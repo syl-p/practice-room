@@ -1,0 +1,31 @@
+<section class="home">
+    <header>
+        <div class="hero hero-sm bg-dark">
+            <div class="hero-body text-center">
+                <h1 class="my-2">Practice room</h1>
+                <p>La pratique de la musique 2.0</p>
+            </div>
+        </div>
+    </header>
+    <section class="container" data-controller="hello">
+        <form class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="columns">
+                        <div class="column">
+                            <label for="">Recherchez un exercise</label><br>
+                            <input class="form-control" type="text" data-action="hello#fetch">
+                        </div>
+                        <div class="column">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- Exercise list -->
+        <div class="pt-2" data-hello-target="exercises">
+            <%= render "shared/exercise_list" %>
+        </div>
+        <!-- Exercise list -->
+    <section>
+</section>

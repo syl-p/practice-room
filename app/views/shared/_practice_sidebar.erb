@@ -1,0 +1,44 @@
+<aside class="practice-sidebar close" 
+    data-controller="practicer-sidebar tabs"
+    data-practicer-sidebar-target="container">
+    <a class="practice-sidebar__close" data-action="click->practicer-sidebar#toggle">close</a>
+    <div class="practice-sidebar__content panel">
+        <header class="text-center panel-header">
+            <figure class="avatar avatar-lg">
+                <img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar">
+            </figure>
+            <h3 class="panel-title  h5 mt-2">Votre pratique du jour</h3>
+            <p class="panel-subtitle">THE HULK</p>
+            <hr>
+        </header>
+        <nav class="panel-nav">
+            <ul class="tab tab-block">
+                <li class="tab-item">
+                    <a href="#" data-tabs-target="tabLink"
+                        data-tabs-index="0" data-action="click->tabs#changeTab">Aujourd'hui</a>
+                </li>
+                <li class="tab-item">
+                    <a href="#" class="badge" data-badge="9"  data-tabs-target="tabLink"
+                         data-tabs-index="1" data-action="click->tabs#changeTab">Challenges</a>
+                </li>
+                <li class="tab-item">
+                    <a href="#"   data-tabs-target="tabLink"
+                        data-tabs-index="2" data-action="click->tabs#changeTab">Vos favoris</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="panel-body">
+            <ul class="tile-list tab-content active" data-tabs-target="tab" data-practicer-sidebar-target="exercises">
+                <%= render partial: "sessions_of_the_days/list", collection: current_user.sessions_of_the_day, as: :exercise  %>
+            </ul>
+            <ul class="tile-list tab-content"  data-tabs-target="tab" data-practicer-sidebar-target="challenges">
+            </ul>
+            <ul class="tile-list tab-content"  data-tabs-target="tab" data-practicer-sidebar-target="favorites">
+                <%= render partial: "shared/user_favorite", collection: current_user.favorites_populated, as: :exercise  %>
+            </ul>
+        </div>
+        <div class="panel-footer">
+            
+        </div>
+    </div>
+</aside>

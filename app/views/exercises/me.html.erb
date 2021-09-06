@@ -1,0 +1,29 @@
+<section class="dashboard-page container">
+    <header class="dashboard-page__header">
+        <h1> Mes exercices </h1>
+        <%= link_to 'New Exercise', new_exercise_path %>
+    </header>
+  <table>
+    <thead>
+      <tr>
+        <th>title</th>
+        <th>body</th>
+        <th>action</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% @exercises.each do |exercise| %>
+        <tr>
+          <td><%= exercise.title %></td>
+          <td><%= exercise.body %></td>
+          <td>
+            <%= link_to 'Show', exercise %>
+            <%= link_to 'Edit', edit_exercise_path(exercise) %>
+            <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<section>

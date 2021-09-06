@@ -1,0 +1,17 @@
+<%= form_with(model: sessions_of_the_day, local: true) do |form| %>
+  <% if sessions_of_the_day.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(sessions_of_the_day.errors.count, "error") %> prohibited this sessions_of_the_day from being saved:</h2>
+
+      <ul>
+        <% sessions_of_the_day.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

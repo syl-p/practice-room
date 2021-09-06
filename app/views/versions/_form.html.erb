@@ -1,0 +1,45 @@
+<%= form_with(model: version, local: true) do |form| %>
+  <% if version.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(version.errors.count, "error") %> prohibited this version from being saved:</h2>
+
+      <ul>
+        <% version.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%
+=begin%>
+ <%= form.label :exercise_id %> 
+<%
+=end%>
+    <%= form.hidden_field :exercise_id %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-input'  %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :description, class: 'form-label'  %>
+    <%= form.text_area :description, class: 'form-input'   %>
+  </div>
+
+  <div class="field">
+    <%
+=begin%>
+ <%= form.label :user_id %> 
+<%
+=end%>
+    <%= form.hidden_field :user_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Envoyer' , class: 'btn btn-primary' %>
+  </div>
+<% end %>

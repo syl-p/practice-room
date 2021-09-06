@@ -1,0 +1,16 @@
+<header class="navbar container">
+  <section class="navbar-section">
+    <a href="<%= root_path %>" class="btn btn-link">Revenir sur le site</a>
+  </section>
+  <section class="navbar-center">
+      <a href="<%= root_path %>">
+          <img src="https://picturepan2.github.io/spectre/img/spectre-logo.svg" alt="Spectre.css">
+      </a>
+  </section>
+  <section class="navbar-section">
+    <%= link_to "Mes exercises", me_exercises_path, class: "btn btn-link" %>
+    <%= link_to "Liste des medias", media_path, class: "btn btn-link" %>
+
+    <%= render partial: "shared/user_dropdown" %>
+  </section>
+</header>

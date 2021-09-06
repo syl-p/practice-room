@@ -1,0 +1,31 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+// Define variables to override default ones
+$primary-color: #2e5bec;
+$dark-color: #3e396b;
+
+// Import full Spectre source code
+@import "spectre.css/src/spectre";
+
+@import "spectre.css/src/spectre-icons";
+
+// Layout
+
+@import "tools/mixins";
+@import "layout/container";
+
+// Modules
+@import "modules/exercise-list";
+@import "modules/navbar";
+@import "modules/tile-list";
+@import "modules/comment";
+@import "modules/practice-sidebar";
+@import "modules/practice-action-bar";
+// Pages
+@import "pages/general";
+@import "pages/home";
+@import "pages/exercise-show";
+@import "pages/exercise-edit";
+@import "pages/login";

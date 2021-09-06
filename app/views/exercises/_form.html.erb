@@ -1,0 +1,41 @@
+<%= form_with(model: exercise, local: true) do |form| %>
+  <% if exercise.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
+
+      <ul>
+        <% exercise.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :title, class: "form-input"  %>
+  </div>
+
+  <div class="field form-group columns" data-controller="markdown">
+    <div class="column">
+      <%= form.label :body, class: "form-label"  %>
+      <%= form.text_area :body, class: "form-input mardown-textarea", 
+        data: {markdown_target: 'field', action: 'input->markdown#onChange'} %>
+    </div>
+    <div class="column">
+      <label class="form-label">Aperçu</label>
+      <!-- HTML RESULT FROM MARKDOWN -->
+      <div data-markdown-target="result" class="pt-1"></div>
+    </div>
+  </div>
+  
+  <div class="field form-group">
+    <%= form.label "vidéo (lien de partage youtube)", class: "form-label"  %>
+    <%= form.text_field :video_link, class: "form-input"  %>
+  </div>
+
+  <div class="actions mt-2 form-group" data-markdown-target="result">
+    <%= form.submit "Mettre à jour le contenu", class: "form-input"  %>
+  </div>
+<% end %>

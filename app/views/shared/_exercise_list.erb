@@ -1,0 +1,24 @@
+<ul class="exercise-list columns">
+  <% @exercises.each do |exercise| %>
+    <li class="exercise-list__item column">
+      <div class="card">
+          <div class="card-header">
+            <h2><%= link_to exercise.title, exercise %></h2>
+          </div>
+          <div class="card-image">
+            <img src="https://via.placeholder.com/728x90.png"  class="img-responsive">
+          </div>
+          <div class="card-body">
+            <p>lorem ipsum dolor</p>
+          </div>
+          <div class="card-footer">
+            
+            <% if can? :manage, exercise %>
+              <p><%= link_to 'Edit', edit_exercise_path(exercise) %> | <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+            <% end %>
+          </div>
+      </div>
+    </li>
+  <% end %>
+</ul>    
+<%= link_to 'New Exercise', new_exercise_path if !current_user.nil? %>

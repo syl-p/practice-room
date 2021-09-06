@@ -1,0 +1,19 @@
+
+<%= turbo_frame_tag "exercise_versions" do %>
+    <div class="panel">
+        <div class="panel-header">
+            <a href="<%= list_versions_path(@version.exercise) %>" class="float-right">
+                <i class="icon icon-cross"></i>
+            </a>
+            <h3>Nouvelle version:</h3>
+            <p>Proposer une version personnalisée de l'exercice: <%= @version.exercise.title %></p>
+        </div>
+        <div class="panel-body">
+            <%= render 'form', version: @version %>
+        </div>
+
+        <div class="panel-footer">
+            <%=  link_to 'Retour à la liste des versions', list_versions_path(@version.exercise) %>
+        </div>
+    </div>
+<% end %>

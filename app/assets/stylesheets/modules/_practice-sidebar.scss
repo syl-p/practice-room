@@ -1,0 +1,24 @@
+.practice-sidebar {
+    background-color: white;
+    position: fixed;
+    height: 100%;
+    width: 500px;
+    right: 0px;
+    top: 0px;
+    z-index: 1000;
+    &.close {
+        right: -500px;
+    }
+    &__close {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+    }
+    &__content {
+        padding:80px 30px 0px;
+        min-height: 100%;
+        .panel-body {
+            padding-top: 20px;
+        }
+    }
+}

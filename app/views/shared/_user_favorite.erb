@@ -1,0 +1,16 @@
+<li class="tile" data-exercise-id="<%= exercise.id %>">
+    <div class="tile-icon">
+        <i class="icon icon-bookmark centered"></i>
+    </div>
+    <div class="tile-content">
+        <%= link_to exercise.title, exercise, class: 'tile-title' %>
+        <small class="tile-subtitle">
+            short description to replace
+        </small>
+    </div>
+    <div class="tile-action">
+        <button class="btn btn-link" data-action="click->practicer-sidebar#removeFromFavorites">
+            <i class="icon icon-cross"></i>
+        </button>
+    </div>
+</li>

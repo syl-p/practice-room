@@ -1,0 +1,10 @@
+    <nav class="mb-2">
+        <ul class="tab">
+            <li class="tab-item <%= 'active' if (active.nil?) %>">
+                <%= link_to 'Contenu', edit_exercise_path %>
+            </li>
+            <li class="tab-item <%= 'active' if (active && active === 'media') %>">
+                <%= link_to 'Ressources', edit_exercise_path + "/media" %>
+            </li>
+        </ul>
+    </nav>

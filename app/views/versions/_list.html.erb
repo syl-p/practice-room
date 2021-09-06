@@ -1,0 +1,35 @@
+
+<%= turbo_frame_tag "exercise_versions" do %>
+<div class="panel">
+    <div class="panel-header">
+        <h3 class="panel-title mb-0">Autres versions (<%= @exercise.versions.count %>)</h3>
+        <small>Pour aller plus loin, découvrez des variantes de cet exercice</small>
+    </div>
+    <div class="panel-nav">
+        <!-- navigation components: tabs, breadcrumbs or pagination -->
+    </div>
+    <div class="panel-body">
+        <% versions.each do |version| %>
+        <div class="tile">
+            <div class="tile-icon">
+                <figure class="avatar"></figure>
+            </div>
+            <div class="tile-content">
+                <p class="tile-title mb-0">
+                    <strong><%= version.title %></strong> publié 
+                        par <a href="#"><%= version.user.username %></a>
+                </p>
+                <p class="tile-subtitle">
+                    <%= version.description %>
+                    <%= link_to "Voir la version", version %>
+                </p>
+            </div>
+        </div>
+        <% end %>
+    </div>
+    <div class="panel-footer text-center">
+        <!-- buttons or inputs -->
+        <%= link_to "Proposer votre version", new_version_path(exercise_id: @exercise), class: 'btn' %>
+    </div>
+</div>
+<% end %>

@@ -1,0 +1,44 @@
+<%
+=begin%>
+ <%= turbo_stream_from comment %> 
+<%
+=end%>
+<%= turbo_frame_tag comment do %>
+    <div class="comment tile" data-controller="comment">
+        <div class="tile-icon">
+            <figure class="avatar avatar-lg"><img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar"></figure>
+        </div>
+        <div class="tile-content pl-3">
+            <p class="tile-title mb-0">
+                <a href="" class="text-bold"><%= comment.user.username %></a> 
+                <br>
+                <small>le <%= comment.created_at %></small>
+            </p>
+            <p class="tile-subtitle mb-1">
+                <%= comment.body %>
+            </p>
+
+
+            <p>
+                <% if comment.parent_id.nil? %>
+                    <%= link_to "Répondre", "#", class: "btn btn-primary btn-sm", data: {action: "click->comment#display"} %>
+                <% end %>
+
+                <% if can? :manage, comment %>
+                    <%= link_to "Editer", edit_comment_path(comment), class: "btn btn-sm" %>
+                    <%= link_to "Delete", comment_path(comment), method: :delete, data: {confirm: "Tu es sûr(e) ?"}, class: "btn btn-sm" %>
+                <% end %>
+            </p>
+
+            <!-- COMMENT REPLY SECTION -->
+            <div id="<%= dom_id(comment) %>_comments">
+                <%= render partial: "comments/comment", 
+                    collection: comment.comments, as: :comment  %>
+            </div>
+            <%= render partial: "comments/form", 
+                    locals: {commentable: comment, comment: Comment.new, 
+                    data: {comment_target: "form"}, class: 'd-none'} if comment.parent_id.nil? && user_signed_in? %>
+        </div>
+        <hr>
+    </div>
+<% end %>

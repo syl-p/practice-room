@@ -1,0 +1,41 @@
+.exercise-show {
+    margin-bottom: 100px;
+
+    &__nav {
+        text-align: right;
+        // .btn-group {
+        //     float: right;
+        //     width: 200px;
+        // }
+    }
+    &__intro {
+        position: relative;
+        // margin: -130px auto 0px;
+        margin-bottom: 50px;
+    }
+    &__content {
+        margin-bottom: 100px;
+    }
+    &__comments {
+        .empty { 
+            background: #f7f8f9;
+            margin: 50px 0px;
+        }
+        form {
+            margin: 20px 0px 20px 0px;
+        }
+    }
+
+    &__versions {
+        position: relative;
+        .panel {
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    }
+}

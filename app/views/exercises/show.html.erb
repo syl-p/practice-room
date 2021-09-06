@@ -1,0 +1,124 @@
+<% content_for(:title, @exercise.title) %>
+
+<section class="exercise-show container">
+    <header class="hero">
+        <div class="hero-body ">
+
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <%= link_to 'Accueil', root_path %>
+                </li>
+                <li class="breadcrumb-item">
+                    <%= link_to 'Exercices', exercises_path %>
+                </li>
+                <li class="breadcrumb-item active">
+                    <%= @exercise.title %>
+                </li>
+            </ul>
+
+            <p id="notice"><%= notice %></p>
+            
+            <h1 class="my-2">
+                <%= @exercise.title %>
+                <% if can? :manage, @exercise %>
+                    <small><%= link_to 'Edit', edit_exercise_path(@exercise) %> | <%= link_to 'Destroy', @exercise, method: :delete, data: { confirm: 'Are you sure?' } %></small>
+                <% end %>
+            </h1>
+
+            <p>Description de l'exercise</p>
+            <%= render "shared/user_tile", user: @exercise.user, published_at: @exercise.created_at %>    
+
+            <nav class="exercise-show__nav" 
+                data-controller="practicer-nav" 
+                data-practicer-nav-exercise-id-value="<%= @exercise.id %>">
+                <div class="btn-group btn-group-block">
+                    <button class="btn" data-practicer-nav-target="btn">
+                        <i class="icon icon-check"></i> Ajouter à ma pratique du jour
+                    </button>
+                    <% if current_user.favorites.include? @exercise.id.to_s %>
+                        <button class="btn" 
+                            data-practicer-nav-target="btn" 
+                            data-favorite-action="remove"  
+                            data-action="click->practicer-nav#favorites">
+                            <i class="icon icon-bookmark"></i> Retirer de mes favoris
+                        </button>
+                    <% else %>
+                        <button class="btn" 
+                        data-practicer-nav-target="btn"
+                        data-favorite-action="add"  
+                        data-action="click->practicer-nav#favorites">
+                            <i class="icon icon-bookmark"></i> Ajouter à mes favoris
+                        </button>
+                    <% end %>
+                </div> 
+            </nav>
+        </div>
+    </header>
+    <article class="container">
+        <header class="exercise-show__intro columns">
+
+                <% if @exercise.video_link %>
+                <div class="column">
+                    <div class="video-responsive">
+                        <iframe class=""
+                            src="https://www.youtube.com/embed/<%= @exercise.video_link %>" 
+                            title="YouTube video player" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                <% end %>
+                
+                <!-- DYNAMIC ZONE -->
+                <aside class="exercise-show__versions column col-4 hide-lg">
+                    <%= turbo_frame_tag "exercise_versions" do %>
+                        <%= render partial: "versions/list", locals: {versions: @exercise.versions, exercise: @exercise } %>
+                    <% end %>
+                </aside>
+                <!-- DYNAMIC ZONE -->
+        </header>
+        <section class="exercise-show__content columns">
+            <section class="column col-8">
+                <%= sanitize renderHtml @exercise.body %>
+            </section>
+            <aside class="column col-4">
+                <%= render "shared/ressource_list" if @exercise.media.present? %>
+            </aside>
+        </section>
+        <footer class="exercise-show__comments">
+            <h2>Commentaires</h2>
+            <% if user_signed_in? %>
+                <%= turbo_frame_tag "comment_new" do %>
+                    <%= render partial: "comments/form", 
+                        locals: {comment: Comment.new, commentable: @exercise} %>
+                <% end %>
+            <% else %>
+                <div class="empty">
+                    <div class="empty-icon">
+                        <i class="icon icon-people"></i>
+                    </div>
+                    <p class="empty-title h5">Vous devez être connecter pour pouvoir commenter.</p>
+                    <p class="empty-subtitle">Si tu n'as pas de compte tu peux aussi t'inscrire gratuitement pour participer à la conversation.</p>
+                    <div class="empty-action">
+                        <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary"  %> 
+            <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-link"  %>
+                    </div>
+                </div>
+            <% end %>
+            
+            <!-- COMMENT LIST -->
+            <%
+=begin%>
+ <%= turbo_stream_from @exercise, :comments %> 
+<%
+=end%>
+            <%= tag.div id: "#{dom_id(@exercise)}_comments" do %>
+                <%=  render partial: "comments/comment", collection: @exercise.comments.where(parent_id: nil), as: :comment  %>
+            <% end %>
+            <!-- END COMMENT LIST -->
+            
+        </footer>
+    </article>
+</section>

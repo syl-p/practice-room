@@ -1,0 +1,18 @@
+    <div class="dropdown">
+        <div class="btn-group">
+            <button class="btn" data-action="click->application#togglePracticerSidebar">
+                <%= current_user.username %>
+                <figure class="avatar avatar-sm" data-initial="xx" style="background-color: #5755d9;"></figure>
+            </button>
+            <a class="btn dropdown-toggle" tabindex="0">
+                <i class="icon icon-caret"></i>
+            </a>
+        
+            <!-- menu component -->
+            <ul class="menu">
+                <li><%= link_to "Edit profile", edit_user_registration_path %></li>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+            </ul>
+        </div>
+    </div>
