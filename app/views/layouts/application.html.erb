@@ -13,7 +13,7 @@
 
     <main data-controller="application">
       <%= render "shared/navbar" %>
-      <%= render "shared/practice_sidebar" %>
+      <%= render "shared/practice_sidebar" if current_user %>
 
       <% if notice.present? %>
         <p class="notice"><%= notice %></p>

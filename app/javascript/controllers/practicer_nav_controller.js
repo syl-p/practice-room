@@ -12,9 +12,9 @@ export default class extends ApplicationController {
   favorites($event) {
     this.favorite(this.exerciseIdValue, $event.target.dataset.favoriteAction)
       .then((response) => {
+        const favoritesTarget = super.practicerSidebarController.favoritesTarget
         switch ($event.target.dataset.favoriteAction) {
           case "add":
-            const favoritesTarget = super.practicerSidebarController.favoritesTarget
             // add element to list
             favoritesTarget.innerHTML = favoritesTarget.innerHTML + response
 

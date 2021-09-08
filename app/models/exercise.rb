@@ -1,5 +1,5 @@
 class Exercise < ApplicationRecord
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
   has_many :media_exercises, dependent: :destroy
   has_many :versions, dependent: :destroy
   has_many :media, through: :media_exercises

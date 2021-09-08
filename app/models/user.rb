@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :exercises, dependent: :destroy
   has_many :sessions_of_the_days, dependent: :destroy
 
+  # toto goal
+
   # overwrite favorites
   def favorites_populated
     res = [] 
@@ -20,6 +22,8 @@ class User < ApplicationRecord
 
 
   def sessions_of_the_day
-    read_attribute(:sessions_of_the_days).select {|v| => v.date === Date.today}
+    if read_attribute(:sessions_of_the_days)
+      read_attribute(:sessions_of_the_days).select {|v| v.date === Date.today}
+    end
   end
 end
