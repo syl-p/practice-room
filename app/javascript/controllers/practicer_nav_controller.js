@@ -38,4 +38,12 @@ export default class extends ApplicationController {
       })
       .catch(err => console.log(err))
   }
+
+  addToPractice($event) {
+    this.practice(this.exerciseIdValue)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch(err => console.log(err))
+  }
 }

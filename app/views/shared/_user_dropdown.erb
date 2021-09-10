@@ -10,7 +10,8 @@
         
             <!-- menu component -->
             <ul class="menu">
-                <li><%= link_to "Edit profile", edit_user_registration_path %></li>
+                <li><%= link_to "Votre profil", user_path(current_user) %></li>
+                <li><%= link_to "Modifiez vos informations", edit_user_registration_path %></li>
                 <li role="separator" class="divider"></li>
                 <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
             </ul>

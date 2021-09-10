@@ -24,6 +24,24 @@ export const practice = controller => {
                     })
             })
 
+        },
+        practice(exerciseId) {
+          return new Promise((resolve, reject) => {
+            fetch(`${exerciseId}/add_to_practice`, {
+              method: "GET",
+              credentials: "same-origin",
+              headers: {
+                "X-CSRF-Token": this.csrfToken
+              }
+            })
+              .then(response => response.text())
+              .then((response) => {
+                resolve(response)
+              })
+              .catch((err) => {
+                reject(err)
+              })
+          });
         }
     });
   };

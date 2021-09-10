@@ -1,0 +1,23 @@
+<li>
+    Session à <%= session['time'] %>
+    <ul>
+        <% session['exercises'].each do |exercise| %>
+            <li class="tile tile-centered">
+                <div class="tile-icon">
+                    <i class="icon icon-file centered"></i>
+                </div>
+                <div class="tile-content">
+                    <div class="tile-title">Exercice</div>
+                    <small class="tile-subtitle text-gray">
+                        10 minutes - à 11h00
+                    </small>
+                </div>
+                <div class="tile-action">
+                    <button class="btn btn-link">
+                    <i class="icon icon-more-vert"></i>
+                    </button>
+                </div>
+            </li>
+        <% end %>
+    </ul>
+</li>

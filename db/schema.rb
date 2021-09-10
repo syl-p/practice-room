@@ -51,22 +51,12 @@ ActiveRecord::Schema.define(version: 2021_08_29_111553) do
     t.index ["medium_id", "exercise_id"], name: "media_exercise"
   end
 
-  create_table "session_of_the_days", force: :cascade do |t|
+  create_table "sessions_of_the_days", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.date "date"
     t.json "sessions", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_session_of_the_days_on_user_id"
-  end
-
-  create_table "table_name", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.date "date"
-    t.json "sessions", default: [], array: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_table_name_on_user_id"
+    t.index ["user_id"], name: "index_sessions_of_the_days_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -96,8 +86,7 @@ ActiveRecord::Schema.define(version: 2021_08_29_111553) do
 
   add_foreign_key "comments", "users"
   add_foreign_key "exercises", "users"
-  add_foreign_key "session_of_the_days", "users"
-  add_foreign_key "table_name", "users"
+  add_foreign_key "sessions_of_the_days", "users"
   add_foreign_key "versions", "exercises"
   add_foreign_key "versions", "users"
 end

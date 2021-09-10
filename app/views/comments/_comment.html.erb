@@ -6,11 +6,15 @@
 <%= turbo_frame_tag comment do %>
     <div class="comment tile" data-controller="comment">
         <div class="tile-icon">
-            <figure class="avatar avatar-lg"><img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar"></figure>
+            <figure class="avatar avatar-lg">
+                <a href="<%= user_url(comment.user) %>"  data-turbo="false">
+                    <img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar">
+                </a>
+            </figure>
         </div>
         <div class="tile-content pl-3">
             <p class="tile-title mb-0">
-                <a href="" class="text-bold"><%= comment.user.username %></a> 
+                <a href="<%= user_url(comment.user) %>" class="text-bold" data-turbo="false"><%= comment.user.username %></a> 
                 <br>
                 <small>le <%= comment.created_at %></small>
             </p>

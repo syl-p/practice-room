@@ -89,7 +89,7 @@ class ExercisesController < ApplicationController
         # Send html for exercise favorite element
         respond_to do |format|
           format.html { render partial: 'shared/user_favorite', locals: {exercise: @exercise} }
-          format.json { render json: @current_user.favorites, status: 200 }
+          format.json { render json: current_user.favorites, status: 200 }
         end
     else
       head 404, content_type: "text/html"
@@ -108,6 +108,24 @@ class ExercisesController < ApplicationController
       head 404, content_type: "text/html"
     end
   end
+
+  def add_to_practice
+    sessions_of_today = current_user.sessions_of_the_days.find_by(created_at: Date.today)
+    new_session = {time: Time.now, exercises:[params[:exercise_id]]}
+
+    if sessions_of_today.present?
+      sessions_of_today.sessions << new_session
+    else
+      sessions_of_today = SessionsOfTheDay.new()
+      sessions_of_today.sessions << new_session
+    end
+
+    respond_to do |format|
+      format.html { render partial: 'sessions_of_the_days/item', collection: current_user.sessions_of_today, as: :session }
+      format.json { render json: current_user.sessions_of_today, status: 200 }
+    end
+  end
+
 
 
   private

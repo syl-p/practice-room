@@ -21,9 +21,11 @@ class User < ApplicationRecord
   end
 
 
-  def sessions_of_the_day
-    if read_attribute(:sessions_of_the_days)
-      read_attribute(:sessions_of_the_days).select {|v| v.date === Date.today}
+  def sessions_of_today
+    res = []
+    self.sessions_of_the_days.each do |sessions_of_the_day|
+      res << sessions_of_the_day if sessions_of_the_day.created_at >= Time.zone.now.beginning_of_day
     end
+    return res && res.count > 0 ? res[0].sessions : nil
   end
 end

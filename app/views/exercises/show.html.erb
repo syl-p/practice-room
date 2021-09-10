@@ -32,7 +32,9 @@
                 data-controller="practicer-nav" 
                 data-practicer-nav-exercise-id-value="<%= @exercise.id %>">
                 <div class="btn-group btn-group-block">
-                    <button class="btn" data-practicer-nav-target="btn">
+                    <button class="btn" 
+                        data-practicer-nav-target="btn"
+                        data-action="click->practicer-nav#addToPractice">
                         <i class="icon icon-check"></i> Ajouter à ma pratique du jour
                     </button>
                     <% if current_user.favorites.include? @exercise.id.to_s %>
