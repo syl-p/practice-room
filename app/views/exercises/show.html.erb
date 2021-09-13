@@ -27,33 +27,35 @@
 
             <p>Description de l'exercise</p>
             <%= render "shared/user_tile", user: @exercise.user, published_at: @exercise.created_at %>    
-
-            <nav class="exercise-show__nav" 
-                data-controller="practicer-nav" 
-                data-practicer-nav-exercise-id-value="<%= @exercise.id %>">
-                <div class="btn-group btn-group-block">
-                    <button class="btn" 
-                        data-practicer-nav-target="btn"
-                        data-action="click->practicer-nav#addToPractice">
-                        <i class="icon icon-check"></i> Ajouter à ma pratique du jour
-                    </button>
-                    <% if current_user.favorites.include? @exercise.id.to_s %>
+            
+            <% if current_user %>
+                <nav class="exercise-show__nav" 
+                    data-controller="practicer-nav" 
+                    data-practicer-nav-exercise-id-value="<%= @exercise.id %>">
+                    <div class="btn-group btn-group-block">
                         <button class="btn" 
-                            data-practicer-nav-target="btn" 
-                            data-favorite-action="remove"  
+                            data-practicer-nav-target="btn"
+                            data-action="click->practicer-nav#addToPractice">
+                            <i class="icon icon-check"></i> Ajouter à ma pratique du jour
+                        </button>
+                        <% if current_user.favorites.include? @exercise.id.to_s %>
+                            <button class="btn" 
+                                data-practicer-nav-target="btn" 
+                                data-favorite-action="remove"  
+                                data-action="click->practicer-nav#favorites">
+                                <i class="icon icon-bookmark"></i> Retirer de mes favoris
+                            </button>
+                        <% else %>
+                            <button class="btn" 
+                            data-practicer-nav-target="btn"
+                            data-favorite-action="add"  
                             data-action="click->practicer-nav#favorites">
-                            <i class="icon icon-bookmark"></i> Retirer de mes favoris
-                        </button>
-                    <% else %>
-                        <button class="btn" 
-                        data-practicer-nav-target="btn"
-                        data-favorite-action="add"  
-                        data-action="click->practicer-nav#favorites">
-                            <i class="icon icon-bookmark"></i> Ajouter à mes favoris
-                        </button>
-                    <% end %>
-                </div> 
-            </nav>
+                                <i class="icon icon-bookmark"></i> Ajouter à mes favoris
+                            </button>
+                        <% end %>
+                    </div> 
+                </nav>
+            <% end %>
         </div>
     </header>
     <article class="container">

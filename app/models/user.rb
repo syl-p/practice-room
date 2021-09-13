@@ -26,6 +26,6 @@ class User < ApplicationRecord
     self.sessions_of_the_days.each do |sessions_of_the_day|
       res << sessions_of_the_day if sessions_of_the_day.created_at >= Time.zone.now.beginning_of_day
     end
-    return res && res.count > 0 ? res[0].sessions : nil
+    return res && res.count > 0 ? res[0] : nil
   end
 end

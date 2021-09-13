@@ -32,7 +32,7 @@
         <div class="panel-body">
             <ul class="tile-list tab-content active" data-tabs-target="tab" data-practicer-sidebar-target="exercises">
                 <%= turbo_frame_tag "practicer_sessions" do %>
-                    <%= render partial: "sessions_of_the_days/item", collection: current_user.sessions_of_today, as: :session  %>
+                    <%= render partial: "sessions_of_the_days/item", collection: current_user.sessions_of_today.sessions, as: :session if current_user.sessions_of_today  %>
                 <% end %>
             </ul>
             <ul class="tile-list tab-content"  data-tabs-target="tab" data-practicer-sidebar-target="challenges">

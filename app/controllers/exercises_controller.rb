@@ -110,19 +110,20 @@ class ExercisesController < ApplicationController
   end
 
   def add_to_practice
-    sessions_of_today = current_user.sessions_of_the_days.find_by(created_at: Date.today)
+    sessions_of_today = current_user.sessions_of_today
     new_session = {time: Time.now, exercises:[params[:exercise_id]]}
 
-    if sessions_of_today.present?
-      sessions_of_today.sessions << new_session
-    else
-      sessions_of_today = SessionsOfTheDay.new()
-      sessions_of_today.sessions << new_session
+    if !sessions_of_today.present?
+      sessions_of_today = SessionsOfTheDay.new(user_id: current_user.id)
     end
+  
+    sessions_of_today.sessions << new_session
+    sessions_of_today.save
 
     respond_to do |format|
-      format.html { render partial: 'sessions_of_the_days/item', collection: current_user.sessions_of_today, as: :session }
-      format.json { render json: current_user.sessions_of_today, status: 200 }
+      format.html { render partial: 'sessions_of_the_days/item', 
+        locals: {session: sessions_of_today.sessions.last} }
+      format.json { render json: new_session, status: 200 }
     end
   end
 

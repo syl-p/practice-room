@@ -42,7 +42,9 @@ export default class extends ApplicationController {
   addToPractice($event) {
     this.practice(this.exerciseIdValue)
       .then((response) => {
-        console.log(response)
+        const exercisesTarget = super.practicerSidebarController.exercisesTarget
+        // add element to list
+        exercisesTarget.innerHTML = exercisesTarget.innerHTML + response
       })
       .catch(err => console.log(err))
   }
