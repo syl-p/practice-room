@@ -5,7 +5,9 @@
     <div class="panel-header">
         <div class="tile">
             <div class="tile-icon">
-                <figure class="avatar"></figure>
+                <a href="<%= user_path(@version.user.id) %>" data-turbo="false">
+                    <figure class="avatar"></figure>
+                </a>
             </div>
             <div class="tile-content">
                 <a href="<%= list_versions_path(@version.exercise) %>" class="float-right">
@@ -13,7 +15,7 @@
                 </a>
                 <p class="tile-title mb-0">
                     <strong><%= @version.title %></strong> <br> publié 
-                    par <a href="#"><%= @version.user.username %></a>
+                    par <%= link_to @version.user.username, user_path(@version.user.id), data: {turbo: false}  %>
                 </p>
             </div>
         </div>

@@ -12,12 +12,14 @@
         <% versions.each do |version| %>
         <div class="tile">
             <div class="tile-icon">
-                <figure class="avatar"></figure>
+                <a href="<%= user_path(version.user.id) %>" data-turbo="false">
+                    <figure class="avatar"></figure>
+                </a>
             </div>
             <div class="tile-content">
                 <p class="tile-title mb-0">
                     <strong><%= version.title %></strong> publié 
-                        par <a href="#"><%= version.user.username %></a>
+                        par <%= link_to version.user.username, user_path(version.user.id), data: {turbo: false}  %>
                 </p>
                 <p class="tile-subtitle">
                     <%= version.description %>
