@@ -10,8 +10,7 @@ Rails.application.routes.draw do
       get "me"
       get ":id/edit/:step", to: "exercises#edit", as: "edit_exercise_with_step"
       get "new/:step", to: "exercises#new", as: "new_exercise_with_step"
-      get ":id/versions", to: "exercises#get_versions_list", as: "list_versions"
-      get ":exercise_id/add_to_practice", to: "exercises#add_to_practice", as: "add_to_practice"
+      get ":id/practice/add", to: "exercises#add_to_practice", as: "add_to_practice"
 
       put ":id/favorites/add", to: "exercises#add_to_favorites"
       put ":id/favorites/remove", to: "exercises#remove_from_favorites"
@@ -26,6 +25,10 @@ Rails.application.routes.draw do
   root "exercises#index"
 
   get "users/:id", to: "users#show", as: "user"
+  
+  # Here because use turbo ??
+  get "exercises/:id/versions", to: "exercises#get_versions_list", as: "list_versions"
+  delete "exercises/:id/practice/remove/:sessions_of_the_day_id/:session_index", to: "exercises#remove_from_practice", as: "remove_from_practice"
 
   mount MediumUploader.download_endpoint => "/uploads"
 

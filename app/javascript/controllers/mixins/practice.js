@@ -27,7 +27,7 @@ export const practice = controller => {
         },
         practice(exerciseId) {
           return new Promise((resolve, reject) => {
-            fetch(`${exerciseId}/add_to_practice`, {
+            fetch(`${exerciseId}/practice/add`, {
               method: "GET",
               credentials: "same-origin",
               headers: {

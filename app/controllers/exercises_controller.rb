@@ -111,20 +111,50 @@ class ExercisesController < ApplicationController
 
   def add_to_practice
     sessions_of_today = current_user.sessions_of_today
-    new_session = {time: Time.now, exercises:[params[:exercise_id]]}
+    new_session = {time: Time.now, exercises:[params[:id]]}
 
     if !sessions_of_today.present?
       sessions_of_today = SessionsOfTheDay.new(user_id: current_user.id)
     end
-  
-    sessions_of_today.sessions << new_session
+
+    if sessions_of_today.sessions.count > 0  && ((Time.now - sessions_of_today.sessions.last["time"].to_time) <= 1.hour)
+        sessions_of_today.sessions.last["exercises"] << params[:id]
+    else
+      sessions_of_today.sessions << new_session
+    end
     sessions_of_today.save
 
     respond_to do |format|
-      format.html { render partial: 'sessions_of_the_days/item', 
-        locals: {session: sessions_of_today.sessions.last} }
+      format.html { render partial: 'sessions_of_the_days/list', 
+        locals: {session: sessions_of_today.sessions.last, index: sessions_of_today.sessions.count - 1, sessions_of_the_day: sessions_of_today} }
       format.json { render json: new_session, status: 200 }
     end
+  end
+
+  def remove_from_practice
+    sessions_of_the_day = SessionsOfTheDay.find(params[:sessions_of_the_day_id])
+    sessions_of_the_day.sessions[params[:session_index].to_i]["exercises"].delete(params[:id]) if session
+    sessions_of_the_day.save
+      
+    if sessions_of_the_day.sessions[params[:session_index].to_i]["exercises"].count <= 0
+      sessions_of_the_day.sessions.delete_at(params[:session_index].to_i)
+      sessions_of_the_day.save
+      
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.remove("practice_session_#{params[:sessions_of_the_day_id]}_#{params[:session_index]}") 
+        end
+      end
+    else 
+          
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.remove("practice_exercise_#{params[:id]}_#{params[:sessions_of_the_day_id]}_#{params[:session_index]}") 
+        end
+      end
+    end
+    
+
   end
 
 

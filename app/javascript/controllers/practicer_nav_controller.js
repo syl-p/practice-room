@@ -44,7 +44,7 @@ export default class extends ApplicationController {
       .then((response) => {
         const exercisesTarget = super.practicerSidebarController.exercisesTarget
         // add element to list
-        exercisesTarget.innerHTML = exercisesTarget.innerHTML + response
+        exercisesTarget.innerHTML = response
       })
       .catch(err => console.log(err))
   }

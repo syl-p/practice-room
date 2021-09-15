@@ -1,23 +1,17 @@
-<li>
-    Session à <%= session['time'] %>
+<div class="session">
+    <strong>Session débuté à <u><time class="session__time"><%= session['time'] %></time></u></strong><br>
+    <small>Liste des exercices: </small>
     <ul>
         <% session['exercises'].each do |exercise| %>
-            <li class="tile tile-centered">
-                <div class="tile-icon">
-                    <i class="icon icon-file centered"></i>
-                </div>
-                <div class="tile-content">
-                    <div class="tile-title">Exercice</div>
-                    <small class="tile-subtitle text-gray">
-                        10 minutes - à 11h00
-                    </small>
-                </div>
-                <div class="tile-action">
-                    <button class="btn btn-link">
-                    <i class="icon icon-more-vert"></i>
-                    </button>
-                </div>
-            </li>
+            <%= turbo_frame_tag "practice_exercise_#{exercise}_#{sessions_of_the_day.id}_#{index}" do %>
+                <%= render layout: "exercises/practice_exercise_tile", locals: {exercise: exercise} do %>
+                    <li><%= link_to "Supprimer", 
+                        remove_from_practice_path(id: exercise, 
+                        sessions_of_the_day_id: sessions_of_the_day.id,
+                        session_index: index), method: :delete %></li>
+                    <li><a href="#">Editer</a></li>
+                <% end %>
+            <% end %>
         <% end %>
     </ul>
-</li>
+</div>

@@ -1,0 +1,16 @@
+<ul class="tile-list tab-content active" data-tabs-target="tab" data-practicer-sidebar-target="exercises">
+    <% if current_user.sessions_of_today.present? %>
+        <% current_user.sessions_of_today.sessions.each_with_index do |session, index| %>
+            <li>
+                <%= turbo_frame_tag "practice_session_#{current_user.sessions_of_today.id}_#{index}" do %>
+                    <%= render partial: "sessions_of_the_days/item", 
+                        locals: {
+                            session: session, index: index, 
+                            sessions_of_the_day: current_user.sessions_of_today
+                        } 
+                    %>
+                <% end %>
+            </li>
+        <% end %>
+    <% end %>
+</ul>

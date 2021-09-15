@@ -1,0 +1,19 @@
+    <li class="tile tile-centered">
+        <div class="tile-icon">
+            <i class="icon icon-file centered"></i>
+        </div>
+        <div class="tile-content">
+            <div class="tile-title"><%= exercise %></div>
+            <small class="tile-subtitle text-gray">
+                10 minutes
+            </small>
+        </div>
+        <div class="tile-action dropdown dropdown-right" tabindex="0">
+            <button class="btn btn-link dropdown-toggle">
+                <i class="icon icon-more-vert"></i>
+            </button>
+            <ul class="menu">
+                <%= yield %>
+            </ul>
+        </div>
+    </li>
