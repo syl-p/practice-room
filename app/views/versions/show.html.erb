@@ -14,8 +14,8 @@
                   <i class="icon icon-cross"></i>
                 </a>
                 <p class="tile-title mb-0">
-                    <strong><%= @version.title %></strong> <br> publié 
-                    par <%= link_to @version.user.username, user_path(@version.user.id), data: {turbo: false}  %>
+                    <strong><%= @version.title %></strong> <br> <small>Publié 
+                    par <%= link_to @version.user.username, user_path(@version.user.id), data: {turbo: false}  %></small>
                 </p>
             </div>
         </div>

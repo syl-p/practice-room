@@ -9,25 +9,32 @@
         <!-- navigation components: tabs, breadcrumbs or pagination -->
     </div>
     <div class="panel-body">
-        <% versions.each do |version| %>
-        <div class="tile">
-            <div class="tile-icon">
-                <a href="<%= user_path(version.user.id) %>" data-turbo="false">
-                    <figure class="avatar"></figure>
-                </a>
-            </div>
-            <div class="tile-content">
-                <p class="tile-title mb-0">
-                    <strong><%= version.title %></strong> publié 
-                        par <%= link_to version.user.username, user_path(version.user.id), data: {turbo: false}  %>
-                </p>
-                <p class="tile-subtitle">
-                    <%= version.description %>
-                    <%= link_to "Voir la version", version %>
-                </p>
-            </div>
-        </div>
-        <% end %>
+        <ul class="tile-list">
+            <% versions.each do |version| %>
+            <li class="p-2 <%=  "bg-secondary" if !version.published %>">
+                <div class="tile py-0">
+                    <div class="tile-action">
+                        <a href="<%= user_path(version.user.id) %>" data-turbo="false">
+                            <figure class="avatar"></figure>
+                        </a>
+                    </div>
+                    <div class="tile-content">
+                        <p class="tile-title mb-0">
+                            <strong><%= version.title %></strong>
+                            <% if !version.published %>
+                                <small class="text-right">( En cours de validation par l'auteur de l'exercice )</small> <br>
+                            <% end %>
+                            <small>Publié par <%= link_to version.user.username, user_path(version.user.id), data: {turbo: false}  %></small>
+                        </p>
+                        <p class="tile-subtitle">
+                            <%= version.description %>
+                            <%= link_to "Voir la version", version %>
+                        </p>
+                    </div>
+                </div>
+            </li>
+            <% end %>
+        </ul>
     </div>
     <div class="panel-footer text-center">
         <!-- buttons or inputs -->

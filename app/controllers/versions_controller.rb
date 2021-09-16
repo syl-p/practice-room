@@ -70,6 +70,6 @@ class VersionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def version_params
-      params.require(:version).permit(:exercise_id, :title, :description, :user_id)
+      params.require(:version).permit(:exercise_id, :title, :description, :video_link, :user_id)
     end
 end

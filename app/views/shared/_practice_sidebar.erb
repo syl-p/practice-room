@@ -17,21 +17,27 @@
             <ul class="tab tab-block">
                 <li class="tab-item">
                     <a href="#" data-tabs-target="tabLink"
-                        data-tabs-index="0" data-action="click->tabs#changeTab">Aujourd'hui</a>
+                        data-tabs-index="0" 
+                        data-action="click->tabs#changeTab">Aujourd'hui</a>
                 </li>
                 <li class="tab-item">
                     <a href="#" class="badge" data-badge="9"  data-tabs-target="tabLink"
-                         data-tabs-index="1" data-action="click->tabs#changeTab">Challenges</a>
+                         data-tabs-index="1" 
+                         data-action="click->tabs#changeTab">Challenges</a>
                 </li>
                 <li class="tab-item">
-                    <a href="#"   data-tabs-target="tabLink"
-                        data-tabs-index="2" data-action="click->tabs#changeTab">Vos favoris</a>
+                    <a href="#" data-tabs-target="tabLink"
+                        data-tabs-index="2" 
+                        data-action="click->tabs#changeTab">Vos favoris</a>
                 </li>
             </ul>
         </nav>
         <div class="panel-body">
-            <%= render partial: "sessions_of_the_days/list" %>
+            <ul class="tile-list tab-content active" data-tabs-target="tab" data-practicer-sidebar-target="exercises">
+                <%= render partial: "sessions_of_the_days/list" %>
+            </ul>
             <ul class="tile-list tab-content"  data-tabs-target="tab" data-practicer-sidebar-target="challenges">
+                <li><b>Partie non développée pour le moment...</b><br> Patience :) !</li>
             </ul>
             <ul class="tile-list tab-content"  data-tabs-target="tab" data-practicer-sidebar-target="favorites">
                 <%= render partial: "shared/user_favorite", collection: current_user.favorites_populated, as: :exercise  %>

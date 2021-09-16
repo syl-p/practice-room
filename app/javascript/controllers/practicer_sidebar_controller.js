@@ -1,4 +1,3 @@
-import { Controller } from "stimulus"
 import ApplicationController from "./application_controller"
 import { practice } from "./mixins/practice"
 
