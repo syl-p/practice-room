@@ -28,7 +28,10 @@
                         </p>
                         <p class="tile-subtitle">
                             <%= version.description %>
-                            <%= link_to "Voir la version", version %>
+                            <%= link_to "Voir la version", version, data: {
+                                video_id: version.video_link,
+                                action: 'click->application#showVersion'
+                            } %>
                         </p>
                     </div>
                 </div>

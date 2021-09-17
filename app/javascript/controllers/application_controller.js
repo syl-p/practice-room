@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = []
+  static targets = ["videoPlayer"]
 
   connect() {
     // console.log(this.application)
@@ -22,5 +22,12 @@ export default class extends Controller {
 
   togglePracticerSidebar() {
     this.practicerSidebarController.toggle();
+  }
+
+  showVersion($event) {
+    const versionVideoId = $event.target.dataset.videoId
+    if (versionVideoId && this.videoPlayerTarget) {
+      this.videoPlayerTarget.setAttribute('video-id', versionVideoId)
+    }
   }
 }

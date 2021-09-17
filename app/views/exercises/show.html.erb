@@ -63,15 +63,7 @@
 
                 <% if @exercise.video_link %>
                 <div class="column">
-                    <div class="video-responsive">
-                        <iframe class=""
-                            src="https://www.youtube.com/embed/<%= @exercise.video_link %>" 
-                            title="YouTube video player" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
+                    <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
                 </div>
                 <% end %>
                 

@@ -10,9 +10,11 @@
                 </a>
             </div>
             <div class="tile-content">
-                <a href="<%= list_versions_path(@version.exercise) %>" class="float-right">
-                  <i class="icon icon-cross"></i>
-                </a>
+                <%= link_to "close", list_versions_path(@version.exercise), class: "float-right", data: {
+                    video_id: @version.exercise.video_link,
+                    action: 'click->application#showVersion'
+                  }  
+                %>
                 <p class="tile-title mb-0">
                     <strong><%= @version.title %></strong> <br> <small>Publié 
                     par <%= link_to @version.user.username, user_path(@version.user.id), data: {turbo: false}  %></small>
