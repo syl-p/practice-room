@@ -25,15 +25,6 @@
 
     <div class="panel-body">
       <p id="notice"><%= notice %></p>
-
-      <%
-=begin%>
- <p>
-        <strong>Exercise:</strong>
-        <%= @version.exercise_id %>
-      </p> 
-<%
-=end%>
       <p>
         <%= @version.description %>
       </p>
@@ -41,7 +32,9 @@
     </div>
 
     <div class="panel-footer">
-      <%= link_to 'Edit', edit_version_path(@version) %> | <%= link_to 'Destroy', @version, method: :delete, data: { confirm: 'Are you sure?' } %> 
+      <% if can? :manage, @version %>
+        <%= link_to 'Edit', edit_version_path(@version) %> | <%= link_to 'Destroy', @version, method: :delete, data: { confirm: 'Are you sure?' } %> 
+      <% end %>
     </div>
   </div>
 <% end %>

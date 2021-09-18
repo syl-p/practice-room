@@ -1,6 +1,7 @@
 class VersionsController < ApplicationController
   before_action :set_version, only: %i[ show edit update destroy ]
-
+  authorize_resource
+  
   # GET /versions or /versions.json
   def index
     @versions = Version.all

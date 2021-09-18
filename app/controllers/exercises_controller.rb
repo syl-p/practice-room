@@ -14,7 +14,10 @@ class ExercisesController < ApplicationController
   end
 
   def get_versions_list
-    render partial: "versions/list", locals: {versions: @exercise.versions, exercise: @exercise}
+    render partial: "versions/list", locals: {
+      versions: @exercise.versions, 
+      exercise: @exercise
+    }
   end
 
   def me

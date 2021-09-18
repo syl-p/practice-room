@@ -8,10 +8,14 @@ class Ability
 
     can :read, Exercise
     can :read, Comment
+    can :read, User
+    can :read, Version
 
     if user.id
       can :manage, Exercise, {user_id: user.id}
       can :manage, Comment, {user_id: user.id}
+      can :manage, User, {id: user.id}
+      can :manage, Version, {user_id: user.id}
     end
 
     # Define abilities for the passed in user here. For example:
