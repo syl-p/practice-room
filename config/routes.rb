@@ -8,8 +8,8 @@ Rails.application.routes.draw do
     resources :comments, module: :exercises
     collection do
       get "me"
-      get ":id/edit/:step", to: "exercises#edit", as: "edit_exercise_with_step"
-      get "new/:step", to: "exercises#new", as: "new_exercise_with_step"
+      get ":id/edit/:step", to: "exercises#edit", as: "edit_with_step"
+      get "new/:step", to: "exercises#new", as: "new_with_step"
       get ":id/practice/add", to: "exercises#add_to_practice", as: "add_to_practice"
 
       put ":id/favorites/add", to: "exercises#add_to_favorites"

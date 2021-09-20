@@ -65,7 +65,7 @@ class ExercisesController < ApplicationController
   def update
     respond_to do |format|
       if @exercise.update(exercise_params)
-        format.turbo_stream { redirect_to (params[:exercise]['medium_ids'].present? ? edit_exercise_with_step_path(step: 'media') : edit_exercise_path), notice: "Exercise was successfully updated." }
+        format.turbo_stream { redirect_to (params[:exercise]['medium_ids'].present? ? edit_with_step_exercises_path(step: 'media') : edit_exercise_path), notice: "Exercise was successfully updated." }
         format.html { redirect_to @exercise, notice: "Exercise was successfully updated." }
         format.json { render :show, status: :ok, location: @exercise }
       else
