@@ -40,6 +40,8 @@ class ExercisesController < ApplicationController
       case params[:step]
       when "media"
         render "exercises/form_for_media"
+      when "versions"
+        render "exercises/form_for_versions"
       end
     end
   end
@@ -65,7 +67,16 @@ class ExercisesController < ApplicationController
   def update
     respond_to do |format|
       if @exercise.update(exercise_params)
-        format.turbo_stream { redirect_to (params[:exercise]['medium_ids'].present? ? edit_with_step_exercises_path(step: 'media') : edit_exercise_path), notice: "Exercise was successfully updated." }
+        step_layout = ""
+        if params[:exercise]['medium_ids'].present?
+          step_layout = edit_with_step_exercises_path(step: 'media')
+        elsif params[:exercise]['versions_attributes'].present?
+          step_layout = edit_with_step_exercises_path(step: 'versions')
+        else
+          step_layout = edit_exercise_path
+        end
+
+        format.turbo_stream { redirect_to step_layout, notice: "Exercise was successfully updated." }
         format.html { redirect_to @exercise, notice: "Exercise was successfully updated." }
         format.json { render :show, status: :ok, location: @exercise }
       else
@@ -170,6 +181,6 @@ class ExercisesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exercise_params
-      params.fetch(:exercise, {}).permit(:body, :video_link, :title, medium_ids: [])
+      params.fetch(:exercise, {}).permit(:body, :video_link, :title, medium_ids: [], versions_attributes: [:id, :published, :title, :description, :video_link])
     end
 end

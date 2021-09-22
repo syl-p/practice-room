@@ -1,0 +1,43 @@
+<%= turbo_frame_tag "#{@exercise.id}_edit_form" do %>
+
+    <% if !notice.nil? %>
+        <div id="notice toast toast-success">
+            <button class="btn btn-clear float-right"></button>
+            <%= notice %>
+        </div>
+    <% end %>
+
+    <%= render "shared/dashboard/exercise_edit_tab", active: 'versions' %>
+    
+    <%= form_with(model: @exercise, local: true) do |f| %>
+
+        <ul>
+            <%= f.fields_for :versions do |version| %>
+                <li>
+                    <div class="form-group">
+                        <%= version.label :title, class: "form-label" %>
+                        <%= version.text_field :title, readonly: true, class: "form-input" %>
+                    </div>
+                    <div class="form-group">
+                        <%= version.label :description, class: "form-label" %>
+                        <%= version.text_area :description, readonly: true, class: "form-input" %>
+                    </div>
+                    <div class="form-group">
+                        <%= version.label :video_link, class: "form-label" %>
+                        <%= version.text_field :video_link, readonly: true, class: "form-input" %>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-switch">
+                            <%= version.check_box :published %>
+                            <i class="form-icon"></i> published
+                        </label>
+                    </div>
+                </li>
+            <% end %>
+        <ul>
+
+        <div class="actions mt-2 form-group">
+            <%= f.submit "Mettre à jour les versions", class: "form-input"  %>
+        </div>
+    <% end %>
+<% end %>

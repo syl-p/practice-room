@@ -25,7 +25,7 @@ class VersionsController < ApplicationController
   # POST /versions or /versions.json
   def create
     @version = Version.new(version_params)
-
+    @version.user_id = current_user.id
     respond_to do |format|
       if @version.save
         format.html { redirect_to @version, notice: "Version was successfully created." }
@@ -71,6 +71,6 @@ class VersionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def version_params
-      params.require(:version).permit(:exercise_id, :title, :description, :video_link, :user_id)
+      params.require(:version).permit(:exercise_id, :title, :description, :video_link, :published)
     end
 end

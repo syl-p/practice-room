@@ -6,16 +6,20 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    can :read, Exercise
+    can [:read, :get_versions_list], Exercise
     can :read, Comment
     can :read, User
     can :read, Version
 
+    # Abilities for logged users
     if user.id
       can :manage, Exercise, {user_id: user.id}
       can :manage, Comment, {user_id: user.id}
       can :manage, User, {id: user.id}
+
       can :manage, Version, {user_id: user.id}
+      cannot :update, Version, :published, {user_id: user.id}
+      can :update, Version, :published, {exercise: {user_id: user.id}}
     end
 
     # Define abilities for the passed in user here. For example:

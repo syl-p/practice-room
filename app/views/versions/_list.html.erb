@@ -41,7 +41,7 @@
     </div>
     <div class="panel-footer text-center">
         <!-- buttons or inputs -->
-        <%= link_to "Proposer votre version", new_version_path(exercise_id: @exercise), class: 'btn' %>
+        <%= link_to "Proposer votre version", new_version_path(exercise_id: @exercise), class: 'btn' if current_user.present? %>
     </div>
 </div>
 <% end %>

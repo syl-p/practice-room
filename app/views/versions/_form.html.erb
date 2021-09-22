@@ -35,14 +35,14 @@
     <%= form.text_field :video_link, class: "form-input"  %>
   </div>
 
-  <div class="field">
-    <%
-=begin%>
- <%= form.label :user_id %> 
-<%
-=end%>
-    <%= form.hidden_field :user_id %>
-  </div>
+  <% if can? :update, @version, :published %>
+    <div class="field form-group">
+        <label class="form-label">
+          <%= form.check_box :published %><i class="form-icon"></i>
+          <%= form.label :published %>
+        </label>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= form.submit 'Envoyer' , class: 'btn btn-primary' %>
