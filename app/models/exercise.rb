@@ -14,13 +14,4 @@ class Exercise < ApplicationRecord
         self.all
     end
   end
-
-  	
-  def versions_attributes=(version_attributes)
-    version_attributes.values.each do |version_attribute| 
-      version = Version.find(version_attribute["id"])
-      version.published = version_attribute['published']
-      version.save
-    end	  
-  end
 end

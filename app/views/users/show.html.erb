@@ -1,2 +1,22 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<section class="container">
+    <header class="hero mb-0">
+        <div class="hero-body">
+            <figure class="avatar avatar-xl" data-initial="YZ" style="background-color: #5755d9;">
+
+            </figure>
+            <div>
+                <h1 class="my-0"><%= @user.username %></h1>
+                <p class="pt-0">Membre depuis <%= @user.created_at %></p>
+            </div>
+        </div>
+    </header>
+    <section class="columns">
+        <article class="column">
+            <h2>Derniers exercices publiés</h2>
+        </article>
+        <aside class="column col-5">
+            <h2>Ses dernières discussions</h2>
+        </aside>
+    </section>
+</section>
+

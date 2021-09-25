@@ -139,8 +139,7 @@ class ExercisesController < ApplicationController
     sessions_of_today.save
 
     respond_to do |format|
-      format.html { render partial: 'sessions_of_the_days/list', 
-        locals: {session: sessions_of_today.sessions.last, index: sessions_of_today.sessions.count - 1, sessions_of_the_day: sessions_of_today} }
+      format.html { render partial: 'sessions_of_the_days/list' }
       format.json { render json: new_session, status: 200 }
     end
   end

@@ -25,6 +25,11 @@ export const practice = controller => {
             })
 
         },
+
+        /**
+         * GET /exercises/:id/practice/add
+         * @param exerciseId int
+        **/
         practice(exerciseId) {
           return new Promise((resolve, reject) => {
             fetch(`${exerciseId}/practice/add`, {
