@@ -15,7 +15,7 @@ class ExercisesController < ApplicationController
 
   def get_versions_list
     render partial: "versions/list", locals: {
-      versions: @exercise.versions, 
+      versions: @exercise.versions_filtered(current_user), 
       exercise: @exercise
     }
   end

@@ -12,10 +12,12 @@
     </header>
     <section class="columns">
         <article class="column">
-            <h2>Derniers exercices publiés</h2>
+            <% @user.exercises.each do |exercise| %>
+
+            <% end %>
         </article>
         <aside class="column col-5">
-            <h2>Ses dernières discussions</h2>
+            <h2>Ses exercises favoris</h2>
         </aside>
     </section>
 </section>

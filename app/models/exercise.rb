@@ -14,4 +14,16 @@ class Exercise < ApplicationRecord
         self.all
     end
   end
+  
+  def versions_filtered(user_id = nil) 
+    if user_id
+      if user === user_id
+        versions
+      else
+        versions.where("published = true OR user_id = ?", user_id).order("created_at ASC")
+      end
+    else
+      versions.where({published: true}).order("created_at ASC")
+    end
+  end
 end

@@ -56,7 +56,7 @@ class VersionsController < ApplicationController
     @exercise = @version.exercise
     respond_to do |format|
       format.turbo_stream {
-        render turbo_stream: turbo_stream.replace("exercise_versions", partial: "versions/list", locals: {versions: @exercise.versions, exercise: @exercise}) 
+        render turbo_stream: turbo_stream.replace("exercise_versions", partial: "versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise}) 
       }
       format.html { redirect_to versions_url, notice: "Version was successfully destroyed." }
       format.json { head :no_content }
