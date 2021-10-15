@@ -11,7 +11,7 @@ class Exercise < ApplicationRecord
     if query_params[:text]
       self.where("title ILIKE :text OR body ILIKE :text", text: "%#{query_params[:text]}%")
     else
-        self.all
+      self.all
     end
   end
   

@@ -1,23 +1,63 @@
-<section class="container">
-    <header class="hero mb-0">
-        <div class="hero-body">
+<section>
+    <header class="hero mb-2 bg-secondary container">
+        <div class="hero-body columns">
             <figure class="avatar avatar-xl" data-initial="YZ" style="background-color: #5755d9;">
 
             </figure>
-            <div>
+            <div class="pl-2">
                 <h1 class="my-0"><%= @user.username %></h1>
                 <p class="pt-0">Membre depuis <%= @user.created_at %></p>
             </div>
         </div>
     </header>
-    <section class="columns">
+    <section class="container columns py-2">
         <article class="column">
-            <% @user.exercises.each do |exercise| %>
-
-            <% end %>
+            <div class="card">
+                <div class="card-header">
+                    <h2>Exercices publiés: </h2>
+                </div>
+                <div class="card-body">
+                    <% if @user.exercises.present? %>
+                        <%= render partial: 'exercises/list_compact', 
+                            locals: {exercises: @user.exercises} %>
+                    <% else %>
+                        <p>Aucun exercice publié par cet utilisateur pour le moment.</p>
+                    <% end %>
+                </div>
+            </div>
         </article>
-        <aside class="column col-5">
-            <h2>Ses exercises favoris</h2>
+        <aside class="column col-4">
+            <div class="card mb-2">
+                <div class="card-header">
+                    <div class="card-title h5">Contact & Information</div>
+                </div>
+                <div class="card-body">
+                    ...
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title h5">Derniers commentaires et réponses</div>
+                </div>
+                <div class="card-body">
+                    <% if @user.comments.present? %>
+                        <ul>
+                            <% @user.comments.group_by(&:commentable_id).each do |commentable_id, commentable| %>
+                                <li>
+                                    <%=  link_to commentable.first.commentable.title, commentable.first.commentable, title: 'Voir l\'exercice' %>
+                                    <ul>
+                                        <% commentable.each do |comment| %>
+                                            <li><%= comment.body %></li>
+                                        <% end %>
+                                    </ul>
+                                </li>
+                            <% end %>
+                        </ul>
+                    <% else %>
+                        <p>Aucun commentaire...</p>
+                    <% end %>
+                </div>
+            </div>
         </aside>
     </section>
 </section>

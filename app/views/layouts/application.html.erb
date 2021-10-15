@@ -15,12 +15,16 @@
       <%= render "shared/navbar" %>
       <%= render "shared/practice_sidebar" if current_user %>
 
-      <% if notice.present? %>
+      <%
+=begin%>
+ <% if notice.present? %>
         <p class="notice"><%= notice %></p>
       <% end %>
       <% if alert.present? %>
         <p class="alert"><%= alert %></p>
-      <% end %>
+      <% end %> 
+<%
+=end%>
       
       <%= yield %>
     </main>

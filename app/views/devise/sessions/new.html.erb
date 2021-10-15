@@ -3,7 +3,16 @@
     <h2 class="text-center">Connecte toi</h2>
   </header>
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {turbo: false}) do |f| %>
+    
+    <% if flash[:notice].present? %>
+      <p><%= flash[:notice] %></p>
+    <% end %>
+
+    <% if flash[:alert].present? %>
+      <p><%= flash[:alert] %></p>
+    <% end %>
+
     <div class="field form-group">
       <%= f.label :email, class: "form-label" %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-input" %>

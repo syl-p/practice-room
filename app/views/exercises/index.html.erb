@@ -1,6 +1,6 @@
 <section class="home">
     <header>
-        <div class="hero hero-sm bg-dark">
+        <div class="hero hero-sm bg-secondary">
             <div class="hero-body text-center">
                 <h1 class="my-2">Practice room</h1>
                 <p>La pratique de la musique 2.0</p>
@@ -24,7 +24,7 @@
         </form>
         <!-- Exercise list -->
         <div class="pt-2" data-hello-target="exercises">
-            <%= render partial: "exercises/list" %>
+            <%= render partial: "exercises/list", locals: {exercises: @exercises} %>
         </div>
         <!-- Exercise list -->
     <section>
