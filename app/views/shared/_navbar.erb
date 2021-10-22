@@ -1,11 +1,12 @@
 <header class="navbar container">
     <section class="navbar-section">
-        <%= link_to "Accueil", :root, class: "btn btn-link" %>
+        <a href="<%= root_path %>">
+            Prm.
+        </a>
     </section>
     <section class="navbar-center">
-        <a href="<%= root_path %>">
-            <img src="https://picturepan2.github.io/spectre/img/spectre-logo.svg" alt="Spectre.css">
-        </a>
+        <%= link_to "Accueil", :root, class: "btn btn-link" %>
+        <a href="<%= root_path %>" class="btn btn-link">Qui sommes nous ?</a>
     </section>
     <section class="navbar-section">
       <% if user_signed_in? %>

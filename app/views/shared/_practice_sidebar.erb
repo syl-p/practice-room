@@ -9,8 +9,12 @@
                     <img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar">
                 </a>
             </figure>
-            <h3 class="panel-title  h5 mt-2">Votre pratique du jour</h3>
-            <p class="panel-subtitle">THE HULK</p>
+            <h3 class="panel-title  h5 mt-2">
+                <a href="<%= user_url(current_user) %>">
+                    <%= current_user.username %>
+                </a>
+            </h3>
+            <p class="panel-subtitle">VOTRE PRATIQUE DU JOUR</p>
             <hr>
         </header>
         <nav class="panel-nav">

@@ -9,7 +9,7 @@ class ExercisesController < ApplicationController
   def index
     @exercises = Exercise.filtered(params)
     if params[:export].present?
-      render partial: "shared/exercise_list"
+      render partial: "exercises/list", locals: {exercises: @exercises}
     end
   end
 
