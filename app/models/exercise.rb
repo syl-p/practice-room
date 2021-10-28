@@ -1,8 +1,12 @@
 class Exercise < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
-  has_many :media_exercises, dependent: :destroy
   has_many :versions, dependent: :destroy
+  
+  # todo: convert into has_and_belongs_to_many
+  has_many :media_exercises, dependent: :destroy
   has_many :media, through: :media_exercises
+
+  has_and_belongs_to_many :categories
   belongs_to :user
 
   accepts_nested_attributes_for :versions, update_only: true

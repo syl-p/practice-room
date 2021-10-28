@@ -35,6 +35,11 @@
     <%= form.text_field :video_link, class: "form-input"  %>
   </div>
 
+  <div class="field form-group">
+      <%= form.label :categories, class: "form-label"  %>
+      <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => true, selected_value: nil}, class: "form-input", :multiple => true %>
+  </div> 
+
   <div class="actions mt-2 form-group" data-markdown-target="result">
     <%= form.submit "Mettre à jour le contenu", class: "form-input"  %>
   </div>

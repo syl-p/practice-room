@@ -1,24 +1,30 @@
+<%= link_to 'New Exercise', new_exercise_path if !current_user.nil? %>
 <ul class="exercise-list columns">
   <% exercises.each do |exercise| %>
-    <li class="exercise-list__item column">
+    <li class="exercise-list__item column col-3">
       <div class="card">
-          <div class="card-header">
-            <h2><%= link_to exercise.title, exercise %></h2>
+          <div class="card-header">            
+            <h2 class="card-title h5 mb-0"><%= link_to exercise.title, exercise %></h2>
           </div>
           <div class="card-image">
-            <img src="https://via.placeholder.com/728x90.png"  class="img-responsive">
+            <div class="exercise-list__item__categories">
+              <% exercise.categories.each do |category| %>
+                <a href="<%= category_path category %>" title="<%= category.description %>" class="chip"><%= category.name %></a>
+              <% end %>
+            </div>
+            <img src="https://via.placeholder.com/800x440.png"  class="img-responsive">
           </div>
           <div class="card-body">
-            <p>lorem ipsum dolor</p>
+            <p class="card-subtitle m-0">
+              lorem ipsum dolor
+            </p>
           </div>
           <div class="card-footer">
-            
             <% if can? :manage, exercise %>
-              <p><%= link_to 'Edit', edit_exercise_path(exercise) %> | <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+              <%= link_to 'Edit', edit_exercise_path(exercise) %> | <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' } %>
             <% end %>
           </div>
       </div>
     </li>
   <% end %>
 </ul>    
-<%= link_to 'New Exercise', new_exercise_path if !current_user.nil? %>

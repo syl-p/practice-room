@@ -180,6 +180,8 @@ class ExercisesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exercise_params
-      params.fetch(:exercise, {}).permit(:body, :video_link, :title, medium_ids: [], versions_attributes: [:id, :published, :title, :description, :video_link])
+      params.fetch(:exercise, {}).permit(
+          :body, :video_link, :title, medium_ids: [], category_ids: [], 
+          versions_attributes: [:id, :published, :title, :description, :video_link])
     end
 end

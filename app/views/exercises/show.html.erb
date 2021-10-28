@@ -4,7 +4,9 @@
     <header class="hero">
         <div class="hero-body ">
 
-            <ul class="breadcrumb">
+            <p id="notice"><%= notice %></p>
+            
+            <ul class="breadcrumb ml-2">
                 <li class="breadcrumb-item">
                     <%= link_to 'Accueil', root_path %>
                 </li>
@@ -16,9 +18,12 @@
                 </li>
             </ul>
 
-            <p id="notice"><%= notice %></p>
-            
-            <h1 class="my-2">
+            <p class="mb-0">
+                <% @exercise.categories.each do |category| %>
+                    <a href="<%= category_path category %>" title="<%= category.description %>" class="chip"><%= category.name %></a>
+                <% end %>
+            </p>
+            <h1 class="mb-2">
                 <%= @exercise.title %>
                 <% if can? :manage, @exercise %>
                     <small><%= link_to 'Edit', edit_exercise_path(@exercise) %> | <%= link_to 'Destroy', @exercise, method: :delete, data: { confirm: 'Are you sure?' } %></small>
@@ -60,20 +65,19 @@
     </header>
     <article class="container">
         <header class="exercise-show__intro columns">
-
-                <% if @exercise.video_link %>
-                <div class="column">
-                    <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
-                </div>
+            <% if @exercise.video_link %>
+            <div class="column">
+                <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
+            </div>
+            <% end %>
+            
+            <!-- DYNAMIC ZONE -->
+            <aside class="exercise-show__versions column col-4 hide-lg">
+                <%= turbo_frame_tag "exercise_versions" do %>
+                    <%= render partial: "versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
                 <% end %>
-                
-                <!-- DYNAMIC ZONE -->
-                <aside class="exercise-show__versions column col-4 hide-lg">
-                    <%= turbo_frame_tag "exercise_versions" do %>
-                        <%= render partial: "versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
-                    <% end %>
-                </aside>
-                <!-- DYNAMIC ZONE -->
+            </aside>
+            <!-- DYNAMIC ZONE -->
         </header>
         <section class="exercise-show__content columns">
             <section class="column col-8">
