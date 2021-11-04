@@ -14,7 +14,7 @@ class ExercisesController < ApplicationController
   end
 
   def get_versions_list
-    render partial: "versions/list", locals: {
+    render partial: "exercises/versions/list", locals: {
       versions: @exercise.versions_filtered(current_user), 
       exercise: @exercise
     }
@@ -27,11 +27,19 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1 or /exercises/1.json
   def show
+    if params[:view].present?
+      render "exercises/versions/show"
+    end
   end
 
   # GET /exercises/new
   def new
-    @exercise = Exercise.new
+    @exercise = Exercise.new 
+
+    if params[:exercise_id].present? # version ?
+      @exercise.exercise_id = params[:exercise_id]
+      render "exercises/versions/new"
+    end
   end
 
   # GET /exercises/1/edit
@@ -43,6 +51,10 @@ class ExercisesController < ApplicationController
       when "versions"
         render "exercises/form_for_versions"
       end
+    else
+      if @exercise.original.present? # it's a version
+        render "exercises/versions/edit"
+      end
     end
   end
 
@@ -53,7 +65,7 @@ class ExercisesController < ApplicationController
 
     respond_to do |format|
       if @exercise.save
-        format.turbo_stream { redirect_to @exercise, notice: "Exercise was successfully created." }
+        format.turbo_stream { redirect_to exercise_path(@exercise, view: "version"), notice: "Exercise was successfully created." }
         format.html { redirect_to @exercise, notice: "Exercise was successfully created." }
         format.json { render :show, status: :created, location: @exercise }
       else
@@ -181,7 +193,6 @@ class ExercisesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def exercise_params
       params.fetch(:exercise, {}).permit(
-          :body, :video_link, :title, medium_ids: [], category_ids: [], 
-          versions_attributes: [:id, :published, :title, :description, :video_link])
+          :body, :video_link, :title, :published, :exercise_id, :description, medium_ids: [], category_ids: [])
     end
 end

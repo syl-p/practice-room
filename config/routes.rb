@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :categories
   get 'users/index'
   get 'users/show'
-  resources :versions
+  # resources :versions
   devise_for :users
   resources :media
   resources :exercises do 
@@ -11,8 +11,8 @@ Rails.application.routes.draw do
       get "me"
       get ":id/edit/:step", to: "exercises#edit", as: "edit_with_step"
       get "new/:step", to: "exercises#new", as: "new_with_step"
+      
       get ":id/practice/add", to: "exercises#add_to_practice", as: "add_to_practice"
-
       put ":id/favorites/add", to: "exercises#add_to_favorites"
       put ":id/favorites/remove", to: "exercises#remove_from_favorites"
     end

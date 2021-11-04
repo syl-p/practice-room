@@ -74,7 +74,7 @@
             <!-- DYNAMIC ZONE -->
             <aside class="exercise-show__versions column col-4 hide-lg">
                 <%= turbo_frame_tag "exercise_versions" do %>
-                    <%= render partial: "versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
+                    <%= render partial: "exercises/versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
                 <% end %>
             </aside>
             <!-- DYNAMIC ZONE -->

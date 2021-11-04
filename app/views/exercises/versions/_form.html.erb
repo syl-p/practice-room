@@ -11,14 +11,10 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%
-=begin%>
- <%= form.label :exercise_id %> 
-<%
-=end%>
-    <%= form.hidden_field :exercise_id %>
-  </div>
+
+  <p id="notice"><%= notice %></p>
+  
+  <%= form.hidden_field :exercise_id %>
 
   <div class="field form-group">
     <%= form.label :title, class: 'form-label' %>
