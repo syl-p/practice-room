@@ -1,5 +1,4 @@
-
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 import { Remarkable } from "remarkable"
 
 export default class extends Controller {
