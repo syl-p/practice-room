@@ -15,17 +15,15 @@ export default class extends ApplicationController {
     this.containerTarget.classList.toggle('close')
   }
 
-  removeFromFavorites($event) {
-    const exId = $event.currentTarget.parentElement.parentElement.dataset.exerciseId
-    this.favorite(exId, 'remove')
+  removeFromFavorites({params: {id}}) {
+    this.favorite(id, 'remove')
       .then((response) => {
-          const favorite = Array.from(this.favoritesTarget.children).find(c => c.dataset.exerciseId === exId)
+          const favorite = Array.from(this.favoritesTarget.children).find(c => c.dataset.exerciseId === id)
           if (favorite) {
             favorite.remove()
             // UPDATE BTN
             super.practicerNavController.btnTargets[1].dataset.favoriteAction = "add"
             super.practicerNavController.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> Ajouter à mes favoris`
-          
           }
       })
       .catch(err => {
