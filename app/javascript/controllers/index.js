@@ -20,6 +20,3 @@ application.register("practicer-nav", PracticerNavController)
 
 import PracticerSidebarController from "./practicer_sidebar_controller.js"
 application.register("practicer-sidebar", PracticerSidebarController)
-
-import TabsController from "./tabs_controller.js"
-application.register("tabs", TabsController)

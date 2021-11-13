@@ -15,38 +15,29 @@
                 </a>
             </h3>
             <p class="panel-subtitle">VOTRE PRATIQUE DU JOUR</p>
-            <hr>
         </header>
-        <nav class="panel-nav">
-            <ul class="tab tab-block">
-                <li class="tab-item">
-                    <a href="#" data-tabs-target="tabLink"
-                        data-tabs-index="0" 
-                        data-action="click->tabs#changeTab">Aujourd'hui</a>
-                </li>
-                <li class="tab-item">
-                    <a href="#" class="badge" data-badge="9"  data-tabs-target="tabLink"
-                         data-tabs-index="1" 
-                         data-action="click->tabs#changeTab">Challenges</a>
-                </li>
-                <li class="tab-item">
-                    <a href="#" data-tabs-target="tabLink"
-                        data-tabs-index="2" 
-                        data-action="click->tabs#changeTab">Vos favoris</a>
-                </li>
+
+        <tabs-section tab-list-class="tab tab-block" tab-link-class="tab-item">
+
+            <nav class="panel-nav" slot=nav></nav>
+
+            <ul class="tile-list" data-tab-title="Aujourd'hui" slot="tab"
+                data-tabs-target="tab" data-practicer-sidebar-target="exercises">
+              <%= render partial: "sessions_of_the_days/list" %>
             </ul>
-        </nav>
-        <div class="panel-body">
-            <ul class="tile-list tab-content active" data-tabs-target="tab" data-practicer-sidebar-target="exercises">
-                <%= render partial: "sessions_of_the_days/list" %>
+
+            <ul class="tile-list" data-tab-title="Challenges" slot="tab"
+                data-tabs-target="tab" data-practicer-sidebar-target="challenges">
+              <li><b>Partie non développée pour le moment...</b><br> Patience :) !</li>
             </ul>
-            <ul class="tile-list tab-content"  data-tabs-target="tab" data-practicer-sidebar-target="challenges">
-                <li><b>Partie non développée pour le moment...</b><br> Patience :) !</li>
+
+            <ul class="tile-list" data-tab-title="Vos favoris" slot="tab"
+                data-tabs-target="tab" data-practicer-sidebar-target="favorites">
+              <%= render partial: "shared/user_favorite", collection: current_user.favorites_populated, as: :exercise  %>
             </ul>
-            <ul class="tile-list tab-content"  data-tabs-target="tab" data-practicer-sidebar-target="favorites">
-                <%= render partial: "shared/user_favorite", collection: current_user.favorites_populated, as: :exercise  %>
-            </ul>
-        </div>
+
+        </tabs-section>
+
         <div class="panel-footer">
             
         </div>

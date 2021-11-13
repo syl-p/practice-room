@@ -29,3 +29,7 @@ $dark-color: #3e396b;
 @import "pages/exercise-show";
 @import "pages/exercise-edit";
 @import "pages/login";
+
+tabs-section::shadow .panel-nav{
+  background: blue;
+}
