@@ -1,5 +1,5 @@
 class SessionsOfTheDaysController < ApplicationController
-  before_action :set_sessions_of_the_day, only: %i[ show edit update destroy ]
+  before_action :set_sessions_of_the_day, only: %i[show edit update destroy]
 
   # GET /sessions_of_the_days or /sessions_of_the_days.json
   def index
@@ -54,6 +54,26 @@ class SessionsOfTheDaysController < ApplicationController
       format.html { redirect_to sessions_of_the_days_url, notice: "Sessions of the day was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def get_previous
+    res = nil
+    res = if params[:id] # Get previous from id
+      SessionsOfTheDay.where(["id < ?", params[:id]]).last
+    else # Get previou
+      SessionsOfTheDay.where(["created_at < ?", Date.today]).last
+          end
+    render partial: "sessions_of_the_days/list", locals: { sessions_of_the_day: res}
+  end
+
+  def get_next
+    res = nil
+    res = if params[:id] # Get previous from id
+      SessionsOfTheDay.where(["id > ?", params[:id]]).first
+    else # Get previou
+      SessionsOfTheDay.where(["created_at > ?", Date.today]).first
+    end
+    render partial: "sessions_of_the_days/list", locals: { sessions_of_the_day: res}
   end
 
   private

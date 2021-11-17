@@ -1,14 +1,26 @@
-<% if current_user.sessions_of_today.present? %>
-    <% current_user.sessions_of_today.sessions.each_with_index do |session, index| %>
-        <li>
-            <%= turbo_frame_tag "practice_session_#{current_user.sessions_of_today.id}_#{index}" do %>
-                <%= render partial: "sessions_of_the_days/item", 
-                    locals: {
-                        session: session, index: index, 
-                        sessions_of_the_day: current_user.sessions_of_today
-                    } 
-                %>
-            <% end %>
-        </li>
+<%= turbo_frame_tag "sessions_of_the_day" do %>
+  <h4 class="text-center mt-2 h6"><%= sessions_of_the_day.present? ? sessions_of_the_day.created_at : Date.now %></h4>
+  <p class="clearfix p-2">
+    <%
+      params = sessions_of_the_day.present? ? { id: sessions_of_the_day.id } : nil
+    %>
+    <%= link_to "précédent", previous_session_path(params), { class: 'float-left' } %>
+    <%= link_to "suivant", next_session_path(params), { class: 'float-right' } if sessions_of_the_day && sessions_of_the_day.created_at.to_date != Date.today  %>
+  </p>
+  <ul class="tile-list">
+    <% if sessions_of_the_day.present? %>
+        <% sessions_of_the_day.sessions.each_with_index do |session, index| %>
+            <li>
+                <%= turbo_frame_tag "practice_session_#{sessions_of_the_day.id}_#{index}" do %>
+                    <%= render partial: "sessions_of_the_days/item",
+                        locals: {
+                            session: session, index: index,
+                            sessions_of_the_day: sessions_of_the_day
+                        }
+                    %>
+                <% end %>
+            </li>
+        <% end %>
     <% end %>
+    </ul>
 <% end %>

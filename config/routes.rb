@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   get "exercises/:id/versions", to: "exercises#get_versions_list", as: "list_versions"
   delete "exercises/:id/practice/remove/:sessions_of_the_day_id/:session_index", to: "exercises#remove_from_practice", as: "remove_from_practice"
 
+  get "sessons_of_the_days/previous(/:id)", to: "sessions_of_the_days#get_previous", as: "previous_session"
+  get "sessons_of_the_days/next(/:id)", to: "sessions_of_the_days#get_next", as: "next_session"
+
   mount MediumUploader.download_endpoint => "/uploads"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

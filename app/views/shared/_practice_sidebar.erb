@@ -9,7 +9,7 @@
                     <img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar">
                 </a>
             </figure>
-            <h3 class="panel-title  h5 mt-2">
+            <h3 class="panel-title h5 mt-2">
                 <a href="<%= user_url(current_user) %>">
                     <%= current_user.username %>
                 </a>
@@ -21,10 +21,9 @@
 
             <nav class="panel-nav" slot=nav></nav>
 
-            <ul class="tile-list" data-tab-title="Aujourd'hui" slot="tab"
-                data-tabs-target="tab" data-practicer-sidebar-target="exercises">
-              <%= render partial: "sessions_of_the_days/list" %>
-            </ul>
+            <div data-tab-title="Votre journal" slot="tab" data-practicer-sidebar-target="exercises">
+                <%= render partial: "sessions_of_the_days/list", locals: {sessions_of_the_day: current_user.sessions_of_today} %>
+            </div>
 
             <ul class="tile-list" data-tab-title="Challenges" slot="tab"
                 data-tabs-target="tab" data-practicer-sidebar-target="challenges">
