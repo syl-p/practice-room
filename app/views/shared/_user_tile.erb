@@ -4,7 +4,7 @@
     </a>
     <div class="tile-content pl-3">
         <p class="tile-title mb-0">Publié par: 
-            <%= link_to user.username, user_path(user) %> le <%= published_at %></p>
+            <%= link_to user.username, user_path(user) %> le <%= l published_at, format: :long %></p>
         <p class="tile-subtitle mb-1">The Strategic Homeland Intervention, Enforcement, and Logistics Division...</p>
         <p>
             <button class="btn btn-primary btn-sm">Join</button>

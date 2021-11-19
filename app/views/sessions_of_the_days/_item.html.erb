@@ -1,5 +1,5 @@
 <div class="session">
-    <strong>Session débuté à <u><time class="session__time"><%= session['time'] %></time></u></strong><br>
+    <strong>Session débuté à <u><time class="session__time"><%= l session['time'].to_datetime, format: '%H:%M:%S' %></time></u></strong><br>
     <small>Liste des exercices: </small>
     <ul>
         <% session['exercises'].each do |exercise| %>

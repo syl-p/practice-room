@@ -21,7 +21,7 @@
 
             <nav class="panel-nav" slot=nav></nav>
 
-            <div data-tab-title="Votre journal" slot="tab" data-practicer-sidebar-target="exercises">
+            <div data-tab-title="Aujourd'hui" slot="tab" data-practicer-sidebar-target="exercises">
                 <%= render partial: "sessions_of_the_days/list", locals: {sessions_of_the_day: current_user.sessions_of_today} %>
             </div>
 

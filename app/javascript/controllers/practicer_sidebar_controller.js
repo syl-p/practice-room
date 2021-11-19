@@ -2,10 +2,18 @@ import ApplicationController from "./application_controller"
 import { practice } from "./mixins/practice"
 
 export default class extends ApplicationController {
-  static targets = [ "container", "exercises", "challenges", "favorites"]
+  static targets = [ "container", "exercises", "challenges", "favorites", "logNav"]
 
   connect() {
     practice(this)
+    console.log("initial: ", this.logValue)
+  }
+
+  logNavTargetConnected(element) {
+    const a = this.containerTarget.querySelector(".panel-nav ul li a")
+    if(a) {
+      a.innerHTML = element.dataset.date
+    }
   }
 
   toggle($event = null) {

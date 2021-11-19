@@ -1,6 +1,7 @@
 <%= turbo_frame_tag "sessions_of_the_day" do %>
-  <h4 class="text-center mt-2 h6"><%= sessions_of_the_day.present? ? sessions_of_the_day.created_at : Date.now %></h4>
-  <p class="clearfix p-2">
+  <p class="clearfix p-2"
+     data-practicer-sidebar-target="logNav"
+     data-date="<%= sessions_of_the_day.present? ? l(sessions_of_the_day.created_at, format: :short) : "Aujourd'hui" %>">
     <%
       params = sessions_of_the_day.present? ? { id: sessions_of_the_day.id } : nil
     %>
