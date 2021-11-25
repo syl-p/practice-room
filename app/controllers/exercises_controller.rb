@@ -3,7 +3,7 @@ class ExercisesController < ApplicationController
   authorize_resource
 
   # specific layout for manage actions
-  layout "layouts/dashboard", only: [:edit, :new, :me]
+  layout "layouts/dashboard", only: %i[edit new me]
 
   # GET /exercises or /exercises.json
   def index
@@ -65,7 +65,8 @@ class ExercisesController < ApplicationController
 
     respond_to do |format|
       if @exercise.save
-        format.turbo_stream { redirect_to exercise_path(@exercise, view: "version"), notice: "Exercise was successfully created." }
+        format.turbo_stream {
+ redirect_to exercise_path(@exercise, view: "version"), notice: "Exercise was successfully created." }
         format.html { redirect_to @exercise, notice: "Exercise was successfully created." }
         format.json { render :show, status: :created, location: @exercise }
       else
@@ -192,6 +193,9 @@ class ExercisesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def exercise_params
     params.fetch(:exercise, {}).permit(
-        :body, :video_link, :title, :published, :exercise_id, :description, medium_ids: [], category_ids: [], versions_attributes: [:published, :user_id, :id])
+      :body, :video_link, :title, :published, :exercise_id, :description, medium_ids: [], category_ids: [], versions_attributes: %i[
+        published user_id id
+      ]
+    )
   end
 end
