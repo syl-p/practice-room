@@ -3,11 +3,12 @@
         <h1> Mes exercices </h1>
         <%= link_to 'New Exercise', new_exercise_path %>
     </header>
-  <table>
+  <table class="table">
     <thead>
       <tr>
         <th>title</th>
-        <th>body</th>
+        <th>published</th>
+        <th>description</th>
         <th>action</th>
       </tr>
     </thead>
@@ -16,7 +17,8 @@
       <% @exercises.each do |exercise| %>
         <tr>
           <td><%= exercise.title %></td>
-          <td><%= exercise.body %></td>
+          <td><%= exercise.published %></td>
+          <td><%= exercise.description %></td>
           <td>
             <%= link_to 'Show', exercise %>
             <%= link_to 'Edit', edit_exercise_path(exercise) %>

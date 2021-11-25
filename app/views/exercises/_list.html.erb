@@ -3,8 +3,22 @@
   <% exercises.each do |exercise| %>
     <li class="exercise-list__item column col-3">
       <div class="card">
-          <div class="card-header">            
+          <div class="card-header">
             <h2 class="card-title h5 mb-0"><%= link_to exercise.title, exercise %></h2>
+          </div>
+          <div class="card-body pt-1">
+            <p class="card-subtitle m-0">
+              <%= exercise.description %>
+            </p>
+            <small class="tile mt-2">
+              <a href="<%= user_url(exercise.user) %>" class="tile-icon">
+                <figure class="avatar avatar-sm"><img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar"></figure>
+              </a>
+              <div class="tile-content pl-3">
+                <p class="tile-title mb-0">Publié par:
+                  <%= link_to exercise.user.username, user_path(exercise.user) %> le <%= l exercise.created_at, format: :short %></p>
+              </div>
+            </small>
           </div>
           <div class="card-image">
             <div class="exercise-list__item__categories">
@@ -13,11 +27,6 @@
               <% end %>
             </div>
             <img src="https://via.placeholder.com/800x440.png"  class="img-responsive">
-          </div>
-          <div class="card-body">
-            <p class="card-subtitle m-0">
-              lorem ipsum dolor
-            </p>
           </div>
           <div class="card-footer">
             <% if can? :manage, exercise %>

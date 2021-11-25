@@ -1,13 +1,13 @@
 class ExercisesController < ApplicationController
   before_action :set_exercise, only: %i[ show edit get_versions_list update destroy add_to_favorites ]
   authorize_resource
-  
+
   # specific layout for manage actions
   layout "layouts/dashboard", only: [:edit, :new, :me]
 
   # GET /exercises or /exercises.json
   def index
-    @exercises = Exercise.filtered(params)
+    @exercises = Exercise.filtered(params).where(original: nil)
     if params[:export].present?
       render partial: "exercises/list", locals: {exercises: @exercises}
     end
@@ -15,13 +15,13 @@ class ExercisesController < ApplicationController
 
   def get_versions_list
     render partial: "exercises/versions/list", locals: {
-      versions: @exercise.versions_filtered(current_user), 
+      versions: @exercise.versions_filtered(current_user),
       exercise: @exercise
     }
   end
 
   def me
-    @exercises = current_user.exercises
+    @exercises = current_user.exercises.where(original: nil)
     render :me
   end
 
@@ -34,7 +34,7 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/new
   def new
-    @exercise = Exercise.new 
+    @exercise = Exercise.new
 
     if params[:exercise_id].present? # version ?
       @exercise.exercise_id = params[:exercise_id]
@@ -79,13 +79,12 @@ class ExercisesController < ApplicationController
   def update
     respond_to do |format|
       if @exercise.update(exercise_params)
-        step_layout = ""
-        if params[:exercise]['medium_ids'].present?
-          step_layout = edit_with_step_exercises_path(step: 'media')
+        step_layout = if params[:exercise]['medium_ids'].present?
+          edit_with_step_exercises_path(step: 'media')
         elsif params[:exercise]['versions_attributes'].present?
-          step_layout = edit_with_step_exercises_path(step: 'versions')
+          edit_with_step_exercises_path(step: 'versions')
         else
-          step_layout = edit_exercise_path
+          edit_exercise_path
         end
 
         format.turbo_stream { redirect_to step_layout, notice: "Exercise was successfully updated." }
@@ -109,7 +108,7 @@ class ExercisesController < ApplicationController
 
   def add_to_favorites
     if !current_user.favorites.include? params[:id]
-        current_user.update_attribute(:favorites, current_user.favorites << params[:id].to_i)
+      current_user.update_attribute(:favorites, current_user.favorites << params[:id].to_i)
         current_user.save
 
         # Send html for exercise favorite element
@@ -125,7 +124,7 @@ class ExercisesController < ApplicationController
   def remove_from_favorites
     if current_user.favorites.include? params[:id]
 
-        current_user.update_attribute(:favorites, current_user.favorites - [params[:id]])
+      current_user.update_attribute(:favorites, current_user.favorites - [params[:id]])
         current_user.save
 
         # Send html for exercise favorite element
@@ -144,7 +143,7 @@ class ExercisesController < ApplicationController
     end
 
     if sessions_of_today.sessions.count > 0  && ((Time.now - sessions_of_today.sessions.last["time"].to_time) <= 1.hour)
-        sessions_of_today.sessions.last["exercises"] << params[:id]
+      sessions_of_today.sessions.last["exercises"] << params[:id]
     else
       sessions_of_today.sessions << new_session
     end
@@ -160,39 +159,39 @@ class ExercisesController < ApplicationController
     sessions_of_the_day = SessionsOfTheDay.find(params[:sessions_of_the_day_id])
     sessions_of_the_day.sessions[params[:session_index].to_i]["exercises"].delete(params[:id]) if session
     sessions_of_the_day.save
-      
+
     if sessions_of_the_day.sessions[params[:session_index].to_i]["exercises"].count <= 0
       sessions_of_the_day.sessions.delete_at(params[:session_index].to_i)
       sessions_of_the_day.save
-      
+
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.remove("practice_session_#{params[:sessions_of_the_day_id]}_#{params[:session_index]}") 
+          render turbo_stream: turbo_stream.remove("practice_session_#{params[:sessions_of_the_day_id]}_#{params[:session_index]}")
         end
       end
-    else 
-          
+    else
+
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.remove("practice_exercise_#{params[:id]}_#{params[:sessions_of_the_day_id]}_#{params[:session_index]}") 
+          render turbo_stream: turbo_stream.remove("practice_exercise_#{params[:id]}_#{params[:sessions_of_the_day_id]}_#{params[:session_index]}")
         end
       end
     end
-    
+
 
   end
 
 
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_exercise
-      @exercise = Exercise.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_exercise
+    @exercise = Exercise.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def exercise_params
-      params.fetch(:exercise, {}).permit(
-          :body, :video_link, :title, :published, :exercise_id, :description, medium_ids: [], category_ids: [])
-    end
+  # Only allow a list of trusted parameters through.
+  def exercise_params
+    params.fetch(:exercise, {}).permit(
+        :body, :video_link, :title, :published, :exercise_id, :description, medium_ids: [], category_ids: [], versions_attributes: [:published, :user_id, :id])
+  end
 end

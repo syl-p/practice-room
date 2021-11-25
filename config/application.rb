@@ -18,5 +18,10 @@ module PracticeRoom
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Devise layouts
+    config.to_prepare do
+      Devise::RegistrationsController.layout "dashboard"
+    end
   end
 end

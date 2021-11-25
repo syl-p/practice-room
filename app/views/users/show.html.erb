@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <% if @user.exercises.present? %>
                         <%= render partial: 'exercises/list_compact', 
-                            locals: {exercises: @user.exercises} %>
+                            locals: {exercises: @user.exercises.where(original: nil)} %>
                     <% else %>
                         <p>Aucun exercice publié par cet utilisateur pour le moment.</p>
                     <% end %>

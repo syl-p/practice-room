@@ -6,7 +6,6 @@ export default class extends ApplicationController {
 
   connect() {
     practice(this)
-    console.log("initial: ", this.logValue)
   }
 
   logNavTargetConnected(element) {

@@ -9,8 +9,6 @@ class User < ApplicationRecord
   has_many :exercises, dependent: :destroy
   has_many :sessions_of_the_days, dependent: :destroy
 
-  # toto goal
-
   # overwrite favorites
   def favorites_populated
     res = [] 
@@ -19,7 +17,6 @@ class User < ApplicationRecord
     end
     res
   end
-
 
   def sessions_of_today
     return self.sessions_of_the_days.where(created_at: Time.current.all_day).first

@@ -1,7 +1,7 @@
 class Exercise < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :versions, dependent: :destroy
-  
+
   # todo: convert into has_and_belongs_to_many
   has_many :media_exercises, dependent: :destroy
   has_many :media, through: :media_exercises
@@ -21,8 +21,8 @@ class Exercise < ApplicationRecord
       self.all
     end
   end
-  
-  def versions_filtered(user_id = nil) 
+
+  def versions_filtered(user_id = nil)
     if user_id
       if user === user_id
         versions

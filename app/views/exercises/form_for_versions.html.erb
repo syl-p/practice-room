@@ -14,6 +14,8 @@
         <ul>
             <%= f.fields_for :versions do |version| %>
                 <li>
+                    <%= version.hidden_field :user_id %>
+                    <%= version.hidden_field :id %>
                     <div class="form-group">
                         <%= version.label :title, class: "form-label" %>
                         <%= version.text_field :title, readonly: true, class: "form-input" %>
@@ -34,7 +36,7 @@
                     </div>
                 </li>
             <% end %>
-        <ul>
+        </ul>
 
         <div class="actions mt-2 form-group">
             <%= f.submit "Mettre à jour les versions", class: "form-input"  %>
