@@ -7,7 +7,9 @@
         <small class="tile-subtitle">short description to replace</small>
     </div>
     <div class="tile-action">
-        <button class="btn btn-link" data-action="click->practicer-sidebar#removeFromFavorites">
+        <button class="btn btn-link"
+                data-practicer-sidebar-id-param="<%= exercise.id %>"
+                data-action="click->practicer-sidebar#removeFromFavorites">
             <i class="icon icon-cross"></i>
         </button>
     </div>

@@ -29,7 +29,7 @@ export default class extends ApplicationController {
           if (favorite) {
             favorite.remove()
             // UPDATE BTN
-            super.practicerNavController.btnTargets[1].dataset.favoriteAction = "add"
+            super.practicerNavController.btnTargets[1].dataset.PracticerNavActionParam = "add"
             super.practicerNavController.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> Ajouter à mes favoris`
           }
       })

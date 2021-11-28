@@ -45,15 +45,17 @@
                         </button>
                         <% if current_user.favorites.include? @exercise.id.to_s %>
                             <button class="btn" 
-                                data-practicer-nav-target="btn" 
-                                data-favorite-action="remove"  
-                                data-action="click->practicer-nav#favorites">
+                            data-practicer-nav-target="btn"
+                            data-practicer-nav-action-param="remove"
+                            data-practicer-nav-id-param="<%= @exercise.id %>"
+                            data-action="click->practicer-nav#favorites">
                                 <i class="icon icon-bookmark"></i> Retirer de mes favoris
                             </button>
                         <% else %>
                             <button class="btn" 
                             data-practicer-nav-target="btn"
-                            data-favorite-action="add"  
+                            data-practicer-nav-action-param="add"
+                            data-practicer-nav-id-param="<%= @exercise.id %>"
                             data-action="click->practicer-nav#favorites">
                                 <i class="icon icon-bookmark"></i> Ajouter à mes favoris
                             </button>
