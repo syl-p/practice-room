@@ -21,7 +21,7 @@ module PracticeRoom
 
     # Devise layouts
     config.to_prepare do
-      Devise::RegistrationsController.layout "dashboard"
+      Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "dashboard" : "application" }
     end
   end
 end

@@ -22,7 +22,11 @@
         </form>
         <!-- Exercise list -->
         <div class="pt-2" data-hello-target="exercises">
-            <%= render partial: "exercises/list", locals: {exercises: @exercises} %>
+            <% if @exercises.present? %>
+                <%= render partial: "exercises/list", locals: {exercises: @exercises} %>
+            <% else %>
+                <p>Aucun exercice n'a été renseigné. </p>
+            <% end %>
         </div>
         <!-- Exercise list -->
     </section>

@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2021_11_07_203616) do
     t.bigint "user_id"
     t.text "video_link"
     t.bigint "exercise_id"
-    t.boolean "published", default: false
+    t.boolean "published", default: true
     t.text "description"
     t.index ["exercise_id"], name: "index_exercises_on_exercise_id"
     t.index ["user_id"], name: "index_exercises_on_user_id"
@@ -121,25 +121,10 @@ ActiveRecord::Schema.define(version: 2021_11_07_203616) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "versions", force: :cascade do |t|
-    t.bigint "exercise_id", null: false
-    t.string "title"
-    t.text "description"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.boolean "published", default: false
-    t.string "video_link"
-    t.index ["exercise_id"], name: "index_versions_on_exercise_id"
-    t.index ["user_id"], name: "index_versions_on_user_id"
-  end
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "exercises", "exercises"
   add_foreign_key "exercises", "users"
   add_foreign_key "sessions_of_the_days", "users"
-  add_foreign_key "versions", "exercises"
-  add_foreign_key "versions", "users"
 end
