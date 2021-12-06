@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+default_categories = [
+    {name: "Jazz skills", description: "", slug: "jazz-skills"},
+    {name: "Rythme et groove", description: "", slug: "rythme-et-groove"},
+    {name: "Freatboard", description: "", slug: "freatboard"}
+]
+
+default_categories.each do |category|
+    Category.create(name: category[:name], 
+                    description: category[:description],
+                    slug: category[:slug])
+end
