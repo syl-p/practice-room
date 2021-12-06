@@ -1,11 +1,12 @@
-    <li class="tile tile-centered">
+    <li class="tile tile-centered" 
+        data-practicer-sidebar-target="exercise" data-duration="<%= exercise["duration"] %>">
         <div class="tile-icon">
             <i class="icon icon-file centered"></i>
         </div>
         <div class="tile-content">
-            <div class="tile-title"><%= exercise %></div>
+            <div class="tile-title"><%= exercise["id"] %></div>
             <small class="tile-subtitle text-gray">
-                10 minutes
+                <%= Time.at(exercise["duration"]).utc.strftime("%H:%M:%S") %>
             </small>
         </div>
         <div class="tile-action dropdown dropdown-right" tabindex="0">

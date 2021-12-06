@@ -10,7 +10,7 @@
                 </a>
             </div>
             <div class="tile-content">
-                <%= link_to "close", list_versions_path(@exercise.original), class: "float-right", data: {
+                <%= link_to "close", list_versions_path(id: @exercise.original), class: "float-right", data: {
                     video_id: @exercise.original.video_link,
                     action: 'click->application#showVersion'
                   }  

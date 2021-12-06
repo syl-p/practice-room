@@ -13,14 +13,14 @@ export default class extends ApplicationController {
     this.favorite(id, action)
       .then((response) => {
         const favoritesTarget = super.practicerSidebarController.favoritesTarget
-        switch ($event.target.dataset.favoriteAction) {
+        switch (action) {
           case "add":
             // add element to list
             favoritesTarget.innerHTML = favoritesTarget.innerHTML + response
 
             // UPDATE BTN
-            this.btnTargets[1].target.dataset.PracticerNavActionParam = "remove"
-            this.btnTargets[1].target.innerHTML = `<i class="icon icon-bookmark"></i> Retirer de mes favoris`
+            this.btnTargets[1].dataset.practicerNavActionParam = "remove"
+            this.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> Retirer de mes favoris`
             break;
           case "remove":
             const favorite = Array.from(favoritesTarget.children).find(c => parseInt(c.dataset.exerciseId) === this.exerciseIdValue)
@@ -29,7 +29,7 @@ export default class extends ApplicationController {
             }
 
             // UPDATE BTN
-            this.btnTargets[1].dataset.PracticerNavActionParam = "add"
+            this.btnTargets[1].dataset.practicerNavActionParam = "add"
             this.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> Ajouter à mes favoris`
             break;
           default:

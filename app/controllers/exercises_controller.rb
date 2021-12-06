@@ -137,14 +137,14 @@ class ExercisesController < ApplicationController
 
   def add_to_practice
     sessions_of_today = current_user.sessions_of_today
-    new_session = {time: Time.now, exercises:[params[:id]]}
+    new_session = {time: Time.now, exercises:[{id: params[:id], duration: 3600}]}
 
     if !sessions_of_today.present?
       sessions_of_today = SessionsOfTheDay.new(user_id: current_user.id)
     end
 
     if sessions_of_today.sessions.count > 0  && ((Time.now - sessions_of_today.sessions.last["time"].to_time) <= 1.hour)
-      sessions_of_today.sessions.last["exercises"] << params[:id]
+      sessions_of_today.sessions.last["exercises"] << {id: params[:id], duration: 3600}
     else
       sessions_of_today.sessions << new_session
     end
@@ -158,7 +158,7 @@ class ExercisesController < ApplicationController
 
   def remove_from_practice
     sessions_of_the_day = SessionsOfTheDay.find(params[:sessions_of_the_day_id])
-    sessions_of_the_day.sessions[params[:session_index].to_i]["exercises"].delete(params[:id]) if session
+    sessions_of_the_day.sessions[params[:session_index].to_i]["exercises"].delete_at(params[:index].to_i) if session
     sessions_of_the_day.save
 
     if sessions_of_the_day.sessions[params[:session_index].to_i]["exercises"].count <= 0
@@ -174,7 +174,7 @@ class ExercisesController < ApplicationController
 
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.remove("practice_exercise_#{params[:id]}_#{params[:sessions_of_the_day_id]}_#{params[:session_index]}")
+          render turbo_stream: turbo_stream.remove("practice_exercise_#{params[:index]}_#{params[:sessions_of_the_day_id]}_#{params[:session_index]}")
         end
       end
     end

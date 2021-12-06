@@ -9,13 +9,14 @@
     <%= link_to "suivant", next_session_path(params), { class: 'float-right' } if sessions_of_the_day && sessions_of_the_day.created_at.to_date != Date.today  %>
   </p>
   <ul class="tile-list">
-    <% if sessions_of_the_day.present? %>
+    <% if sessions_of_the_day.present? && sessions_of_the_day.sessions.present?%>
         <% sessions_of_the_day.sessions.each_with_index do |session, index| %>
             <li>
                 <%= turbo_frame_tag "practice_session_#{sessions_of_the_day.id}_#{index}" do %>
                     <%= render partial: "sessions_of_the_days/item",
                         locals: {
-                            session: session, index: index,
+                            session: session, 
+                            session_index: index,
                             sessions_of_the_day: sessions_of_the_day
                         }
                     %>
