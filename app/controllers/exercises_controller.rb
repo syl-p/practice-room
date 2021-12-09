@@ -136,15 +136,16 @@ class ExercisesController < ApplicationController
   end
 
   def add_to_practice
+    duration = params[:time].present? ? Time.parse(params[:time]).seconds_since_midnight : 3600
     sessions_of_today = current_user.sessions_of_today
-    new_session = {time: Time.now, exercises:[{id: params[:id], duration: 3600}]}
+    new_session = {time: Time.now, exercises:[{id: params[:id], duration: duration}]}
 
     if !sessions_of_today.present?
       sessions_of_today = SessionsOfTheDay.new(user_id: current_user.id)
     end
 
     if sessions_of_today.sessions.count > 0  && ((Time.now - sessions_of_today.sessions.last["time"].to_time) <= 1.hour)
-      sessions_of_today.sessions.last["exercises"] << {id: params[:id], duration: 3600}
+      sessions_of_today.sessions.last["exercises"] << {id: params[:id], duration: duration}
     else
       sessions_of_today.sessions << new_session
     end

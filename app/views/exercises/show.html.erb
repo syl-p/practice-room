@@ -37,6 +37,10 @@
                 <nav class="exercise-show__nav" 
                     data-controller="practicer-nav" 
                     data-practicer-nav-exercise-id-value="<%= @exercise.id %>">
+                    <div class="form-group">
+                        <label class="form-label">Temps à aloué:</label>
+                        <input type="time" class="form-input"  data-practicer-nav-target="selectedTime"/>
+                    </div>
                     <div class="btn-group btn-group-block">
                         <button class="btn" 
                             data-practicer-nav-target="btn"

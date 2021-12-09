@@ -27,12 +27,12 @@ export const practice = controller => {
         },
 
         /**
-         * GET /exercises/:id/practice/add
+         * GET /exercises/:id/practice/padd
          * @param exerciseId int
         **/
-        practice(exerciseId) {
+        practice(exerciseId, time = null) {
           return new Promise((resolve, reject) => {
-            fetch(`${exerciseId}/practice/add`, {
+            fetch(`${exerciseId}/practice/add/${time}`, {
               method: "GET",
               credentials: "same-origin",
               headers: {

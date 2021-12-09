@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       get ":id/edit/:step", to: "exercises#edit", as: "edit_with_step"
       get "new/:step", to: "exercises#new", as: "new_with_step"
 
-      get ":id/practice/add", to: "exercises#add_to_practice", as: "add_to_practice"
+      get ":id/practice/add(/:time)", to: "exercises#add_to_practice", as: "add_to_practice"
       put ":id/favorites/add", to: "exercises#add_to_favorites"
       put ":id/favorites/remove", to: "exercises#remove_from_favorites"
     end
