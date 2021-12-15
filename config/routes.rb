@@ -1,13 +1,20 @@
 Rails.application.routes.draw do
-  resources :categories
+  resources :categories do
+    collection do
+      get ":category", to: "exercises#search", as: "get"
+    end
+  end
+
   get 'users/index'
   get 'users/show'
+
   # resources :versions
   devise_for :users
   resources :media
   resources :exercises do
     resources :comments, module: :exercises
     collection do
+      post "search"
       get "me"
       get ":id/edit/:step", to: "exercises#edit", as: "edit_with_step"
       get "new/:step", to: "exercises#new", as: "new_with_step"

@@ -1,33 +1,46 @@
-<section class="home">
+
+<%= turbo_frame_tag "search" do %>
+  <section class="exercises-index">
     <header>
-        <div class="hero hero-sm bg-secondary">
-            <div class="hero-body text-center">
-                <h1 class="my-2">Practice room</h1>
-                <p>La pratique de la musique 2.0</p>
-            </div>
-        </div>
-    </header>
-    <section class="container" data-controller="hello">
-        <form class="card">
-            <div class="card-body">
-                <div class="form-group">
-                    <div class="columns">
-                        <div class="column">
-                            <label for="search" class="form-label">Recherchez un exercise</label>
-                            <input name="search" class="form-input" type="text" data-action="hello#fetch">
-                        </div>
+      <div class="hero hero-sm">
+        <div class="hero-body">
+          <div class="container" data-controller="hello">
+            <%= form_with(url: search_exercises_path, data: {hello_target: "form"}) do |form| %>
+              <div class="columns">
+                <div class="column col-6">
+                    <div class="has-icon-left">
+                        <%= form.text_field :text,
+                            data: { action: "input->hello#search" },
+                            class: "form-input input-lg",
+                            placeholder: "Rechercher..." %>
+                        <i class="form-icon icon icon-search"></i>
                     </div>
                 </div>
-            </div>
-        </form>
-        <!-- Exercise list -->
-        <div class="pt-2" data-hello-target="exercises">
-            <% if @exercises.present? %>
-                <%= render partial: "exercises/list", locals: {exercises: @exercises} %>
-            <% else %>
-                <p>Aucun exercice n'a été renseigné. </p>
+                <div class="column col-4 col-ml-auto">
+                  <div class="input-group">
+                      <span class="input-group-addon">Ordre</span>
+                        <%= form.select :order_by, [["Date d'ajout", "created_at"], ["Titre", "title"]], {selected: 'created_at'}, {
+                          data: { action: "change->hello#search" },
+                          class: "form-select select-lg"
+                        }
+                      %>
+                      <%= form.select :order, [["Descendant", "DESC"], ["Ascendant", "ASC"]], {selected: 'DESC'}, {
+                          data: { action: "change->hello#search" },
+                          class: "form-select select-lg"
+                        }
+                      %>
+                  </div>
+                </div>
+              </div>
             <% end %>
+          </div>
         </div>
+      </div>
+    </header>
+    <section class="exercises-index_content container">
+        <!-- Exercise list -->
+            <%= render partial: "exercises/list", locals: {exercises: @exercises, categories: @categories} %>
         <!-- Exercise list -->
     </section>
-</section>
+  </section>
+<% end %>

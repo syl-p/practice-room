@@ -15,10 +15,10 @@ class Exercise < ApplicationRecord
   has_many :versions, class_name: 'Exercise', dependent: :destroy
 
   def self.filtered(query_params)
-    if query_params[:text]
+    if query_params.present?
       self.where("title ILIKE :text OR body ILIKE :text", text: "%#{query_params[:text]}%")
     else
-      self.all
+      self.all.order("created_at DESC")
     end
   end
 

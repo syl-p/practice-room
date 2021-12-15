@@ -1,39 +1,57 @@
-<%= link_to 'New Exercise', new_exercise_path if !current_user.nil? %>
-<ul class="exercise-list columns">
-  <% exercises.each do |exercise| %>
-    <li class="exercise-list__item column col-3">
-      <div class="card">
-          <div class="card-header">
-            <h2 class="card-title h5 mb-0"><%= link_to exercise.title, exercise %></h2>
-          </div>
-          <div class="card-body pt-1">
-            <p class="card-subtitle m-0">
-              <%= exercise.description %>
-            </p>
-            <small class="tile mt-2">
-              <a href="<%= user_url(exercise.user) %>" class="tile-icon">
-                <figure class="avatar avatar-sm"><img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar"></figure>
-              </a>
-              <div class="tile-content pl-3">
-                <p class="tile-title mb-0">Publié par:
-                  <%= link_to exercise.user.username, user_path(exercise.user) %> le <%= l exercise.created_at, format: :short %></p>
-              </div>
-            </small>
-          </div>
-          <div class="card-image">
-            <div class="exercise-list__item__categories">
-              <% exercise.categories.each do |category| %>
-                <a href="<%= category_path category %>" title="<%= category.description %>" class="chip"><%= category.name %></a>
-              <% end %>
+<%= turbo_frame_tag "search_results" do %>
+  <div class="columns">
+    <div class="column col-2">
+      <p>Catégories: </p>
+      <ul>
+        <li><%= link_to 'Toutes', exercises_path(), data: {turbo: true} %></li>
+        <% categories.each do |category| %>
+          <li>
+            <%= link_to category.name, get_categories_path(category: category.slug), data: {turbo: true} %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="column col-10">
+      <%= link_to 'New Exercise', new_exercise_path if !current_user.nil? %>
+      <p><%= exercises.count %> résultats trouvés. </p>
+      <ul class="exercise-list columns">
+        <% exercises.each do |exercise| %>
+          <li class="exercise-list__item column col-3">
+            <div class="card">
+                <div class="card-header">
+                  <h2 class="card-title h5 mb-0"><%= link_to exercise.title, exercise, data: {turbo: false} %></h2>
+                </div>
+                <div class="card-body pt-1">
+                  <p class="card-subtitle m-0">
+                    <%= exercise.description %>
+                  </p>
+                  <small class="tile mt-2">
+                    <a href="<%= user_url(exercise.user) %>" data-turbo="false" class="tile-icon">
+                      <figure class="avatar avatar-sm"><img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar"></figure>
+                    </a>
+                    <div class="tile-content pl-3">
+                      <p class="tile-title mb-0">Publié par:
+                        <%= link_to exercise.user.username, user_path(exercise.user), data: {turbo: false}  %> le <%= l exercise.created_at, format: :short %></p>
+                    </div>
+                  </small>
+                </div>
+                <div class="card-image">
+                  <div class="exercise-list__item__categories">
+                    <% exercise.categories.each do |category| %>
+                      <a href="<%= category_path category %>" title="<%= category.description %>"  data-turbo="false" class="chip"><%= category.name %></a>
+                    <% end %>
+                  </div>
+                  <img src="https://via.placeholder.com/800x440.png"  class="img-responsive">
+                </div>
+                <div class="card-footer">
+                  <% if can? :manage, exercise %>
+                    <%= link_to 'Edit', edit_exercise_path(exercise) %> | <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' } %>
+                  <% end %>
+                </div>
             </div>
-            <img src="https://via.placeholder.com/800x440.png"  class="img-responsive">
-          </div>
-          <div class="card-footer">
-            <% if can? :manage, exercise %>
-              <%= link_to 'Edit', edit_exercise_path(exercise) %> | <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' } %>
-            <% end %>
-          </div>
-      </div>
-    </li>
-  <% end %>
-</ul>    
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

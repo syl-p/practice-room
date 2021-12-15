@@ -1,5 +1,5 @@
 class ExercisesController < ApplicationController
-  before_action :set_exercise, only: %i[ show edit get_versions_list update destroy add_to_favorites ]
+  before_action :set_exercise, only: %i[ show edit get_versions_list update destroy add_to_favorites]
   authorize_resource
 
   # specific layout for manage actions
@@ -7,9 +7,42 @@ class ExercisesController < ApplicationController
 
   # GET /exercises or /exercises.json
   def index
-    @exercises = Exercise.filtered(params).where(original: nil)
+    @categories = Category.all
+    @exercises = Exercise.all.where(original: nil)
+                          .order("created_at DESC")
     if params[:export].present?
       render partial: "exercises/list", locals: {exercises: @exercises}
+    end
+  end
+
+  def search
+    order_by = params[:order_by].present? ? params[:order_by] : 'created_at'
+    order = params[:order].present? ? params[:order] : 'DESC'
+
+    @exercises = Exercise.all
+    .where(original: nil)
+    .filtered(params)
+    .order("#{params[:order_by]} #{params[:order]}")
+
+    if params[:category].present?
+      @exercises = @exercises.joins(:categories).where(categories: {slug: params[:category]})
+    end
+
+    # TODO: ajouter nombres de résultats par categories
+    @categories = Category.all
+
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.replace(
+          "search_results",
+            partial: "list",
+            locals: {exercises: @exercises, categories: @categories}
+          )
+      }
+
+      format.html {
+        render partial: "list", locals: {exercises: @exercises, categories: @categories}
+      }
     end
   end
 
@@ -66,7 +99,8 @@ class ExercisesController < ApplicationController
     respond_to do |format|
       if @exercise.save
         format.turbo_stream {
- redirect_to exercise_path(@exercise, view: "version"), notice: "Exercise was successfully created." }
+          redirect_to exercise_path(@exercise, view: "version"), notice: "Exercise was successfully created."
+        }
         format.html { redirect_to @exercise, notice: "Exercise was successfully created." }
         format.json { render :show, status: :created, location: @exercise }
       else
