@@ -19,7 +19,13 @@
                     <% @categories.each do |category| %>
                       <li class="form-group">
                         <label class="form-checkbox">
-                          <%= form.check_box :category_ids, { multiple: true, data: {action: "change->hello#search"} }, category.id, false %>
+                          <%= form.check_box :category_ids, {
+                                multiple: true,
+                                data: {action: "change->hello#search"},
+                                checked: @category.present? && @category.id == category.id
+                              },
+                              category.id,
+                              false %>
                           <i class="form-icon"></i>
                           <%= category.name %>
                         </label>

@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  layout "layouts/dashboard", except: %i[show]
+  layout "layouts/dashboard", except: %i[show index get_by_slug]
   before_action :set_category, only: %i[ show edit update destroy ]
 
   # GET /categories or /categories.json
@@ -9,6 +9,13 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
+  end
+
+  def get_by_slug
+    @categories = Category.all
+    @category = @categories.find_by(slug: params[:slug])
+    @exercises = Exercise.joins(:categories).where(categories: {slug: params[:slug]})
+    render "exercises/index"
   end
 
   # GET /categories/new

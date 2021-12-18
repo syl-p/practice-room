@@ -12,7 +12,7 @@ class ExercisesController < ApplicationController
                           .order("created_at DESC")
   end
 
-  # POST /exercises/searchZ
+  # POST /exercises/search
   def search
     order_by = params[:order_by].present? ? params[:order_by] : 'created_at'
     order = params[:order].present? ? params[:order] : 'DESC'
@@ -99,7 +99,7 @@ class ExercisesController < ApplicationController
     respond_to do |format|
       if @exercise.save
         format.turbo_stream {
-          redirect_to exercise_path(@exercise, view: "version"), notice: "Exercise was successfully created."
+          redirect_to exercise_path(@exercise, view: @exercise.original ? "version" : nil), notice: "Exercise was successfully created."
         }
         format.html { redirect_to @exercise, notice: "Exercise was successfully created." }
         format.json { render :show, status: :created, location: @exercise }

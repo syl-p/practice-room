@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :categories do
     collection do
-      get ":category", to: "exercises#search", as: "get"
+      get ":slug", to: "categories#get_by_slug", as: "by_slug"
     end
   end
 
