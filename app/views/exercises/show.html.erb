@@ -5,7 +5,7 @@
         <div class="hero-body">
 
             <p id="notice"><%= notice %></p>
-            
+
             <ul class="breadcrumb ml-2">
                 <li class="breadcrumb-item">
                     <%= link_to 'Accueil', root_path %>
@@ -31,18 +31,18 @@
             </h1>
 
             <p>Description de l'exercise</p>
-            <%= render "shared/user_tile", user: @exercise.user, published_at: @exercise.created_at %>    
-            
+            <%= render "shared/user_tile", user: @exercise.user, published_at: @exercise.created_at %>
+
             <% if current_user %>
-                <nav class="exercise-show__nav" 
-                    data-controller="practicer-nav" 
+                <nav class="exercise-show__nav"
+                    data-controller="practicer-nav"
                     data-practicer-nav-exercise-id-value="<%= @exercise.id %>">
                     <div class="form-group">
                         <label class="form-label">Temps à aloué:</label>
                         <input type="time" class="form-input"  data-practicer-nav-target="selectedTime"/>
                     </div>
                     <div class="btn-group btn-group-block">
-                        <button class="btn" 
+                        <button class="btn"
                             data-practicer-nav-target="btn"
                             data-practicer-nav-action-param="add"
                             data-practicer-nav-id-param="<%= @exercise.id %>"
@@ -50,7 +50,7 @@
                             <i class="icon icon-check"></i> Ajouter à ma pratique du jour
                         </button>
                         <% if current_user.favorites.include? @exercise.id.to_s %>
-                            <button class="btn" 
+                            <button class="btn"
                             data-practicer-nav-target="btn"
                             data-practicer-nav-action-param="remove"
                             data-practicer-nav-id-param="<%= @exercise.id %>"
@@ -58,7 +58,7 @@
                                 <i class="icon icon-bookmark"></i> Retirer de mes favoris
                             </button>
                         <% else %>
-                            <button class="btn" 
+                            <button class="btn"
                             data-practicer-nav-target="btn"
                             data-practicer-nav-action-param="add"
                             data-practicer-nav-id-param="<%= @exercise.id %>"
@@ -66,7 +66,7 @@
                                 <i class="icon icon-bookmark"></i> Ajouter à mes favoris
                             </button>
                         <% end %>
-                    </div> 
+                    </div>
                 </nav>
             <% end %>
         </div>
@@ -78,7 +78,7 @@
                 <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
             </div>
             <% end %>
-            
+
             <!-- DYNAMIC ZONE -->
             <aside class="exercise-show__versions column col-4 hide-lg">
                 <%= turbo_frame_tag "exercise_versions" do %>
@@ -99,7 +99,7 @@
             <h2>Commentaires</h2>
             <% if user_signed_in? %>
                 <%= turbo_frame_tag "comment_new" do %>
-                    <%= render partial: "comments/form", 
+                    <%= render partial: "comments/form",
                         locals: {comment: Comment.new, commentable: @exercise} %>
                 <% end %>
             <% else %>
@@ -110,23 +110,23 @@
                     <p class="empty-title h5">Vous devez être connecter pour pouvoir commenter.</p>
                     <p class="empty-subtitle">Si tu n'as pas de compte tu peux aussi t'inscrire gratuitement pour participer à la conversation.</p>
                     <div class="empty-action">
-                        <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary"  %> 
+                        <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary"  %>
             <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-link"  %>
                     </div>
                 </div>
             <% end %>
-            
+
             <!-- COMMENT LIST -->
             <%
 =begin%>
- <%= turbo_stream_from @exercise, :comments %> 
+ <%= turbo_stream_from @exercise, :comments %>
 <%
 =end%>
             <%= tag.div id: "#{dom_id(@exercise)}_comments" do %>
                 <%=  render partial: "comments/comment", collection: @exercise.comments.where(parent_id: nil), as: :comment  %>
             <% end %>
             <!-- END COMMENT LIST -->
-            
+
         </footer>
     </article>
 </section>

@@ -1,0 +1,26 @@
+<div class="columns">
+  <div class="column col-6">
+      <div class="has-icon-left">
+          <%= form.text_field :text,
+              data: { action: "input->hello#search" },
+              class: "form-input input-lg",
+              placeholder: "Rechercher..." %>
+          <i class="form-icon icon icon-search"></i>
+      </div>
+  </div>
+  <div class="column col-4 col-ml-auto">
+    <div class="input-group">
+        <span class="input-group-addon">Ordre</span>
+          <%= form.select :order_by, [["Date d'ajout", "created_at"], ["Titre", "title"]], {selected: 'created_at'}, {
+            data: { action: "change->hello#search" },
+            class: "form-select select-lg"
+          }
+        %>
+        <%= form.select :order, [["Descendant", "DESC"], ["Ascendant", "ASC"]], {selected: 'DESC'}, {
+            data: { action: "change->hello#search" },
+            class: "form-select select-lg"
+          }
+        %>
+    </div>
+  </div>
+</div>

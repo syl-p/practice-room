@@ -17,10 +17,17 @@
     <%= form.text_field :title, class: "form-input"  %>
   </div>
 
+  <div class="field form-group columns">
+    <div class="column">
+      <%= form.label :description, class: "form-label"  %>
+      <%= form.text_area :description, class: "form-input" %>
+    </div>
+  </div>
+
   <div class="field form-group columns" data-controller="markdown">
     <div class="column">
       <%= form.label :body, class: "form-label"  %>
-      <%= form.text_area :body, class: "form-input mardown-textarea", 
+      <%= form.text_area :body, class: "form-input mardown-textarea",
         data: {markdown_target: 'field', action: 'input->markdown#onChange'} %>
     </div>
     <div class="column">
@@ -29,7 +36,7 @@
       <div data-markdown-target="result" class="pt-1"></div>
     </div>
   </div>
-  
+
   <div class="field form-group">
     <%= form.label "vidéo (lien de partage youtube)", class: "form-label"  %>
     <%= form.text_field :video_link, class: "form-input"  %>
@@ -38,7 +45,7 @@
   <div class="field form-group">
       <%= form.label :categories, class: "form-label"  %>
       <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => true, selected_value: nil}, class: "form-input", :multiple => true %>
-  </div> 
+  </div>
 
   <div class="actions mt-2 form-group" data-markdown-target="result">
     <%= form.submit "Mettre à jour le contenu", class: "form-input"  %>

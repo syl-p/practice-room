@@ -1,46 +1,41 @@
-
-<%= turbo_frame_tag "search" do %>
-  <section class="exercises-index">
-    <header>
-      <div class="hero hero-sm">
-        <div class="hero-body">
-          <div class="container" data-controller="hello">
-            <%= form_with(url: search_exercises_path, data: {hello_target: "form"}) do |form| %>
-              <div class="columns">
-                <div class="column col-6">
-                    <div class="has-icon-left">
-                        <%= form.text_field :text,
-                            data: { action: "input->hello#search" },
-                            class: "form-input input-lg",
-                            placeholder: "Rechercher..." %>
-                        <i class="form-icon icon icon-search"></i>
-                    </div>
-                </div>
-                <div class="column col-4 col-ml-auto">
-                  <div class="input-group">
-                      <span class="input-group-addon">Ordre</span>
-                        <%= form.select :order_by, [["Date d'ajout", "created_at"], ["Titre", "title"]], {selected: 'created_at'}, {
-                          data: { action: "change->hello#search" },
-                          class: "form-select select-lg"
-                        }
-                      %>
-                      <%= form.select :order, [["Descendant", "DESC"], ["Ascendant", "ASC"]], {selected: 'DESC'}, {
-                          data: { action: "change->hello#search" },
-                          class: "form-select select-lg"
-                        }
-                      %>
-                  </div>
+<section data-controller="hello">
+  <%= turbo_frame_tag "search" do %>
+    <%= form_with(url: search_exercises_path, data: {hello_target: "form"}) do |form| %>
+        <section class="exercises-index">
+          <header>
+            <div class="hero hero-sm">
+              <div class="hero-body">
+                <div class="container">
+                  <%= render partial: "exercises/search/search_fields", locals: {form: form} %>
                 </div>
               </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </header>
-    <section class="exercises-index_content container">
-        <!-- Exercise list -->
-            <%= render partial: "exercises/list", locals: {exercises: @exercises, categories: @categories} %>
-        <!-- Exercise list -->
-    </section>
-  </section>
-<% end %>
+            </div>
+          </header>
+          <section class="exercises-index_content container">
+              <section class="columns">
+                <aside class="column col-2 hide-md exercises-index_content_aside">
+                  <h3>Par catégorie</h3>
+                  <ul class="exercises-index_content_aside_categories-filter">
+                    <% @categories.each do |category| %>
+                      <li class="form-group">
+                        <label class="form-checkbox">
+                          <%= form.check_box :category_ids, { multiple: true, data: {action: "change->hello#search"} }, category.id, false %>
+                          <i class="form-icon"></i>
+                          <%= category.name %>
+                        </label>
+                      </li>
+                    <% end %>
+                  </ul>
+                </aside>
+
+                <!-- Results list -->
+                <section class="column col-md-12 col-10 exercises-index_content_main">
+                    <%= render partial: "exercises/search/list", locals: {exercises: @exercises, categories: @categories} %>
+                </section>
+                <!-- END Results list -->
+              </section>
+          </section>
+        </section>
+    <% end %>
+  <% end %>
+</section>

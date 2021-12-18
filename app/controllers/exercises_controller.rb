@@ -10,11 +10,9 @@ class ExercisesController < ApplicationController
     @categories = Category.all
     @exercises = Exercise.all.where(original: nil)
                           .order("created_at DESC")
-    if params[:export].present?
-      render partial: "exercises/list", locals: {exercises: @exercises}
-    end
   end
 
+  # POST /exercises/searchZ
   def search
     order_by = params[:order_by].present? ? params[:order_by] : 'created_at'
     order = params[:order].present? ? params[:order] : 'DESC'
@@ -24,8 +22,10 @@ class ExercisesController < ApplicationController
     .filtered(params)
     .order("#{params[:order_by]} #{params[:order]}")
 
-    if params[:category].present?
-      @exercises = @exercises.joins(:categories).where(categories: {slug: params[:category]})
+    puts params[:category_ids]
+
+    if params[:category_ids].present? && params[:category_ids].count > 0
+      @exercises = @exercises.joins(:categories).where(categories: params[:category_ids])
     end
 
     # TODO: ajouter nombres de résultats par categories
@@ -35,13 +35,13 @@ class ExercisesController < ApplicationController
       format.turbo_stream {
         render turbo_stream: turbo_stream.replace(
           "search_results",
-            partial: "list",
+            partial: "exercises/search/list",
             locals: {exercises: @exercises, categories: @categories}
           )
       }
 
       format.html {
-        render partial: "list", locals: {exercises: @exercises, categories: @categories}
+        render partial: "exercises/search/list", locals: {exercises: @exercises, categories: @categories}
       }
     end
   end

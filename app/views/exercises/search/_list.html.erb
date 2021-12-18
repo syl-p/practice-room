@@ -1,0 +1,44 @@
+<%= turbo_frame_tag "search_results", target: "search_results" do %>
+  <p><i>Nous avons trouvé <%= exercises.count %> résultats.</i> <%= link_to 'Créer un exercice', new_exercise_path if !current_user.nil? %></p>
+  <ul class="exercise-list columns">
+    <% exercises.each do |exercise| %>
+      <li class="exercise-list__item column col-sm-12 col-xl-6 col-3">
+        <div class="card">
+            <div class="card-image">
+              <div class="exercise-list__item__categories">
+                <% exercise.categories.each do |category| %>
+                  <a href="<%= category_path category %>" title="<%= category.description %>"  data-turbo="false" class="chip"><%= category.name %></a>
+                <% end %>
+              </div>
+              <img src="https://via.placeholder.com/800x440.png"  class="img-responsive">
+            </div>
+            <div class="card-header">
+
+              <small class="tile mb-2">
+                <a href="<%= user_url(exercise.user) %>" data-turbo="false" class="tile-icon">
+                  <figure class="avatar avatar-sm"><img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar"></figure>
+                </a>
+
+                <div class="tile-content pl-3">
+                  <p class="tile-title mb-0">Publié par:
+                    <%= link_to exercise.user.username, user_path(exercise.user), data: {turbo: false}  %> le <%= l exercise.created_at, format: :short %></p>
+                </div>
+              </small>
+
+              <h2 class="card-title h5 mb-0">
+                <%= link_to exercise.title, exercise, data: {turbo: false} %>
+              </h2>
+            </div>
+            <div class="card-body">
+              <p><%= exercise.description %></p>
+            </div>
+            <div class="card-footer">
+              <% if can? :manage, exercise %>
+                <%= link_to 'Edit', edit_exercise_path(exercise), data: {turbo: false}  %> | <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' } %>
+              <% end %>
+            </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

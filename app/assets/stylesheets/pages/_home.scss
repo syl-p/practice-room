@@ -1,13 +1,15 @@
 .exercises-index {
-    .hero {
-        .input-group {
-            // box-shadow: 6px 6px 12px #979797;
-        }
-        .divider {
-            margin: 30px 0;
-        }
+  .hero {
+    .divider {
+      margin: 30px 0;
     }
-    &_content {
-        padding-top: 30px;
+  }
+  &_content {
+    padding-top: 30px;
+    &_aside {
+      &_categories-filter {
+        list-style: none;
+      }
     }
+  }
 }
