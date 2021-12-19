@@ -1,4 +1,4 @@
-<aside class="practice-sidebar close" 
+<aside class="practice-sidebar close"
     data-controller="practicer-sidebar tabs"
     data-practicer-sidebar-target="container">
     <a class="practice-sidebar__close" data-action="click->practicer-sidebar#toggle">close</a>
@@ -16,7 +16,7 @@
             </h3>
             <p class="panel-subtitle">
                 VOTRE PRATIQUE DU JOUR<br>
-                <span class="practice-sidebar__practice-time" 
+                <span class="practice-sidebar__practice-time"
                     data-practicer-sidebar-target="practiceTime">
                     00:00:00
                 </span>
@@ -31,10 +31,10 @@
                 <%= render partial: "sessions_of_the_days/list", locals: {sessions_of_the_day: current_user.sessions_of_today} %>
             </div>
 
-            <ul class="tile-list" data-tab-title="Challenges" slot="tab"
+            <%# <ul class="tile-list" data-tab-title="Challenges" slot="tab"
                 data-tabs-target="tab" data-practicer-sidebar-target="challenges">
               <li><b>Partie non développée pour le moment...</b><br> Patience :) !</li>
-            </ul>
+            </ul> %>
 
             <ul class="tile-list" data-tab-title="Vos favoris" slot="tab"
                 data-tabs-target="tab" data-practicer-sidebar-target="favorites">
@@ -44,7 +44,7 @@
         </tabs-section>
 
         <div class="panel-footer">
-            
+
         </div>
     </div>
 </aside>

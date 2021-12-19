@@ -1,13 +1,5 @@
 .exercise-show {
     margin-bottom: 100px;
-
-    &__nav {
-        text-align: right;
-        // .btn-group {
-        //     float: right;
-        //     width: 200px;
-        // }
-    }
     &__intro {
         position: relative;
         // margin: -130px auto 0px;
@@ -17,7 +9,7 @@
         margin-bottom: 100px;
     }
     &__comments {
-        .empty { 
+        .empty {
             background: #f7f8f9;
             margin: 50px 0px;
         }
