@@ -2,12 +2,15 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["videoPlayer"]
-
-  connect() {
-    // console.log(this.application)
+  static values = {
+    root: String
   }
 
-  get practicerSidebarController() {    
+  connect() {
+    console.log(this.rootValue)
+  }
+
+  get practicerSidebarController() {
     return this.application.controllers.find(c => c.identifier === "practicer-sidebar")
   }
 
@@ -18,6 +21,10 @@ export default class extends Controller {
   get csrfToken() {
     const element = document.head.querySelector(`meta[name="csrf-token"]`)
     return element ? element.getAttribute("content") : null
+  }
+
+  get root() {
+    return this.rootValue
   }
 
   togglePracticerSidebar() {

@@ -1,14 +1,20 @@
 <% extended = false if local_assigns[:extended].nil? %>
 <nav class="practice-toolbar columns"
     data-controller="practicer-nav"
+    data-practicer-nav-extended-value="<%= extended %>"
     data-practicer-nav-exercise-id-value="<%= exercise.id %>">
+
     <% if extended %>
       <div class="input-group column col-7">
           <label class="input-group-addon">Temps à aloué à l'exercice:</label>
           <input type="time" class="form-input"
           data-practicer-nav-target="selectedTime" value="00:10"/>
       </div>
+    <% else %>
+      <input type="hidden"
+      data-practicer-nav-target="selectedTime" value="00:10"/>
     <% end %>
+
     <div class="btn-group btn-group-block <%= "column col-5" if extended %>">
       <button class="btn"
           data-practicer-nav-target="btn"
@@ -23,7 +29,7 @@
           data-practicer-nav-action-param="remove"
           data-practicer-nav-id-param="<%= exercise.id %>"
           data-action="click->practicer-nav#favorites">
-              <i class="icon icon-bookmark"></i> <%= "Retirer de mes favoris" if extended %>
+              <i class="icon icon-bookmark"></i> <%= "Retirer de   mes favoris" if extended %>
           </button>
       <% else %>
           <button class="btn"

@@ -11,8 +11,7 @@
   </head>
 
   <body>
-
-    <main data-controller="application">
+    <main data-controller="application" data-application-root-value="<%= root_url %>">
       <%= render "shared/navbar" %>
       <%= render "shared/practicer/practice_sidebar" if current_user %>
 

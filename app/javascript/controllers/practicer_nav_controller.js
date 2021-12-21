@@ -3,7 +3,11 @@ import { practice } from "./mixins/practice"
 
 export default class extends ApplicationController {
   static targets = ["btn", "selectedTime"]
-  static values = {exerciseId: Number}
+  static values = {
+    exerciseId: Number,
+    extended: Boolean,
+    defaultTime: String
+  }
 
   connect() {
     practice(this)
@@ -20,7 +24,7 @@ export default class extends ApplicationController {
 
             // UPDATE BTN
             this.btnTargets[1].dataset.practicerNavActionParam = "remove"
-            this.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> Retirer de mes favoris`
+            this.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> ${this.extendedValue ? "Retirer de mes favoris" : ''}`
             break;
           case "remove":
             const favorite = Array.from(favoritesTarget.children).find(c => parseInt(c.dataset.exerciseId) === parseInt(id))
@@ -30,7 +34,7 @@ export default class extends ApplicationController {
 
             // UPDATE BTN
             this.btnTargets[1].dataset.practicerNavActionParam = "add"
-            this.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> Ajouter à mes favoris`
+            this.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> ${this.extendedValue ? "Ajouter à mes favoris" : ''}`
             break;
           default:
             break;
@@ -40,7 +44,8 @@ export default class extends ApplicationController {
   }
 
   addToPractice({params: {id}}) {
-    this.practice(id, this.selectedTimeTarget.value)
+    const time = this.extendedValue ? this.selectedTimeTarget: "00:10"
+    this.practice(id, time)
       .then((response) => {
         const exercisesTarget = super.practicerSidebarController.exercisesTarget
         // add element to list
