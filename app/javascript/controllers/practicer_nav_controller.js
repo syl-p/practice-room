@@ -24,7 +24,7 @@ export default class extends ApplicationController {
 
             // UPDATE BTN
             this.btnTargets[1].dataset.practicerNavActionParam = "remove"
-            this.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> ${this.extendedValue ? "Retirer de mes favoris" : ''}`
+            this.btnTargets[1].innerHTML = `<i class="icon icon-cross"></i> ${this.extendedValue ? "Retirer de mes favoris" : ''}`
             break;
           case "remove":
             const favorite = Array.from(favoritesTarget.children).find(c => parseInt(c.dataset.exerciseId) === parseInt(id))

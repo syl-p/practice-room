@@ -16,23 +16,26 @@
     <% end %>
 
     <div class="btn-group btn-group-block <%= "column col-5" if extended %>">
-      <button class="btn"
+      <button class="btn <%= "tooltip tooltip-left" if extended.blank? %>"
+          data-tooltip="<%= "Ajouter à ma pratique du jour" if extended.blank?  %>"
           data-practicer-nav-target="btn"
           data-practicer-nav-action-param="add"
           data-practicer-nav-id-param="<%= exercise.id %>"
           data-action="click->practicer-nav#addToPractice">
-          <i class="icon icon-check"></i> <%= "Ajouter à ma pratique du jour" if extended %>
+          <i class="icon icon-plus"></i> <%= "Ajouter à ma pratique du jour" if extended %>
       </button>
       <% if current_user.favorites.include? exercise.id.to_s %>
-          <button class="btn"
+          <button class="btn <%= "tooltip tooltip-left" if extended.blank? %>"
+          data-tooltip="<%= "Retirer de mes favoris" if extended.blank?  %>"
           data-practicer-nav-target="btn"
           data-practicer-nav-action-param="remove"
           data-practicer-nav-id-param="<%= exercise.id %>"
           data-action="click->practicer-nav#favorites">
-              <i class="icon icon-bookmark"></i> <%= "Retirer de   mes favoris" if extended %>
+              <i class="icon icon-cross"></i> <%= "Retirer de mes favoris" if extended %>
           </button>
       <% else %>
-          <button class="btn"
+          <button class="btn <%= "tooltip tooltip-left" if extended.blank? %>"
+          data-tooltip="<%= "Ajouter à mes favoris" if extended.blank?  %>"
           data-practicer-nav-target="btn"
           data-practicer-nav-action-param="add"
           data-practicer-nav-id-param="<%= exercise.id %>"
