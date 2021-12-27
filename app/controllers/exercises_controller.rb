@@ -22,10 +22,12 @@ class ExercisesController < ApplicationController
     .filtered(params)
     .order("#{params[:order_by]} #{params[:order]}")
 
-    puts params[:category_ids]
-
     if params[:category_ids].present? && params[:category_ids].count > 0
       @exercises = @exercises.joins(:categories).where(categories: params[:category_ids])
+    end
+
+    if params[:levels].present? && params[:levels].count > 0
+      @exercises = @exercises.where(level: params[:levels])
     end
 
     # TODO: ajouter nombres de résultats par categories
@@ -170,7 +172,8 @@ class ExercisesController < ApplicationController
   end
 
   def add_to_practice
-    duration = params[:time].present? ? Time.parse(params[:time]).seconds_since_midnight : 3600
+    # default duration is 10 minutes (600 seconds)
+    duration = params[:time].present? ? Time.parse(params[:time]).seconds_since_midnight : 600
     sessions_of_today = current_user.sessions_of_today
     new_session = {time: Time.now, exercises:[{id: params[:id], duration: duration}]}
 
@@ -228,7 +231,7 @@ class ExercisesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def exercise_params
     params.fetch(:exercise, {}).permit(
-      :body, :video_link, :title, :published, :exercise_id, :description, medium_ids: [], category_ids: [], versions_attributes: %i[
+      :body, :video_link, :title, :published, :exercise_id, :description, :level, medium_ids: [], category_ids: [], levels: [], versions_attributes: %i[
         published user_id id
       ]
     )

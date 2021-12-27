@@ -8,11 +8,11 @@
       <div class="input-group column col-7">
           <label class="input-group-addon">Temps à aloué à l'exercice:</label>
           <input type="time" class="form-input"
-          data-practicer-nav-target="selectedTime" value="00:10"/>
+          data-practicer-nav-target="selectedTime" value="<%= exercise.duration ? Time.at(exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
       </div>
     <% else %>
       <input type="hidden"
-      data-practicer-nav-target="selectedTime" value="00:10"/>
+      data-practicer-nav-target="selectedTime" value="<%= exercise.duration ? Time.at(exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
     <% end %>
 
     <div class="btn-group btn-group-block <%= "column col-5" if extended %>">

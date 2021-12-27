@@ -32,6 +32,23 @@
                       </li>
                     <% end %>
                   </ul>
+                  <div class="divider"></div>
+                  <h3>Par niveau</h3>
+                  <ul class="exercises-index_content_aside_levels-filter">
+                    <% Exercise.levels.each do |level| %>
+                      <li class="form-group">
+                        <label class="form-checkbox">
+                          <%= form.check_box :levels, {
+                                multiple: true,
+                                data: {action: "change->hello#search"}
+                              },
+                              level.second,
+                              false %>
+                          <i class="form-icon"></i>
+                          <%= level.first %>
+                        </label>
+                      </li>
+                    <% end %>
                 </aside>
 
                 <!-- Results list -->

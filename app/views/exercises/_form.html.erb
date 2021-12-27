@@ -47,6 +47,16 @@
       <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => true, selected_value: nil}, class: "form-input", :multiple => true %>
   </div>
 
+
+
+  <div class="field form-group">
+    <%= form.label :level, class: "form-label"  %>
+    <% Exercise.levels.keys.each do |level| %>
+      <%= form.radio_button :level, level %>
+      <%= form.label "#{:level}_#{level.parameterize.underscore}", level %>
+    <% end %>
+  </div>
+
   <div class="actions mt-2 form-group" data-markdown-target="result">
     <%= form.submit "Mettre à jour le contenu", class: "form-input"  %>
   </div>

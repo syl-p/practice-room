@@ -14,6 +14,12 @@ class Exercise < ApplicationRecord
   belongs_to :original, class_name: 'Exercise', optional: true, foreign_key: :exercise_id
   has_many :versions, class_name: 'Exercise', dependent: :destroy
 
+  enum level: {
+    beginner: 0,
+    intermediate: 1,
+    advanced: 2
+  }
+
   def self.filtered(query_params)
     if query_params.present?
       self.where("title ILIKE :text OR body ILIKE :text", text: "%#{query_params[:text]}%")

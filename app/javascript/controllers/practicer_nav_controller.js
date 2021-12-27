@@ -44,7 +44,7 @@ export default class extends ApplicationController {
   }
 
   addToPractice({params: {id}}) {
-    const time = this.extendedValue ? this.selectedTimeTarget: "00:10"
+    const time = this.extendedValue && this.selectedTimeTarget ? this.selectedTimeTarget.value : "00:10"
     this.practice(id, time)
       .then((response) => {
         const exercisesTarget = super.practicerSidebarController.exercisesTarget

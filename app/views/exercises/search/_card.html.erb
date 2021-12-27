@@ -11,7 +11,7 @@
     <img src="https://via.placeholder.com/800x440.png"  class="img-responsive">
   </div>
 
-  <div class="card-header">
+  <div class="card-header mb-2">
     <small class="tile mb-2">
       <a href="<%= user_url(exercise.user) %>" data-turbo="false" class="tile-icon">
         <figure class="avatar avatar-sm"><img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar"></figure>
@@ -28,11 +28,27 @@
     </h2>
   </div>
   <div class="card-body">
-    <p><%= exercise.description %></p>
+    <p><%= exercise.description.truncate(50) if exercise.description %></p>
   </div>
   <div class="card-footer">
-    <% if can? :manage, exercise %>
+
+<%
+=begin %>
+    <% if can? :manage, exercise && false %>
       <%= link_to 'Edit', edit_exercise_path(exercise), data: {turbo: false}  %> | <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' } %>
     <% end %>
+<%
+=end %>
+
+      <% if exercise.level %>
+        <p class="mb-0">
+          <i class="icon icon-flag"></i> Niveau:  <%= exercise.level %>
+        </p>
+      <% end %>
+      <% if exercise.duration %>
+        <p class="mb-0">
+          <i class="icon icon-time"></i> Durée:  <%= Time.at(exercise.duration).utc.strftime("%H:%M") %>
+        </p>
+      <% end %>
   </div>
 </div>
