@@ -12,9 +12,10 @@
   </div>
 
   <div class="card-header mb-2">
+    <!-- user info -->
     <small class="tile mb-2">
       <a href="<%= user_url(exercise.user) %>" data-turbo="false" class="tile-icon">
-        <figure class="avatar avatar-sm"><img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar"></figure>
+        <%= render partial: "users/avatar", locals: {user: exercise.user, size: :small} %>
       </a>
 
       <div class="tile-content pl-3">
@@ -22,6 +23,7 @@
           <%= link_to exercise.user.username, user_path(exercise.user), data: {turbo: false}  %> le <%= l exercise.created_at, format: :short %></p>
       </div>
     </small>
+    <!-- end user info -->
 
     <h2 class="card-title h5 mb-0">
       <%= link_to exercise.title, exercise, data: {turbo: false} %>
@@ -50,5 +52,8 @@
           <i class="icon icon-time"></i> Durée:  <%= Time.at(exercise.duration).utc.strftime("%H:%M") %>
         </p>
       <% end %>
+      <p class="mb-0">
+        <i class="icon icon-message"></i> Commentaires:  <%= exercise.comments.count %>
+      </p>
   </div>
 </div>

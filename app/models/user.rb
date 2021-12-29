@@ -4,14 +4,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  
   has_many :comments, dependent: :destroy
   has_many :exercises, dependent: :destroy
   has_many :sessions_of_the_days, dependent: :destroy
 
+  include AvatarUploader::Attachment(:avatar)
+
   # overwrite favorites
   def favorites_populated
-    res = [] 
+    res = []
     read_attribute(:favorites).each do |id|
       res << Exercise.find(id)
     end

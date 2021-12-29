@@ -2,12 +2,12 @@
     <strong>Session débuté à <u><time class="session__time"><%= l session['time'].to_datetime, format: '%H:%M:%S' %></time></u></strong><br>
     <small>Liste des exercices: </small>
     <ul>
-        <% session['exercises'].each_with_index do |exercise, index| %>
+        <% session['exercises'].each_with_index do |practiced, index| %>
             <%= turbo_frame_tag "practice_exercise_#{index}_#{sessions_of_the_day.id}_#{session_index}" do %>
-                <%= render layout: "exercises/practice_exercise_tile", locals: {exercise: exercise} do %>
-                    <li><%= link_to "Supprimer", 
+                <%= render layout: "exercises/practice_exercise_tile", locals: {practiced: practiced} do %>
+                    <li><%= link_to "Supprimer",
                         remove_from_practice_path(
-                            index: index, 
+                            index: index,
                             sessions_of_the_day_id: sessions_of_the_day.id,
                             session_index: session_index),
                         method: :delete %></li>

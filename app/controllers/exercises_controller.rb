@@ -1,5 +1,5 @@
 class ExercisesController < ApplicationController
-  before_action :set_exercise, only: %i[ show edit get_versions_list update destroy add_to_favorites]
+  before_action :set_exercise, only: %i[ show edit get_versions_list update destroy add_to_favorites add_to_practice]
   authorize_resource
 
   # specific layout for manage actions
@@ -175,14 +175,20 @@ class ExercisesController < ApplicationController
     # default duration is 10 minutes (600 seconds)
     duration = params[:time].present? ? Time.parse(params[:time]).seconds_since_midnight : 600
     sessions_of_today = current_user.sessions_of_today
-    new_session = {time: Time.now, exercises:[{id: params[:id], duration: duration}]}
 
-    if !sessions_of_today.present?
+    # exercise practiced
+    practiced = {exercise: @exercise, duration: duration}
+
+    # prepare new session
+    new_session = {time: Time.now, exercises:[]}
+    new_session[:exercises] << practiced
+
+    if !sessions_of_today.present? # no session today
       sessions_of_today = SessionsOfTheDay.new(user_id: current_user.id)
     end
 
     if sessions_of_today.sessions.count > 0  && ((Time.now - sessions_of_today.sessions.last["time"].to_time) <= 1.hour)
-      sessions_of_today.sessions.last["exercises"] << {id: params[:id], duration: duration}
+      sessions_of_today.sessions.last["exercises"] << practiced
     else
       sessions_of_today.sessions << new_session
     end

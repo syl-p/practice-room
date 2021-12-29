@@ -1,9 +1,9 @@
 <div class="tile">
     <a href="<%= user_url(user) %>" class="tile-icon">
-        <figure class="avatar avatar-lg"><img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar"></figure>
+      <%= render partial: "users/avatar", locals: {user: user, size: :large} %>
     </a>
     <div class="tile-content pl-3">
-        <p class="tile-title mb-0">Publié par: 
+        <p class="tile-title mb-0">Publié par:
             <%= link_to user.username, user_path(user) %> le <%= l published_at, format: :long %></p>
         <p class="tile-subtitle mb-1">The Strategic Homeland Intervention, Enforcement, and Logistics Division...</p>
         <p>

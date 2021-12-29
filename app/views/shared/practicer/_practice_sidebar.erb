@@ -4,11 +4,9 @@
     <a class="practice-sidebar__close" data-action="click->practicer-sidebar#toggle">close</a>
     <div class="practice-sidebar__content panel">
         <header class="text-center panel-header">
-            <figure class="avatar avatar-lg">
-                <a href="<%= user_url(current_user) %>">
-                    <img src="https://picturepan2.github.io/spectre/img/avatar-2.png" alt="Avatar">
-                </a>
-            </figure>
+            <a href="<%= user_url(current_user) %>">
+                <%= render partial: "users/avatar", locals: {user: current_user, size: :xlarge} %>
+            </a>
             <h3 class="panel-title h5 mt-2">
                 <a href="<%= user_url(current_user) %>">
                     <%= current_user.username %>

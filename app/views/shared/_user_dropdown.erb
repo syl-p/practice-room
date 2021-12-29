@@ -1,13 +1,13 @@
     <div class="dropdown">
         <div class="btn-group">
             <button class="btn btn-link" data-action="click->application#togglePracticerSidebar">
-                <figure class="avatar avatar-sm" data-initial="xx" style="background-color: #5755d9;"></figure>
+                <%= render partial: "users/avatar", locals: {user: current_user, size: :small} %>
                 <%= current_user.username %>
             </button>
             <a class="btn btn-link dropdown-toggle" tabindex="0">
                 <i class="icon icon-caret"></i>
             </a>
-        
+
             <!-- menu component -->
             <ul class="menu">
                 <li><%= link_to "Votre espace", me_exercises_path %></li>
