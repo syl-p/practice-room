@@ -11,9 +11,12 @@
     </div>
   <% end %>
 
+  <% if notice.present? %>
+    <div class="toast toast-primary">
+      <p class="notice"><%= notice %></p>
+    </div>
+  <% end %>
 
-  <p id="notice"><%= notice %></p>
-  
   <%= form.hidden_field :exercise_id %>
 
   <div class="field form-group">
@@ -25,7 +28,7 @@
     <%= form.label :description, class: 'form-label'  %>
     <%= form.text_area :description, class: 'form-input'   %>
   </div>
-  
+
   <div class="field form-group">
     <%= form.label "vidéo (lien de partage youtube)", class: "form-label"  %>
     <%= form.text_field :video_link, class: "form-input"  %>

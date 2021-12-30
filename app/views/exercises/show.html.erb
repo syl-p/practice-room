@@ -40,11 +40,11 @@
     </header>
     <article class="container">
         <header class="exercise-show__intro columns">
-            <% if @exercise.video_link %>
-            <div class="column">
-                <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
+            <!-- VIDEO -->
+            <div class="exercise-show__intro__hero column">
+              <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
             </div>
-            <% end %>
+            <!-- VIDEO -->
 
             <!-- DYNAMIC ZONE -->
             <aside class="exercise-show__versions column col-4 hide-lg">

@@ -6,7 +6,7 @@
                 <i class="icon icon-cross"></i>
             </a>
             <h3>Nouvelle version:</h3>
-            <p>Proposer une version personnalisée de l'exercice: <%= @exercise.original.title %></p>
+            <small>Proposer une version personnalisée de l'exercice: <%= @exercise.original.title %></small>
         </div>
         <div class="panel-body">
             <%= render 'exercises/versions/form', version: @exercise %>

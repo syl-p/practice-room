@@ -15,7 +15,7 @@
                 <div class="tile py-0">
                     <div class="tile-action">
                         <a href="<%= user_path(version.user.id) %>" data-turbo="false">
-                            <figure class="avatar"></figure>
+                          <%= render partial: "users/avatar", locals: {user: version.user} %>
                         </a>
                     </div>
                     <div class="tile-content">

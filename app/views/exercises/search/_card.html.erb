@@ -11,7 +11,31 @@
     <img src="https://via.placeholder.com/800x440.png"  class="img-responsive">
   </div>
 
-  <div class="card-header mb-2">
+  <div class="card-header">
+    <h2 class="card-title h5">
+      <%= link_to exercise.title, exercise, data: {turbo: false} %>
+    </h2>
+    <div class="divider"></div>
+    <p class="card-subtitle  text-gray"><%= exercise.description.truncate(50) if exercise.description %></p>
+  </div>
+
+  <div class="card-body pt-0">
+    <% if exercise.level %>
+      <p class="mb-0">
+        <i class="icon icon-flag"></i> Niveau:  <%= exercise.level %>
+      </p>
+    <% end %>
+    <% if exercise.duration %>
+      <p class="mb-0">
+        <i class="icon icon-time"></i> Durée:  <%= Time.at(exercise.duration).utc.strftime("%H:%M") %>
+      </p>
+    <% end %>
+    <p class="mb-0">
+      <i class="icon icon-message"></i> Commentaires:  <%= exercise.comments.count %>
+    </p>
+  </div>
+
+  <div class="card-footer">
     <!-- user info -->
     <small class="tile mb-2">
       <a href="<%= user_url(exercise.user) %>" data-turbo="false" class="tile-icon">
@@ -19,20 +43,11 @@
       </a>
 
       <div class="tile-content pl-3">
-        <p class="tile-title mb-0">Publié par:
+        <p class="tile-title mb-0">
           <%= link_to exercise.user.username, user_path(exercise.user), data: {turbo: false}  %> le <%= l exercise.created_at, format: :short %></p>
       </div>
     </small>
     <!-- end user info -->
-
-    <h2 class="card-title h5 mb-0">
-      <%= link_to exercise.title, exercise, data: {turbo: false} %>
-    </h2>
-  </div>
-  <div class="card-body">
-    <p><%= exercise.description.truncate(50) if exercise.description %></p>
-  </div>
-  <div class="card-footer">
 
 <%
 =begin %>
@@ -42,18 +57,5 @@
 <%
 =end %>
 
-      <% if exercise.level %>
-        <p class="mb-0">
-          <i class="icon icon-flag"></i> Niveau:  <%= exercise.level %>
-        </p>
-      <% end %>
-      <% if exercise.duration %>
-        <p class="mb-0">
-          <i class="icon icon-time"></i> Durée:  <%= Time.at(exercise.duration).utc.strftime("%H:%M") %>
-        </p>
-      <% end %>
-      <p class="mb-0">
-        <i class="icon icon-message"></i> Commentaires:  <%= exercise.comments.count %>
-      </p>
   </div>
 </div>

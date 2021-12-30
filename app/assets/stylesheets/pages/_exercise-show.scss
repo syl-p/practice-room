@@ -4,6 +4,9 @@
         position: relative;
         // margin: -130px auto 0px;
         margin-bottom: 50px;
+      &__hero {
+        min-height: 500px;
+      }
     }
     &__content {
         margin-bottom: 100px;
