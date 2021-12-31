@@ -24,10 +24,12 @@
     </div>
 
     <div class="panel-body">
-      <div id="notice" class="toast toast-success">
-        <button class="btn btn-clear float-right"></button>
-        <%= notice %>
-      </div>
+      <% if notice.present? %>
+        <div id="notice" class="toast toast-success">
+          <button class="btn btn-clear float-right"></button>
+          <%= notice %>
+        </div>
+      <% end %>
       <p>
         <%= @exercise.description %>
       </p>
@@ -35,7 +37,7 @@
 
     <div class="panel-footer">
       <% if can? :manage, @exercise %>
-        <%= link_to 'Edit', edit_exercise_path(@exercise) %> | <%= link_to 'Destroy', @exercise, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Modifier', edit_exercise_path(@exercise) %> | <%= link_to 'Supprimer', @exercise, method: :delete, data: { confirm: 'Are you sure?', turbo: true } %>
       <% end %>
     </div>
   </div>

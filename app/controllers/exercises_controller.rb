@@ -138,6 +138,19 @@ class ExercisesController < ApplicationController
   def destroy
     @exercise.destroy
     respond_to do |format|
+      # turbo do get_versions_list
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.replace(
+          "exercise_versions",
+            partial: "exercises/versions/list",
+            locals: {
+              exercise: @exercise,
+              versions: @exercise.original.versions_filtered
+            }
+          )
+      }
+
+      # normal
       format.html { redirect_to exercises_url, notice: "Exercise was successfully destroyed." }
       format.json { head :no_content }
     end

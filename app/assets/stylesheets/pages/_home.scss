@@ -10,6 +10,12 @@
       &_categories-filter, &_levels-filter {
         list-style: none;
       }
+      &_inner {
+        margin: 20px 0;
+        &:first-child {
+          margin-top: 0;
+        }
+      }
     }
   }
 }
