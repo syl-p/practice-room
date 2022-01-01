@@ -12,22 +12,58 @@
     </div>
   <% end %>
 
-  <div class="field form-group">
-    <%= form.label :name, class: "form-label" %>
-    <%= form.text_field :title, class: "form-input"  %>
-  </div>
 
-  <div class="field form-group columns">
-    <div class="column">
-      <%= form.label :description, class: "form-label"  %>
-      <%= form.text_area :description, class: "form-input" %>
+  <div class="columns">
+
+    <div class="column col-6">
+      <div class="field form-group">
+        <%= form.label :title, class: "form-label" %>
+        <%= form.text_field :title, class: "form-input"  %>
+      </div>
+
+      <div class="field form-group columns">
+        <div class="column">
+          <%= form.label :description, class: "form-label"  %>
+          <%= form.text_area :description, class: "form-input" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column col-6">
+        <div class="field form-group">
+          <%= form.label "vidéo (lien de partage youtube)", class: "form-label"  %>
+          <%= form.text_field :video_link, class: "form-input"  %>
+        </div>
+
+        <div class="field form-group">
+          <%= form.label :level, class: "form-label"  %>
+          <% Exercise.levels.keys.each do |level| %>
+            <%= form.radio_button :level, level %>
+            <%= form.label "#{:level}_#{level.parameterize.underscore}", level %>
+          <% end %>
+        </div>
+
+        <div class="field form-group">
+          <%= form.label "Visibilité", class: "form-label"  %>
+          <label class="form-switch">
+            <%= form.check_box :published %>
+            <i class="form-icon"></i> Publié (visible par les autres utilisateurs)
+          </label>
+        </div>
+
+        <div class="field form-group">
+          <%= form.label :categories, class: "form-label"  %>
+          <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => true, selected_value: nil}, :multiple => true %>
+        </div>
     </div>
   </div>
 
+  <div class="divider text-center" data-content="contenu"></div>
+
   <div class="field form-group columns" data-controller="markdown">
     <div class="column">
-      <%= form.label :body, class: "form-label"  %>
-      <%= form.text_area :body, class: "form-input mardown-textarea",
+      <%= form.label "Markdown", class: "form-label"  %>
+      <%= form.text_area "Aperçu", class: "form-input mardown-textarea",
         data: {markdown_target: 'field', action: 'input->markdown#onChange'} %>
     </div>
     <div class="column">
@@ -35,26 +71,6 @@
       <!-- HTML RESULT FROM MARKDOWN -->
       <div data-markdown-target="result" class="pt-1"></div>
     </div>
-  </div>
-
-  <div class="field form-group">
-    <%= form.label "vidéo (lien de partage youtube)", class: "form-label"  %>
-    <%= form.text_field :video_link, class: "form-input"  %>
-  </div>
-
-  <div class="field form-group">
-      <%= form.label :categories, class: "form-label"  %>
-      <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => true, selected_value: nil}, class: "form-input", :multiple => true %>
-  </div>
-
-
-
-  <div class="field form-group">
-    <%= form.label :level, class: "form-label"  %>
-    <% Exercise.levels.keys.each do |level| %>
-      <%= form.radio_button :level, level %>
-      <%= form.label "#{:level}_#{level.parameterize.underscore}", level %>
-    <% end %>
   </div>
 
   <div class="actions mt-2 form-group" data-markdown-target="result">
