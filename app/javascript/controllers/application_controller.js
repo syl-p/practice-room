@@ -14,8 +14,8 @@ export default class extends Controller {
     return this.application.controllers.find(c => c.identifier === "practicer-sidebar")
   }
 
-  get practicerNavController() {
-    return this.application.controllers.find(c => c.identifier === "practicer-nav")
+  get practicerNavControllers() {
+    return this.application.controllers.filter(c => c.identifier === "practicer-nav")
   }
 
   get csrfToken() {

@@ -9,6 +9,15 @@ class UsersController < ApplicationController
   def show
   end
 
+  def delete_avatar
+    @user = User.find(params[:id])
+
+    # delete avatar
+    @user.avatar = nil
+    @user.save
+    redirect_to edit_user_registration_path, notice: "Avatar was successfully deleted."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

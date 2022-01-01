@@ -28,7 +28,7 @@
             <div class="tile">
               <div class="tile-icon mr-2">
                 <!-- avatar preview -->
-                <%= render partial: "users/avatar", locals: {user: resource, size: :large} %>
+                <%= render partial: "users/avatar", locals: {user: resource, size: :large, ui: true} %>
               </div>
               <div class="tile-content ml-2">
                 <!-- field -->
@@ -69,7 +69,7 @@
         <div class="column col-12 mt-2">
         <div class="divider text-center" data-content="confirmation"></div>
           <div class="field form-group">
-            <%= f.label :current_password, class: "form-label"  %>
+            <%= f.label "Mot de passe actuel", class: "form-label"  %>
             <small>
               <i>(Nous avons besoin de votre mot de passe pour confirmer les changements)</i>
             </small>

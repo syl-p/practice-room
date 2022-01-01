@@ -1,4 +1,6 @@
-<% size = nil if local_assigns[:size].nil?
+<%
+size = nil if local_assigns[:size].nil?
+ui = nil if local_assigns[:ui].nil?
 class_size = case size
             when :small
               "avatar-sm"
@@ -16,5 +18,11 @@ class_size = case size
   data-initial="xx" style="background-color: #5755d9;">
   <% if user.avatar.present? %>
     <img src="<%= user.avatar.url %>" alt="<%= user.username %>">
+    <% if ui.present? %>
+      <!-- delete link rails ujs -->
+      <%= link_to delete_avatar_url(id: current_user.id), method: :delete, class: 'avatar-delete avatar-icon' do %>
+        <i class="icon icon-cross"></i>
+      <% end %>
+    <% end %>
   <% end %>
 </figure>

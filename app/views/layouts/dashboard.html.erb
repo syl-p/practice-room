@@ -14,16 +14,22 @@
   <body>
     <main>
       <%= render "shared/dashboard/navbar" %>
+
       <% if notice.present? %>
-        <p class="notice"><%= notice %></p>
+        <div class="toast toast-primary">
+          <p class="notice"><%= notice %></p>
+        </div>
       <% end %>
       <% if alert.present? %>
-        <p class="alert"><%= alert %></p>
+        <div class="toast toast-warning">
+          <p class="alert"><%= alert %></p>
+        </div>
       <% end %>
+
       <%= yield %>
     </main>
     <footer class="site-footer container">
-      <p class="text-center">Designed and built with <span class="text-error">♥</span> 
+      <p class="text-center">Designed and built with <span class="text-error">♥</span>
         by <a target="_blank" href="https://www.linkedin.com/in/websylvain/" target="_blank">Sylvain Pastor</a>.</p>
     </footer>
   </body>

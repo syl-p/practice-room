@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   root "exercises#index"
 
   get "users/:id", to: "users#show", as: "user"
+  delete "users/:id/delete_avatar", to: "users#delete_avatar", as: "delete_avatar"
 
   # Here because use turbo ??
   get "exercises/:id/versions", to: "exercises#get_versions_list", as: "list_versions"

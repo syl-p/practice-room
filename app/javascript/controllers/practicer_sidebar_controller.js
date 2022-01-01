@@ -2,7 +2,7 @@ import ApplicationController from "./application_controller"
 import { practice } from "./mixins/practice"
 
 export default class extends ApplicationController {
-  static targets = [ "container", "exercises", "exercise", "challenges", 
+  static targets = [ "container", "exercises", "exercise", "challenges",
   "favorites", "logNav", "practiceTime"]
 
   connect() {
@@ -57,9 +57,12 @@ export default class extends ApplicationController {
           const favorite = Array.from(this.favoritesTarget.children).find(c => c.dataset.exerciseId == id)
           if (favorite) {
             favorite.remove()
-            // UPDATE BTN
-            super.practicerNavController.btnTargets[1].dataset.practicerNavActionParam = "add"
-            super.practicerNavController.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> Ajouter à mes favoris`
+            // Get the good button in practicerNav controllers
+            const controller = super.practicerNavControllers.find(c => c.exerciseIdValue == id)
+            if (controller) {
+              controller.btnTargets[1].dataset.practicerNavActionParam = "add"
+              controller.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> ${controller.extendedValue ? "Ajouter à mes favoris" : ''}`
+            }
           }
       })
       .catch(err => {

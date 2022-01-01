@@ -15,6 +15,7 @@ class Ability
       can :manage, Exercise, {user_id: user.id}
       can :manage, Comment, {user_id: user.id}
       can :manage, User, {id: user.id}
+      can :delete_avatar, User, {id: user.id}
 
       # can :update, Version, :published, {exercise: {user_id: user.id}}
     end
