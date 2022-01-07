@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'users/show'
 
   # resources :versions
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations" }
   resources :media
   resources :exercises do
     resources :comments, module: :exercises

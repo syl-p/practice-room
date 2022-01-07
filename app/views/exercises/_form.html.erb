@@ -63,7 +63,7 @@
   <div class="field form-group columns" data-controller="markdown">
     <div class="column">
       <%= form.label "Markdown", class: "form-label"  %>
-      <%= form.text_area "Aperçu", class: "form-input mardown-textarea",
+      <%= form.text_area :body, class: "form-input mardown-textarea",
         data: {markdown_target: 'field', action: 'input->markdown#onChange'} %>
     </div>
     <div class="column">
