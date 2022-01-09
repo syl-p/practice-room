@@ -38,6 +38,11 @@
             </div>
           </div>
 
+          <div class="field form-group">
+            <%= f.label :bio, class: "form-label"  %>
+            <%= f.text_area :bio, class: "form-input" %>
+          </div>
+
           <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
             <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
           <% end %>
