@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :categories do
     collection do
+      get "new", to: "categories#new", as: "new"
       get ":slug", to: "categories#get_by_slug", as: "by_slug"
     end
   end
