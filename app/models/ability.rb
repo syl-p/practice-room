@@ -9,6 +9,7 @@ class Ability
     can [:read, :get_versions_list, :index, :search], Exercise
     can :read, Comment
     can :read, User
+    can [:read, :get_by_slug], Category
 
     # Abilities for logged users
     if user.id
@@ -16,8 +17,20 @@ class Ability
       can :manage, Comment, {user_id: user.id}
       can :manage, User, {id: user.id}
       can :delete_avatar, User, {id: user.id}
-
       # can :update, Version, :published, {exercise: {user_id: user.id}}
+
+      # Abilities for admins
+      if user.role == "admin"
+        can :manage, :all
+      end
+
+      # Abilities for moderators
+      if user.role == "moderator"
+        can :manage, Exercise
+        can :manage, Comment
+        # can :manage, User
+        can :manage, Category
+      end
     end
 
     # Define abilities for the passed in user here. For example:

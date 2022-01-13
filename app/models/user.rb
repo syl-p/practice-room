@@ -10,6 +10,13 @@ class User < ApplicationRecord
 
   include AvatarUploader::Attachment(:avatar)
 
+  enum role: {
+    banned: 0,
+    user: 1,
+    moderator: 2,
+    admin: 3
+  }
+
   # overwrite favorites
   def favorites_populated
     res = []
