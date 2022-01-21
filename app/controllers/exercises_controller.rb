@@ -98,6 +98,9 @@ class ExercisesController < ApplicationController
     @exercise = Exercise.new(exercise_params)
     @exercise.user_id = current_user.id
 
+    # published false if is a version of an exercise
+    @exercise.published = false if @exercise.original.present?
+
     respond_to do |format|
       if @exercise.save
         format.turbo_stream {

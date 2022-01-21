@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users, :controllers => { :registrations => "registrations" }
   resources :categories do
     collection do
       get "new", to: "categories#new", as: "new"
@@ -9,8 +10,6 @@ Rails.application.routes.draw do
   get 'users/index'
   get 'users/show'
 
-  # resources :versions
-  devise_for :users, :controllers => { :registrations => "registrations" }
   resources :media
   resources :exercises do
     resources :comments, module: :exercises
@@ -44,6 +43,13 @@ Rails.application.routes.draw do
   get "sessons_of_the_days/next(/:id)", to: "sessions_of_the_days#get_next", as: "next_session"
 
   mount MediumUploader.download_endpoint => "/uploads"
+
+
+  # Errors routes
+  get '/404', to: 'errors#not_found'
+  get '/500', to: 'errors#internal_server'
+  get '/422', to: 'errors#unprocessable'
+  get '/406', to: 'errors#unacceptable'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

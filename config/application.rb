@@ -19,6 +19,9 @@ module PracticeRoom
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # errors routes
+    config.exceptions_app = self.routes
+
     # Devise layouts
     config.to_prepare do
       Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "dashboard" : "application" }
