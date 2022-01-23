@@ -7,7 +7,15 @@ export default class extends ApplicationController {
 
   connect() {
     practice(this)
+    // CLICK outside to remove active class the sidebar
+    document.addEventListener('click', (e) => {
+      if (!this.containerTarget.contains(e.target)
+        && e.target.dataset.action != "click->application#togglePracticerSidebar") {
+        this.containerTarget.classList.remove('active')
+      }
+    })
   }
+
 
   logNavTargetConnected(element) {
     const a = this.containerTarget.querySelector(".panel-nav ul li a")
@@ -48,7 +56,7 @@ export default class extends ApplicationController {
     if ($event) {
       $event.preventDefault()
     }
-    this.containerTarget.classList.toggle('close')
+    this.containerTarget.classList.toggle('active')
   }
 
   removeFromFavorites({params: {id}}) {

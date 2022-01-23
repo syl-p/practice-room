@@ -3,11 +3,17 @@
     position: fixed;
     height: 100%;
     width: 500px;
-    right: 0px;
     top: 0px;
     z-index: 1000;
-    &.close {
-        right: -500px;
+    right: -500px;
+    // -webkit-transition: all 0.25s ease;
+    // -moz-transition: all 0.25s ease;
+    // -ms-transition: all 0.25s ease;
+    // -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+
+    &.active {
+      right: 0px;
     }
     &__close {
         position: absolute;
