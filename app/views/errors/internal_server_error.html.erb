@@ -1,2 +1,9 @@
-<h1>Errors#internal_server_error</h1>
-<p>Find me in app/views/errors/internal_server_error.html.erb</p>
+<section class="container error-page">
+  <article class="error-page_content">
+    <h1 class="mb-0">500</h1>
+    <p>Internal Server Error</p>
+    <p>Le server a rencontré une erreur interne. Il est possible que vous n'ayez pas les droits suffisants pour accéder à cette page.<br>
+    Vous pouvez réessayer plus tard ou contacter l'administrateur du site.</p>
+    <%= link_to 'Retour arrière', :back %> ou <%= link_to 'Accueil', root_path %>
+  </article>
+</section>

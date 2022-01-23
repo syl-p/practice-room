@@ -1,2 +1,8 @@
-<h1>Errors#not_found</h1>
-<p>Find me in app/views/errors/not_found.html.erb</p>
+<section class="container error-page">
+  <article class="error-page_content">
+    <h1 class="mb-0">404</h1>
+    <p>Page non trouvée</p>
+    <p>La page que vous avez demandée n'existe pas ou plus. Peut être qu'elle a été déplacée ou supprimée. <br> Nous sommes désolés de ce désagrément.</p>
+    <%= link_to 'Retour arrière', :back %> ou <%= link_to 'Accueil', root_path %>
+  </article>
+</section>

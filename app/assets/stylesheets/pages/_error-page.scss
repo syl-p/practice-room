@@ -1,0 +1,14 @@
+.error-page {
+  // center contain horizontally
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 70vh;
+  &_content {
+    h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+  }
+}
