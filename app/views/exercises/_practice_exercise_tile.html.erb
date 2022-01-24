@@ -4,9 +4,11 @@
             <i class="icon icon-file centered"></i>
         </div>
         <div class="tile-content">
-            <div class="tile-title"><%= practiced["exercise"]["title"] %></div>
+            <div class="tile-title">
+              <%= link_to practiced["exercise"]["title"], exercise_path(practiced["exercise"]['id']), data: {turbo: false} %>
+            </div>
             <small class="tile-subtitle text-gray">
-                <%= Time.at(practiced["duration"]).utc.strftime("%H:%M:%S") %>
+                Durée: <%= Time.at(practiced["duration"]).utc.strftime("%H:%M:%S") %>
             </small>
         </div>
         <div class="tile-action dropdown dropdown-right" tabindex="0">

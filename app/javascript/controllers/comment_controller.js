@@ -15,12 +15,10 @@ export default class extends Controller {
     this.formTarget.classList.toggle('d-none')
   }
 
-  submit($event) {
-    
-  }
-
   cancel($event) {
+    console.log($event)
     $event.preventDefault()
     this.formTarget.classList.add('d-none')
+    this.formTarget.querySelector('textarea').value = ''
   }
 }

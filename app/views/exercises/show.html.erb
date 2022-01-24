@@ -67,7 +67,9 @@
             <% if user_signed_in? %>
                 <%= turbo_frame_tag "comment_new" do %>
                     <%= render partial: "comments/form",
-                        locals: {comment: Comment.new, commentable: @exercise} %>
+                        locals: {
+                          comment: Comment.new, commentable: @exercise, first: true
+                        } %>
                 <% end %>
             <% else %>
                 <div class="empty">

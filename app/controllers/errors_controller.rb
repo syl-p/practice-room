@@ -3,7 +3,7 @@ class ErrorsController < ApplicationController
     render status: 404
   end
 
-  def internal_server_error
+  def internal_server
     render status: 500
   end
 
