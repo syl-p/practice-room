@@ -28,6 +28,17 @@ class Exercise < ApplicationRecord
     end
   end
 
+  def self.for_current_user(user_id = nil)
+    if user_id
+      self.where("published = true OR user_id = ?", user_id)
+          .where(original: nil)
+          .order("created_at DESC")
+    else
+      self.where({published: true, original: nil})
+          .order("created_at DESC")
+    end
+  end
+
   def versions_filtered(user_id = nil)
     if user_id
       if user === user_id

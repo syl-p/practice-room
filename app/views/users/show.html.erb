@@ -16,9 +16,9 @@
                     <h2>Exercices publiés: </h2>
                 </div>
                 <div class="card-body">
-                    <% if @user.exercises.present? %>
+                    <% if @user.exercises.for_current_user(current_user) %>
                         <%= render partial: 'exercises/list_compact',
-                            locals: {exercises: @user.exercises.where(original: nil)} %>
+                            locals: {exercises: @user.exercises.for_current_user(current_user)} %>
                     <% else %>
                         <p>Aucun exercice publié par cet utilisateur pour le moment.</p>
                     <% end %>

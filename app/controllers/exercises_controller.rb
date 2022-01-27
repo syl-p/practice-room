@@ -1,5 +1,6 @@
 class ExercisesController < ApplicationController
   before_action :set_exercise, only: %i[ show edit get_versions_list update destroy add_to_favorites add_to_practice]
+  before_action :set_exerices_list, only: [:index, :search]
   authorize_resource
 
   # specific layout for manage actions
@@ -7,9 +8,6 @@ class ExercisesController < ApplicationController
 
   # GET /exercises or /exercises.json
   def index
-    @categories = Category.all
-    @exercises = Exercise.all.where(original: nil)
-                          .order("created_at DESC")
   end
 
   # POST /exercises/search
@@ -17,10 +15,10 @@ class ExercisesController < ApplicationController
     order_by = params[:order_by].present? ? params[:order_by] : 'created_at'
     order = params[:order].present? ? params[:order] : 'DESC'
 
-    @exercises = Exercise.all
-    .where(original: nil)
-    .filtered(params)
-    .order("#{params[:order_by]} #{params[:order]}")
+    @exercises = @exercises
+                      .where(original: nil)
+                      .filtered(params)
+                      .order("#{params[:order_by]} #{params[:order]}")
 
     if params[:category_ids].present? && params[:category_ids].count > 0
       @exercises = @exercises.joins(:categories).where(categories: params[:category_ids])
@@ -29,9 +27,6 @@ class ExercisesController < ApplicationController
     if params[:levels].present? && params[:levels].count > 0
       @exercises = @exercises.where(level: params[:levels])
     end
-
-    # TODO: ajouter nombres de résultats par categories
-    @categories = Category.all
 
     respond_to do |format|
       format.turbo_stream {
@@ -248,6 +243,12 @@ class ExercisesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_exercise
     @exercise = Exercise.find(params[:id])
+  end
+
+  def set_exerices_list
+    @categories = Category.all
+    # if connected show published exercise and my private exercise
+    @exercises = Exercise.for_current_user(current_user)
   end
 
   # Only allow a list of trusted parameters through.
