@@ -1,9 +1,10 @@
+<h3>Ressources annexes</h3>
 <ul class="tile-list">
     <% @exercise.media.each do |medium| %>
     <!-- <%= medium.to_json %> -->
       <li class="tile tile-centered">
           <div class="tile-icon">
-              <i class="icon icon-mail centered"></i>
+              <i class="icon icon-link centered"></i>
           </div>
           <div class="tile-content">
             <div class="tile-title"><%= medium.name %> (<%= medium.file.metadata['filename'] %>)</div>
@@ -11,13 +12,18 @@
               <%= medium.file.metadata['size'] %> Octets · Public · <%= medium.created_at %></small>
           </div>
           <div class="tile-action dropdown dropdown-right">
+            <!--
             <button class="btn btn-link dropdown-toggle">
               <i class="icon icon-more-vert"></i>
             </button>
             <ul class="menu">
-              <li><%= link_to "Ouvrir", medium.file_url, { target: '_blank' } %></li>
-              <li><%= link_to "Téléchargement", medium.file.download_url %></li>
+              <li><%= link_to "Ouvrir", medium.file_url, { target: '_blank', data: {turbo: false} } %></li>
+              <li><%= link_to "Téléchargement", medium.file.download_url, { target: '_blank', data: {turbo: false} } %></li>
             </ul>
+            -->
+            <%= link_to medium.file_url, {class: 'btn btn-link', target: '_blank', data: {turbo: false} } do %>
+              <i class="icon icon-download"></i>
+            <% end %>
           </div>
       </li>
     <% end %>

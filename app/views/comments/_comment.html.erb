@@ -23,7 +23,7 @@
 
             <p>
                 <% if comment.parent_id.nil? %>
-                    <%= link_to "Répondre", "#", class: "btn btn-primary btn-sm", data: {action: "click->comment#display"} %>
+                    <%= link_to "Répondre", "#", class: "btn btn-primary btn-sm", data: {action: "click->comment#display"} if user_signed_in? %>
                 <% end %>
 
                 <% if can? :manage, comment %>

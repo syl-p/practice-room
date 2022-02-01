@@ -61,12 +61,12 @@
   <div class="divider text-center" data-content="contenu"></div>
 
   <div class="field form-group columns" data-controller="markdown">
-    <div class="column">
+    <div class="column col-6">
       <%= form.label "Markdown", class: "form-label"  %>
       <%= form.text_area :body, class: "form-input mardown-textarea",
         data: {markdown_target: 'field', action: 'input->markdown#onChange'} %>
     </div>
-    <div class="column">
+    <div class="column col-6">
       <label class="form-label">Aperçu</label>
       <!-- HTML RESULT FROM MARKDOWN -->
       <div data-markdown-target="result" class="pt-1"></div>

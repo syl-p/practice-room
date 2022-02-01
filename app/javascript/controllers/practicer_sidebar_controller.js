@@ -9,8 +9,10 @@ export default class extends ApplicationController {
     practice(this)
     // CLICK outside to remove active class the sidebar
     document.addEventListener('click', (e) => {
+      console.log(e.target.parentNode)
       if (!this.containerTarget.contains(e.target)
-        && e.target.dataset.action != "click->application#togglePracticerSidebar") {
+          && e.target.dataset.action != "click->application#togglePracticerSidebar"
+          && !e.target.closest('form')) {
         this.containerTarget.classList.remove('active')
       }
     })
