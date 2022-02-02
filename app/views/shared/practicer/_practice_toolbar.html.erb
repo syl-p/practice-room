@@ -16,7 +16,7 @@
     <% end %>
 
     <div class="btn-group btn-group-block <%= "column col-5 col-md-12" if extended %>">
-      <button class="btn <%= "tooltip tooltip-left" if extended.blank? %>"
+      <button type="button" class="btn <%= "tooltip tooltip-left" if extended.blank? %>"
           data-tooltip="<%= "Ajouter à ma pratique du jour" if extended.blank?  %>"
           data-practicer-nav-target="btn"
           data-practicer-nav-action-param="add"
@@ -25,7 +25,7 @@
           <i class="icon icon-plus"></i> <%= "Ajouter à ma pratique du jour" if extended %>
       </button>
       <% if current_user.favorites.include? exercise.id.to_s %>
-          <button class="btn <%= "tooltip tooltip-left" if extended.blank? %>"
+          <button type="button" class="btn <%= "tooltip tooltip-left" if extended.blank? %>"
           data-tooltip="<%= "Retirer de mes favoris" if extended.blank?  %>"
           data-practicer-nav-target="btn"
           data-practicer-nav-action-param="remove"
@@ -34,7 +34,7 @@
               <i class="icon icon-cross"></i> <%= "Retirer de mes favoris" if extended %>
           </button>
       <% else %>
-          <button class="btn <%= "tooltip tooltip-left" if extended.blank? %>"
+          <button type="button" class="btn <%= "tooltip tooltip-left" if extended.blank? %>"
           data-tooltip="<%= "Ajouter à mes favoris" if extended.blank?  %>"
           data-practicer-nav-target="btn"
           data-practicer-nav-action-param="add"
