@@ -1,18 +1,19 @@
 <header class="navbar container">
     <section class="navbar-section">
         <a href="<%= root_path %>">
-            Prm.
+          Prm.
         </a>
     </section>
     <section class="navbar-center">
         <%= link_to "Accueil", :root, class: "btn btn-link" %>
-        <a href="<%= root_path %>" class="btn btn-link">Qui sommes nous ?</a>
+        <%= link_to "La plateforme", page_path(slug: 'a-propos'), class: "btn btn-link" %>
+        <%= link_to "Contact & support", page_path(slug: 'contact'), class: "btn btn-link" %>
     </section>
     <section class="navbar-section">
       <% if user_signed_in? %>
           <%= render partial: "shared/user_dropdown" %>
       <% else %>
-        <%= link_to "Se connecter", new_user_session_path, class: "btn btn-link"  %> 
+        <%= link_to "Se connecter", new_user_session_path, class: "btn btn-link"  %>
         <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-link"  %>
       <% end %>
     </section>

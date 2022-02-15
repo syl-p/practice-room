@@ -42,8 +42,11 @@ Rails.application.routes.draw do
   get "sessons_of_the_days/previous(/:id)", to: "sessions_of_the_days#get_previous", as: "previous_session"
   get "sessons_of_the_days/next(/:id)", to: "sessions_of_the_days#get_next", as: "next_session"
 
+  # Media
   mount MediumUploader.download_endpoint => "/uploads"
 
+  # Pages
+  get "/pages/:slug", to: "pages#show", as: "page"
 
   # Errors routes
   get '/404', to: 'errors#not_found'

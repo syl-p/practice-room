@@ -2,17 +2,17 @@ import ApplicationController from "./application_controller"
 import { practice } from "./mixins/practice"
 
 export default class extends ApplicationController {
-  static targets = [ "container", "exercises", "exercise", "challenges",
+  static targets = ["container", "exercises", "exercise", "challenges",
   "favorites", "logNav", "practiceTime"]
 
   connect() {
     practice(this)
     // CLICK outside to remove active class the sidebar
     document.addEventListener('click', (e) => {
-      console.log(e.target.parentNode)
+      console.log(e.target, e.target.parentNode)
       if (!this.containerTarget.contains(e.target)
           && e.target.dataset.action != "click->application#togglePracticerSidebar"
-          && !e.target.closest('form')) {
+          && e.target.getAttribute('type') != "submit") {
         this.containerTarget.classList.remove('active')
       }
     })
