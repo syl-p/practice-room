@@ -1,11 +1,12 @@
-<section>
-    <header class="hero mb-2 bg-secondary container">
+<section class="user-show">
+    <header class="hero mb-2 container">
         <div class="hero-body columns">
             <%= render partial: "users/avatar", locals: {user: @user, size: :xlarge} %>
-            <div class="pl-2">
+            <div class="user-show__header">
                 <h1 class="my-0"><%= @user.username %></h1>
                 <p class="pt-0">Membre depuis <%= @user.created_at %></p>
-                <p class="pt-0"><%= @user.bio %></p>
+                <p class="pt-0 mb-0">Amis: </p>
+                <%= render partial: "users/friendships/preview-list", locals: {user: @user} %>
             </div>
         </div>
     </header>
@@ -28,10 +29,10 @@
         <aside class="column col-4">
             <div class="card mb-2">
                 <div class="card-header">
-                    <div class="card-title h5">Contact & Information</div>
+                    <div class="card-title h5">Bio et autres informations</div>
                 </div>
                 <div class="card-body">
-                    ...
+                  <p><%= @user.bio %></p>
                 </div>
             </div>
             <div class="card">

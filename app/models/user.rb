@@ -8,6 +8,12 @@ class User < ApplicationRecord
   has_many :exercises, dependent: :destroy
   has_many :sessions_of_the_days, dependent: :destroy
 
+  has_many :friendships_as_requestor, class_name: "Friendship", foreign_key: "requestor_id", dependent: :destroy
+  has_many :friendships_as_receiver, class_name: "Friendship", foreign_key: "receiver_id", dependent: :destroy
+
+  has_many :requestors, through: :friendships_as_requestor
+  has_many :receivers, through: :friendships_as_receiver
+
   include AvatarUploader::Attachment(:avatar)
 
   enum role: {
@@ -16,6 +22,15 @@ class User < ApplicationRecord
     moderator: 2,
     admin: 3
   }
+
+  # get friends
+  def friendships
+    self.friendships_as_requestor.where(accepted: true) + self.friendships_as_receiver.where(accepted: true)
+  end
+
+  def friends
+    self.friendships.map { |friendship| friendship.requestor_id == self.id ? friendship.receiver : friendship.requestor }
+  end
 
   # overwrite favorites
   def favorites_populated

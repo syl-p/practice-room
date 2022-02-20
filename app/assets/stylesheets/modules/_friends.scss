@@ -1,0 +1,25 @@
+.friends {
+  &__list {
+    &__item {
+      &__avatar {
+
+      }
+    }
+  }
+
+  &__preview-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+    :first-child {
+      margin-left: 0;
+    }
+    &__item {
+      margin: 10px;
+    }
+  }
+}

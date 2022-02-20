@@ -11,6 +11,7 @@
 @import "modules/tile-list";
 @import "modules/comment";
 @import "modules/footer";
+@import "modules/friends";
 @import "modules/exercises/list";
 @import "modules/exercises/card";
 @import "modules/practicer/sidebar";
@@ -23,6 +24,7 @@
 @import "pages/login";
 @import "pages/about-page";
 @import "pages/error-page";
+@import "pages/user-show";
 
 tabs-section::shadow .panel-nav{
   background: blue;
