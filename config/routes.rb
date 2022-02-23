@@ -48,6 +48,11 @@ Rails.application.routes.draw do
   # Pages
   get "/pages/:slug", to: "pages#show", as: "page"
 
+  # Friendships
+  delete "friendship/remove/:id", to: "friendships#destroy", as: "remove_friendship"
+  post "friendship/request/:id", to: "friendships#create", as: "friendship_request"
+  put "friendship/accept/:id", to: "friendships#accept", as: "accept_friendship"
+
   # Errors routes
   get '/404', to: 'errors#not_found'
   get '/500', to: 'errors#internal_server'

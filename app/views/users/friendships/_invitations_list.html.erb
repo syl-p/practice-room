@@ -1,0 +1,24 @@
+<%= turbo_frame_tag "invitations_list" do %>
+  <ul>
+    <% if current_user.pending_invitations.count > 0 %>
+      <!-- pending invitation list -->
+      <% current_user.pending_invitations.each do |invitation| %>
+        <li class="tile tile-centered">
+          <div class="tile-icon">
+            <%= render partial: "users/avatar", locals: {user: invitation.requestor, size: :small} %>
+          </div>
+          <div class="tile-content pl-3">
+            <%= link_to invitation.requestor.username, user_path(invitation.requestor), data: {turbo: false} %> souhaite vous ajouter en ami.
+            <%= link_to "Accepter", accept_friendship_path(id: invitation.id, view: 'invitations_list'), method: :put %>
+            ou
+            <%= link_to "Refuser", remove_friendship_path(id: invitation.id, view: 'invitations_list'), method: :delete %>
+          </div>
+        </li>
+      <% end %>
+    <% else %>
+      <li>Aucune invitation en attente</li>
+      <li role="separator" class="divider"></li>
+      <li><a href="#">Voir la liste d'amis</a></li>
+    <% end %>
+  </ul>
+<% end %>

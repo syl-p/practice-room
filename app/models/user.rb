@@ -32,6 +32,22 @@ class User < ApplicationRecord
     self.friendships.map { |friendship| friendship.requestor_id == self.id ? friendship.receiver : friendship.requestor }
   end
 
+  def following?(user)
+    self.friendships_as_requestor.where(receiver_id: user.id, accepted: true).first.present? || self.friendships_as_receiver.where(requestor_id: user.id, accepted: true).first.present?
+  end
+
+  def find_friendship(user)
+    self.friendships_as_requestor.where(receiver_id: user.id).first || self.friendships_as_receiver.where(requestor_id: user.id).first
+  end
+
+  def pending_requests
+    self.friendships_as_requestor.where(accepted: false)
+  end
+
+  def pending_invitations
+    self.friendships_as_receiver.where(accepted: false)
+  end
+
   # overwrite favorites
   def favorites_populated
     res = []

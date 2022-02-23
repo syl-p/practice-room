@@ -3,9 +3,7 @@
 <section class="exercise-show container">
     <header class="hero">
         <div class="hero-body">
-
             <p id="notice"><%= notice %></p>
-
             <ul class="breadcrumb ml-2">
                 <li class="breadcrumb-item">
                     <%= link_to 'Accueil', root_path %>
@@ -32,27 +30,29 @@
 
             <p>Description de l'exercise</p>
             <%= render "shared/user_tile", user: @exercise.user, published_at: @exercise.created_at %>
-
-            <% if current_user %>
-              <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: @exercise, extended: true } %>
-            <% end %>
         </div>
     </header>
     <article class="container">
         <header class="exercise-show__intro columns">
-            <!-- VIDEO -->
-            <div class="exercise-show__intro__hero column">
-              <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
-            </div>
-            <!-- VIDEO -->
+          <!-- VIDEO -->
+          <div class="exercise-show__intro__hero column">
+            <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
+          </div>
+          <!-- VIDEO -->
 
-            <!-- DYNAMIC ZONE -->
-            <aside class="exercise-show__versions column col-4 hide-lg">
-                <%= turbo_frame_tag "exercise_versions" do %>
-                  <%= render partial: "exercises/versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
-                <% end %>
-            </aside>
-            <!-- DYNAMIC ZONE -->
+          <!-- DYNAMIC ZONE -->
+          <aside class="exercise-show__versions column col-4 hide-lg">
+              <%= turbo_frame_tag "exercise_versions" do %>
+                <%= render partial: "exercises/versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
+              <% end %>
+          </aside>
+          <!-- DYNAMIC ZONE -->
+
+          <div class="exercise-show__practice-toolbar column col-12">
+            <% if current_user.present? %>
+              <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: @exercise, extended: true } %>
+            <% end %>
+          </div>
         </header>
         <section class="exercise-show__content columns">
             <section class="column col-8">

@@ -18,6 +18,10 @@ class Ability
       can :manage, Comment, {user_id: user.id}
       can :manage, User, {id: user.id}
       can :delete_avatar, User, {id: user.id}
+
+      can :manage, Friendship, {requestor_id: user.id}
+      can :manage, Friendship, {receiver_id: user.id}
+
       # can :update, Version, :published, {exercise: {user_id: user.id}}
 
       # Abilities for admins

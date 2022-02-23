@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2022_02_18_085340) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["receiver_id"], name: "index_friendships_on_receiver_id"
+    t.index ["requestor_id", "receiver_id"], name: "index_friendships_on_requestor_id_and_receiver_id", unique: true
     t.index ["requestor_id"], name: "index_friendships_on_requestor_id"
   end
 
