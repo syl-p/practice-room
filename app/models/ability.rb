@@ -15,6 +15,11 @@ class Ability
     # Abilities for logged users
     if user.id
       can :manage, Exercise, {user_id: user.id}
+      can :add_to_favorites, Exercise
+      can :remove_from_favorites, Exercise
+      can :add_to_practice, Exercise
+      can :remove_from_practice, Exercise
+
       can :manage, Comment, {user_id: user.id}
       can :manage, User, {id: user.id}
       can :delete_avatar, User, {id: user.id}
