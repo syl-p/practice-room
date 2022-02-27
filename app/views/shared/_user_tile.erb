@@ -6,8 +6,5 @@
         <p class="tile-title mb-0">Publié par:
             <%= link_to user.username, user_path(user) %> le <%= l published_at, format: :long %></p>
         <p class="tile-subtitle mb-1"><%= user.bio %></p>
-        <% if current_user.present? && current_user.id != user.id %>
-          <%= render partial: "users/friendships/friendship_with_current_user", locals: {user: user} %>
-        <% end %>
     </div>
 </div>
