@@ -20,6 +20,12 @@ class Exercise < ApplicationRecord
     advanced: 2
   }
 
+  enum visibility: {
+    everyone: 0,
+    not_referenced: 1,
+    friends: 2
+  }
+
   def self.filtered(query_params)
     if query_params.present?
       self.where("title ILIKE :text OR body ILIKE :text", text: "%#{query_params[:text]}%")
@@ -30,13 +36,12 @@ class Exercise < ApplicationRecord
 
   def self.for_current_user(user_id = nil)
     if user_id
-      self.where("published = true OR user_id = ?", user_id)
-          .where(original: nil)
-          .order("created_at DESC")
+      # own exercises + (exercise visibility = 0 or (visibility = 2 and friends))
+      exercices = self.where("user_id = ? OR (published = true AND (visibility = 0 OR (visibility = 2 AND user_id IN (?))))", user_id, user_id.friends)
     else
-      self.where({published: true, original: nil})
-          .order("created_at DESC")
+      exercices = self.where({published: true, visibility: 0, original: nil})
     end
+    exercices.where(original: nil).order("created_at DESC")
   end
 
   def versions_filtered(user_id = nil)

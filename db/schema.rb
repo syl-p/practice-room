@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_18_085340) do
+ActiveRecord::Schema.define(version: 2022_03_03_081153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 2022_02_18_085340) do
     t.text "description"
     t.integer "level"
     t.integer "duration", default: 600
+    t.integer "visibility", default: 0
     t.index ["exercise_id"], name: "index_exercises_on_exercise_id"
     t.index ["user_id"], name: "index_exercises_on_user_id"
   end

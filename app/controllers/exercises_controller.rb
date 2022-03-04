@@ -28,6 +28,13 @@ class ExercisesController < ApplicationController
       @exercises = @exercises.where(level: params[:levels])
     end
 
+    if params[:visibility].present?
+      case params[:visibility]
+      when "friends"
+        @exercises = @exercises.joins(:user).where(users: {id: current_user.friends})
+      end
+    end
+
     respond_to do |format|
       format.turbo_stream {
         render turbo_stream: turbo_stream.replace(
@@ -250,7 +257,7 @@ class ExercisesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def exercise_params
     params.fetch(:exercise, {}).permit(
-      :body, :video_link, :title, :published, :exercise_id, :description, :level, medium_ids: [], category_ids: [], levels: [], versions_attributes: %i[
+      :body, :video_link, :title, :published, :visibility, :exercise_id, :description, :level, medium_ids: [], category_ids: [], levels: [], versions_attributes: %i[
         published user_id id
       ]
     )

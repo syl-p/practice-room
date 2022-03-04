@@ -27,6 +27,11 @@
           <%= form.text_area :description, class: "form-input" %>
         </div>
       </div>
+
+      <div class="field form-group">
+        <%= form.label :categories, class: "form-label"  %>
+        <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => true, selected_value: nil}, :multiple => true, class: "form-select" %>
+      </div>
     </div>
 
     <div class="column col-6">
@@ -44,16 +49,19 @@
         </div>
 
         <div class="field form-group">
-          <%= form.label "Visibilité", class: "form-label"  %>
+          <%= form.label "Mettre en ligne ?", class: "form-label"  %>
           <label class="form-switch">
             <%= form.check_box :published %>
-            <i class="form-icon"></i> Publié (visible par les autres utilisateurs)
+            <i class="form-icon"></i> Mettre en ligne
           </label>
         </div>
 
         <div class="field form-group">
-          <%= form.label :categories, class: "form-label"  %>
-          <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => true, selected_value: nil}, :multiple => true %>
+          <%= form.label "Visibilité", class: "form-label"  %>
+          <% Exercise.visibilities.keys.each do |visibility| %>
+            <%= form.radio_button :visibility, visibility %>
+            <%= form.label "#{:visibility}_#{visibility.parameterize.underscore}", visibility %>
+          <% end %>
         </div>
     </div>
   </div>

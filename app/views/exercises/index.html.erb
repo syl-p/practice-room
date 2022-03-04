@@ -14,51 +14,11 @@
           <section class="exercises-index_content container">
               <section class="columns">
                 <aside class="column col-2 hide-md exercises-index_content_aside">
-                  <div class="exercises-index_content_aside_inner">
-                    <h3>Catégories</h3>
-                    <ul class="exercises-index_content_aside_categories-filter">
-                      <% @categories.each do |category| %>
-                        <li class="form-group">
-                          <label class="form-checkbox">
-                            <%= form.check_box :category_ids, {
-                                  multiple: true,
-                                  data: {action: "change->hello#search"},
-                                  checked: @category.present? && @category.id == category.id
-                                },
-                                category.id,
-                                false %>
-                            <i class="form-icon"></i>
-                            <%= category.name %>
-                          </label>
-                        </li>
-                      <% end %>
-                    </ul>
-                  </div>
-                  <div class="divider"></div>
-                  <div class="exercises-index_content_aside_inner">
-                    <h3>Niveaux</h3>
-                    <ul class="exercises-index_content_aside_levels-filter">
-                      <% Exercise.levels.each do |level| %>
-                        <li class="form-group">
-                          <label class="form-checkbox">
-                            <%= form.check_box :levels, {
-                                  multiple: true,
-                                  data: {action: "change->hello#search"}
-                                },
-                                level.second,
-                                false %>
-                            <i class="form-icon"></i>
-                            <%= level.first %>
-                          </label>
-                        </li>
-                      <% end %>
-                    </ul>
-                  </div>
+                  <%= render partial: "exercises/search/aside", locals: {categories: @categories, form: form}%>
                 </aside>
-
                 <!-- Results list -->
                 <section class="column col-md-12 col-10 exercises-index_content_main">
-                    <%= render partial: "exercises/search/list", locals: {exercises: @exercises, categories: @categories} %>
+                  <%= render partial: "exercises/search/list", locals: {exercises: @exercises, categories: @categories} %>
                 </section>
                 <!-- END Results list -->
               </section>
