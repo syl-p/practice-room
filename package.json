@@ -3,11 +3,12 @@
   "private": true,
   "scripts": {
     "build": "esbuild app/javascript/application.js --bundle --outdir=app/assets/builds",
-    "build:css": "sass ./app/assets/stylesheets/application.sass.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+    "build:css": "cp -r ./node_modules/@mdi/font/fonts ./public; sass ./app/assets/stylesheets/application.sass.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/turbo-rails": "^7.0.1",
+    "@mdi/font": "^6.5.95",
     "@rails/actioncable": "^7.0.0-alpha2",
     "@rails/activestorage": "^7.0.0-alpha2",
     "@rails/ujs": "^7.0.0-alpha2",

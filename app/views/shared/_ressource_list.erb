@@ -4,7 +4,7 @@
     <!-- <%= medium.to_json %> -->
       <li class="tile tile-centered">
           <div class="tile-icon">
-              <i class="icon icon-link centered"></i>
+              <i class="mdi mdi-file centered"></i>
           </div>
           <div class="tile-content">
             <div class="tile-title"><%= medium.name %> (<%= medium.file.metadata['filename'] %>)</div>
@@ -22,7 +22,7 @@
             </ul>
             -->
             <%= link_to medium.file_url, {class: 'btn btn-link', target: '_blank', data: {turbo: false} } do %>
-              <i class="icon icon-download"></i>
+              <i class="mdi mdi-download"></i>
             <% end %>
           </div>
       </li>

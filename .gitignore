@@ -29,12 +29,15 @@
 /config/master.key
 
 /public/uploads/*
+/public/fonts
+/public/fonts/*
 /public/packs
 /public/packs-test
 /node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+/.idea/*
 
 /app/assets/builds/*
 !/app/assets/builds/.keep

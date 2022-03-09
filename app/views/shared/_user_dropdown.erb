@@ -1,26 +1,26 @@
 
-  <div class="btn-group navbar__user-infos">
+  <div class="btn-group navbar__user-infos"  data-controller="user-nav">
     <!--!-->
-    <div class="dropdown" data-controller="user-nav">
+    <div class="dropdown">
       <button
         class="btn btn-link <%= current_user.pending_invitations.count > 0 ? "badge" : "" %> mx-2  dropdown-toggle"
         data-user-nav-target="invitationsCount"
         data-badge="<%= current_user.pending_invitations.count > 0 ? current_user.pending_invitations.count : 0 %>"
         >
-        <i class="icon icon-people"></i>
+        <i class="mdi mdi-account-supervisor"></i>
       </button>
       <!--!-->
       <div class="menu">
         <%= render partial: 'users/friendships/invitations_list' %>
       </div>
     </div>
-    <div class="dropdown" data-controller="user-nav">
+    <div class="dropdown">
       <button class="btn btn-link ml-2" data-action="click->application#togglePracticerSidebar">
           <span class="pr-2"><%= current_user.username %></span>
           <%= render partial: "users/avatar", locals: {user: current_user, size: :small} %>
       </button>
-      <a class="btn btn-link dropdown-toggle pl-0" tabindex="0">
-          <i class="icon icon-caret"></i>
+      <a class="btn btn-link dropdown-toggle px-0" tabindex="0">
+          <i class="mdi mdi-menu-down"></i>
       </a>
       <!-- menu component -->
       <ul class="menu">

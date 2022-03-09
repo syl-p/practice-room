@@ -5,4 +5,11 @@
   &_copyright {
     margin-top: 50px;
   }
+  &__contact-list {
+    list-style-type: none;
+    padding-left: 0;
+    .mdi {
+      font-size: 20px;
+    }
+  }
 }

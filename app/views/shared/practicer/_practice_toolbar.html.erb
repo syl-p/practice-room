@@ -22,7 +22,7 @@
           data-practicer-nav-action-param="add"
           data-practicer-nav-id-param="<%= exercise.id %>"
           data-action="click->practicer-nav#addToPractice">
-          <i class="icon icon-plus"></i> <%= "Ajouter à ma pratique du jour" if extended %>
+          <i class="mdi mdi-playlist-plus"></i> <%= "Ajouter à ma pratique du jour" if extended %>
       </button>
       <% if current_user.favorites.include? exercise.id.to_s %>
           <button type="button" class="btn <%= "tooltip tooltip-left" if extended.blank? %>"
@@ -31,7 +31,7 @@
           data-practicer-nav-action-param="remove"
           data-practicer-nav-id-param="<%= exercise.id %>"
           data-action="click->practicer-nav#favorites">
-              <i class="icon icon-cross"></i> <%= "Retirer de mes favoris" if extended %>
+              <i class="mdi mdi-bookmark-remove"></i> <%= "Retirer de mes favoris" if extended %>
           </button>
       <% else %>
           <button type="button" class="btn <%= "tooltip tooltip-left" if extended.blank? %>"
@@ -40,7 +40,7 @@
           data-practicer-nav-action-param="add"
           data-practicer-nav-id-param="<%= exercise.id %>"
           data-action="click->practicer-nav#favorites">
-              <i class="icon icon-bookmark"></i> <%= "Ajouter à mes favoris" if extended %>
+              <i class="mdi mdi-bookmark-outline"></i> <%= "Ajouter à mes favoris" if extended %>
           </button>
       <% end %>
   </div>

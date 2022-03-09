@@ -23,16 +23,16 @@
   <div class="card-body pt-0">
     <% if exercise.level %>
       <p class="mb-0">
-        <i class="icon icon-flag"></i> Niveau:  <%= exercise.level %>
+        <i class="mdi mdi-arm-flex"></i> Niveau:  <%= exercise.level %>
       </p>
     <% end %>
     <% if exercise.duration %>
       <p class="mb-0">
-        <i class="icon icon-time"></i> Durée:  <%= Time.at(exercise.duration).utc.strftime("%H:%M") %>
+        <i class="mdi mdi-timer-sand"></i> Durée:  <%= Time.at(exercise.duration).utc.strftime("%H:%M") %>
       </p>
     <% end %>
     <p class="mb-0">
-      <i class="icon icon-message"></i> Commentaires:  <%= exercise.comments.count %>
+      <i class="mdi mdi-forum-outline"></i> Commentaires:  <%= exercise.comments.count %>
     </p>
   </div>
 

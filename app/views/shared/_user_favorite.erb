@@ -1,16 +1,16 @@
 <li class="tile" data-exercise-id="<%= exercise.id %>">
     <div class="tile-icon">
-        <i class="icon icon-bookmark centered"></i>
+        <i class="mdi mdi-bookmark-outline centered"></i>
     </div>
     <div class="tile-content">
         <%= link_to exercise.title, exercise, class: 'tile-title' %><br>
-        <small class="tile-subtitle">short description to replace</small>
+        <small class="tile-subtitle"><%= exercise.title %></small>
     </div>
     <div class="tile-action">
         <button class="btn btn-link"
                 data-practicer-sidebar-id-param="<%= exercise.id %>"
                 data-action="click->practicer-sidebar#removeFromFavorites">
-            <i class="icon icon-cross"></i>
+            <i class="mdi mdi-close"></i>
         </button>
     </div>
 </li>

@@ -63,7 +63,10 @@
             </aside>
         </section>
         <footer class="exercise-show__comments">
-            <h2>Commentaires</h2>
+            <h2 class="text-center">
+              <i class="mdi mdi-forum-outline"></i>
+              Commentaires
+            </h2>
             <% if user_signed_in? %>
                 <%= turbo_frame_tag "comment_new" do %>
                     <%= render partial: "comments/form",
@@ -74,23 +77,18 @@
             <% else %>
                 <div class="empty">
                     <div class="empty-icon">
-                        <i class="icon icon-people"></i>
+                        <i class="mdi mdi-account"></i>
                     </div>
                     <p class="empty-title h5">Vous devez être connecter pour pouvoir commenter.</p>
                     <p class="empty-subtitle">Si tu n'as pas de compte tu peux aussi t'inscrire gratuitement pour participer à la conversation.</p>
                     <div class="empty-action">
-                        <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary"  %>
-            <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-link"  %>
+                      <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary"  %>
+                      <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-link"  %>
                     </div>
                 </div>
             <% end %>
 
             <!-- COMMENT LIST -->
-            <%
-=begin%>
- <%= turbo_stream_from @exercise, :comments %>
-<%
-=end%>
             <%= tag.div id: "#{dom_id(@exercise)}_comments" do %>
                 <%=  render partial: "comments/comment", collection: @exercise.comments.where(parent_id: nil), as: :comment  %>
             <% end %>

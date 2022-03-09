@@ -21,7 +21,7 @@ class_size = case size
     <% if ui.present? %>
       <!-- delete link rails ujs -->
       <%= link_to delete_avatar_url(id: current_user.id), method: :delete, class: 'avatar-delete avatar-icon' do %>
-        <i class="icon icon-cross"></i>
+        <i class="mdi mdi-close"></i>
       <% end %>
     <% end %>
   <% end %>

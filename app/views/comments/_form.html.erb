@@ -14,11 +14,11 @@
     <% end %>
 
     <div class="form-group">
-        <%= f.label "Votre commentaire", class: "form-label" %> <br>
+        <%= f.label "Votre commentaire", class: "form-label mb-0" %>
         <%= f.text_area :body, class: "form-input" %>
     </div>
     <div class="from-group">
-        <%= f.submit "Submit", disable_with: 'Submiting...', class: "btn" %>
+        <%= f.submit "Commenter", disable_with: 'Submiting...', class: "btn" %>
         <%= link_to "Annuler", comment, class: "btn", data: {action: "click->comment#cancel"} if !first %>
     </div>
 <% end %>

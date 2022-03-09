@@ -12,6 +12,11 @@
         margin-bottom: 100px;
     }
     &__comments {
+        h2 {
+          .mdi {
+            font-size: 1.8rem;
+          }
+        }
         .empty {
             background: #f7f8f9;
             margin: 50px 0px;

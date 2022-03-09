@@ -71,7 +71,7 @@ export default class extends ApplicationController {
             const controller = super.practicerNavControllers.find(c => c.exerciseIdValue == id)
             if (controller) {
               controller.btnTargets[1].dataset.practicerNavActionParam = "add"
-              controller.btnTargets[1].innerHTML = `<i class="icon icon-bookmark"></i> ${controller.extendedValue ? "Ajouter à mes favoris" : ''}`
+              controller.btnTargets[1].innerHTML = `<i class="mdi mdi-bookmark-outline"></i> ${controller.extendedValue ? "Ajouter à mes favoris" : ''}`
             }
           }
       })

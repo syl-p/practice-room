@@ -1,19 +1,19 @@
-<ul>
+<ul class="tile-list">
     <% exercises.each do |exercise| %>
-        <li class="tile" data-exercise-id="<%= exercise.id %>">
+        <li class="tile tile-centered" data-exercise-id="<%= exercise.id %>">
             <div class="tile-icon">
-                <i class="icon icon-bookmark centered"></i>
+              <i class="mdi mdi-book-open centered"></i>
             </div>
             <div class="tile-content">
-                <%= link_to exercise.title, exercise, class: 'tile-title' %><br>
-                <small class="tile-subtitle">short description to replace</small>
+              <%= link_to exercise.title, exercise, class: 'tile-title' %><br>
+              <small class="tile-subtitle"><%= exercise.description %></small>
             </div>
             <% if can? :manage, exercise %>
-                <div class="tile-action">
-                    <a href="<%= edit_exercise_path(exercise) %>" class="btn btn-link" title="Editer l'exercice">
-                        <i class="icon icon-edit"></i>
-                    </a>
-                </div>
+              <div class="tile-action">
+                  <a href="<%= edit_exercise_path(exercise) %>" class="btn btn-link" title="Editer l'exercice">
+                      <i class="mdi mdi-pencil"></i>
+                  </a>
+              </div>
             <% end %>
         </li>
     <% end %>
