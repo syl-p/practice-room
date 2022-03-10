@@ -5,7 +5,7 @@
         // margin: -130px auto 0px;
         margin-bottom: 50px;
       &__hero {
-        min-height: 500px;
+        // min-height: 500px;
       }
     }
     &__content {
@@ -47,4 +47,15 @@
       padding-top: 2rem;
       padding-bottom: 2rem;
     }
+}
+
+// responsive
+@media (min-width: 840px) {
+  .exercise-show {
+    &__intro {
+      &__hero {
+        min-height: 300px;
+      }
+    }
+  }
 }

@@ -1,4 +1,7 @@
-<% content_for(:title, "Profil de #{@user.username}") %>
+<%
+  content_for(:title, "Profil de #{@user.username}")
+  content_for(:description, @user.bio)
+%>
 <section class="user-show">
     <header class="hero mb-2 container">
       <div class="hero-body columns">

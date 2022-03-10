@@ -1,3 +1,6 @@
+<%
+  content_for :description, "Practice room; c'est une plateforme collaborative qui permet aux musiciens de créer et améliorer leur routine de pratique."
+%>
 <section data-controller="hello">
   <%= turbo_frame_tag "search" do %>
     <%= form_with(url: search_exercises_path, data: {hello_target: "form"}) do |form| %>

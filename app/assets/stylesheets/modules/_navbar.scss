@@ -4,3 +4,19 @@
   &__user-infos {
   }
 }
+
+// responsive
+@media (max-width: 840px) {
+  .navbar {
+    .navbar-center {
+      display: none;
+    }
+    &__user-infos {
+      &__settings {
+        button span {
+          display: none;
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,7 @@
-<% content_for(:title, @exercise.title) %>
+<%
+  content_for(:title, @exercise.title)
+  content_for(:description, @exercise.description)
+%>
 
 <section class="exercise-show container">
     <header class="hero">
@@ -55,10 +58,10 @@
           </div>
         </header>
         <section class="exercise-show__content columns">
-            <section class="column col-8">
+            <section class="column col-8 col-sm-12">
                 <%= sanitize renderHtml @exercise.body %>
             </section>
-            <aside class="column col-4">
+            <aside class="column col-4 col-sm-12">
                 <%= render "shared/ressource_list" if @exercise.media.present? %>
             </aside>
         </section>
