@@ -1,0 +1,32 @@
+<section class="container dashboard-page  exercise-edit">
+  <% if !notice.nil? %>
+      <div id="notice toast toast-success">
+          <button class="btn btn-clear float-right"></button>
+          <%= notice %>
+      </div>
+  <% end %>
+
+
+  <%= render partial: 'exercises/form/nav', locals: {active: 'vibility', edit: true} %>
+  <%= form_with(model: @exercise, local: true) do |f| %>
+    <div class="field form-group">
+      <%= f.label "Mettre en ligne ?", class: "form-label"  %>
+      <label class="form-switch">
+        <%= f.check_box :published %>
+        <i class="form-icon"></i> Mettre en ligne
+      </label>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label "Type de visibilité:", class: "form-label"  %>
+      <% Exercise.visibilities.keys.each do |visibility| %>
+        <%= f.radio_button :visibility, visibility %>
+        <%= f.label "#{:visibility}_#{visibility.parameterize.underscore}", visibility %>
+      <% end %>
+    </div>
+
+    <div class="actions mt-2 form-group" data-markdown-target="result">
+      <%= f.submit "Mettre à jour la visibilité", class: "form-input"  %>
+    </div>
+  <% end %>
+</section>

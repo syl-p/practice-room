@@ -84,9 +84,11 @@ class ExercisesController < ApplicationController
     if params[:step].present?
       case params[:step]
       when "media"
-        render "exercises/form_for_media"
+        render "exercises/form/media"
       when "versions"
-        render "exercises/form_for_versions"
+        render "exercises/form/versions"
+      when "visibility"
+        render "exercises/form/visibility"
       end
     else
       if @exercise.original.present? # it's a version
@@ -106,7 +108,12 @@ class ExercisesController < ApplicationController
     respond_to do |format|
       if @exercise.save
         format.turbo_stream {
-          redirect_to exercise_path(@exercise, view: @exercise.original ? "version" : nil), notice: "Exercise was successfully created."
+          path = if @exercise.original.present? # it's a new version
+            exercise_path(@exercise, view: 'versions')
+          else
+            edit_exercise_path(@exercise) + '/media' # redirect to media step
+          end
+          redirect_to path, notice: "Exercise was successfully created."
         }
         format.html { redirect_to @exercise, notice: "Exercise was successfully created." }
         format.json { render :show, status: :created, location: @exercise }
@@ -141,19 +148,23 @@ class ExercisesController < ApplicationController
 
   # DELETE /exercises/1 or /exercises/1.json
   def destroy
+    original = @exercise.original
     @exercise.destroy
     respond_to do |format|
-      # turbo do get_versions_list
-      format.turbo_stream {
-        render turbo_stream: turbo_stream.replace(
-          "exercise_versions",
-            partial: "exercises/versions/list",
-            locals: {
-              exercise: @exercise,
-              versions: @exercise.original.versions_filtered
-            }
-          )
-      }
+
+      if original.present? # it's a version
+        # turbo respond for get_versions_list
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(
+            "exercise_versions",
+              partial: "exercises/versions/list",
+              locals: {
+                exercise: @exercise,
+                versions: @exercise.original.versions_filtered
+              }
+            )
+        }
+      end
 
       # normal
       format.html { redirect_to exercises_url, notice: "Exercise was successfully destroyed." }
@@ -257,7 +268,7 @@ class ExercisesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def exercise_params
     params.fetch(:exercise, {}).permit(
-      :body, :video_link, :title, :published, :visibility, :exercise_id, :description, :level, medium_ids: [], category_ids: [], levels: [], versions_attributes: %i[
+      :body, :video_link, :title, :published, :visibility, :versions_enabled, :exercise_id, :description, :level, medium_ids: [], category_ids: [], levels: [], versions_attributes: %i[
         published user_id id
       ]
     )

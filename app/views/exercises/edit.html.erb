@@ -1,21 +1,11 @@
-<section class="container dashboard-page">
-    <header class="dashboard-page__header">
-        <h1>Edition de l'exercise</h1>
-        <%= link_to 'Show', @exercise %> |
-        <%= link_to 'Back', me_exercises_path %>
-    </header>
-
-    <%= turbo_frame_tag "#{@exercise.id}_edit_form" do %>
-        
-        <% if !notice.nil? %>
-            <div id="notice toast toast-success">
-                <button class="btn btn-clear float-right"></button>
-                <%= notice %>
-            </div>
-        <% end %>
-
-        <%= render "shared/dashboard/exercise_edit_tab", active: nil %>
-        
-        <%= render 'form', exercise: @exercise %>
+<section class="container dashboard-page exercise-edit">
+    <% if !notice.nil? %>
+      <div id="notice toast toast-success">
+        <button class="btn btn-clear float-right"></button>
+        <%= notice %>
+      </div>
     <% end %>
+
+    <%= render partial: 'exercises/form/nav', locals: {active: nil, edit: true} %>
+    <%= render 'exercises/form/content', exercise: @exercise %>
 </section>

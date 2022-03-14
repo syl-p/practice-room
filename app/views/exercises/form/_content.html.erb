@@ -48,21 +48,6 @@
           <% end %>
         </div>
 
-        <div class="field form-group">
-          <%= form.label "Mettre en ligne ?", class: "form-label"  %>
-          <label class="form-switch">
-            <%= form.check_box :published %>
-            <i class="form-icon"></i> Mettre en ligne
-          </label>
-        </div>
-
-        <div class="field form-group">
-          <%= form.label "Visibilité", class: "form-label"  %>
-          <% Exercise.visibilities.keys.each do |visibility| %>
-            <%= form.radio_button :visibility, visibility %>
-            <%= form.label "#{:visibility}_#{visibility.parameterize.underscore}", visibility %>
-          <% end %>
-        </div>
     </div>
   </div>
 

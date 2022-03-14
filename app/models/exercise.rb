@@ -14,6 +14,8 @@ class Exercise < ApplicationRecord
   belongs_to :original, class_name: 'Exercise', optional: true, foreign_key: :exercise_id
   has_many :versions, class_name: 'Exercise', dependent: :destroy
 
+  validates :title, presence: true, length: { maximum: 255 }
+
   enum level: {
     beginner: 0,
     intermediate: 1,

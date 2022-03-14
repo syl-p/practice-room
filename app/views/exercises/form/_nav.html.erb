@@ -1,0 +1,35 @@
+<%
+active = active if local_assigns[:active].nil?
+edit = edit if local_assigns[:edit].nil?
+%>
+
+<ul class="step">
+  <li class="step-item <%= 'active' if (active.nil?) %>">
+    <a
+      href="<%= edit ? edit_exercise_path : '#' %>"
+      class="tooltip " data-tooltip="Contenu">
+      1. Contenu
+    </a>
+  </li>
+  <li class="step-item <%= 'active' if (active && active === 'media') %>">
+    <a
+      href="<%= edit ? edit_exercise_path + "/media" : '#' %>"
+      class="tooltip" data-tooltip="Ressources">
+      2. Ressources
+    </a>
+  </li>
+  <li class="step-item <%= 'active' if (active && active === 'versions') %>">
+    <a
+      href="<%= edit ? edit_exercise_path + "/versions" : '#' %>"
+      class="tooltip" data-tooltip="Versions">
+      3. Versions
+    </a>
+  </li>
+  <li class="step-item <%= 'active' if (active && active === 'visibility') %>">
+    <a
+      href="<%= edit ? edit_exercise_path + "/visibility" : '#' %>"
+      class="tooltip" data-tooltip="Visibility">
+      3. Visibilité
+    </a>
+  </li>
+</ul>

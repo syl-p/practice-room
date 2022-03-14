@@ -1,9 +1,6 @@
-<section class="container dashboard-page">
-    <header class="dashboard-page__header">
-        <h1>Nouvel exercise</h1>
-        <%= link_to 'Back', me_exercises_path %>
-    </header>
-    
-    <%= render 'form', exercise: @exercise %>
-
+<section class="container dashboard-page exercise-edit">
+  <article>
+    <%= render partial: 'exercises/form/nav', local: {active: nil, edit: false} %>
+    <%= render 'exercises/form/content', exercise: @exercise %>
+  </article>
 </section>
