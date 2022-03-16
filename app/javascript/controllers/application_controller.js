@@ -30,8 +30,9 @@ export default class extends Controller {
     return this.rootValue
   }
 
-  togglePracticerSidebar() {
-    this.practicerSidebarController.toggle();
+  togglePracticerSidebar($event) {
+    $event.stopPropagation()
+    this.practicerSidebarController.toggle()
   }
 
   // Version actions

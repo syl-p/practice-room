@@ -6,8 +6,10 @@
       </div>
   <% end %>
 
-
-  <%= render partial: 'exercises/form/nav', locals: {active: 'vibility', edit: true} %>
+  <header class="dashboard-page__header text-center">
+    <h1>Modifier l'exercice</h1>
+    <%= render partial: 'exercises/form/header', locals: {exercise: @exercise, active: 'vibility'} %>
+  </header>
   <%= form_with(model: @exercise, local: true) do |f| %>
     <div class="field form-group">
       <%= f.label "Mettre en ligne ?", class: "form-label"  %>
@@ -25,8 +27,9 @@
       <% end %>
     </div>
 
-    <div class="actions mt-2 form-group" data-markdown-target="result">
-      <%= f.submit "Mettre à jour la visibilité", class: "form-input"  %>
+    <div class="actions form-group mt-2 col-12">
+      <%= link_to "Retour", edit_exercise_path(@exercise) + '/versions', class: "btn" %>
+      <%= f.submit "Enregistrer", class: "btn btn-primary float-right"  %>
     </div>
   <% end %>
 </section>

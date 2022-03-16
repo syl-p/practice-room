@@ -1,33 +1,35 @@
 <section class="container dashboard-page exercise-edit">
   <% if !notice.nil? %>
       <div id="notice toast toast-success">
-          <button class="btn btn-clear float-right"></button>
-          <%= notice %>
+        <button class="btn btn-clear float-right"></button>
+        <%= notice %>
       </div>
   <% end %>
 
-
-  <%= render partial: 'exercises/form/nav', locals: {active: 'media', edit: true} %>
+  <header class="dashboard-page__header text-center">
+    <h1>Modifier l'exercice</h1>
+    <%= render partial: 'exercises/form/header', locals: {exercise: @exercise, active: 'media'} %>
+  </header>
   <%= form_with(model: @exercise, local: true) do |form| %>
-      <% if @exercise.errors.any? %>
-          <div id="error_explanation">
-          <h2><%= pluralize(exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
+    <% if @exercise.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
 
-          <ul>
-              <% exercise.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-              <% end %>
-          </ul>
-
-          </div>
-      <% end %>
-
-      <div class="field form-group">
-          <%= form.label :media, class: "form-label"  %>
-          <%= form.select :medium_ids, Medium.all.collect { |x| [x.name, x.id]} , {:include_blank => true, selected_value: nil}, class: "form-input", :multiple => true %>
+        <ul>
+          <% exercise.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+          <% end %>
+        </ul>
       </div>
-      <div class="actions mt-2 form-group">
-          <%= form.submit "Mettre à jour les ressources", class: "form-input"  %>
-      </div>
+    <% end %>
+
+    <div class="field form-group">
+      <%= form.label :media, class: "form-label"  %>
+      <%= form.select :medium_ids, Medium.all.collect { |x| [x.name, x.id]} , {:include_blank => true, selected_value: nil}, class: "form-input", :multiple => true %>
+    </div>
+    <div class="actions mt-2">
+      <%= link_to "Retour", edit_exercise_path(@exercise), class: "btn" %>
+      <%= form.submit "Enregistrer", class: "btn btn-primary float-right"  %>
+    </div>
   <% end %>
 </section>

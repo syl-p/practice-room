@@ -101,21 +101,12 @@ class ExercisesController < ApplicationController
   def create
     @exercise = Exercise.new(exercise_params)
     @exercise.user_id = current_user.id
-
     # published false if is a version of an exercise
     @exercise.published = false if @exercise.original.present?
 
     respond_to do |format|
       if @exercise.save
-        format.turbo_stream {
-          path = if @exercise.original.present? # it's a new version
-            exercise_path(@exercise, view: 'versions')
-          else
-            edit_exercise_path(@exercise) + '/media' # redirect to media step
-          end
-          redirect_to path, notice: "Exercise was successfully created."
-        }
-        format.html { redirect_to @exercise, notice: "Exercise was successfully created." }
+        format.html { redirect_to edit_with_step_exercises_path(@exercise, step: 'media'), notice: "Exercise was successfully created." }
         format.json { render :show, status: :created, location: @exercise }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -128,16 +119,22 @@ class ExercisesController < ApplicationController
   def update
     respond_to do |format|
       if @exercise.update(exercise_params)
-        step_layout = if params[:exercise]['medium_ids'].present?
-          edit_with_step_exercises_path(step: 'media')
-        elsif params[:exercise]['versions_attributes'].present?
-          edit_with_step_exercises_path(step: 'versions')
-        else
-          edit_exercise_path
+        format.html do
+          # get url
+          url = request.referer.split('/')
+          case url.last
+          when 'media'
+            redirect_to edit_with_step_exercises_path(@exercise, step: "versions"), notice: "Exercise was successfully updated."
+          when "versions"
+            redirect_to edit_with_step_exercises_path(@exercise, step: "visibility"), notice: "Exercise was successfully updated."
+          else
+            if url.last == 'visibility'
+              redirect_to edit_with_step_exercises_path(@exercise, step: "visibility"), notice: "Exercise was successfully updated."
+            else
+              redirect_to edit_with_step_exercises_path(@exercise, step: "media"), notice: "Exercise was successfully updated."
+            end
+          end
         end
-
-        format.turbo_stream { redirect_to step_layout, notice: "Exercise was successfully updated." }
-        format.html { redirect_to @exercise, notice: "Exercise was successfully updated." }
         format.json { render :show, status: :ok, location: @exercise }
       else
         format.html { render :edit, status: :unprocessable_entity }

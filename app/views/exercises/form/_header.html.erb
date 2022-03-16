@@ -1,0 +1,39 @@
+<%
+active = active if local_assigns[:active].nil?
+%>
+<nav>
+  <p>
+    <%= link_to "Voir l'exercice", exercise_path(exercise)  %> |
+    <%= link_to "Retour à la liste", me_exercises_path %>
+  </p>
+  <ul class="step">
+    <li class="step-item <%= 'active' if (active.nil?) %>">
+      <a
+        href="<%= edit_exercise_path %>"
+        class="tooltip " data-tooltip="Renseignez votre exercice">
+        1. Contenu
+      </a>
+    </li>
+    <li class="step-item <%= 'active' if (active && active === 'media') %>">
+      <a
+        href="<%= edit_exercise_path + "/media" %>"
+        class="tooltip" data-tooltip="Associez vos ressources">
+        2. Ressources
+      </a>
+    </li>
+    <li class="step-item <%= 'active' if (active && active === 'versions') %>">
+      <a
+        href="<%= edit_exercise_path + "/versions" %>"
+        class="tooltip" data-tooltip="Managez les versions de votre exercice">
+        3. Versions
+      </a>
+    </li>
+    <li class="step-item <%= 'active' if (active && active === 'visibility') %>">
+      <a
+        href="<%= edit_exercise_path + "/visibility" %>"
+        class="tooltip" data-tooltip="Définissez vos paramètres de visibilité">
+        3. Visibilité
+      </a>
+    </li>
+  </ul>
+</nav>

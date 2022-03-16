@@ -6,63 +6,64 @@
     </div>
   <% end %>
 
+  <header class="dashboard-page__header text-center">
+    <h1>Modifier l'exercice</h1>
+    <%= render partial: 'exercises/form/header', locals: {exercise: @exercise, active: 'versions'} %>
+  </header>
+  <%= form_with(model: @exercise, local: true) do |f| %>
+    <div class="columns">
+      <aside class="field form-group col-4">
+        <label class="form-switch">
+          <%= f.check_box :versions_enabled, {data: {
+            'application-target': 'inputVersionsEnabled',
+            'action': 'click->application#toggleVersionsEnabled'
+            }} %>
+          <i class="form-icon"></i> Autoriser les autres utilisateurs à proposer des versions personnalisées
+        </label>
+      </aside>
 
-  <%= render partial: 'exercises/form/nav', locals: {active: 'versions', edit: true} %>
 
-    <%= form_with(model: @exercise, local: true) do |f| %>
-      <div class="columns">
-        <aside class="field form-group col-4">
-          <%= f.label "Autoriser les autres utilisateurs à proposer des versions personnalisées:" %>
-          <label class="form-switch">
-            <%= f.check_box :versions_enabled, {data: {
-              'application-target': 'inputVersionsEnabled',
-              'action': 'click->application#toggleVersionsEnabled'
-              }} %>
-            <i class="form-icon"></i> Autoriser
-          </label>
-        </aside>
-
-
-        <article class="col-8">
-          <label class="mb-2">Liste des versions proposées pour votre exercice:</label>
-          <ul class="exercise-edit__versions-list" data-application-target="versionsListEdit">
-            <%= f.fields_for :versions do |version| %>
-              <li class="exercise-edit__versions-list__item">
-                <a href="<%= version.object.video_link %>" class="exercise-edit__versions-list__item__thumbnail" data-turbo="false">
-                  <% img_link = version.object.video_link.present? ? "//img.youtube.com/vi/#{version.object.video_link}/0.jpg" : "https://via.placeholder.com/800x440.png" %>
-                  <%= image_tag img_link, class: "img-responsive", alt: version.object.title %>
-                </a>
-                <div class="exercise-edit__versions-list__item__description">
-                  <div>
-                    <header class="mb-2">
-                      <h5 class="mb-0"><%= version.object.title %></h5>
-                      <small>
-                        Proposer par <%= link_to version.object.user.username, user_path(version.object.user.id),
-                                         data: {turbo: false}  %>
-                      </small>
-                    </header>
-                    <p>
-                      <%= version.object.description %><br>
-                      <%= version.object.video_link %>
-                      <%= version.hidden_field :user_id %>
-                      <%= version.hidden_field :id %>
-                    </p>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-switch float-right">
-                      <%= version.check_box :published %>
-                      <i class="form-icon"></i> Afficher
-                    </label>
-                  </div>
+      <article class="col-8">
+        <label class="mb-2">Liste des versions proposées pour votre exercice:</label>
+        <ul class="exercise-edit__versions-list" data-application-target="versionsListEdit">
+          <%= f.fields_for :versions do |version| %>
+            <li class="exercise-edit__versions-list__item">
+              <a href="<%= version.object.video_link %>" class="exercise-edit__versions-list__item__thumbnail" data-turbo="false">
+                <% img_link = version.object.video_link.present? ? "//img.youtube.com/vi/#{version.object.video_link}/0.jpg" : "https://via.placeholder.com/800x440.png" %>
+                <%= image_tag img_link, class: "img-responsive", alt: version.object.title %>
+              </a>
+              <div class="exercise-edit__versions-list__item__description">
+                <div>
+                  <header class="mb-2">
+                    <h5 class="mb-0"><%= version.object.title %></h5>
+                    <small>
+                      Proposer par <%= link_to version.object.user.username, user_path(version.object.user.id),
+                                        data: {turbo: false}  %>
+                    </small>
+                  </header>
+                  <p>
+                    <%= version.object.description %><br>
+                    <%= version.object.video_link %>
+                    <%= version.hidden_field :user_id %>
+                    <%= version.hidden_field :id %>
+                  </p>
                 </div>
-              </li>
-            <% end %>
-          </ul>
-        </article>
+                <div class="form-group">
+                  <label class="form-switch float-right">
+                    <%= version.check_box :published %>
+                    <i class="form-icon"></i> Afficher
+                  </label>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </article>
 
-        <div class="actions mt-2 form-group col-12">
-          <%= f.submit "Mettre à jour les versions", class: "form-input"  %>
-        </div>
+      <div class="actions mt-2 col-12">
+        <%= link_to "Retour", edit_exercise_path(@exercise) + '/media', class: "btn" %>
+        <%= f.submit "Enregistrer", class: "btn btn-primary float-right"  %>
       </div>
-    <% end %>
+    </div>
+  <% end %>
 </section>

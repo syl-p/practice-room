@@ -67,6 +67,10 @@
   </div>
 
   <div class="actions mt-2 form-group" data-markdown-target="result">
-    <%= form.submit "Mettre à jour le contenu", class: "form-input"  %>
+    <% if @exercise.persisted? %>
+      <%= form.submit "Modifier", class: "form-input btn btn-primary my-auto" %>
+    <% else %>
+      <%= form.submit "Créer", class: "form-input btn btn-primary" %>
+    <% end %>
   </div>
 <% end %>

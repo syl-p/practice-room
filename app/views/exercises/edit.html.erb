@@ -6,6 +6,9 @@
       </div>
     <% end %>
 
-    <%= render partial: 'exercises/form/nav', locals: {active: nil, edit: true} %>
+    <header class="dashboard-page__header text-center">
+      <h1>Modifier l'exercice</h1>
+      <%= render partial: 'exercises/form/header', locals: {exercise: @exercise, active: nil} %>
+    </header>
     <%= render 'exercises/form/content', exercise: @exercise %>
 </section>
