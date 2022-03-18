@@ -1,22 +1,23 @@
 
 <%= turbo_frame_tag "exercise_versions" do %>
-    <div class="panel">
-        <div class="panel-header">
-            <%= link_to "close", list_versions_path(id: @exercise.original), class: "float-right", data: {
-                video_id: @exercise.original.video_link,
-                action: 'click->application#showVersion'
-                }  
-            %>
-            <h3>Modification de la version</h3>
-            <p>Mise à jour de l'exercice: <%= @exercise.title %></p>
-        </div>
-
-        <div class="panel-body">
-            <%= render 'exercises/versions/form', version: @exercise %>
-        </div>
-
-        <div class="panel-footer">
-            <%=  link_to 'Retour à la liste des versions', list_versions_path(id: @exercise.original) %>
-        </div>
+  <div class="panel">
+    <div class="panel-header">
+      <%= link_to list_versions_path(id: @exercise.original), class: "float-right", data: {
+          video_id: @exercise.original.video_link,
+          action: 'click->application#showVersion'
+        }  do %>
+        <i class="mdi mdi-close"></i>
+      <% end %>
+      <h3>Modification de la version</h3>
+      <p>Mise à jour de l'exercice: <%= @exercise.title %></p>
     </div>
+
+    <div class="panel-body">
+      <%= render 'exercises/versions/form', version: @exercise %>
+    </div>
+
+    <div class="panel-footer">
+      <%=  link_to 'Retour à la liste des versions', list_versions_path(id: @exercise.original) %>
+    </div>
+  </div>
 <% end %>

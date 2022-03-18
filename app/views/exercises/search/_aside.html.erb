@@ -3,7 +3,7 @@
   <ul class="exercises-index__content__aside__visibility-filter">
     <li class="form-group">
       <label class="form-radio">
-        <%= form.radio_button :visibility, "all", data: {action: "change->hello#search"} %>
+        <%= form.radio_button :visibility, "all", checked: true, data: {action: "change->hello#search"} %>
         <i class="form-icon"></i> Tous les exercices
       </label>
     </li>

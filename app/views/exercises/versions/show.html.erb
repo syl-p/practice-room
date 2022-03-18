@@ -1,28 +1,28 @@
 
 <%= turbo_frame_tag "exercise_versions" do %>
   <div class="panel">
-
     <div class="panel-header">
-        <div class="tile">
-            <div class="tile-icon">
-                <a href="<%= user_path(@exercise.user.id) %>" data-turbo="false">
-                  <%= render partial: "users/avatar", locals: {user: @exercise.user} %>
-                </a>
-            </div>
-            <div class="tile-content">
-                <%= link_to "close", list_versions_path(id: @exercise.original), class: "float-right", data: {
-                    video_id: @exercise.original.video_link,
-                    action: 'click->application#showVersion'
-                  }
-                %>
-                <p class="tile-title mb-0">
-                    <strong><%= @exercise.title %></strong> <br> <small>Publié
-                    par <%= link_to @exercise.user.username, user_path(@exercise.user.id), data: {turbo: false}  %></small>
-                </p>
-            </div>
+      <div class="tile">
+        <div class="tile-icon">
+          <a href="<%= user_path(@exercise.user.id) %>" data-turbo="false">
+            <%= render partial: "users/avatar", locals: {user: @exercise.user} %>
+          </a>
         </div>
+        <div class="tile-content">
+          <%= link_to  list_versions_path(id: @exercise.original), class: "float-right",
+            data: {
+              video_id: @exercise.original.video_link,
+              action: 'click->application#showVersion'
+            } do %>
+            <i class="mdi mdi-close"></i>
+          <% end %>
+          <p class="tile-title mb-0">
+              <strong><%= @exercise.title %></strong> <br> <small>Publié
+              par <%= link_to @exercise.user.username, user_path(@exercise.user.id), data: {turbo: false}  %></small>
+          </p>
+        </div>
+      </div>
     </div>
-
     <div class="panel-body">
       <% if notice.present? %>
         <div id="notice" class="toast toast-success">

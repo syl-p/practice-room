@@ -9,34 +9,41 @@
       }
     }
     &__content {
-        margin-bottom: 100px;
-    }
-    &__comments {
-        h2 {
-          .mdi {
-            font-size: 1.8rem;
+      margin-bottom: 30px;
+      aside {
+        & > div {
+          margin-bottom: 30px;
+          .divider {
+            margin: 25px 0px;
           }
         }
-        .empty {
-            background: #f7f8f9;
-            margin: 50px 0px;
+      }
+    }
+    &__comments {
+      h2 {
+        .mdi {
+          font-size: 1.8rem;
         }
-        form {
-            margin: 20px 0px 20px 0px;
-        }
+      }
+      .empty {
+        background: #f7f8f9;
+        margin: 50px 0px;
+      }
+      form {
+        margin: 20px 0px 20px 0px;
+      }
     }
 
     &__versions {
-        position: relative;
-        .panel {
-
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-        }
+      position: relative;
+      .panel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+      }
     }
 
     &__practice-toolbar {
