@@ -1,4 +1,5 @@
 
+<%  if current_user.present?  %>
   <div class="btn-group navbar__user-infos"  data-controller="user-nav">
     <!--!-->
     <div class="dropdown navbar__user-infos__friendships">
@@ -31,3 +32,4 @@
       </ul>
     </div>
   </div>
+<% end %>

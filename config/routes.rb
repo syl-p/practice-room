@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   get "sessons_of_the_days/next(/:id)", to: "sessions_of_the_days#get_next", as: "next_session"
 
   # Media
-  mount MediumUploader.download_endpoint => "/uploads"
+  # mount MediumUploader.download_endpoint => "/uploads"
 
   # Pages
   get "/pages/:slug", to: "pages#show", as: "page"

@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 2022_03_11_182850) do
     t.bigint "exercise_id"
     t.boolean "published", default: true
     t.text "description"
-    t.integer "level"
+    t.integer "level", default: 0
     t.integer "duration", default: 600
     t.integer "visibility", default: 0
     t.boolean "versions_enabled", default: true

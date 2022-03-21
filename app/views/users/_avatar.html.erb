@@ -16,8 +16,8 @@ class_size = case size
 %>
 <figure class="avatar <%= class_size %>"
   data-initial="xx" style="background-color: #5755d9;">
-  <% if user.avatar.present? %>
-    <img src="<%= user.avatar.url %>" alt="<%= user.username %>">
+  <% if user.avatar.attached? %>
+    <%= image_tag(url_for user.avatar) %>
     <% if ui.present? %>
       <!-- delete link rails ujs -->
       <%= link_to delete_avatar_url(id: current_user.id), method: :delete, class: 'avatar-delete avatar-icon' do %>

@@ -10,6 +10,7 @@
     <h1>Modifier l'exercice</h1>
     <%= render partial: 'exercises/form/header', locals: {exercise: @exercise, active: 'media'} %>
   </header>
+
   <%= form_with(model: @exercise, local: true) do |form| %>
     <% if @exercise.errors.any? %>
       <div id="error_explanation">

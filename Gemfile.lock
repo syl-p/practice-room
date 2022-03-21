@@ -92,12 +92,9 @@ GEM
     childprocess (4.1.0)
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
-    content_disposition (1.0.0)
     crass (1.0.6)
     cssbundling-rails (0.2.4)
       railties (>= 6.0.0)
-    down (5.2.4)
-      addressable (~> 2.8)
     erubi (1.10.0)
     ffi (1.15.4)
     globalid (0.5.2)
@@ -195,9 +192,6 @@ GEM
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
-    shrine (3.4.0)
-      content_disposition (~> 1.0)
-      down (~> 5.1)
     sidekiq (6.3.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
@@ -261,7 +255,6 @@ DEPENDENCIES
   redis (~> 4.0)
   sass-rails
   selenium-webdriver
-  shrine (~> 3.0)
   sidekiq
   spring
   spring-watcher-listen (~> 2.0.0)

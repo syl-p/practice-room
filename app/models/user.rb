@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :requestors, through: :friendships_as_requestor
   has_many :receivers, through: :friendships_as_receiver
 
-  include AvatarUploader::Attachment(:avatar)
+  has_one_attached :avatar
 
   enum role: {
     banned: 0,
