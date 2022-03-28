@@ -66,11 +66,13 @@
                 <%= render "shared/user_tile", user: @exercise.user, published_at: @exercise.created_at %>
                 <div class="divider"></div>
               </div>
-              <div>
-                <h3>Ressources</h3>
-                <%= render "shared/ressource_list" if @exercise.media.present? %>
-                <div class="divider"></div>
-              </div>
+              <% if @exercise.media.present? %>
+                <div>
+                  <h3>Ressources</h3>
+                  <%= render "shared/ressource_list" %>
+                  <div class="divider"></div>
+                </div>
+              <% end %>
               <div>
                 <h3>Partager</h3>
                 <%= render partial: "exercises/share", locals: {exercise: @exercise} %>

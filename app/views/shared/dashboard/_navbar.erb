@@ -7,7 +7,7 @@
   <section class="navbar-center">
 
     <%= link_to "Mes exercises", me_exercises_path, class: "btn btn-link" %>
-    <%= link_to "Liste des medias", media_path, class: "btn btn-link" %>
+    <%= link_to "Liste des medias", me_media_path, class: "btn btn-link" %>
     <%= link_to "Liste des catégories", categories_path, class: "btn btn-link" if can? :manage, Category  %>
 
   </section>

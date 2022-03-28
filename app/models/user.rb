@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   has_many :exercises, dependent: :destroy
+  has_many :media, dependent: :destroy
   has_many :sessions_of_the_days, dependent: :destroy
 
   has_many :friendships_as_requestor, class_name: "Friendship", foreign_key: "requestor_id", dependent: :destroy

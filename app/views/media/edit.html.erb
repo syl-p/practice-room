@@ -1,6 +1,11 @@
-<h1>Editing Medium</h1>
+<section class="container dashboard-page medium-edit">
 
-<%= render 'form', medium: @medium %>
+  <header class="dashboard-page__header">
+    <h1>Editing Medium</h1>
+  </header>
 
-<%= link_to 'Show', @medium %> |
-<%= link_to 'Back', media_path %>
+  <%= render 'form', medium: @medium %>
+
+  <%= link_to 'Show', @medium %> |
+  <%= link_to 'Back', media_path %>
+</section>

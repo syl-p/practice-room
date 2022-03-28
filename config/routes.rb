@@ -10,7 +10,12 @@ Rails.application.routes.draw do
   get 'users/index'
   get 'users/show'
 
-  resources :media
+  resources :media do
+    collection do
+      get 'me'
+    end
+  end
+
   resources :exercises do
     resources :comments, module: :exercises
     collection do

@@ -1,10 +1,16 @@
 class MediaController < ApplicationController
   layout "layouts/dashboard"
   before_action :set_medium, only: %i[ show edit update destroy ]
+  authorize_resource
 
   # GET /media or /media.json
   def index
     @media = Medium.all
+  end
+
+  def me
+    @media = current_user.media
+    render :index
   end
 
   # GET /media/1 or /media/1.json
@@ -23,6 +29,7 @@ class MediaController < ApplicationController
   # POST /media or /media.json
   def create
     @medium = Medium.new(medium_params)
+    @medium.user_id = current_user.id
 
     respond_to do |format|
       if @medium.save

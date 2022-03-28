@@ -9,6 +9,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>Fichier</th>
         <th>Name</th>
         <th>Description</th>
         <th>Action</th>
@@ -18,6 +19,7 @@
     <tbody>
       <% @media.each do |medium| %>
         <tr>
+          <td><%= medium.file.filename  %></td>
           <td><%= medium.name %></td>
           <td><%= medium.description %></td>
           <td>

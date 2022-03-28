@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_11_182850) do
+ActiveRecord::Schema.define(version: 2022_03_27_204553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,8 @@ ActiveRecord::Schema.define(version: 2022_03_11_182850) do
     t.text "file_data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_media_on_user_id"
   end
 
   create_table "media_exercises", force: :cascade do |t|
@@ -147,5 +149,6 @@ ActiveRecord::Schema.define(version: 2022_03_11_182850) do
   add_foreign_key "exercises", "users"
   add_foreign_key "friendships", "users", column: "receiver_id"
   add_foreign_key "friendships", "users", column: "requestor_id"
+  add_foreign_key "media", "users"
   add_foreign_key "sessions_of_the_days", "users"
 end

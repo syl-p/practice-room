@@ -10,6 +10,7 @@ class Ability
     can :read, Exercise, {published: true}
     can :read, Comment
     can :read, User
+    can :read, Medium
     can [:read, :get_by_slug], Category
 
     # Abilities for logged users
@@ -22,6 +23,7 @@ class Ability
 
       can :manage, Comment, {user_id: user.id}
       can :manage, User, {id: user.id}
+      can :manage, Medium, {user_id: user.id}
       can :delete_avatar, User, {id: user.id}
 
       can :manage, Friendship, {requestor_id: user.id}
@@ -40,6 +42,7 @@ class Ability
         can :manage, Comment
         # can :manage, User
         can :manage, Category
+        can :manage, Medium
       end
     end
 
