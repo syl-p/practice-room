@@ -1,10 +1,17 @@
-<section class="container dashboard-page">
-  <header class="dashboard-page__header">
-    <h1>New Medium</h1>
-  </header>
+<%= turbo_frame_tag "medium-edit" do %>
+  <%= form_with(model: @medium, local: true, html: { data: { controller: "upload-async" } }) do |form| %>
+    <h2>Ajouter une ressource</h2>
+    <% if @medium.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@medium.errors.count, "error") %> prohibited this medium from being saved:</h2>
 
-  <%= render 'form', medium: @medium %>
-
-  <%= link_to 'Back', media_path %>
-</section>
-
+        <ul>
+          <% @medium.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= render partial: "shared/drag_and_drop", locals: {form: form, auto_upload: true} %>
+  <% end %>
+<% end %>

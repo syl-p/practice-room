@@ -26,3 +26,7 @@ application.register("user-nav", UserNavController)
 
 import UploadAsyncController from "./upload_async_controller.js"
 application.register("upload-async", UploadAsyncController)
+
+
+import Popup from "./popup_controller"
+application.register("popup", Popup)

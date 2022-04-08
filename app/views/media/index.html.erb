@@ -3,35 +3,25 @@
 
   <header class="dashboard-page__header">
     <h1> Liste des medias </h1>
-    <%= link_to 'New Medium', new_medium_path %>
+    <div data-controller="popup" data-popup-active-class="active">
+      <%= link_to "#", class: "btn btn-primary",
+        data: { action: "click->popup#toggle", target: "#popup" } do %>
+        <i class="mdi mdi-plus"></i>
+        Ajouter une ressource
+      <% end %>
+      <div class="popup" data-popup-target="popup">
+        <div class="popup__content" data-popup-target="popupContent">
+          <%= turbo_frame_tag "medium-edit", src: new_medium_path, loading: :lazy do %>
+            Chargement...
+          <% end %>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Fichier</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @media.each do |medium| %>
-        <tr>
-          <td><%= medium.file.filename  %></td>
-          <td><%= medium.name %></td>
-          <td><%= medium.description %></td>
-          <td>
-            <%= link_to 'Show', medium %>
-            <%= link_to 'Edit', edit_medium_path(medium) %>
-            <%= link_to 'Destroy', medium, method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <br>
-
+  <article>
+    <%= turbo_frame_tag "media-list"  do %>
+      <%= render partial: "list", locals: {media: @media} %>
+    <% end %>
+  </article>
 </section>

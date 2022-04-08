@@ -1,0 +1,10 @@
+<%= turbo_stream.replace "media-list" do %>
+  <%= render "list", media: current_user.media %>
+<% end %>
+
+<%= turbo_stream.replace "medium-edit" do %>
+  <p>
+    Upload de votre ressource terminé, vous pouvez la visualiser
+    dans la liste ci-dessus ou la modifier en cliquant sur le bouton "Edit".
+  </p>
+<% end %>

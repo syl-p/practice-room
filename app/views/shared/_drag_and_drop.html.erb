@@ -1,0 +1,8 @@
+<drag-and-drop label="Déposez ici votre fichier">
+  <%= form.file_field :file, direct_upload: true, data: { action: auto_upload ? "change->upload-async#upload" : "" } %>
+</drag-and-drop>
+
+<div class="upload-async-progress" data-upload-async-target="progress">
+  <div>Upload en cours: <span id="progressText" data-upload-async-target="progressText">Warming up...</span></div>
+  <progress  data-upload-async-target="progressWidth" class="progress" value="0" max="100"></progress>
+</div>

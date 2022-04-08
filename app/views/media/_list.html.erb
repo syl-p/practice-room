@@ -1,0 +1,27 @@
+
+<%= turbo_frame_tag "media-list" do %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Fichier</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% media.each do |medium| %>
+        <tr>
+          <td><%= medium.file.filename  %></td>
+          <td><%= medium.name %></td>
+          <td><%= medium.description %></td>
+          <td>
+            <%= link_to 'Edit', edit_medium_path(medium) %>
+            <%= link_to 'Destroy', medium, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

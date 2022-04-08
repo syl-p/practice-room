@@ -1,4 +1,5 @@
 import styles from './drag-and-drop.style'
+import Rails from "@rails/ujs";
 export class DragAndDrop extends HTMLElement {
   constructor() {
     super();

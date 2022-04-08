@@ -84,6 +84,7 @@ class ExercisesController < ApplicationController
     if params[:step].present?
       case params[:step]
       when "media"
+        @medium = Medium.new
         render "exercises/form/media"
       when "versions"
         render "exercises/form/versions"

@@ -2,7 +2,7 @@ export default `
   .drag-and-drop {
     border: 1px dashed;
     margin-bottom: 1rem;
-    padding: 1rem;
+    padding: 3rem;
     position: relative;
   }
 

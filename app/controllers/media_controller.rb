@@ -33,8 +33,13 @@ class MediaController < ApplicationController
 
     respond_to do |format|
       if @medium.save
-        format.html { redirect_to edit_medium_path(@medium), notice: "Medium was successfully created." }
-        format.json { render :show, status: :created, location: @medium }
+        if params["medium"]["exercise_id"].present?
+          format.html { redirect_to edit_with_step_exercises_path(params["medium"]["exercise_id"], step: 'media'), notice: 'Medium was successfully created.' }
+        else
+          format.turbo_stream
+          format.html { redirect_to edit_medium_path(@medium), notice: "Medium was successfully created." }
+          format.json { render :show, status: :created, location: @medium }
+        end
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @medium.errors, status: :unprocessable_entity }

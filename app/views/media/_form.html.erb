@@ -1,17 +1,16 @@
-<%= form_with(model: medium, local: true, html: { data: { controller: "upload-async" } }) do |form| %>
-  <% if medium.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(medium.errors.count, "error") %> prohibited this medium from being saved:</h2>
+<%= turbo_frame_tag "medium-edit" do %>
+  <%= form_with(model: medium, local: true, html: { data: { controller: "upload-async" } }) do |form| %>
+    <% if medium.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(medium.errors.count, "error") %> prohibited this medium from being saved:</h2>
 
-      <ul>
-        <% medium.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <% if medium.persisted? %>
+        <ul>
+          <% medium.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
     <div class="columns">
       <div class="col col-7">
@@ -33,29 +32,14 @@
             <div class="empty-icon"><i class="mdi mdi-file-outline"></i></div>
             <p class="empty-title h5">Ressource non visualisable</p>
             <div class="empty-action">
-              <%= link_to rails_blob_path(medium.file, disposition: "attachment") do %>
-                <%= medium.file.filename %>
-              <% end %>
+
             </div>
           </div>
         <% end %>
       </div>
     </div>
-  <% else %>
-
-    <drag-and-drop label="Déposez ici votre fichier">
-      <%= form.file_field :file, direct_upload: true %>
-    </drag-and-drop>
-
-    <div class="upload-async-progress" data-upload-async-target="progress">
-      <div>Upload en cours: <span id="progressText" data-upload-async-target="progressText">Warming up...</span></div>
-
-      <progress  data-upload-async-target="progressWidth" class="progress" value="0" max="100"></progress>
-
+    <div class="actions">
+      <%= form.submit nil, class: "form-input", data: { action: !medium.persisted? ? "click->uploader-async#showProgress" :  '' } %>
     </div>
-
   <% end %>
-  <div class="actions">
-    <%= form.submit nil, class: "form-input", data: { action: !medium.persisted? ? "click->uploader-async#showProgress" :  '' } %>
-  </div>
 <% end %>

@@ -55,4 +55,10 @@
       }
     }
   }
+  &__media {
+    select {
+      min-height: 190px;
+      margin-bottom: 50px;
+    }
+  }
 }

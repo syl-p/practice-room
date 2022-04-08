@@ -1,9 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
+import Rails from "@rails/ujs";
 
 export default class extends Controller {
   static targets = [ "inputFile", "progress", "progressText", "progressWidth" ]
 
   initialize() {
+  }
+
+  progressTargetConnected() { // display none on page load
+    this.progressTarget.style.display = "none"
   }
 
   connect() {
@@ -23,6 +28,10 @@ export default class extends Controller {
       const { id, error } = event.detail
       console.log(error)
     })
+  }
+
+  upload() {
+    Rails.fire(this.element.closest('form'), 'submit')
   }
 
 /*  disconnect() {
