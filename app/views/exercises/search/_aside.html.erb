@@ -1,58 +1,60 @@
-<div class="exercises-index__content__aside__inner">
-  <h3>Visibilité</h3>
-  <ul class="exercises-index__content__aside__visibility-filter">
-    <li class="form-group">
-      <label class="form-radio">
-        <%= form.radio_button :visibility, "all", checked: true, data: {action: "change->hello#search"} %>
-        <i class="form-icon"></i> Tous les exercices
-      </label>
-    </li>
-    <li class="form-group">
-      <label class="form-radio">
-        <%= form.radio_button :visibility, "friends", data: {action: "change->hello#search"} %>
-        <i class="form-icon"></i> Exercices (public et privé) des amis uniquement
-      </label>
-    </li>
-  </ul>
-  <div class="divider"></div>
-</div>
-<div class="exercises-index__content__aside__inner">
-  <h3>Catégories</h3>
-  <ul class="exercises-index__content__aside__categories-filter">
-    <% categories.each do |category| %>
+<%= form_with(url: search_exercises_path, data: {hello_target: "form"}) do |form| %>
+  <div class="exercises-index__content__aside__inner">
+    <h3>Visibilité</h3>
+    <ul class="exercises-index__content__aside__visibility-filter">
       <li class="form-group">
-        <label class="form-checkbox">
-          <%= form.check_box :category_ids, {
-                multiple: true,
-                data: {action: "change->hello#search"},
-                checked: @category.present? && @category.id == category.id
-              },
-              category.id,
-              false %>
-          <i class="form-icon"></i>
-          <%= category.name %>
+        <label class="form-radio">
+          <%= form.radio_button :visibility, "all", checked: true, data: {action: "change->hello#search"} %>
+          <i class="form-icon"></i> Tous les exercices
         </label>
       </li>
-    <% end %>
-  </ul>
-  <div class="divider"></div>
-</div>
-<div class="exercises-index__content__aside__inner">
-  <h3>Niveaux</h3>
-  <ul class="exercises-index__content__aside__levels-filter">
-    <% Exercise.levels.each do |level| %>
       <li class="form-group">
-        <label class="form-checkbox">
-          <%= form.check_box :levels, {
-                multiple: true,
-                data: {action: "change->hello#search"}
-              },
-              level.second,
-              false %>
-          <i class="form-icon"></i>
-          <%= level.first %>
+        <label class="form-radio">
+          <%= form.radio_button :visibility, "friends", data: {action: "change->hello#search"} %>
+          <i class="form-icon"></i> Exercices (public et privé) des amis uniquement
         </label>
       </li>
-    <% end %>
-  </ul>
-</div>
+    </ul>
+    <div class="divider"></div>
+  </div>
+  <div class="exercises-index__content__aside__inner">
+    <h3>Catégories</h3>
+    <ul class="exercises-index__content__aside__categories-filter">
+      <% categories.each do |category| %>
+        <li class="form-group">
+          <label class="form-checkbox">
+            <%= form.check_box :category_ids, {
+                  multiple: true,
+                  data: {action: "change->hello#search"},
+                  checked: @category.present? && @category.id == category.id
+                },
+                category.id,
+                false %>
+            <i class="form-icon"></i>
+            <%= category.name %>
+          </label>
+        </li>
+      <% end %>
+    </ul>
+    <div class="divider"></div>
+  </div>
+  <div class="exercises-index__content__aside__inner">
+    <h3>Niveaux</h3>
+    <ul class="exercises-index__content__aside__levels-filter">
+      <% Exercise.levels.each do |level| %>
+        <li class="form-group">
+          <label class="form-checkbox">
+            <%= form.check_box :levels, {
+                  multiple: true,
+                  data: {action: "change->hello#search"}
+                },
+                level.second,
+                false %>
+            <i class="form-icon"></i>
+            <%= level.first %>
+          </label>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

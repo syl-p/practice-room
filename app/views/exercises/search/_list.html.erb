@@ -1,10 +1,7 @@
-<%= turbo_frame_tag "search_results", target: "search_results" do %>
-  <p><i>Nous avons trouvé <%= exercises.count %> résultats.</i> <%= link_to 'Créer un exercice', new_exercise_path, data: {turbo: false} if !current_user.nil? %></p>
-  <ul class="exercises-list columns">
-    <% exercises.each do |exercise| %>
-      <li class="exercises-list__item column col-sm-12 col-xl-6 col-3">
-        <%= render partial: "exercises/search/card", locals: {exercise: exercise} %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
+<ul class="exercises-list columns">
+  <% exercises.each do |exercise| %>
+    <li class="exercises-list__item column col-sm-12 col-xl-6 col-3">
+      <%= render partial: "exercises/search/card", locals: {exercise: exercise} %>
+    </li>
+  <% end %>
+</ul>

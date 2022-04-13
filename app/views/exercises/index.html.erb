@@ -3,30 +3,52 @@
 %>
 <section data-controller="hello">
   <%= turbo_frame_tag "search" do %>
-    <%= form_with(url: search_exercises_path, data: {hello_target: "form"}) do |form| %>
-        <section class="exercises-index">
-          <header>
-            <div class="hero hero-sm">
-              <div class="hero-body">
-                <div class="container">
-                  <%= render partial: "exercises/search/search_fields", locals: {form: form} %>
-                </div>
-              </div>
+    <section class="exercises-index">
+      <header>
+        <div class="hero hero-sm">
+          <div class="hero-body">
+            <div class="container">
+              <h1>Découvrez une nouvelle<br> façon de pratiquer</h1>
+              <%= render partial: "exercises/search/search_fields" %>
             </div>
-          </header>
-          <section class="exercises-index_content container">
-              <section class="columns">
-                <aside class="column col-2 hide-md exercises-index_content_aside">
-                  <%= render partial: "exercises/search/aside", locals: {categories: @categories, form: form}%>
-                </aside>
-                <!-- Results list -->
-                <section class="column col-md-12 col-10 exercises-index_content_main">
-                  <%= render partial: "exercises/search/list", locals: {exercises: @exercises, categories: @categories} %>
-                </section>
-                <!-- END Results list -->
-              </section>
+          </div>
+        </div>
+      </header>
+      <section class="exercises-index_content container">
+          <section class="columns">
+            <aside class="column col-2 hide-md exercises-index_content_aside">
+              <%= render partial: "exercises/search/aside", locals: {categories: @categories}%>
+            </aside>
+            <!-- Results list -->
+            <section class="column col-md-12 col-10 exercises-index_content_main">
+              <header class="columns">
+                <div class="column col-6">
+                  <%= turbo_frame_tag "search_results_count" do %>
+                    Nous avons trouvé <%= @exercises.count %> résultats.
+                  <% end %>
+                  <%= link_to 'Créer un exercice', new_exercise_path, data: {turbo: false} if !current_user.nil? %>
+                </div>
+                <%= form_with(url: search_exercises_path,
+                    data: {hello_target: "form"}, class: "col-6 columns") do |form| %>
+                  <%= form.select :order_by, [["Date d'ajout", "created_at"], ["Titre", "title"]], {selected: 'created_at'}, {
+                      data: { action: "change->hello#search" },
+                      class: "form-select select-lg col-6"
+                    }
+                  %>
+                  <%= form.select :order, [["Descendant", "DESC"], ["Ascendant", "ASC"]], {selected: 'DESC'}, {
+                      data: { action: "change->hello#search" },
+                      class: "form-select select-lg col-6"
+                    }
+                  %>
+                <% end %>
+              </header>
+              <%= turbo_frame_tag "search_results", target: "search_results" do %>
+                <%= render partial: "exercises/search/list", locals: {exercises: @exercises, categories: @categories} %>
+              <% end %>
+            </section>
+            <!-- END Results list -->
           </section>
-        </section>
-    <% end %>
+      </section>
+    </section>
   <% end %>
 </section>

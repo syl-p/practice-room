@@ -1,0 +1,11 @@
+<%= turbo_stream.replace "search_results_count" do %>
+  <%= turbo_frame_tag "search_results_count" do %>
+    Nous avons trouvé <%= @exercises.count %> résultats.
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "search_results" do %>
+  <%= turbo_frame_tag "search_results", target: "search_results" do %>
+    <%= render "exercises/search/list", exercises: @exercises, categories: @categories %>
+  <% end %>
+<% end %>

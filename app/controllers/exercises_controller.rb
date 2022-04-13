@@ -36,13 +36,7 @@ class ExercisesController < ApplicationController
     end
 
     respond_to do |format|
-      format.turbo_stream {
-        render turbo_stream: turbo_stream.replace(
-          "search_results",
-            partial: "exercises/search/list",
-            locals: {exercises: @exercises, categories: @categories}
-          )
-      }
+      format.turbo_stream
 
       format.html {
         render partial: "exercises/search/list", locals: {exercises: @exercises, categories: @categories}
