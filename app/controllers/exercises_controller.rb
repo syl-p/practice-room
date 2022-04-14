@@ -159,21 +159,21 @@ class ExercisesController < ApplicationController
       end
 
       # normal
-      format.html { redirect_to exercises_url, notice: "Exercise was successfully destroyed." }
+      format.html { redirect_to me_exercises_path, notice: "Exercise was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   def add_to_favorites
     if !current_user.favorites.include? params[:id]
-      current_user.update_attribute(:favorites, current_user.favorites << params[:id].to_i)
-        current_user.save
+      current_user.update_attribute(:favorites, current_user.favorites << params[:id])
+      current_user.save
 
-        # Send html for exercise favorite element
-        respond_to do |format|
-          format.html { render partial: 'shared/user_favorite', locals: {exercise: @exercise} }
-          format.json { render json: current_user.favorites, status: 200 }
-        end
+      # Send html for exercise favorite element
+      respond_to do |format|
+        format.html { render partial: 'shared/user_favorite', locals: {exercise: @exercise} }
+        format.json { render json: current_user.favorites, status: 200 }
+      end
     else
       head 404, content_type: "text/html"
     end

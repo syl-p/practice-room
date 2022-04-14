@@ -28,6 +28,8 @@ class Exercise < ApplicationRecord
     friends: 2
   }
 
+  before_destroy :remove_from_favorites
+
   def self.filtered(query_params)
     if query_params.present?
       self.where("title ILIKE :text OR body ILIKE :text", text: "%#{query_params[:text]}%")
@@ -55,6 +57,12 @@ class Exercise < ApplicationRecord
       end
     else
       versions.where({published: true}).order("created_at ASC")
+    end
+  end
+
+  def remove_from_favorites
+    User.all.each do |user|
+      user.update(favorites: user.favorites.reject { |f| f == self.id.to_s })
     end
   end
 end
