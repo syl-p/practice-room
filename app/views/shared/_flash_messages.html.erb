@@ -1,0 +1,12 @@
+<% if notice.present? %>
+  <div class="toast toast-success">
+    <button class="btn btn-clear float-right"></button>
+    <p class="notice"><%= notice %></p>
+  </div>
+<% end %>
+<% if alert.present? %>
+  <div class="toast toast-warning">
+    <button class="btn btn-clear float-right"></button>
+    <p class="alert"><%= alert %></p>
+  </div>
+<% end %>

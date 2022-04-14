@@ -1,14 +1,8 @@
 <section class="container dashboard-page exercise-edit">
-  <% if !notice.nil? %>
-      <div id="notice toast toast-success">
-        <button class="btn btn-clear float-right"></button>
-        <%= notice %>
-      </div>
-  <% end %>
-
   <header class="dashboard-page__header text-center">
     <h1>Modifier l'exercice</h1>
     <%= render partial: 'exercises/form/header', locals: {exercise: @exercise, active: 'media'} %>
+    <%= render partial: "shared/flash_messages" %>
   </header>
 
   <% if @exercise.errors.any? %>

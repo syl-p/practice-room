@@ -16,6 +16,8 @@
       <%= render "shared/dashboard/navbar" %>
       <%= render "shared/practicer/practice_sidebar" if current_user %>
 
+<%
+=begin
       <% if notice.present? %>
         <div class="toast toast-primary">
           <p class="notice"><%= notice %></p>
@@ -26,6 +28,8 @@
           <p class="alert"><%= alert %></p>
         </div>
       <% end %>
+<%
+=end %>
 
       <%= yield %>
     </main>

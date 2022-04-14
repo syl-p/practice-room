@@ -1,7 +1,11 @@
 <section class="dashboard-page container">
     <header class="dashboard-page__header">
-        <h1> Mes exercices </h1>
+      <h1> Mes exercices</h1>
+      <p>
         <%= link_to 'New Exercise', new_exercise_path %>
+      </p>
+
+      <%= render partial: "shared/flash_messages" %>
     </header>
   <table class="table">
     <thead>
@@ -12,7 +16,7 @@
         <th>action</th>
       </tr>
     </thead>
-  
+
     <tbody>
       <% @exercises.each do |exercise| %>
         <tr>

@@ -1,4 +1,18 @@
 <div class="card exercise-card">
+  <div class="card-header">
+    <!-- user info -->
+    <small class="tile">
+      <a href="<%= user_url(exercise.user) %>" data-turbo="false" class="tile-icon">
+        <%= render partial: "users/avatar", locals: {user: exercise.user, size: :small} %>
+      </a>
+
+      <div class="tile-content pl-3">
+        <p class="tile-title mb-0">
+          <%= link_to exercise.user.username, user_path(exercise.user), data: {turbo: false}  %> le <%= l exercise.created_at, format: :short %></p>
+      </div>
+    </small>
+    <!-- end user info -->
+  </div>
   <div class="card-image">
     <% if current_user %>
       <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: exercise } %>
@@ -12,15 +26,14 @@
     <%= image_tag img_link, class: "img-responsive", alt: exercise.title %>
   </div>
 
-  <div class="card-header">
+  <div class="card-body">
     <h2 class="card-title h5">
       <%= link_to exercise.title, exercise, data: {turbo: false} %>
     </h2>
-    <div class="divider"></div>
     <p class="card-subtitle  text-gray"><%= exercise.description.truncate(50) if exercise.description %></p>
   </div>
 
-  <div class="card-body pt-0">
+  <div class="card-footer">
     <% if exercise.level %>
       <p class="mb-0">
         <i class="mdi mdi-arm-flex"></i> Niveau:  <%= exercise.level %>
@@ -34,21 +47,6 @@
     <p class="mb-0">
       <i class="mdi mdi-forum-outline"></i> Commentaires:  <%= exercise.comments.count %>
     </p>
-  </div>
-
-  <div class="card-footer">
-    <!-- user info -->
-    <small class="tile mb-2">
-      <a href="<%= user_url(exercise.user) %>" data-turbo="false" class="tile-icon">
-        <%= render partial: "users/avatar", locals: {user: exercise.user, size: :small} %>
-      </a>
-
-      <div class="tile-content pl-3">
-        <p class="tile-title mb-0">
-          <%= link_to exercise.user.username, user_path(exercise.user), data: {turbo: false}  %> le <%= l exercise.created_at, format: :short %></p>
-      </div>
-    </small>
-    <!-- end user info -->
 
 <%
 =begin %>
