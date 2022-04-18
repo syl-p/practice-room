@@ -1,7 +1,9 @@
-<ul class="exercises-list columns">
-  <% exercises.each do |exercise| %>
-    <li class="exercises-list__item column col-sm-12 col-xl-6 col-3">
-      <%= render partial: "exercises/search/card", locals: {exercise: exercise} %>
-    </li>
-  <% end %>
-</ul>
+<%= turbo_frame_tag "search_results", target: "search_results" do %>
+  <ul class="exercises-list columns">
+    <% exercises.each do |exercise| %>
+      <li class="exercises-list__item column col-sm-12 col-xl-6 col-3">
+        <%= render partial: "exercises/search/card", locals: {exercise: exercise} %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
