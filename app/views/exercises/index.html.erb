@@ -2,7 +2,7 @@
   content_for :description, "Practice room; c'est une plateforme collaborative qui permet aux musiciens de créer et améliorer leur routine de pratique."
 %>
 <%= turbo_frame_tag "search" do %>
-  <section class="exercises-index">
+  <section class="exercises-index" data-controller="hello">
     <header>
       <div class="hero hero-sm">
         <div class="hero-body">
@@ -20,29 +20,8 @@
           </aside>
           <!-- Results list -->
           <section class="column col-md-12 col-10 exercises-index_content_main">
-            <header class="columns">
-              <div class="column col-6">
-                <%= turbo_frame_tag "search_results_count" do %>
-                  Nous avons trouvé <%= @exercises.count %> résultats.
-                <% end %>
-                <%= link_to 'Créer un exercice', new_exercise_path, data: {turbo: false} if !current_user.nil? %>
-              </div>
-              <%= form_with(url: search_exercises_path,
-                  data: {controller: "hello", hello_target: "form"}, class: "col-6 columns") do |form| %>
-                <%= form.select :order_by, [["Date d'ajout", "created_at"], ["Titre", "title"]], {selected: 'created_at'}, {
-                    data: { action: "change->hello#search" },
-                    class: "form-select select-lg col-6"
-                  }
-                %>
-                <%= form.select :order, [["Descendant", "DESC"], ["Ascendant", "ASC"]], {selected: 'DESC'}, {
-                    data: { action: "change->hello#search" },
-                    class: "form-select select-lg col-6"
-                  }
-                %>
-              <% end %>
-            </header>
-            <%= turbo_frame_tag "search_results", target: "search_results" do %>
-              <%= render partial: "exercises/search/list", locals: {exercises: @exercises, categories: @categories} %>
+            <%= turbo_frame_tag "results", src: list_exercises_path, loading: :lazy do %>
+              <%= render partial: "exercises/search/results_skeleton" %>
             <% end %>
           </section>
           <!-- END Results list -->

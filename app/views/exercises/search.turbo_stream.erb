@@ -6,6 +6,6 @@
 
 <%= turbo_stream.replace "search_results" do %>
   <%= turbo_frame_tag "search_results", target: "search_results" do %>
-    <%= render "exercises/search/list", exercises: @exercises, categories: @categories %>
+    <%= render partial: "exercises/search/list", locals: {exercises: @exercises}  %>
   <% end %>
 <% end %>

@@ -6,3 +6,7 @@ customElements.define('tabs-section', Tabs)
 
 import { DragAndDrop } from "./drag-and-drop/drag-and-drop";
 customElements.define('drag-and-drop', DragAndDrop)
+
+
+import { Skeleton } from "./skeleton/skeleton";
+customElements.define('skeleton-box', Skeleton)

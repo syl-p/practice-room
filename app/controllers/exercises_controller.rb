@@ -1,6 +1,7 @@
 class ExercisesController < ApplicationController
   before_action :set_exercise, only: %i[ show edit get_versions_list update destroy add_to_favorites add_to_practice]
-  before_action :set_exerices_list, only: [:index, :search]
+  before_action :set_exerices, only: [:search, :list]
+  before_action :set_categories, only: [:index, :search]
   authorize_resource
 
   # specific layout for manage actions
@@ -8,6 +9,10 @@ class ExercisesController < ApplicationController
 
   # GET /exercises or /exercises.json
   def index
+  end
+
+  def list
+    render partial: "exercises/search/results", locals: {exercises: @exercises}
   end
 
   # POST /exercises/search
@@ -251,8 +256,11 @@ class ExercisesController < ApplicationController
     @exercise = Exercise.find(params[:id])
   end
 
-  def set_exerices_list
+  def set_categories
     @categories = Category.all
+  end
+
+  def set_exerices
     # if connected show published exercise and my private exercise
     @exercises = Exercise.for_current_user(current_user)
   end
