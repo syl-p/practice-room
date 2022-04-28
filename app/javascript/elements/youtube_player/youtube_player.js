@@ -12,7 +12,7 @@ export class YoutubePlayer extends HTMLElement {
     }
 
     disconnectedCallback() {
-        
+
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -20,11 +20,11 @@ export class YoutubePlayer extends HTMLElement {
     }
 
     setUpPlayer() {
-        if(this.getAttribute('video-id')) {
+        if(this.getAttribute('video-id') && this.getAttribute('video-id') !== '') {
             this.shadow.innerHTML = `
                 <style>${styles}</style>
-                <div class="youtube-player" data-embed="${this.getAttribute('video-id')}"> 
-                    <div class="play-button"></div> 
+                <div class="youtube-player" data-embed="${this.getAttribute('video-id')}">
+                    <div class="play-button"></div>
                 </div>
             `
             // GET THE TUMBNAIL
@@ -38,14 +38,21 @@ export class YoutubePlayer extends HTMLElement {
             // CLICK EVENT
             this.shadow.addEventListener( "click", () => {
                 const iframe = document.createElement( "iframe" );
-        
+
                 iframe.setAttribute( "frameborder", "0" );
                 iframe.setAttribute( "allowfullscreen", "" );
                 iframe.setAttribute( "src", "https://www.youtube.com/embed/"+ this.getAttribute('video-id') +"?rel=0&showinfo=0&autoplay=1" );
-        
+
                 this.shadow.querySelector('.youtube-player').innerHTML = "";
                 this.shadow.querySelector('.youtube-player').appendChild( iframe );
             });
+        } else {
+          this.shadow.innerHTML = `
+            <style>${styles}</style>
+            <div class="no-video">
+              <p>Aucune vidéo par defaut n'a été définie pour cette exercice.</p>
+            </div>
+          `
         }
     }
 }

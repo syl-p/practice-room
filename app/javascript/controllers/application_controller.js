@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["videoPlayer", 'inputVersionsEnabled', 'versionsListEdit']
+  static targets = ["videoPlayer", 'inputVersionsEnabled', 'versionsListEdit', 'videoPreviewer']
   static values = {
     root: String
   }
@@ -11,6 +11,14 @@ export default class extends Controller {
 
   inputVersionsEnabledTargetConnected() {
     this.showVersionList(this.inputVersionsEnabledTarget.checked)
+  }
+
+  videoPreviewerTargetConnected() {
+    // observe text input in the target
+    const textInput = this.videoPreviewerTarget.querySelector('input')
+    textInput.addEventListener('input', () => { // and change youtube-player video id
+      this.videoPreviewerTarget.querySelector('youtube-player').setAttribute('video-id', textInput.value)
+    })
   }
 
   get practicerSidebarController() {
