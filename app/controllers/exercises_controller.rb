@@ -6,6 +6,7 @@ class ExercisesController < ApplicationController
 
   # specific layout for manage actions
   layout "layouts/dashboard", only: %i[edit new me]
+  layout "layouts/practicing", only: [:show]
 
   # GET /exercises or /exercises.json
   def index

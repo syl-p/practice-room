@@ -3,116 +3,115 @@
   content_for(:description, @exercise.description)
 %>
 
-<section class="exercise-show container">
-    <header class="hero">
-        <div class="hero-body">
-            <p id="notice"><%= notice %></p>
-            <ul class="breadcrumb m-0">
-              <li class="breadcrumb-item">
-                <%= link_to 'Accueil', root_path %>
-              </li>
-              <li class="breadcrumb-item">
-                <%= link_to 'Exercices', exercises_path %>
-              </li>
-              <li class="breadcrumb-item active">
-                <%= @exercise.title %>
-              </li>
-            </ul>
-            <h1 class="my-0">
-                <%= @exercise.title %>
-                <% if can? :manage, @exercise %>
-                    <small><%= link_to 'Edit', edit_exercise_path(@exercise) %> | <%= link_to 'Destroy', @exercise, method: :delete, data: { confirm: 'Are you sure?' } %></small>
-                <% end %>
-            </h1>
-            <p class="mb-0">
-              Description de l'exercise
-              <% @exercise.categories.each do |category| %>
-                  <a href="<%= by_slug_categories_path category.slug %>" title="<%= category.description %>" class="chip"><%= category.name %></a>
-              <% end %>
-            </p>
-        </div>
+<section class="exercise-show">
+  <header class="exercise-show__header py-2">
+    <ul class="breadcrumb m-0">
+      <li class="breadcrumb-item">
+        <%= link_to 'Accueil', root_path %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to 'Exercices', exercises_path %>
+      </li>
+      <li class="breadcrumb-item active">
+        <%= @exercise.title %>
+      </li>
+    </ul>
+    <h1 class="my-0">
+        <%= @exercise.title %>
+        <% if can? :manage, @exercise %>
+            <small><%= link_to 'Edit', edit_exercise_path(@exercise) %> | <%= link_to 'Destroy', @exercise, method: :delete, data: { confirm: 'Are you sure?' } %></small>
+        <% end %>
+    </h1>
+    <p class="mb-0">
+      Description de l'exercise
+      <% @exercise.categories.each do |category| %>
+          <a href="<%= by_slug_categories_path category.slug %>" title="<%= category.description %>" class="chip"><%= category.name %></a>
+      <% end %>
+    </p>
+  </header>
+
+  <article class="container">
+    <p id="notice"><%= notice %></p>
+    <header class="exercise-show__intro columns">
+      <!-- VIDEO -->
+      <div class="exercise-show__intro__hero column">
+        <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
+      </div>
+      <!-- VIDEO -->
+
+      <% if @exercise.versions_enabled %>
+        <!-- VERSIONS LIST -->
+        <aside class="exercise-show__versions column col-4 hide-lg">
+            <%= turbo_frame_tag "exercise_versions" do %>
+              <%= render partial: "exercises/versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
+            <% end %>
+        </aside>
+        <!-- VERSIONS LIST -->
+      <% end %>
+
+      <div class="exercise-show__practice-toolbar column col-12">
+        <% if current_user.present? %>
+          <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: @exercise, extended: true } %>
+        <% end %>
+      </div>
     </header>
-    <article class="container">
-        <header class="exercise-show__intro columns">
-          <!-- VIDEO -->
-          <div class="exercise-show__intro__hero column">
-            <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
-          </div>
-          <!-- VIDEO -->
-
-          <% if @exercise.versions_enabled %>
-            <!-- VERSIONS LIST -->
-            <aside class="exercise-show__versions column col-4 hide-lg">
-                <%= turbo_frame_tag "exercise_versions" do %>
-                  <%= render partial: "exercises/versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
-                <% end %>
-            </aside>
-            <!-- VERSIONS LIST -->
-          <% end %>
-
-          <div class="exercise-show__practice-toolbar column col-12">
-            <% if current_user.present? %>
-              <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: @exercise, extended: true } %>
-            <% end %>
-          </div>
-        </header>
-        <section class="exercise-show__content columns">
-            <section class="column col-8 col-sm-12">
-                <%= sanitize renderHtml @exercise.body %>
-            </section>
-            <aside class="column col-4 col-sm-12">
-              <div>
-                <h3>Auteur</h3>
-                <%= render "shared/user_tile", user: @exercise.user, published_at: @exercise.created_at %>
-                <div class="divider"></div>
-              </div>
-              <% if @exercise.media.present? %>
-                <div>
-                  <h3>Ressources</h3>
-                  <%= render "shared/ressource_list" %>
-                  <div class="divider"></div>
-                </div>
-              <% end %>
-              <div>
-                <h3>Partager</h3>
-                <%= render partial: "exercises/share", locals: {exercise: @exercise} %>
-                <div class="divider"></div>
-              </div>
-            </aside>
-            <div class="divider col-12"></div>
+    <section class="exercise-show__content columns">
+        <section class="column col-8 col-sm-12">
+            <%= sanitize renderHtml @exercise.body %>
         </section>
-        <footer class="exercise-show__comments">
-            <h2 class="text-center">
-              <i class="mdi mdi-forum-outline"></i>
-              Commentaires
-            </h2>
-            <% if user_signed_in? %>
-                <%= turbo_frame_tag "comment_new" do %>
-                    <%= render partial: "comments/form",
-                        locals: {
-                          comment: Comment.new, commentable: @exercise, first: true
-                        } %>
-                <% end %>
-            <% else %>
-                <div class="empty">
-                    <div class="empty-icon">
-                        <i class="mdi mdi-account"></i>
-                    </div>
-                    <p class="empty-title h5">Vous devez être connecter pour pouvoir commenter.</p>
-                    <p class="empty-subtitle">Si tu n'as pas de compte tu peux aussi t'inscrire gratuitement pour participer à la conversation.</p>
-                    <div class="empty-action">
-                      <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary"  %>
-                      <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-link"  %>
-                    </div>
+        <aside class="column col-4 col-sm-12">
+          <div>
+            <h3>Auteur</h3>
+            <%= render "shared/user_tile", user: @exercise.user, published_at: @exercise.created_at %>
+            <div class="divider"></div>
+          </div>
+          <% if @exercise.media.present? %>
+            <div>
+              <h3>Ressources</h3>
+              <%= render "shared/ressource_list" %>
+              <div class="divider"></div>
+            </div>
+          <% end %>
+          <div>
+            <h3>Partager</h3>
+            <%= render partial: "exercises/share", locals: {exercise: @exercise} %>
+            <div class="divider"></div>
+          </div>
+        </aside>
+        <div class="divider col-12"></div>
+    </section>
+    <footer class="exercise-show__comments">
+        <h2 class="text-center">
+          <i class="mdi mdi-forum-outline"></i>
+          Commentaires
+        </h2>
+        <% if user_signed_in? %>
+            <%= turbo_frame_tag "comment_new" do %>
+                <%= render partial: "comments/form",
+                    locals: {
+                      comment: Comment.new, commentable: @exercise, first: true
+                    } %>
+            <% end %>
+        <% else %>
+            <div class="empty">
+                <div class="empty-icon">
+                    <i class="mdi mdi-account"></i>
                 </div>
-            <% end %>
+                <p class="empty-title h5">Vous devez être connecter pour pouvoir commenter.</p>
+                <p class="empty-subtitle">Si tu n'as pas de compte tu peux aussi t'inscrire gratuitement pour participer à la conversation.</p>
+                <div class="empty-action">
+                  <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary"  %>
+                  <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-link"  %>
+                </div>
+            </div>
+        <% end %>
 
-            <!-- COMMENT LIST -->
-            <%= tag.div id: "#{dom_id(@exercise)}_comments" do %>
-                <%=  render partial: "comments/comment", collection: @exercise.comments.where(parent_id: nil), as: :comment  %>
-            <% end %>
-            <!-- END COMMENT LIST -->
+        <!-- COMMENT LIST -->
+        <%= tag.div id: "#{dom_id(@exercise)}_comments" do %>
+            <%=  render partial: "comments/comment", collection: @exercise.comments.where(parent_id: nil), as: :comment  %>
+        <% end %>
+        <!-- END COMMENT LIST -->
 
-        </footer>
-    </article>
+    </footer>
+  </article>
 </section>

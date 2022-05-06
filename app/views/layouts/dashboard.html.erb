@@ -14,23 +14,6 @@
   <body>
     <main data-controller="application" data-application-root-value="<%= root_url %>">
       <%= render "shared/dashboard/navbar" %>
-      <%= render "shared/practicer/practice_sidebar" if current_user %>
-
-<%
-=begin
-      <% if notice.present? %>
-        <div class="toast toast-primary">
-          <p class="notice"><%= notice %></p>
-        </div>
-      <% end %>
-      <% if alert.present? %>
-        <div class="toast toast-warning">
-          <p class="alert"><%= alert %></p>
-        </div>
-      <% end %>
-<%
-=end %>
-
       <%= yield %>
     </main>
     <%= render partial: 'shared/footer' %>
