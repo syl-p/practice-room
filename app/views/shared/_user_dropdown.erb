@@ -1,6 +1,6 @@
 
 <%  if current_user.present?  %>
-  <div class="btn-group navbar__user-infos"  data-controller="user-nav">
+  <div class="btn-group navbar__user-infos hide-lg"  data-controller="user-nav">
     <!--!-->
     <div class="dropdown navbar__user-infos__friendships">
       <button
@@ -20,7 +20,7 @@
         <span class="pr-2"><%= current_user.username %></span>
         <%= render partial: "users/avatar", locals: {user: current_user, size: :small} %>
       <% end %>
-      <a class="btn btn-link dropdown-toggle px-0 hide-xs" tabindex="0">
+      <a class="btn btn-link dropdown-toggle px-0" tabindex="0">
           <i class="mdi mdi-menu-down"></i>
       </a>
       <!-- menu component -->

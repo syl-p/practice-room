@@ -3,9 +3,20 @@
   --container-width: calc(100vw - var(--container-padding) * 2);
 }
 
-@media only screen and (min-width: 840px) {
+.off-canvas .off-canvas-content {
+  padding: 0;
+}
+
+@media only screen and (min-width: 960px) {
   :root {
     --container-padding: 32px;
+  }
+
+  .container {
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: calc(50% - var(--container-width) / 2);
+    padding-right: calc(50% - var(--container-width) / 2);
   }
 
   .off-canvas .off-canvas-content {
@@ -22,12 +33,7 @@
 }
 
 
-.container {
-  box-sizing: border-box;
-  width: 100%;
-  padding-left: calc(50% - var(--container-width) / 2);
-  padding-right: calc(50% - var(--container-width) / 2);
-}
+
 
 main {
     min-height: 800px;

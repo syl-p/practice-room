@@ -1,7 +1,3 @@
-<%# <a class="practice-sidebar_close"
-  data-action="click->practicer-sidebar#toggle">
-  <i class="mdi mdi-close"></i>
-</a> %>
 <div class="practice-sidebar__content panel">
   <% if current_user %>
     <header class="panel-header">
@@ -9,49 +5,90 @@
         <a href="<%= root_path %>">
           Prm.
         </a>
-        <div class="text-center mt-2 py-2">
-          <%= link_to me_exercises_path, class: "my-2" do %>
-            <%= render partial: "users/avatar", locals: {user: current_user, size: :xlarge} %>
-          <% end %>
+        <!--<div class="text-center mt-2 py-2">
+          <%#= link_to me_exercises_path, class: "my-2" do %>
+            <%#= render partial: "users/avatar", locals: {user: current_user, size: :xlarge} %>
+          <%# end %>
           <br>
           <p class="mt-2">
             Connecté en tant que
-            <%= link_to me_exercises_path do %>
-              <%= current_user.username %>
-            <% end %>
+            <%#= link_to me_exercises_path do %>
+              <%#= current_user.username %>
+            <%# end %>
             VOTRE PRATIQUE DU JOUR<br>
             <span class="practice-sidebar__practice-time"
               data-practicer-sidebar-target="practiceTime">
               00:00:00
             </span>
           </p>
-        </div>
+        </div>-->
       </div>
-      <%# <p class="panel-subtitle text-center">
-      </p> %>
+    <p class="panel-subtitle text-center">
+      <%#= link_to "Votre espace", me_exercises_path, class: "btn" if ['show'].include?(action_name) %>
+    </p>
     </header>
-    <div class="panel-body">
-      <tabs-section tab-list-class="tab tab-block" tab-link-class="tab-item">
-        <nav class="panel-nav" slot=nav></nav>
+    <div class="panel-body pt-0">
 
-        <div data-tab-title="Aujourd'hui" slot="tab" data-practicer-sidebar-target="exercises">
-          <%= render partial: "sessions_of_the_days/list", locals: {sessions_of_the_day: current_user.sessions_of_today} %>
-        </div>
-
-        <%# <ul class="tile-list" data-tab-title="Challenges" slot="tab"
-            data-tabs-target="tab" data-practicer-sidebar-target="challenges">
-          <li><b>Partie non développée pour le moment...</b><br> Patience :) !</li>
-        </ul> %>
-
-        <ul class="tile-list practice-sidebar__favorites" data-tab-title="Vos favoris" slot="tab"
-          data-tabs-target="tab" data-practicer-sidebar-target="favorites">
-          <%= render partial: "shared/user_favorite", collection: current_user.favorites_populated, as: :exercise  %>
+      <div class="practice-sidebar__content__widget practice-sidebar__content__nav px-0">
+        <ul>
+          <li>
+            <%= link_to me_exercises_path, class: "active" do %>
+              <i class="mdi mdi-view-dashboard"></i>Votre espace
+            <% end %>
+          </li>
+          <li>
+            <%= link_to me_exercises_path, class: "" do %>
+              <i class="mdi mdi-book-edit"></i>Vos exercises
+            <% end %>
+          </li>
+          <li>
+            <%= link_to me_media_path, class: "" do %>
+              <i class="mdi mdi-file-document"></i>Liste des medias
+            <% end %>
+          </li>
+          <%  if can? :manage, Category %>
+            <li>
+              <%= link_to categories_path, class: "btn btn-link" do %>
+                <i class="mdi mdi-card"></i>Liste des catégories
+              <% end %>
+            </li>
+          <% end %>
         </ul>
-      </tabs-section>
+      </div>
+      <div class="practice-sidebar__content__widget">
+        <h5>
+          <i class="mdi mdi-clock-fast"></i>
+          <span>
+            <span class="practice-sidebar__practice-time"
+                  data-practicer-sidebar-target="practiceTime">
+              00:00:00
+            </span><br>
+            <small>de pratique aujourd'hui</small>
+          </span>
+        </h5>
+        <div class="mb-2" data-practicer-sidebar-target="exercises">
+          <%= render partial: "sessions_of_the_days/list", locals: {sessions_of_the_day: current_user.sessions_of_today, nav: false} %>
+        </div>
+        <%= link_to "En voir plus (3 sessions)", me_exercises_path %>
+      </div>
+
+      <% if current_user.favorites_populated.present? %>
+        <div class="practice-sidebar__content__widget">
+          <h5>
+            <i class="mdi mdi-bookmark-multiple"></i>Vos exercices favoris
+          </h5>
+          <ul class="tile-list practice-sidebar__favorites" data-tab-title="Vos favoris" slot="tab"
+              data-tabs-target="tab" data-practicer-sidebar-target="favorites">
+            <%= render partial: "shared/user_favorite", collection: current_user.favorites_populated, as: :exercise  %>
+          </ul>
+        </div>
+      <% end %>
     </div>
 
     <div class="panel-footer">
-      <%= link_to "Se déconnecter", destroy_user_session_path, method: :delete %>
+      <%= link_to destroy_user_session_path, method: :delete do %>
+        <i class="mdi mdi-logout"></i> Se déconnecter
+      <% end %>
     </div>
   <% else %>
     <div class="empty">

@@ -1,21 +1,26 @@
+<%
+  nav = local_assigns[:nav].nil?
+%>
 <%= turbo_frame_tag "sessions_of_the_day" do %>
-  <p class="clearfix p-2"
-     data-practicer-sidebar-target="logNav"
-     data-date="<%= sessions_of_the_day.present? ? l(sessions_of_the_day.created_at, format: :short) : "Aujourd'hui" %>">
-    <%
-      params = sessions_of_the_day.present? ? { id: sessions_of_the_day.id } : nil
-    %>
-    <%= link_to "précédent", previous_session_path(params), { class: 'float-left' } %>
-    <%= link_to "suivant", next_session_path(params), { class: 'float-right' } if sessions_of_the_day && sessions_of_the_day.created_at.to_date != Date.today  %>
-  </p>
-  <ul class="tile-list">
+  <% if nav %>
+    <p class="clearfix p-2"
+       data-practicer-sidebar-target="logNav"
+       data-date="<%= sessions_of_the_day.present? ? l(sessions_of_the_day.created_at, format: :short) : "Aujourd'hui" %>">
+      <%
+        params = sessions_of_the_day.present? ? { id: sessions_of_the_day.id } : nil
+      %>
+      <%= link_to "précédent", previous_session_path(params), { class: 'float-left' } %>
+      <%= link_to "suivant", next_session_path(params), { class: 'float-right' } if sessions_of_the_day && sessions_of_the_day.created_at.to_date != Date.today  %>
+    </p>
+  <% end %>
+  <ul style="list-style: none; margin: 0px;">
     <% if sessions_of_the_day.present? && sessions_of_the_day.sessions.present?%>
         <% sessions_of_the_day.sessions.each_with_index do |session, index| %>
-            <li>
+            <li class="session">
                 <%= turbo_frame_tag "practice_session_#{sessions_of_the_day.id}_#{index}" do %>
                     <%= render partial: "sessions_of_the_days/item",
                         locals: {
-                            session: session, 
+                            session: session,
                             session_index: index,
                             sessions_of_the_day: sessions_of_the_day
                         }
@@ -24,5 +29,5 @@
             </li>
         <% end %>
     <% end %>
-    </ul>
+  </ul>
 <% end %>

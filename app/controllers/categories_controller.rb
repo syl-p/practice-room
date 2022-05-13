@@ -1,5 +1,4 @@
 class CategoriesController < ApplicationController
-  layout "layouts/dashboard", except: %i[get_by_slug]
   before_action :set_category, only: %i[ show edit update destroy ]
   authorize_resource
 

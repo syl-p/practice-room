@@ -1,19 +1,43 @@
-<div class="session">
-    <strong>Session débuté à <u><time class="session__time"><%= l session['time'].to_datetime, format: '%H:%M:%S' %></time></u></strong><br>
-    <small>Liste des exercices: </small>
-    <ul>
-        <% session['exercises'].each_with_index do |practiced, index| %>
+
+  <div class="timeline">
+    <div class="timeline-item" id="timeline-example-1">
+      <div class="timeline-left">
+        <a class="timeline-icon" href="#timeline-example-1">
+          <i class="mdi mdi-clock"></i>
+        </a>
+      </div>
+      <div class="timeline-content">
+        <div class="tile">
+          <strong class="tile-title">
+            Session à <u><time class="session__time"><%= l session['time'].to_datetime, format: '%H:%M:%S' %></time></u>
+          </strong>
+        </div>
+        <ul class="tile-list pl-2">
+          <% session['exercises'].each_with_index do |practiced, index| %>
             <%= turbo_frame_tag "practice_exercise_#{index}_#{sessions_of_the_day.id}_#{session_index}" do %>
-                <%= render layout: "exercises/practice_exercise_tile", locals: {practiced: practiced} do %>
-                    <li><%= link_to "Supprimer",
-                        remove_from_practice_path(
-                            index: index,
-                            sessions_of_the_day_id: sessions_of_the_day.id,
-                            session_index: session_index),
-                        method: :delete %></li>
-                    <li><a href="#">Editer</a></li>
-                <% end %>
+              <li class="tile tile-centered"
+                  data-practicer-sidebar-target="exercise" data-duration="<%= practiced["duration"] %>">
+                <div class="tile-content">
+                  <div class="tile-title">
+                    <%= link_to practiced["exercise"]["title"], exercise_path(practiced["exercise"]['id']), data: {turbo: false} %>
+                  </div>
+                  <small class="tile-subtitle text-gray">
+                    Durée: <%= Time.at(practiced["duration"]).utc.strftime("%H:%M:%S") %>
+                  </small>
+                </div>
+                <div class="tile-action dropdown dropdown-right" tabindex="0">
+                  <%= link_to remove_from_practice_path(
+                                index: index,
+                                sessions_of_the_day_id: sessions_of_the_day.id,
+                                session_index: session_index),
+                              method: :delete, class: "btn btn-link" do %>
+                    <i class="mdi mdi-close"></i>
+                  <% end %>
+                </div>
+              </li>
             <% end %>
-        <% end %>
-    </ul>
-</div>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>

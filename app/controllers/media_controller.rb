@@ -1,5 +1,4 @@
 class MediaController < ApplicationController
-  layout "layouts/dashboard"
   before_action :set_medium, only: %i[ show edit update destroy ]
   authorize_resource
 
