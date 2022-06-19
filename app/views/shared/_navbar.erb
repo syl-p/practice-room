@@ -1,6 +1,6 @@
 <nav class="navbar container">
   <section class="navbar-section">
-    <a href="<%= root_path %>" class="<%= "show-lg" if !current_page?(root_path) %>">
+    <a href="<%= root_path %>">
       Prm.
     </a>
   </section>
@@ -11,7 +11,7 @@
   </section>
   <section class="navbar-section">
     <% if user_signed_in? %>
-      <%= render partial: "shared/user_dropdown" %>
+      <%= render partial: "users/dropdown" %>
     <% else %>
       <%= link_to "Se connecter", new_user_session_path, class: "btn btn-link"  %>
       <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-link"  %>

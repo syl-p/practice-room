@@ -7,7 +7,6 @@ class ErrorsController < ApplicationController
     render status: 500
   end
 
-
   def unprocessable
     render status: 422
   end

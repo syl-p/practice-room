@@ -12,14 +12,12 @@
     "@rails/actioncable": "^7.0.0-alpha2",
     "@rails/activestorage": "^7.0.0-alpha2",
     "@rails/ujs": "^7.0.0-alpha2",
+    "chart.js": "^3.8.0",
     "esbuild": "^0.13.12",
     "remarkable": "^2.0.1",
     "sass": "^1.43.4",
     "spectre.css": "^0.5.9",
     "stimulus": "^2.0.0"
   },
-  "version": "0.1.0",
-  "devDependencies": {
-    "webpack-dev-server": "^3.11.2"
-  }
+  "version": "0.1.0"
 }

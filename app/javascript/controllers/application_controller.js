@@ -1,7 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["videoPlayer", 'inputVersionsEnabled', 'versionsListEdit', 'videoPreviewer']
+  static targets = ["videoPlayer", 'inputVersionsEnabled', 'versionsListEdit',
+                    'videoPreviewer', "sidebar", "container"]
   static values = {
     root: String
   }
@@ -40,7 +41,7 @@ export default class extends Controller {
 
   togglePracticerSidebar($event) {
     $event.stopPropagation()
-    this.practicerSidebarController.toggle()
+    this.sidebarTarget.classList.toggle("active")
   }
 
   // Version actions

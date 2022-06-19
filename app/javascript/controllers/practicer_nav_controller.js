@@ -14,6 +14,7 @@ export default class extends ApplicationController {
   }
 
   favorites({params: {id, action}}) {
+    console.log(this.btnTargets)
     this.favorite(id, action)
       .then((response) => {
         const favoritesTarget = super.practicerSidebarController.favoritesTarget
@@ -44,7 +45,7 @@ export default class extends ApplicationController {
   }
 
   addToPractice({params: {id}}) {
-    const time = this.extendedValue && this.selectedTimeTarget ? this.selectedTimeTarget.value : "00:10"
+    const time = this.selectedTimeTarget ? this.selectedTimeTarget.value : "00:10"
     this.practice(id, time)
       .then((response) => {
         const exercisesTarget = super.practicerSidebarController.exercisesTarget

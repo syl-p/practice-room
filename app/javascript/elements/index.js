@@ -10,3 +10,6 @@ customElements.define('drag-and-drop', DragAndDrop)
 
 import { Skeleton } from "./skeleton/skeleton";
 customElements.define('skeleton-box', Skeleton)
+
+import { Stat } from "./stat/stat";
+customElements.define('stat-box', Stat)

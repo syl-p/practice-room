@@ -4,7 +4,7 @@
 }
 
 .off-canvas .off-canvas-content {
-  padding: 0;
+  padding: 0 1.5rem;
 }
 
 @media only screen and (min-width: 960px) {
@@ -20,8 +20,7 @@
   }
 
   .off-canvas .off-canvas-content {
-    padding: 0 4rem;
-    width: calc(100vw - var(--container-padding));
+    padding: 0 3rem;
   }
 }
 
@@ -32,9 +31,10 @@
   }
 }
 
-
-
-
 main {
     min-height: 800px;
+}
+
+.off-canvas .off-canvas-sidebar {
+  overflow-y: inherit;
 }

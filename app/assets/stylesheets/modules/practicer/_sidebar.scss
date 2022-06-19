@@ -1,6 +1,7 @@
 .practice-sidebar {
+  position: relative;
   z-index: 1000;
-  width: 14rem;
+  width: 16rem;
   height: 100vh;
 
   &.active {
@@ -11,10 +12,15 @@
     right: 30px;
     top: 30px;
     cursor: pointer;
+    background: transparent;
+    border: 0px;
   }
   &__link {
     // onglet style vertical
-    display: block;
+    background: transparent;
+    border: 0px;
+    z-index: 10000;
+    display: none;
     text-decoration: none;
     color: #333;
     font-size: 14px;
@@ -26,20 +32,22 @@
     cursor: pointer;
     position: absolute;
     top: 50%;
-    left: -100px;
+    right: -85px;
+    @media (min-width:$size-md) {
+      display: block;
+    }
   }
   &__content {
     height: 100%;
-    width: 14rem;
+    width: 16rem;
     position: fixed;
     left: 0;
     top: 0;
 
     &__widget {
-      background-color: white;
       border-radius: 10px;
-      padding: 15px 20px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
+      overflow: hidden;
       h5 {
         font-size: inherit;
         margin-bottom: 10px;
@@ -51,9 +59,20 @@
           display: inline-block;
         }
       }
+      &.sessions,
+      &.favorites li {
+        background-color: white;
+        padding: 15px;
+        .tile .tile-title{
+          white-space: inherit;
+        }
+      }
+
+      &.sessions {}
     }
 
     &__nav {
+      background-color: white;
       ul {
         list-style: none;
         padding: 0;

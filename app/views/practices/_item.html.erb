@@ -1,0 +1,38 @@
+<div class="timeline-item" id="session_index">
+  <div class="timeline-left">
+    <a class="timeline-icon icon-lg" href="#session_index">
+      <i class="mdi mdi-marker" style="font-size: 15px"></i>
+    </a>
+  </div>
+  <div class="timeline-content">
+    <div class="tile">
+      <strong class="tile-title">
+        Session à <u><time class="session__time"><%= l session.created_at, format: '%H:%M:%S' %></time></u>
+      </strong>
+    </div>
+    <ul class="tile-list">
+      <% session.practices_exercises.each_with_index do |practiced, index| %>
+        <%= turbo_frame_tag "practices_exercises_#{practiced.id}" do %>
+          <li class="tile tile-centered"
+              data-practicer-sidebar-target="exercise" data-duration="<%= practiced.duration %>">
+            <div class="tile-content">
+              <div class="tile-title">
+                <%= link_to practiced.exercise.title, exercise_path(practiced.exercise), data: {turbo: false} %>
+              </div>
+              <small class="tile-subtitle text-gray">
+                à <%= Time.at(practiced.created_at).utc.strftime("%H:%M:%S") %> Durée: <%= Time.at(practiced.duration).utc.strftime("%H:%M:%S") %>
+              </small>
+            </div>
+            <div class="tile-action dropdown dropdown-right" tabindex="0">
+              <%= link_to remove_from_practice_path(
+                practices_exercises_id: practiced.id),
+                method: :delete, class: "btn btn-link pr-0" do %>
+                <i class="mdi mdi-close"></i>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>

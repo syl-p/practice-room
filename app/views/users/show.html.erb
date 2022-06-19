@@ -20,22 +20,36 @@
       </div>
     </header>
     <section class="container columns py-2">
-        <article class="column">
+        <article class="column  col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h2>Exercices publiés: </h2>
                 </div>
                 <div class="card-body">
                     <% if @user.exercises.for_current_user(current_user) %>
-                        <%= render partial: 'exercises/list_compact',
-                            locals: {exercises: @user.exercises.for_current_user(current_user)} %>
+                    <ul class="m-0 pl-2">
+                      <% @user.exercises.for_current_user(current_user).each do |exercise| %>
+                        <li data-exercise-id="<%= exercise.id %>">
+                          <%= link_to exercise.title, exercise, class: 'tile-title' %>
+                          <% if can? :manage, exercise %>
+                            <a href="<%= edit_exercise_path(exercise) %>" class="btn btn-link" title="Editer l'exercice">
+                              <i class="mdi mdi-pencil"></i>
+                            </a>
+                          <% end %>
+                          <br>
+                          <small class="tile-subtitle"><%= exercise.description %></small>
+                        </li>
+                      <% end %>
+                    </ul>
                     <% else %>
                         <p>Aucun exercice publié par cet utilisateur pour le moment.</p>
                     <% end %>
                 </div>
+                <div class="card-footer">
+                </div>
             </div>
         </article>
-        <aside class="column col-4">
+        <aside class="column col-4 col-md-12">
             <div class="card mb-2">
                 <div class="card-header">
                     <div class="card-title h5">Bio et autres informations</div>

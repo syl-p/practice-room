@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show ]
+  layout "layouts/dashboard", only: %i[index]
   authorize_resource
   # GET /user or /user.json
   def index

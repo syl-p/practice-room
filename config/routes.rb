@@ -7,8 +7,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'users/index'
   get 'users/show'
+  get 'dashboard', to: "users#index", as: "dashboard"
 
   resources :media do
     collection do
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       get "new/:step", to: "exercises#new", as: "new_with_step"
 
       # route for stimulus actions
-      get ":id/practice/add(/:time)", to: "exercises#add_to_practice", as: "add_to_practice"
+      get ":id/practice/add(/:time)", to: "practices#add_to_practice", as: "add_to_practice"
       put ":id/favorites/add", to: "exercises#add_to_favorites"
       put ":id/favorites/remove", to: "exercises#remove_from_favorites"
 
@@ -35,7 +35,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :sessions_of_the_days
   resources :comments do
     resources :comments, module: :comments
   end
@@ -45,15 +44,12 @@ Rails.application.routes.draw do
   get "users/:id", to: "users#show", as: "user"
   delete "users/:id/delete_avatar", to: "users#delete_avatar", as: "delete_avatar"
 
+
+  delete "practice/remove/:practices_exercises_id", to: "practices#remove_from_practice", as: "remove_from_practice"
+  get "practices(/:previous_next)/:date", to: "practices#get_week", defaults: { format: :turbo_stream }, as: "get_week"
+
   # Here because use turbo ??
   get "exercises/:id/versions", to: "exercises#get_versions_list", as: "list_versions"
-  delete "exercises/:index/practice/remove/:sessions_of_the_day_id/:session_index", to: "exercises#remove_from_practice", as: "remove_from_practice"
-
-  get "sessons_of_the_days/previous(/:id)", to: "sessions_of_the_days#get_previous", as: "previous_session"
-  get "sessons_of_the_days/next(/:id)", to: "sessions_of_the_days#get_next", as: "next_session"
-
-  # Media
-  # mount MediumUploader.download_endpoint => "/uploads"
 
   # Pages
   get "/pages/:slug", to: "pages#show", as: "page"

@@ -1,8 +1,4 @@
-@import "spectre.css/src/spectre";
-@import "spectre.css/src/spectre-exp";
-
-@import "spectre.css/src/spectre-icons";
-// @import "@mdi/font/scss/materialdesignicons";
+@import "theme";
 
 /* MaterialDesignIcons.com */
 @import "@mdi/font/scss/variables";
@@ -13,8 +9,38 @@
 @import "@mdi/font/scss/extras";
 @import "@mdi/font/scss/animated";
 
-// Theme
-@import "./main.scss";
+// Layout
+@import "tools/mixins";
+@import "layout/container";
+
+// Modules
+@import "modules/navbar";
+@import "modules/tile-list";
+@import "modules/comment";
+@import "modules/footer";
+@import "modules/friends";
+@import "modules/exercises/list";
+@import "modules/exercises/card";
+@import "modules/practicer/sidebar";
+@import "modules/share-list";
+@import "modules/popup";
+@import "modules/practicer/day-selector";
+
+// Pages
+@import "pages/general";
+@import "pages/home";
+@import "pages/exercise-show";
+@import "pages/exercise-edit";
+@import "pages/login";
+@import "pages/about-page";
+@import "pages/error-page";
+@import "pages/user-show";
+@import "pages/medium-edit";
+@import "pages/dashboard";
+
+tabs-section::shadow .panel-nav{
+  background: blue;
+}
 
 .mdi {
   font-size: 24px;

@@ -2,6 +2,7 @@ class ExercisesController < ApplicationController
   before_action :set_exercise, only: %i[ show edit get_versions_list update destroy add_to_favorites add_to_practice]
   before_action :set_exerices, only: [:search, :list]
   before_action :set_categories, only: [:index, :search]
+  layout "layouts/dashboard", only: %i[edit new me]
   authorize_resource
 
   # GET /exercises or /exercises.json
@@ -71,7 +72,7 @@ class ExercisesController < ApplicationController
 
     if params[:exercise_id].present? # version ?
       @exercise.exercise_id = params[:exercise_id]
-      render "exercises/versions/new"
+      render "exercises/versions/new", locals: {exercise: @exercise}
     end
   end
 
@@ -100,10 +101,11 @@ class ExercisesController < ApplicationController
     @exercise.user_id = current_user.id
     # published false if is a version of an exercise
     @exercise.published = false if @exercise.original.present?
+    step = @exercise.original.present? ? '' : 'media'
 
     respond_to do |format|
       if @exercise.save
-        format.html { redirect_to edit_with_step_exercises_path(@exercise, step: 'media'), notice: "Exercise was successfully created." }
+        format.html { redirect_to edit_with_step_exercises_path(@exercise, step: step), notice: "Exercise was successfully created." }
         format.json { render :show, status: :created, location: @exercise }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -153,8 +155,8 @@ class ExercisesController < ApplicationController
             "exercise_versions",
               partial: "exercises/versions/list",
               locals: {
-                exercise: @exercise,
-                versions: @exercise.original.versions_filtered
+                exercise: original,
+                versions: original.versions_filtered(current_user)
               }
             )
         }
@@ -173,7 +175,7 @@ class ExercisesController < ApplicationController
 
       # Send html for exercise favorite element
       respond_to do |format|
-        format.html { render partial: 'shared/user_favorite', locals: {exercise: @exercise} }
+        format.html { render partial: 'users/favorite', locals: {exercise: @exercise} }
         format.json { render json: current_user.favorites, status: 200 }
       end
     else
@@ -191,59 +193,6 @@ class ExercisesController < ApplicationController
         head 200, content_type: "text/html"
     else
       head 404, content_type: "text/html"
-    end
-  end
-
-  def add_to_practice
-    # default duration is 10 minutes (600 seconds)
-    duration = params[:time].present? ? Time.parse(params[:time]).seconds_since_midnight : 600
-    sessions_of_today = current_user.sessions_of_today
-
-    # exercise practiced
-    practiced = {exercise: @exercise, duration: duration}
-
-    # prepare new session
-    new_session = {time: Time.now, exercises:[]}
-    new_session[:exercises] << practiced
-
-    if !sessions_of_today.present? # no session today
-      sessions_of_today = SessionsOfTheDay.new(user_id: current_user.id)
-    end
-
-    if sessions_of_today.sessions.count > 0  && ((Time.now - sessions_of_today.sessions.last["time"].to_time) <= 1.hour)
-      sessions_of_today.sessions.last["exercises"] << practiced
-    else
-      sessions_of_today.sessions << new_session
-    end
-    sessions_of_today.save
-
-    respond_to do |format|
-      format.html { render partial: 'sessions_of_the_days/list', locals: { sessions_of_the_day: sessions_of_today, nav: false } }
-      format.json { render json: new_session, status: 200 }
-    end
-  end
-
-  def remove_from_practice
-    sessions_of_the_day = SessionsOfTheDay.find(params[:sessions_of_the_day_id])
-    sessions_of_the_day.sessions[params[:session_index].to_i]["exercises"].delete_at(params[:index].to_i) if session
-    sessions_of_the_day.save
-
-    if sessions_of_the_day.sessions[params[:session_index].to_i]["exercises"].count <= 0
-      sessions_of_the_day.sessions.delete_at(params[:session_index].to_i)
-      sessions_of_the_day.save
-
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.remove("practice_session_#{params[:sessions_of_the_day_id]}_#{params[:session_index]}")
-        end
-      end
-    else
-
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.remove("practice_exercise_#{params[:index]}_#{params[:sessions_of_the_day_id]}_#{params[:session_index]}")
-        end
-      end
     end
   end
 

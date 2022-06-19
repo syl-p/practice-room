@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :exercises, dependent: :destroy
   has_many :media, dependent: :destroy
-  has_many :sessions_of_the_days, dependent: :destroy
+  has_many :practices, dependent: :destroy
 
   has_many :friendships_as_requestor, class_name: "Friendship", foreign_key: "requestor_id", dependent: :destroy
   has_many :friendships_as_receiver, class_name: "Friendship", foreign_key: "receiver_id", dependent: :destroy
@@ -58,7 +58,43 @@ class User < ApplicationRecord
     res
   end
 
-  def sessions_of_today
-    return self.sessions_of_the_days.where(created_at: Time.current.all_day).first
+  def practices_of_the_day(date = Date.today)
+    self.practices.where(created_at: date.all_day)
+  end
+
+  def practice_time_today
+    res = 0
+    self.practices_of_the_day.each do |practice|
+      practice.practices_exercises.each do |practice|
+        res += practice.duration
+      end
+    end
+    Time.at(res).utc.strftime("%H:%M:%S")
+  end
+
+  def practice_time_by_category
+    res = {}
+    self.practices.each do |practice|
+      practice.practices_exercises.each do |practiced|
+        # group by categories
+        practiced.exercise.categories.each do |category|
+          res[category.name] ||= 0
+          res[category.name] += practiced.duration
+        end
+      end
+    end
+    res
+  end
+
+  def practice_time_by_day
+    res = {}
+    self.practices.each do |practice|
+      # group by days
+      res[practice.created_at.strftime("%Y-%m-%d")] ||= 0
+      practice.practices_exercises.each do |practiced|
+        res[practice.created_at.strftime("%Y-%m-%d")] += practiced.duration
+      end
+    end
+    res
   end
 end

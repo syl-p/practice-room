@@ -1,2 +1,130 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<section class="dashboard-page"
+
+        data-application-target="sidebar"
+        data-controller="practicer-sidebar"
+  data-practicer-sidebar-target="container">
+
+  <header class="dashboard-page__header">
+    <h1>Votre espace</h1>
+  </header>
+
+  <!-- stats -->
+  <section class="dashboard-page__section dashboard-page__stats columns" id="stats">
+    <article class="column col-6 col-sm-12">
+      <div class="dashboard-page__stats__item card">
+        <div class="card-header">
+          <b>Votre semaine</b>
+        </div>
+        <div class="card-body pt-0">
+          <div>
+            <h2 class="mb-0 h1">
+              <b><%= current_user.practice_time_today %></b>
+            </h2>
+            <small>Temps de pratique moyen</small>
+          </div>
+          <div>
+            <stat-box
+              labels="<%= current_user.practice_time_by_day.keys.map{ |date| date.to_datetime }.to_json %>"
+              values="<%= current_user.practice_time_by_day.values.to_json %>"
+              type="line">
+            </stat-box>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="column col-3  col-sm-12">
+      <div class="dashboard-page__stats__item card ">
+        <div class="card-header">
+          <b>Répartition par catégorie</b>
+        </div>
+        <div class="card-body pt-0">
+          <stat-box
+            labels="<%= current_user.practice_time_by_category.keys.to_json %>"
+            values="<%= current_user.practice_time_by_category.values.to_json %>"
+            type="doughnut">
+          </stat-box>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!--update -->
+  <section class="dashboard-page__section columns">
+    <article class="column col-8" id="update">
+      <h2>Qu'allons nous faire aujourd'hui ?</h2>
+      <tabs-section tab-list-class="tab tab-block" tab-link-class="tab-item">
+        <div data-tab-title="Vous améliorer" slot="tab">
+          <div class="columns">
+            <!-- dailies-->
+            <div class="column dashboard-page__dailies">
+              <div class="card dashboard-page__dailies__item accept">
+                <div class="card-header">
+                  <i class="mdi mdi-check"></i>
+                </div>
+                <div class="card-body">
+                  Plus de 10 mn de pratique
+                </div>
+              </div>
+              <div class="card dashboard-page__dailies__item">
+                <div class="card-header">
+                  <i class="mdi mdi-close"></i>
+                </div>
+                <div class="card-body">
+                  minimum 3 exercice par jour
+                </div>
+              </div>
+              <div class="card dashboard-page__dailies__item">
+                <div class="card-header">
+                  <i class="mdi mdi-close"></i>
+                </div>
+                <div class="card-body">
+                  pratiquer au moins 1 exercice dans chaque catégorie
+                </div>
+              </div>
+            </div>
+            <!-- dailies-->
+            <div class="column pr-2">
+              <h5>
+                Trouvez ici des idées pour augmenter l'efficacité<br> de votre temps de pratique...
+              </h5>
+              <p>
+                Nous développons actuellement plusieurs solutions pour vous motiver,
+                vous inspirer et vous aider à améliorer pratique.
+                <br>
+                Grâce aux dailies, vous aurez déjà une piste de réussite...
+              </p>
+            </div>
+            <div class="column col-12" style="margin-top: 20px">
+              <h5>... ou sélectionnez en un dans vos exercices favoris</h5>
+            </div>
+            <div class="column col-12 columns mt-2">
+              <% current_user.favorites_populated.each do |exercise| %>
+                <div class="col-3 column">
+                  <%= render partial: "exercises/card/lite", locals: {exercise: exercise} %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div data-tab-title="Votre contenu" slot="tab">
+          <div class="columns">
+            <div class="column">
+              test
+            </div><div class="column">
+              lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </div>
+          </div>
+        </div>
+      </tabs-section>
+    </article>
+    <aside>
+      <h2>Journal de pratique</h2>
+      <%= render partial: "practices/selector", locals: {current_date: Date.today} %>
+      <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
+    </aside>
+  </section>
+</section>

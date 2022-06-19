@@ -58,7 +58,6 @@ gem 'cancancan'
 
 gem "redcarpet"
 
-
 gem 'cssbundling-rails'
 gem 'jsbundling-rails'
 gem "sidekiq"

@@ -1,0 +1,64 @@
+<div class="dashboard-sidebar">
+  <div class="dashboard-sidebar__content panel">
+    <header class="panel-header">
+      <div class="panel-title">
+        <a href="<%= root_path %>">
+          Prm.
+        </a>
+      </div>
+      <p class="panel-subtitle text-center">
+      </p>
+      <div class="text-center mt-2 py-2">
+        <%= link_to dashboard_path, class: "my-2" do %>
+          <%= render partial: "users/avatar", locals: {user: current_user, size: :xlarge} %>
+        <% end %>
+        <br>
+        <p class="mt-2">
+          Connecté en tant que
+          <%= link_to dashboard_path do %>
+            <%= current_user.username %>
+          <% end %>
+        </p>
+      </div>
+    </header>
+    <div class="panel-body pt-0">
+      <div class="dashboard-sidebar__content__widget dashboard-sidebar__content__nav px-0">
+        <ul>
+          <li>
+            <%= link_to dashboard_path, class: controller_name == 'users' && action_name == 'index' ? 'active' : '' do %>
+              <i class="mdi mdi-view-dashboard"></i>Votre espace
+            <% end %>
+          </li>
+          <li>
+            <%= link_to me_exercises_path, class: controller_name == 'exercises' ? 'active' : '' do %>
+              <i class="mdi mdi-book-edit"></i>Vos exercises
+            <% end %>
+          </li>
+          <li>
+            <%= link_to me_media_path, class: controller_name == 'media' ? 'active' : '' do %>
+              <i class="mdi mdi-file-document"></i>Liste des medias
+            <% end %>
+          </li>
+          <li>
+            <%= link_to  edit_user_registration_path, class: controller_name == 'devise' ? 'active' : '' do%>
+              <i class="mdi mdi-account-settings"></i>Mon compte
+            <% end %>
+          </li>
+          <% if can? :manage, Category %>
+            <li>
+              <%= link_to categories_path, class: "btn btn-link" do %>
+                <i class="mdi mdi-card"></i>Liste des catégories
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel-footer">
+      <%= link_to destroy_user_session_path, method: :delete do %>
+        <i class="mdi mdi-logout"></i> Se déconnecter
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,17 +1,16 @@
-<header class="navbar container">
+<header class="navbar">
   <section class="navbar-section">
-    <a href="<%= root_path %>" class="btn btn-link">
+    <a href="<%= root_path %>" class="btn btn-link pl-0">
       Revenir sur le site
     </a>
   </section>
   <section class="navbar-center">
 
-    <%= link_to "Mes exercises", me_exercises_path, class: "btn btn-link" %>
-    <%= link_to "Liste des medias", me_media_path, class: "btn btn-link" %>
-    <%= link_to "Liste des catégories", categories_path, class: "btn btn-link" if can? :manage, Category  %>
-
   </section>
   <section class="navbar-section">
-    <%= render partial: "shared/user_dropdown" %>
+    <%= render partial: "users/dropdown" %>
+    <a href="#" class="show-lg" data-action="application#togglePracticerSidebar">
+      <i class="mdi mdi-menu"></i>
+    </a>
   </section>
 </header>

@@ -1,0 +1,10 @@
+<div class="tile">
+  <div class="tile-content pl-3">
+    <p class="tile-title mb-0">Publié par:
+      <%= link_to user.username, user_path(user) %> le <%= l published_at, format: :long %></p>
+    <p class="tile-subtitle mb-1"><%= user.bio %></p>
+  </div>
+    <a href="<%= user_url(user) %>" class="tile-icon">
+      <%= render partial: "users/avatar", locals: {user: user, size: :large} %>
+    </a>
+</div>

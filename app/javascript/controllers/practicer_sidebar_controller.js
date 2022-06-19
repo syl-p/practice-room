@@ -2,18 +2,11 @@ import ApplicationController from "./application_controller"
 import { practice } from "./mixins/practice"
 
 export default class extends ApplicationController {
-  static targets = ["container", "exercises", "exercise", "challenges",
+  static targets = ["exercises", "exercise", "challenges",
   "favorites", "logNav", "practiceTime"]
 
   connect() {
     practice(this)
-  }
-
-  logNavTargetConnected(element) {
-    const a = this.containerTarget.querySelector(".panel-nav ul li a")
-    if(a) {
-      a.innerHTML = element.dataset.date
-    }
   }
 
   exerciseTargetConnected() {
@@ -42,13 +35,6 @@ export default class extends ApplicationController {
       res += parseInt(e.dataset.duration);
     })
     this.practiceTimeTarget.innerHTML = this.convertHMS(res)
-  }
-
-  toggle($event = null) {
-    if ($event) {
-      $event.preventDefault()
-    }
-    this.containerTarget.classList.toggle('active')
   }
 
   removeFromFavorites({params: {id}}) {

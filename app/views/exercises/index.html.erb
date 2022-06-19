@@ -3,15 +3,9 @@
 %>
 <%= turbo_frame_tag "search" do %>
   <section class="exercises-index" data-controller="hello">
-    <header>
-      <div class="hero hero-sm">
-        <div class="hero-body">
-          <div class="container">
-            <h1>Découvrez une nouvelle<br> façon de pratiquer</h1>
-            <%= render partial: "exercises/search/search_fields" %>
-          </div>
-        </div>
-      </div>
+    <header  class="exercises-index__hero container">
+      <h1>Découvrez une nouvelle<br> façon de pratiquer</h1>
+      <%= render partial: "exercises/search/search_fields" %>
     </header>
     <section class="exercises-index_content container">
         <section class="columns">

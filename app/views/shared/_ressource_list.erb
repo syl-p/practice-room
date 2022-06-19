@@ -1,30 +1,26 @@
 <ul class="tile-list">
-    <% @exercise.media.each do |medium| %>
-    <!-- <%= medium.to_json %> -->
+    <% media.each do |medium| %>
       <li class="tile tile-centered">
           <div class="tile-icon">
               <i class="mdi mdi-file centered"></i>
           </div>
           <div class="tile-content">
-            <div class="tile-title">
+            <p class="tile-title m-0">
               <%= medium.name %> (<%= medium.file.filename %>)
-            </div>
-            <small class="tile-subtitle text-gray">
-              <%= medium.file.metadata['size'] %> Octets · Public · <%= medium.created_at %></small>
+            </p>
+            <p class="tile-subtitle text-gray  m-0">
+              <%= medium.file.metadata['size'] %>
+              Octets · Public · <%= medium.created_at %>
+            </p>
           </div>
           <div class="tile-action dropdown dropdown-right">
             <button class="btn btn-link dropdown-toggle">
-              <i class="icon icon-more-vert"></i>
+              <i class="mdi mdi-dots-vertical"></i>
             </button>
             <ul class="menu">
               <li><%= link_to "Ouvrir", url_for(medium.file), { target: '_blank', data: {turbo: false} } %></li>
               <li><%= link_to "Téléchargement", medium.file, { target: '_blank', data: {turbo: false},download: true } %></li>
             </ul>
-            <!--
-            <%= link_to url_for(medium.file), {class: 'btn btn-link', target: '_blank', data: {turbo: false} } do %>
-              <i class="mdi mdi-download"></i>
-            <% end %>
-            -->
           </div>
       </li>
     <% end %>

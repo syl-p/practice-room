@@ -1,0 +1,13 @@
+<div class="card exercise-card">
+  <div class="card-image">
+    <% img_link = exercise.video_link.present? ? "//img.youtube.com/vi/#{exercise.video_link}/0.jpg" : "https://via.placeholder.com/800x440.png" %>
+    <%= image_tag img_link, class: "img-responsive", alt: exercise.title %>
+  </div>
+
+  <div class="card-body">
+    <h2 class="card-title h5">
+      <%= link_to exercise.title, exercise, data: {turbo: false} %>
+    </h2>
+    <p class="card-subtitle  text-gray"><%= exercise.description.truncate(50) if exercise.description %></p>
+  </div>
+</div>

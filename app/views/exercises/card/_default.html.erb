@@ -47,14 +47,5 @@
     <p class="mb-0">
       <i class="mdi mdi-forum-outline"></i> Commentaires:  <%= exercise.comments.count %>
     </p>
-
-<%
-=begin %>
-    <% if can? :manage, exercise && false %>
-      <%= link_to 'Edit', edit_exercise_path(exercise), data: {turbo: false}  %> | <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% end %>
-<%
-=end %>
-
   </div>
 </div>

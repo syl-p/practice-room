@@ -9,9 +9,9 @@ export class Tabs extends HTMLElement {
     connectedCallback() {
         this.shadow.innerHTML = `
             <style>${styles}</style>
-            <slot name="nav" class="panel-nav">
+            <slot name="nav">
             </slot>
-            <slot name="content" class="panel-body">
+            <slot name="content">
                 <slot name="tab"></slot>
             </slot>
         `

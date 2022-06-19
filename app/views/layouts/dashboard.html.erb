@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : 'Bienvenue' %> - Practice Room</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="description" content="<%= content_for(:description) ? yield(:description) : '' %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body>
+    <main
+      class="dashboard off-canvas off-canvas-sidebar-show <%= "home" if action_name == "index" %>"
+      data-controller="application"
+      data-application-target="container"
+      data-application-root-value="<%= root_url %>">
+
+      <aside
+        id="sidebar-id"
+        class="off-canvas-sidebar">
+        <%= render "shared/dashboard/sidebar" %>
+      </aside>
+
+      <a class="off-canvas-overlay" href="#close"
+         data-action="application#togglePracticerSidebar"></a>
+
+      <div class="off-canvas-content">
+        <%= render "shared/dashboard/navbar" %>
+
+        <%= yield %>
+
+        <%= render partial: 'shared/footer' %>
+      </div>
+    </main>
+  </body>
+</html>

@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="dropdown navbar__user-infos__settings">
-      <%= link_to me_exercises_path, class: "btn btn-link ml-2" do %>
+      <%= link_to dashboard_path, class: "btn btn-link ml-2" do %>
         <span class="pr-2"><%= current_user.username %></span>
         <%= render partial: "users/avatar", locals: {user: current_user, size: :small} %>
       <% end %>
@@ -25,7 +25,7 @@
       </a>
       <!-- menu component -->
       <ul class="menu">
-        <li><%= link_to "Votre espace", me_exercises_path %></li>
+        <li><%= link_to "Votre espace", dashboard_path %></li>
         <li><%= link_to "Modifiez vos informations", edit_user_registration_path %></li>
         <li role="separator" class="divider"></li>
         <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
