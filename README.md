@@ -1,57 +1,65 @@
 # PRACTICE ROOM
-"Practice room" est un projet open source en développement. Cette application permet de mettre en place une routine de pratique mais aussi de travailler autrement que seul(e) chez-soi et sans aide.
+**"Practice room"** est une plateforme communautaire et libre (code ouvert), permettant la création, le listing d'exercices pratique (musique, sport...), l'enregistrement du temps de pratique ainsi que le partage d'expérience et la possibilité de se mettre au "challenge" mutuellement.
 
-PS: Ce projet est **initialement développé pour une communauté de musicien** mais le projet peut être utilisé pour n'importe quel autre domaine demandant de la dicipline et de la pratique (ex: le sport...). Donc, si besoin n'hésitez pas à proposer vos évolutions, adpatations et faire une pr.
+> Pratice room est une plateforme ou les utilisateurs peuvent participer à l'évolution des uns et des autres
 
-## Optimisation de votre pratique
-- Lister VOS exercices favoris
-- **Un journal de pratique quotidien**, permettant de connaitre et de mieux contrôler la manière dont vous allouez votre temps à vos exercices.
-- Retrouvez et consultez facilement toutes les ressources annexes necessaires à la pratique d'un exercice...
+Ce concept est actuellement en cours de développement pour une communauté de musicien. Il vous est donc possible d'envoyer vos pull requests.
+
+> Lien d'invitation au serveur discord:  [https://discord.gg/8vCbhQUK7M](https://discord.gg/8vCbhQUK7M)
+
+## Renseigné vos exercices perso', trouvez en de nouveaux
+
+- Liste des exercices proposées par les utilisateurs
+- Possibilité d'en ajouter à vos favoris pour les retrouvez plus facilement
+- Des médias (pdf, mp3...) peuvent être attachés aux exercices afin d'avoir un support complet pour le travailler.
+
+## Gérer votre temps de pratique
+- Un journal de pratique est à votre disposition pour pouvoir enregistrer le temps passé sur vos exercices.
+- Retrouvez dans votre **espace personnel** des statistiques pour avoir un feedback quotidien sur votre temps de pratique
+
+> D'autres features, sont actuellement en pleine étape de réflection. N'hésitez pas à proposer à l'équipe vos idées depuis le serveur discord.
+
 
 ## Pratiquez à plusieurs
-1. En effet, les membres de la plateforme peuvent mettre en ligne leurs exercices de manière publique afin de **les partager** à d'autres personnes.
+1. En effet, les membres de la plateforme peuvent mettre les exercices
+    - en public, afin de le partager avec toute la communauté de la plateforme
+    - en mode "amis seulement", pour ne les partager qu'à vos amis
+    - en privé, pour qu'ils ne soient connus que par vous
 
-2. Les membres qui constituent la communauté de la plateforme peuvent ensuite **proposer une version alternative à chaque exercice** ou **les commenter**...
+2. Les membres qui constituent la communauté de la plateforme:
+    - proposer une **version alternative** à chaque exercice
+    - les commenter
 
-3. Ajouter des membres à **votre liste d'amis**:
+## Faites vous de nouveaux amis
+
+3. Ajouter des membres à **votre liste d'amis** pour leur:
     - proposer des défis à vos amis
-    - partager des exercices exclusivement visible par eux
+    - partager des exercices exclusivement à ces derniers
 
-4. Abonnement à d'autre compte pour recevoir une notification quand ces derniers publient leurs exercices
+4. Système d'abonement afin d'être notifié lorsqu'un utilisateur
+    - ajoute un exercice en public ou pour ses amis (si vous en faites partie)
+    - propose une version d'un exercice que vous pratiquez
+    - publie un défi sur son profil
+
+## Gamification (TODO)
+L'objectif est de **récompenser les utilisateurs** en fonction de:
+- leur pratique respective
+- leur participation à la création de contenu
+- leur participation à la vie communautaire sur l'app.
 
 ## Roadmap && Fixes
-Vous pouvez suivre l'avancement du projet directement, [via l'onglet "projects"](https://github.com/syl-p/practice-room/projects/1) de ce repo.
+Vous pouvez suivre l'avancement du projet directement, [via l'onglet "projects"](https://github.com/syl-p/practice-room/projects/1)
+de ce repo.
 
 ## Communauté, Contact, Team...
-Un discord est à disposition à la fois pour les membres de la plateforme Practice room et pour les personnes souhaitant participer au développement.
+Un discord est à disposition à la fois pour les membres de la plateforme Practice room et pour les personnes souhaitant
+participer au développement.
 
-> Lien d'invitation général:
+
+> Lien d'invitation au serveur discord:  [https://discord.gg/8vCbhQUK7M](https://discord.gg/8vCbhQUK7M)
+
 ___
 
 ## Détails techniques
 - Ruby 2.7.4 avec Ruby on Rails 7.
 - Nodejs LTS
-
-### Installation [Section en cours de rédaction]
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
