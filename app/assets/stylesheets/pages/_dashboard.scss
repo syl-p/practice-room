@@ -71,11 +71,18 @@
 .dashboard-page {
   &__section {
     margin: 0px 0px 50px 0;
+    &__aside {
+      @media only screen and (max-width: $size-md) {
+        margin: 50px 0px 50px 0;
+      }
+    }
   }
   &__stats {
+    align-items: center;
     &__item {
       border-radius: 10px;
       margin-bottom: 20px;
+      min-height: 200px;
       .card-body {
         display: flex;
         justify-content: center;
@@ -89,17 +96,23 @@
   }
   &__dailies {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     &__item {
-      margin-right: 20px;
-      width: 50%;
+      width: calc(50% - 0.4rem);
       background-color: $gray-color-light;
       color: $gray-color;
-      &:last-child {
-        margin-right: 0;
+      margin-bottom: 10px;
+      &:first-child {
+        margin-left: 0;
       }
       &.accept {
         background-color: $success-color;
         color: white;
+      }
+
+      i {
+        font-size: 3rem;
       }
     }
   }
