@@ -1,10 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["videoPlayer", 'inputVersionsEnabled', 'versionsListEdit',
-                    'videoPreviewer', "sidebar", "container"]
+  static targets = ["videoPlayer", 'inputVersionsEnabled', 'versionsListEdit', 'videoPreviewer', "sidebar"]
   static values = {
-    root: String
+    root: String,
+    activeNav: String,
   }
 
   connect() {
