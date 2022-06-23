@@ -6,7 +6,6 @@
 <section class="exercise-show container">
   <header class="exercise-show__header">
     <div class="columns">
-
       <div class="column col-4  hide-md text-right pt-2"
         data-controller="practicer-nav"
         data-practicer-nav-extended-value="false"
@@ -21,31 +20,33 @@
             <%= render partial: "users/avatar", locals: {user: @exercise.user, size: :large} %>
           </a>
         </div>
-        <div class="exercise-show__header__metas">
-          <div>
-            <p class="mb-0 mr-2">Temps de pratique</p>
-            <input type="time" class="mr-2"
-             data-practicer-nav-target="selectedTime"
-             value="<%= @exercise.duration ? Time.at(@exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
+        <% if current_user.present? %>
+          <div class="exercise-show__header__metas">
+            <div>
+              <p class="mb-0 mr-2">Temps de pratique</p>
+              <input type="time" class="mr-2"
+               data-practicer-nav-target="selectedTime"
+               value="<%= @exercise.duration ? Time.at(@exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
+            </div>
+            <button type="button" class="btn"
+              data-practicer-nav-target="btn"
+              data-practicer-nav-action-param="add"
+              data-practicer-nav-id-param="<%= @exercise.id %>"
+              data-action="click->practicer-nav#addToPractice">
+              <i class="mdi mdi-playlist-plus"></i>
+            </button>
           </div>
-          <button type="button" class="btn"
-            data-practicer-nav-target="btn"
-            data-practicer-nav-action-param="add"
-            data-practicer-nav-id-param="<%= @exercise.id %>"
-            data-action="click->practicer-nav#addToPractice">
-            <i class="mdi mdi-playlist-plus"></i>
-          </button>
-        </div>
-        <div class="exercise-show__header__metas">
-          <div></div>
-          <button type="button" class="btn"
-            data-practicer-nav-target="btn"
-            data-practicer-nav-action-param="<%= current_user.favorites.include?(@exercise.id.to_s) ? 'remove' : 'add' %>"
-            data-practicer-nav-id-param="<%= @exercise.id %>"
-            data-action="click->practicer-nav#favorites">
-            <i class="mdi mdi-<%= current_user.favorites.include?(@exercise.id.to_s) ? 'bookmark-remove' : 'bookmark-outline' %>"></i>
-          </button>
-        </div>
+          <div class="exercise-show__header__metas">
+            <div></div>
+            <button type="button" class="btn"
+              data-practicer-nav-target="btn"
+              data-practicer-nav-action-param="<%= current_user.favorites.include?(@exercise.id.to_s) ? 'remove' : 'add' %>"
+              data-practicer-nav-id-param="<%= @exercise.id %>"
+              data-action="click->practicer-nav#favorites">
+              <i class="mdi mdi-<%= current_user.favorites.include?(@exercise.id.to_s) ? 'bookmark-remove' : 'bookmark-outline' %>"></i>
+            </button>
+          </div>
+        <% end %>
       </div>
 
       <div class="column col-8 col-md-12">

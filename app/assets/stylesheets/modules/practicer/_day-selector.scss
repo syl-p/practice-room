@@ -35,6 +35,17 @@
       padding: 4px;
       margin: 5px;
       border-radius: 45px;
+      position: relative;
+      &.with_data::after {
+          content: "";
+          position: absolute;
+          bottom: 2px;
+          right: 2px;
+          width: 8px;
+          height: 8px;
+          border-radius: 8px;
+          background-color: $primary-color;
+      }
       span {
         display: block;
         font-size: 0.6rem;

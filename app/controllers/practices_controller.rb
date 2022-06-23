@@ -98,14 +98,26 @@ class PracticesController < ApplicationController
               Date.parse(params[:date]).prev_week
             when 'next'
               Date.parse(params[:date]).next_week
-            else
-              Date.parse(params[:date])
             end
 
-    @practices_of_the_day = current_user.practices_of_the_day @current_date
+    @practices = current_user.practices.where(created_at: (@current_date.beginning_of_week..@current_date.end_of_week))
 
     respond_to do |format|
-      format.turbo_stream
+      format.html { render partial: 'practices/selector', locals: { current_date: @current_date, practices_for_the_week: @practices } }
+    end
+  end
+
+  def get_day
+    @practices = current_user.practices_of_the_day Date.parse(params[:date])
+
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.replace(
+          "practices_of_the_day",
+          partial: 'practices/list',
+          locals: { practices_of_the_day: @practices }
+        )
+      }
     end
   end
 

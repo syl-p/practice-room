@@ -46,7 +46,8 @@ Rails.application.routes.draw do
 
 
   delete "practice/remove/:practices_exercises_id", to: "practices#remove_from_practice", as: "remove_from_practice"
-  get "practices(/:previous_next)/:date", to: "practices#get_week", defaults: { format: :turbo_stream }, as: "get_week"
+  get "practices/:previous_next/:date", to: "practices#get_week", as: "get_week"
+  get "practices/:date", to: "practices#get_day", defaults: { format: :turbo_stream }, as: "get_day"
 
   # Here because use turbo ??
   get "exercises/:id/versions", to: "exercises#get_versions_list", as: "list_versions"

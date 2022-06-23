@@ -5,6 +5,10 @@ export default class extends ApplicationController {
   static targets = ["exercises", "exercise", "challenges",
   "favorites", "logNav", "practiceTime"]
 
+  static values = {
+    date: String,
+  }
+
   connect() {
     practice(this)
   }
@@ -15,6 +19,18 @@ export default class extends ApplicationController {
 
   exerciseTargetDisconnected() {
     this.evalPracticeTime()
+  }
+
+  dateValueChanged() {
+    const $dateLinks = document.querySelectorAll(`.day-selector a.day-selector__week-day`)
+    $dateLinks.forEach(($dl) => {
+      if ($dl.dataset.date == this.dateValue) {
+        $dl.classList.add('active')
+      } else {
+        $dl.classList.remove('active')
+      }
+    })
+
   }
 
   convertHMS(value) {

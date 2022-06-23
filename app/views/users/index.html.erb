@@ -145,10 +145,9 @@
       </tabs-section>
     </article>
     <aside class="dashboard-page__section__aside column col-4 col-md-12"
-      data-application-target="sidebar"
-      data-controller="practicer-sidebar">
+      data-application-target="sidebar">
       <h2>Journal de pratique</h2>
-      <%= render partial: "practices/selector", locals: {current_date: Date.today} %>
+      <%= render partial: "practices/selector", locals: {current_date: Date.today, practices_for_the_week: @practices_of_the_week } %>
       <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
     </aside>
   </section>
