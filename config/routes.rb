@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       get "new/:step", to: "exercises#new", as: "new_with_step"
 
       # route for stimulus actions
-      get ":id/practice/add(/:time)", to: "practices#add_to_practice", as: "add_to_practice"
+      get ":id/practice/add(/:time)", to: "practices#add_to_practice", defaults: { format: :turbo_stream }, as: "add_to_practice"
       put ":id/favorites/add", to: "exercises#add_to_favorites"
       put ":id/favorites/remove", to: "exercises#remove_from_favorites"
 

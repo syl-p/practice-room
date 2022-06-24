@@ -29,19 +29,12 @@
       </div>
       <div class="panel-body pt-0">
         <tabs-section tab-list-class="tab tab-block" tab-link-class="tab-item">
-
-          <div class="practice-sidebar__content__widget sessions"
-               data-tab-title="Aujourd'hui" slot="tab">
-            <div class="mb-2" data-practicer-sidebar-target="exercises">
-              <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
-            </div>
-            <%#= link_to "En voir plus (3 sessions)", dashboard_path if current_user.practices_of_the_day.present? && current_user.practices_of_the_day.sessions.size > 2 %>
+          <div class="practice-sidebar__content__widget sessions"  data-tab-title="Aujourd'hui" slot="tab">
+            <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
           </div>
 
-          <div class="practice-sidebar__content__widget favorites"
-               data-tab-title="Vos favoris" slot="tab">
-            <ul class="tile-list practice-sidebar__favorites" data-tab-title="Vos favoris" slot="tab"
-                data-tabs-target="tab" data-practicer-sidebar-target="favorites">
+          <div class="practice-sidebar__content__widget favorites" data-tab-title="Vos favoris" slot="tab">
+            <ul class="tile-list practice-sidebar__favorites" data-tab-title="Vos favoris" slot="tab" data-tabs-target="tab">
               <%= render partial: "users/favorite", collection: current_user.favorites_populated, as: :exercise  %>
             </ul>
           </div>

@@ -48,8 +48,12 @@ class PracticesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render partial: 'practices/list', locals: { practices_of_the_day: current_user.practices_of_the_day, nav: false } }
-      format.json { render json: new_session, status: 200 }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "practices_of_the_day",
+          partial: 'practices/list',
+          locals: { practices_of_the_day: current_user.practices_of_the_day })
+      end
     end
   end
 
@@ -60,11 +64,16 @@ class PracticesController < ApplicationController
 
     if practices_exercise.practice.practices_exercises.count <= 0
       practices_exercise.practice.destroy
-    end
-
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.remove("practices_exercises_#{params[:practices_exercises_id]}")
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.remove("practice_#{practices_exercise.practice.id}")
+        end
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.remove("practices_exercises_#{params[:practices_exercises_id]}")
+        end
       end
     end
   end

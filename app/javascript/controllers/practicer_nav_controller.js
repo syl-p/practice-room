@@ -14,10 +14,9 @@ export default class extends ApplicationController {
   }
 
   favorites({params: {id, action}}) {
-    console.log(this.btnTargets)
     this.favorite(id, action)
       .then((response) => {
-        const favoritesTarget = super.practicerSidebarController.favoritesTarget
+        const favoritesTarget = document.querySelector(".practice-sidebar__favorites")
         switch (action) {
           case "add":
             // add element to list
@@ -44,14 +43,4 @@ export default class extends ApplicationController {
       .catch(err => console.log(err))
   }
 
-  addToPractice({params: {id}}) {
-    const time = this.selectedTimeTarget ? this.selectedTimeTarget.value : "00:10"
-    this.practice(id, time)
-      .then((response) => {
-        const exercisesTarget = super.practicerSidebarController.exercisesTarget
-        // add element to list
-        exercisesTarget.innerHTML = response
-      })
-      .catch(err => console.log(err))
-  }
 }
