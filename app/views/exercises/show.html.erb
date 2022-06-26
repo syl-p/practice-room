@@ -31,9 +31,10 @@
                  value="<%= @exercise.duration ? Time.at(@exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
               </div>
               <a href="<%= add_to_practice_exercises_url(id: @exercise.id) %>"
-                 class="btn"
-                 data-turbo="true"
-                 data-tooltip="<%= "Ajouter à ma pratique du jour" %>">
+                class="btn"
+                data-turbo="true"
+                data-practicer-nav-target="btn"
+                data-tooltip="<%= "Ajouter à ma pratique du jour" %>">
                 <i class="mdi mdi-playlist-plus"></i>
               </a>
             </div>

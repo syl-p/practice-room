@@ -18,9 +18,11 @@
     <% end %>
 
     <div class="btn-group btn-group-block <%= "column col-5 col-lg-12" if extended %>">
-      <a href="<%= add_to_practice_exercises_url(id: exercise.id) %>" class="mb-2 btn <%= "tooltip tooltip-left" if extended.blank? %>"
-          data-tooltip="<%= "Ajouter à ma pratique du jour" if extended.blank?  %>">
-          <i class="mdi mdi-playlist-plus"></i> <%= "Ajouter à ma pratique du jour" if extended %>
+      <a href="<%= add_to_practice_exercises_url(id: exercise.id) %>"
+        class="mb-2 btn <%= "tooltip tooltip-left" if extended.blank? %>"
+        data-practicer-nav-target="btn"
+        data-tooltip="<%= "Ajouter à ma pratique du jour" if extended.blank?  %>">
+        <i class="mdi mdi-playlist-plus"></i> <%= "Ajouter à ma pratique du jour" if extended %>
       </a>
       <% if current_user.favorites.include? exercise.id.to_s %>
           <button type="button" class="mb-2 btn <%= "tooltip tooltip-left" if extended.blank? %>"
