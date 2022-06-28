@@ -25,9 +25,8 @@ Rails.application.routes.draw do
       get "new/:step", to: "exercises#new", as: "new_with_step"
 
       # route for stimulus actions
-      get ":id/practice/add(/:time)", to: "practices#add_to_practice", as: "add_to_practice"
-      put ":id/favorites/add", to: "exercises#add_to_favorites"
-      put ":id/favorites/remove", to: "exercises#remove_from_favorites"
+      get ":id/practice/add(/:time)", to: "practices#add_to_practice", defaults: { format: :turbo_stream }, as: "add_to_practice"
+      get ":id/favorites/:add_or_remove", to: "exercises#add_or_remove_favorite", defaults: { format: :turbo_stream }, as: "add_or_remove_favorite"
 
       # route for turbo frame query
       get "list"
@@ -46,7 +45,8 @@ Rails.application.routes.draw do
 
 
   delete "practice/remove/:practices_exercises_id", to: "practices#remove_from_practice", as: "remove_from_practice"
-  get "practices(/:previous_next)/:date", to: "practices#get_week", defaults: { format: :turbo_stream }, as: "get_week"
+  get "practices/:previous_next/:date", to: "practices#get_week", as: "get_week"
+  get "practices/:date", to: "practices#get_day", defaults: { format: :turbo_stream }, as: "get_day"
 
   # Here because use turbo ??
   get "exercises/:id/versions", to: "exercises#get_versions_list", as: "list_versions"

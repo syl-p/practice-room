@@ -48,8 +48,12 @@ class PracticesController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render partial: 'practices/list', locals: { practices_of_the_day: current_user.practices_of_the_day, nav: false } }
-      format.json { render json: new_session, status: 200 }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "practices_of_the_day",
+          partial: 'practices/list',
+          locals: { practices_of_the_day: current_user.practices_of_the_day })
+      end
     end
   end
 
@@ -60,11 +64,16 @@ class PracticesController < ApplicationController
 
     if practices_exercise.practice.practices_exercises.count <= 0
       practices_exercise.practice.destroy
-    end
-
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.remove("practices_exercises_#{params[:practices_exercises_id]}")
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.remove("practice_#{practices_exercise.practice.id}")
+        end
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.remove("practices_exercises_#{params[:practices_exercises_id]}")
+        end
       end
     end
   end
@@ -98,14 +107,26 @@ class PracticesController < ApplicationController
               Date.parse(params[:date]).prev_week
             when 'next'
               Date.parse(params[:date]).next_week
-            else
-              Date.parse(params[:date])
             end
 
-    @practices_of_the_day = current_user.practices_of_the_day @current_date
+    @practices = current_user.practices.where(created_at: (@current_date.beginning_of_week..@current_date.end_of_week))
 
     respond_to do |format|
-      format.turbo_stream
+      format.html { render partial: 'practices/selector', locals: { current_date: @current_date, practices_for_the_week: @practices } }
+    end
+  end
+
+  def get_day
+    @practices = current_user.practices_of_the_day Date.parse(params[:date])
+
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.replace(
+          "practices_of_the_day",
+          partial: 'practices/list',
+          locals: { practices_of_the_day: @practices }
+        )
+      }
     end
   end
 

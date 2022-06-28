@@ -14,7 +14,7 @@
       <% session.practices_exercises.each_with_index do |practiced, index| %>
         <%= turbo_frame_tag "practices_exercises_#{practiced.id}" do %>
           <li class="tile tile-centered"
-              data-practicer-sidebar-target="exercise" data-duration="<%= practiced.duration %>">
+              data-practices-target="exercise" data-duration="<%= practiced.duration %>">
             <div class="tile-content">
               <div class="tile-title">
                 <%= link_to practiced.exercise.title, exercise_path(practiced.exercise), data: {turbo: false} %>

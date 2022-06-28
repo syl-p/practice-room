@@ -1,10 +1,12 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["videoPlayer", 'inputVersionsEnabled', 'versionsListEdit',
-                    'videoPreviewer', "sidebar", "container"]
+  static targets = ["videoPlayer", 'inputVersionsEnabled',
+    'versionsListEdit', 'videoPreviewer', "sidebar", "favorites"]
+
   static values = {
-    root: String
+    root: String,
+    activeNav: String,
   }
 
   connect() {
@@ -23,11 +25,11 @@ export default class extends Controller {
   }
 
   get practicerSidebarController() {
-    return this.application.controllers.find(c => c.identifier === "practicer-sidebar")
+    return this.application.controllers.find(c => c.identifier === "practices")
   }
 
   get practicerNavControllers() {
-    return this.application.controllers.filter(c => c.identifier === "practicer-nav")
+    return this.application.controllers.filter(c => c.identifier === "practice-toolbar")
   }
 
   get csrfToken() {

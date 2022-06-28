@@ -14,11 +14,11 @@
     <main
       class="dashboard off-canvas off-canvas-sidebar-show <%= "home" if action_name == "index" %>"
       data-controller="application"
-      data-application-target="container"
       data-application-root-value="<%= root_url %>">
 
       <aside
         id="sidebar-id"
+        data-application-target="sidebar"
         class="off-canvas-sidebar">
         <%= render "shared/dashboard/sidebar" %>
       </aside>

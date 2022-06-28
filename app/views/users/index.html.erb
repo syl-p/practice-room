@@ -1,9 +1,4 @@
-<section class="dashboard-page"
-
-        data-application-target="sidebar"
-        data-controller="practicer-sidebar"
-  data-practicer-sidebar-target="container">
-
+<section class="dashboard-page">
   <header class="dashboard-page__header">
     <h1>Votre espace</h1>
   </header>
@@ -13,22 +8,28 @@
     <article class="column col-6 col-sm-12">
       <div class="dashboard-page__stats__item card">
         <div class="card-header">
-          <b>Votre semaine</b>
+          <b>Ces 7 derniers jours</b>
         </div>
-        <div class="card-body pt-0">
-          <div>
-            <h2 class="mb-0 h1">
-              <b><%= current_user.practice_time_today %></b>
-            </h2>
-            <small>Temps de pratique moyen</small>
-          </div>
-          <div>
-            <stat-box
-              labels="<%= current_user.practice_time_by_day.keys.map{ |date| date.to_datetime }.to_json %>"
-              values="<%= current_user.practice_time_by_day.values.to_json %>"
-              type="line">
-            </stat-box>
-          </div>
+        <div class="card-body">
+          <% if current_user.practice_time_this_week.present? %>
+            <div>
+              <h2 class="mb-0 h1">
+                <b><%= Time.at(current_user.practice_time_this_week.values.reduce(:+) / 7).utc.strftime("%H:%M:%S")%></b>
+              </h2>
+              <small>Temps de pratique moyen</small>
+            </div>
+            <div>
+              <stat-box
+                labels="<%= current_user.practice_time_this_week.keys.map{ |date| date.to_datetime }.to_json %>"
+                values="<%= current_user.practice_time_this_week.values.to_json %>"
+                type="line">
+              </stat-box>
+            </div>
+          <% else %>
+            <p style="display:block; width: 100%">
+              Aucune donnée disponible pour afficher les statistiques hebdomadaire...
+            </p>
+          <% end %>
         </div>
       </div>
     </article>
@@ -37,12 +38,18 @@
         <div class="card-header">
           <b>Répartition par catégorie</b>
         </div>
-        <div class="card-body pt-0">
-          <stat-box
-            labels="<%= current_user.practice_time_by_category.keys.to_json %>"
-            values="<%= current_user.practice_time_by_category.values.to_json %>"
-            type="doughnut">
-          </stat-box>
+        <div class="card-body">
+          <% if current_user.practice_time_by_category.present? %>
+            <stat-box
+              labels="<%= current_user.practice_time_by_category.keys.to_json %>"
+              values="<%= current_user.practice_time_by_category.values.to_json %>"
+              type="doughnut">
+            </stat-box>
+          <% else %>
+            <p style="display:block; width: 100%">
+              Aucune donnée disponible pour afficher les statistiques par catégorie...
+            </p>
+          <% end %>
         </div>
       </div>
     </article>
@@ -50,19 +57,19 @@
 
   <!--update -->
   <section class="dashboard-page__section columns">
-    <article class="column col-8" id="update">
+    <article class="column col-8 col-md-12" id="update">
       <h2>Qu'allons nous faire aujourd'hui ?</h2>
       <tabs-section tab-list-class="tab tab-block" tab-link-class="tab-item">
         <div data-tab-title="Vous améliorer" slot="tab">
           <div class="columns">
             <!-- dailies-->
-            <div class="column dashboard-page__dailies">
+            <div class="column col-6 col-md-12 dashboard-page__dailies">
               <div class="card dashboard-page__dailies__item accept">
                 <div class="card-header">
                   <i class="mdi mdi-check"></i>
                 </div>
                 <div class="card-body">
-                  Plus de 10 mn de pratique
+                  Plus de 10 minutes de pratique
                 </div>
               </div>
               <div class="card dashboard-page__dailies__item">
@@ -70,7 +77,7 @@
                   <i class="mdi mdi-close"></i>
                 </div>
                 <div class="card-body">
-                  minimum 3 exercice par jour
+                  minimum 3 exercices par jour
                 </div>
               </div>
               <div class="card dashboard-page__dailies__item">
@@ -78,12 +85,12 @@
                   <i class="mdi mdi-close"></i>
                 </div>
                 <div class="card-body">
-                  pratiquer au moins 1 exercice dans chaque catégorie
+                  1 exercice dans chaque catégorie
                 </div>
               </div>
             </div>
             <!-- dailies-->
-            <div class="column pr-2">
+            <div class="column col-md-12">
               <h5>
                 Trouvez ici des idées pour augmenter l'efficacité<br> de votre temps de pratique...
               </h5>
@@ -98,9 +105,25 @@
               <h5>... ou sélectionnez en un dans vos exercices favoris</h5>
             </div>
             <div class="column col-12 columns mt-2">
-              <% current_user.favorites_populated.each do |exercise| %>
-                <div class="col-3 column">
-                  <%= render partial: "exercises/card/lite", locals: {exercise: exercise} %>
+              <% if current_user.favorites.present? %>
+                <% current_user.favorites_populated.each do |exercise| %>
+                  <div class="column col-3 col-md-4">
+                    <%= render partial: "exercises/card/lite", locals: {exercise: exercise} %>
+                  </div>
+                <% end %>
+              <% else %>
+                <div class="column col-3 col-md-4">
+                  <div class="card ">
+                    <div class="card-header text-center">
+                      <%= link_to exercises_path do %>
+                        <i class="mdi mdi-plus"></i>
+                      <% end %>
+                    </div>
+                    <div class="card-body text-center">
+                      Vous n'avez pas de favoris, créer un nouvel exercice ou
+                      <%= link_to "recherchez en un", exercises_path %>...
+                    </div>
+                  </div>
                 </div>
               <% end %>
             </div>
@@ -121,9 +144,10 @@
         </div>
       </tabs-section>
     </article>
-    <aside>
+    <aside class="dashboard-page__section__aside column col-4 col-md-12"
+      data-application-target="sidebar">
       <h2>Journal de pratique</h2>
-      <%= render partial: "practices/selector", locals: {current_date: Date.today} %>
+      <%= render partial: "practices/selector", locals: {current_date: Date.today, practices_for_the_week: @practices_of_the_week } %>
       <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
     </aside>
   </section>

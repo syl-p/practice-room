@@ -5,6 +5,10 @@ export default class extends ApplicationController {
   static targets = ["exercises", "exercise", "challenges",
   "favorites", "logNav", "practiceTime"]
 
+  static values = {
+    date: String,
+  }
+
   connect() {
     practice(this)
   }
@@ -15,6 +19,17 @@ export default class extends ApplicationController {
 
   exerciseTargetDisconnected() {
     this.evalPracticeTime()
+  }
+
+  dateValueChanged() {
+    const $dateLinks = document.querySelectorAll(`.day-selector a.day-selector__week-day`)
+    $dateLinks.forEach(($dl) => {
+      if ($dl.dataset.date == this.dateValue) {
+        $dl.classList.add('active')
+      } else {
+        $dl.classList.remove('active')
+      }
+    })
   }
 
   convertHMS(value) {
@@ -35,24 +50,5 @@ export default class extends ApplicationController {
       res += parseInt(e.dataset.duration);
     })
     this.practiceTimeTarget.innerHTML = this.convertHMS(res)
-  }
-
-  removeFromFavorites({params: {id}}) {
-    this.favorite(id, 'remove')
-      .then(() => {
-          const favorite = Array.from(this.favoritesTarget.children).find(c => c.dataset.exerciseId == id)
-          if (favorite) {
-            favorite.remove()
-            // Get the good button in practicerNav controllers
-            const controller = super.practicerNavControllers.find(c => c.exerciseIdValue == id)
-            if (controller) {
-              controller.btnTargets[1].dataset.practicerNavActionParam = "add"
-              controller.btnTargets[1].innerHTML = `<i class="mdi mdi-bookmark-outline"></i> ${controller.extendedValue ? "Ajouter à mes favoris" : ''}`
-            }
-          }
-      })
-      .catch(err => {
-
-      })
   }
 }

@@ -7,33 +7,26 @@
 <%= turbo_frame_tag "practices_selector", target: "practices_selector"  do %>
   <div class="day-selector">
     <nav class="day-selector__month">
-      <!--<a href="<%=  %>" class="day-selector__month-prev">&lt;</a>-->
       <span class="day-selector__month-name"><%= I18n.t("date.month_names")[current_month] %> <%= current_year %></span>
-      <!--<a href="<%=  %>" class="day-selector__month-next">&gt;</a>-->
     </nav>
     <div class="day-selector__week">
       <%= link_to get_week_path(previous_next: 'previous', date: current_date), class: 'day-selector__week-prev' do %>
         &lt;
       <% end %>
-
-      <% current_week.each do |day| %>
-        <% if day.month == current_month && day <= Date.today %>
-          <a href="<%= get_week_path(date: day) %>"
-            class="day-selector__week-day
-                  <%= day.strftime("%Y-%m-%d") == current_date.strftime("%Y-%m-%d") ? "active" : "" %>
-                  <%= day.strftime("%Y-%m-%d") == Date.today.strftime("%Y-%m-%d") ? "today" : "" %>
-                  ">
-            <span><%= Date::ABBR_DAYNAMES[day.wday][0,1] %></span>
-            <span><%= day.day %></span>
-          </a>
-        <% else %>
-          <a class="day-selector__week-day">
-            <span><%= Date::ABBR_DAYNAMES[day.wday][0,1] %></span>
-            <span><%= day.day %></span>
-          </a>
-        <% end %>
+      <% current_week.each do |day|
+        with_data = practices_for_the_week.select { |p| p.created_at.all_day == day.all_day }.present?
+        today = day.strftime("%Y-%m-%d") == Date.today.strftime("%Y-%m-%d")
+      %>
+        <a href="<%= get_day_path(date: day) if with_data || today %>"
+         data-practices-target="dateLink"
+         data-date="<%= day.strftime("%Y-%m-%d") %>"
+         class="day-selector__week-day <%= "with_data" if with_data %>
+          <%=  "today" if today %>
+        ">
+          <span><%= Date::ABBR_DAYNAMES[day.wday][0,1] %></span>
+          <span><%= day.day %></span>
+        </a>
       <% end %>
-
       <%= link_to get_week_path(previous_next: 'next', date: current_date), class: 'day-selector__week-prev' do %>
         &gt;
       <% end %>

@@ -1,5 +1,9 @@
 <%= turbo_frame_tag "practices_of_the_day" do %>
-  <div class="timeline">
+  <div class="timeline"
+    data-controller="practices"
+    data-practices-date-value="<%= practices_of_the_day.first.nil? || practices_of_the_day.first.created_at == Date.today ? Date.today : practices_of_the_day.first.created_at.strftime("%Y-%m-%d") %>">
+
+    <!-- TIME INDICATOR -->
     <div class="timeline-item" id="timeline-example-1">
       <div class="timeline-left">
         <a class="timeline-icon" href="#timeline-example-1"></a>
@@ -8,16 +12,16 @@
         <h5>
           <span>
             <strong class="practice-sidebar__practice-time"
-                    data-practicer-sidebar-target="practiceTime">
-              00:00:00
+              data-practices-target="practiceTime">
+              <%= current_user.practice_time_today %>
             </strong><br>
             <small>
               de pratique
               <%=
-                if @practices_of_the_day.nil? || @practices_of_the_day.first.created_at == Date.today
+                if practices_of_the_day.first.nil? || practices_of_the_day.first.created_at == Date.today
                   "aujourd'hui"
                 else
-                  "le #{@practices_of_the_day.first.created_at.strftime("%d/%m/%Y")}"
+                  "le #{practices_of_the_day.first.created_at.strftime("%d/%m/%Y")}"
                 end
               %>
             </small>
@@ -25,14 +29,20 @@
         </h5>
       </div>
     </div>
+    <!-- TIME INDICATOR -->
+
     <% if practices_of_the_day.present? %>
       <% practices_of_the_day.each_with_index do |practice, index| %>
-        <%= render partial: "practices/item",
-          locals: {
-            session: practice
-          }
-        %>
+        <%= turbo_frame_tag "practice_#{practice.id.to_s}" do %>
+          <%= render partial: "practices/item",
+            locals: {
+              session: practice
+            }
+          %>
+        <% end %>
       <% end %>
     <% end %>
+
+
   </div>
 <% end %>

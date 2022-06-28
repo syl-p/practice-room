@@ -15,11 +15,8 @@ application.register("hello", HelloController)
 import MarkdownController from "./markdown_controller.js"
 application.register("markdown", MarkdownController)
 
-import PracticerNavController from "./practicer_nav_controller.js"
-application.register("practicer-nav", PracticerNavController)
-
-import PracticerSidebarController from "./practicer_sidebar_controller.js"
-application.register("practicer-sidebar", PracticerSidebarController)
+import PracticesController from "./practices_controller.js"
+application.register("practices", PracticesController)
 
 import UserNavController from "./user_nav_controller.js"
 application.register("user-nav", UserNavController)

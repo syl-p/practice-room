@@ -7,13 +7,13 @@ Ce concept est actuellement en cours de développement pour une communauté de m
 
 > Lien d'invitation au serveur discord:  [https://discord.gg/8vCbhQUK7M](https://discord.gg/8vCbhQUK7M)
 
-## Renseigné vos exercices perso', trouvez en de nouveaux
+## Renseignez vos exercices perso', trouvez en de nouveaux
 
 - Liste des exercices proposées par les utilisateurs
 - Possibilité d'en ajouter à vos favoris pour les retrouvez plus facilement
 - Des médias (pdf, mp3...) peuvent être attachés aux exercices afin d'avoir un support complet pour le travailler.
 
-## Gérer votre temps de pratique
+## Gérez votre temps de pratique
 - Un journal de pratique est à votre disposition pour pouvoir enregistrer le temps passé sur vos exercices.
 - Retrouvez dans votre **espace personnel** des statistiques pour avoir un feedback quotidien sur votre temps de pratique
 
