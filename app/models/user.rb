@@ -86,9 +86,9 @@ class User < ApplicationRecord
     res
   end
 
-  def practice_time_by_day
+  def practice_time_this_week
     res = {}
-    self.practices.each do |practice|
+    self.practices.where('created_at >= ?', 1.week.ago).each do |practice|
       # group by days
       res[practice.created_at.strftime("%Y-%m-%d")] ||= 0
       practice.practices_exercises.each do |practiced|

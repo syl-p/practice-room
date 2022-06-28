@@ -8,22 +8,22 @@
     <article class="column col-6 col-sm-12">
       <div class="dashboard-page__stats__item card">
         <div class="card-header">
-          <b>Votre semaine</b>
+          <b>Ces 7 derniers jours</b>
         </div>
         <div class="card-body">
-          <% if current_user.practice_time_by_day.present? %>
+          <% if current_user.practice_time_this_week.present? %>
             <div>
               <h2 class="mb-0 h1">
-                <b><%= current_user.practice_time_today %></b>
+                <b><%= Time.at(current_user.practice_time_this_week.values.reduce(:+) / 7).utc.strftime("%H:%M:%S")%></b>
               </h2>
               <small>Temps de pratique moyen</small>
             </div>
             <div>
-                <stat-box
-                  labels="<%= current_user.practice_time_by_day.keys.map{ |date| date.to_datetime }.to_json %>"
-                  values="<%= current_user.practice_time_by_day.values.to_json %>"
-                  type="line">
-                </stat-box>
+              <stat-box
+                labels="<%= current_user.practice_time_this_week.keys.map{ |date| date.to_datetime }.to_json %>"
+                values="<%= current_user.practice_time_this_week.values.to_json %>"
+                type="line">
+              </stat-box>
             </div>
           <% else %>
             <p style="display:block; width: 100%">
