@@ -1,47 +1,40 @@
 <% extended = false if local_assigns[:extended].nil? %>
-<nav class="practice-toolbar columns"
-    data-controller="practicer-nav"
-    data-practicer-nav-extended-value="<%= extended %>"
-    data-practicer-nav-exercise-id-value="<%= exercise.id %>">
-
+<%= turbo_frame_tag "practice_toolbar_#{exercise.id}" do %>
+  <nav class="practice-toolbar columns">
     <% if extended %>
       <div class="column col-7 col-lg-12 mb-2">
         <div class="input-group">
-            <label class="input-group-addon">Temps de pratique:</label>
-            <input type="time" class="form-input"
-            data-practicer-nav-target="selectedTime" value="<%= exercise.duration ? Time.at(exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
+          <label class="input-group-addon">Temps de pratique:</label>
+          <input type="time" class="form-input"
+          data-practice-toolbar-target="selectedTime" value="<%= exercise.duration ? Time.at(exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
         </div>
       </div>
     <% else %>
       <input type="hidden"
-      data-practicer-nav-target="selectedTime" value="<%= exercise.duration ? Time.at(exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
+      data-practice-toolbar-target="selectedTime" value="<%= exercise.duration ? Time.at(exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
     <% end %>
 
     <div class="btn-group btn-group-block <%= "column col-5 col-lg-12" if extended %>">
+      <!-- ADD TO PRACTICE -->
       <a href="<%= add_to_practice_exercises_url(id: exercise.id) %>"
         class="mb-2 btn <%= "tooltip tooltip-left" if extended.blank? %>"
-        data-practicer-nav-target="btn"
+        data-practice-toolbar-target="btn"
         data-tooltip="<%= "Ajouter à ma pratique du jour" if extended.blank?  %>">
         <i class="mdi mdi-playlist-plus"></i> <%= "Ajouter à ma pratique du jour" if extended %>
       </a>
-      <% if current_user.favorites.include? exercise.id.to_s %>
-          <button type="button" class="mb-2 btn <%= "tooltip tooltip-left" if extended.blank? %>"
-          data-tooltip="<%= "Retirer de mes favoris" if extended.blank?  %>"
-          data-practicer-nav-target="btn"
-          data-practicer-nav-action-param="remove"
-          data-practicer-nav-id-param="<%= exercise.id %>"
-          data-action="click->practicer-nav#favorites">
-              <i class="mdi mdi-bookmark-remove"></i> <%= "Retirer de mes favoris" if extended %>
-          </button>
-      <% else %>
-          <button type="button" class="mb-2 btn <%= "tooltip tooltip-left" if extended.blank? %>"
-          data-tooltip="<%= "Ajouter à mes favoris" if extended.blank?  %>"
-          data-practicer-nav-target="btn"
-          data-practicer-nav-action-param="add"
-          data-practicer-nav-id-param="<%= exercise.id %>"
-          data-action="click->practicer-nav#favorites">
-              <i class="mdi mdi-bookmark-outline"></i> <%= "Ajouter à mes favoris" if extended %>
-          </button>
-      <% end %>
-  </div>
-</nav>
+
+      <!-- FAVORITES ADD/REMOVE -->
+      <%
+        action = (current_user.favorites.include? exercise.id.to_s) ? 'remove' : 'add'
+        label = "#{(action == 'remove') ? 'Retirer' : 'Ajouter'} de mes favoris"
+        link = add_or_remove_favorite_exercises_url(id: exercise.id, add_or_remove: action)
+        icon = (action == 'remove') ? 'mdi-bookmark-remove' : 'mdi-bookmark-outline'
+      %>
+      <a href="<%= link %>"
+        class="mb-2 btn <%= "tooltip tooltip-left" if extended.blank? %>"
+        data-tooltip="<%= label if extended.blank?  %>">
+          <i class="mdi <%= icon %>"></i> <%= label if extended %>
+      </a>
+    </div>
+  </nav>
+<% end %>

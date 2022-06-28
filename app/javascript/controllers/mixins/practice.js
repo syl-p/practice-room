@@ -7,20 +7,7 @@ export const practice = (controller) => {
      **/
     favorite(exerciseId, action) {
       return new Promise((resolve, reject) => {
-        fetch(`${this.root}/exercises/${exerciseId}/favorites/${action}`, {
-          method: "PUT",
-          credentials: "same-origin",
-          headers: {
-            "X-CSRF-Token": this.csrfToken,
-          },
-        })
-          .then((response) => response.text())
-          .then((response) => {
-            resolve(response);
-          })
-          .catch((err) => {
-            reject(err);
-          });
+        resolve(true)
       });
     },
 

@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "practices_of_the_day" do %>
   <div class="timeline"
-    data-controller="practicer-sidebar"
-    data-practicer-sidebar-date-value="<%= practices_of_the_day.first.nil? || practices_of_the_day.first.created_at == Date.today ? Date.today : practices_of_the_day.first.created_at.strftime("%Y-%m-%d") %>">
+    data-controller="practices"
+    data-practices-date-value="<%= practices_of_the_day.first.nil? || practices_of_the_day.first.created_at == Date.today ? Date.today : practices_of_the_day.first.created_at.strftime("%Y-%m-%d") %>">
 
     <!-- TIME INDICATOR -->
     <div class="timeline-item" id="timeline-example-1">
@@ -11,8 +11,9 @@
       <div class="timeline-content">
         <h5>
           <span>
-            <strong class="practice-sidebar__practice-time" data-practicer-sidebar-target="practiceTime">
-              00:00:00
+            <strong class="practice-sidebar__practice-time"
+              data-practices-target="practiceTime">
+              <%= current_user.practice_time_today %>
             </strong><br>
             <small>
               de pratique

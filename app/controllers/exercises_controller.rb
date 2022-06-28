@@ -168,31 +168,28 @@ class ExercisesController < ApplicationController
     end
   end
 
-  def add_to_favorites
-    if !current_user.favorites.include? params[:id]
-      current_user.update_attribute(:favorites, current_user.favorites << params[:id])
-      current_user.save
-
-      # Send html for exercise favorite element
-      respond_to do |format|
-        format.html { render partial: 'users/favorite', locals: {exercise: @exercise} }
-        format.json { render json: current_user.favorites, status: 200 }
-      end
-    else
-      head 404, content_type: "text/html"
-    end
-  end
-
-  def remove_from_favorites
-    if current_user.favorites.include? params[:id]
-
-      current_user.update_attribute(:favorites, current_user.favorites - [params[:id]])
+  def add_or_remove_favorite
+    @exercise = Exercise.find(params[:id])
+    case params[:add_or_remove]
+    when "add"
+      if !current_user.favorites.include? params[:id]
+        current_user.update_attribute(:favorites, current_user.favorites << params[:id])
         current_user.save
+      else
+        head 404, content_type: "text/html"
+      end
+    when "remove"
+      if current_user.favorites.include? params[:id]
+        current_user.update_attribute(:favorites, current_user.favorites - [params[:id]])
+        current_user.save
+      else
+        head 404, content_type: "text/html"
+      end
+    end
 
-        # Send html for exercise favorite element
-        head 200, content_type: "text/html"
-    else
-      head 404, content_type: "text/html"
+    # Send html for exercise favorite element
+    respond_to do |format|
+      format.turbo_stream
     end
   end
 

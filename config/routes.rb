@@ -26,8 +26,7 @@ Rails.application.routes.draw do
 
       # route for stimulus actions
       get ":id/practice/add(/:time)", to: "practices#add_to_practice", defaults: { format: :turbo_stream }, as: "add_to_practice"
-      put ":id/favorites/add", to: "exercises#add_to_favorites"
-      put ":id/favorites/remove", to: "exercises#remove_from_favorites"
+      get ":id/favorites/:add_or_remove", to: "exercises#add_or_remove_favorite", defaults: { format: :turbo_stream }, as: "add_or_remove_favorite"
 
       # route for turbo frame query
       get "list"

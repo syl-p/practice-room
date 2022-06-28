@@ -18,7 +18,7 @@
         today = day.strftime("%Y-%m-%d") == Date.today.strftime("%Y-%m-%d")
       %>
         <a href="<%= get_day_path(date: day) if with_data || today %>"
-         data-practicer-sidebar-target="dateLink"
+         data-practices-target="dateLink"
          data-date="<%= day.strftime("%Y-%m-%d") %>"
          class="day-selector__week-day <%= "with_data" if with_data %>
           <%=  "today" if today %>

@@ -1,0 +1,11 @@
+<li class="tile" data-exercise-id="<%= exercise.id %>">
+  <div class="tile-content">
+    <p class="mb-0"><%= link_to exercise.title, exercise, class: 'tile-title' %></p>
+  </div>
+  <div class="tile-action">
+    <a href="<%= add_or_remove_favorite_exercises_url(id: exercise.id, add_or_remove: "remove") %>"
+      class="btn btn-link pr-0">
+      <i class="mdi mdi-close"></i>
+    </a>
+  </div>
+</li>

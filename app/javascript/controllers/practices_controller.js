@@ -30,7 +30,6 @@ export default class extends ApplicationController {
         $dl.classList.remove('active')
       }
     })
-
   }
 
   convertHMS(value) {
@@ -51,24 +50,5 @@ export default class extends ApplicationController {
       res += parseInt(e.dataset.duration);
     })
     this.practiceTimeTarget.innerHTML = this.convertHMS(res)
-  }
-
-  removeFromFavorites({params: {id}}) {
-    this.favorite(id, 'remove')
-      .then(() => {
-          const favorite = Array.from(this.favoritesTarget.children).find(c => c.dataset.exerciseId == id)
-          if (favorite) {
-            favorite.remove()
-            // Get the good button in practicerNav controllers
-            const controller = super.practicerNavControllers.find(c => c.exerciseIdValue == id)
-            if (controller) {
-              controller.btnTargets[1].dataset.practicerNavActionParam = "add"
-              controller.btnTargets[1].innerHTML = `<i class="mdi mdi-bookmark-outline"></i> ${controller.extendedValue ? "Ajouter à mes favoris" : ''}`
-            }
-          }
-      })
-      .catch(err => {
-
-      })
   }
 }

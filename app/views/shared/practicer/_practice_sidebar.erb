@@ -33,10 +33,8 @@
             <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
           </div>
 
-          <div class="practice-sidebar__content__widget favorites" data-tab-title="Vos favoris" slot="tab">
-            <ul class="tile-list practice-sidebar__favorites" data-tab-title="Vos favoris" slot="tab" data-tabs-target="tab">
-              <%= render partial: "users/favorite", collection: current_user.favorites_populated, as: :exercise  %>
-            </ul>
+          <div class="practice-sidebar__content__widget favorites" data-tab-title="Vos favoris" data-tabs-target="tab" slot="tab">
+            <%= render partial: "favorites/list", locals: {exercises: current_user.favorites_populated}  %>
           </div>
         </tabs-section>
       </div>

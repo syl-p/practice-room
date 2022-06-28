@@ -1,0 +1,44 @@
+<%= turbo_frame_tag "actions_#{exercise.id}" do %>
+  <div class="exercise-show__header__metas">
+    <div>
+      <%= link_to exercise.user.username, user_path(exercise.user) %><br>
+      <%=  %>le <%= l exercise.created_at, format: :short %>
+    </div>
+    <a href="<%= user_url(exercise.user) %>"
+        class="exercise-show__header__metas__avatar">
+      <%= render partial: "users/avatar", locals: {user: exercise.user, size: :large} %>
+    </a>
+  </div>
+
+  <% if current_user.present? %>
+    <div class="exercise-show__header__metas">
+      <div>
+        <p class="mb-0 mr-2">Temps de pratique</p>
+        <input type="time" class="mr-2"
+          data-practice-toolbar-target="selectedTime"
+          value="<%= exercise.duration ? Time.at(exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
+      </div>
+      <a href="<%= add_to_practice_exercises_url(id: exercise.id) %>"
+        class="btn"
+        data-turbo="true"
+        data-practice-toolbar-target="btn"
+        data-tooltip="<%= "Ajouter à ma pratique du jour" %>">
+        <i class="mdi mdi-playlist-plus"></i>
+      </a>
+    </div>
+    <div class="exercise-show__header__metas">
+      <div></div>
+      <%
+        action = (current_user.favorites.include? exercise.id.to_s) ? 'remove' : 'add'
+        label = "#{(action == 'remove') ? 'Retirer' : 'Ajouter'} de mes favoris"
+        link = add_or_remove_favorite_exercises_url(id: exercise.id, add_or_remove: action)
+        icon = (action == 'remove') ? 'mdi-bookmark-remove' : 'mdi-bookmark-outline'
+      %>
+      <a href="<%= link %>"
+        class="btn <%= "tooltip tooltip-left" %>"
+        data-tooltip="<%= label %>">
+        <i class="mdi <%= icon %>"></i>
+      </a>
+    </div>
+  <% end %>
+<% end %>
