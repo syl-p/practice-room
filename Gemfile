@@ -61,3 +61,5 @@ gem "redcarpet"
 gem 'cssbundling-rails'
 gem 'jsbundling-rails'
 gem "sidekiq"
+
+gem "tailwindcss-rails", "~> 2.0"

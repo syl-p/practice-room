@@ -6,7 +6,7 @@
     <%= csp_meta_tag %>
     <meta name="description" content="<%= content_for(:description) ? yield(:description) : '' %>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
@@ -28,18 +28,6 @@
 
       <div class="off-canvas-content">
         <%= render "shared/navbar" %>
-<!--        <%# if notice.present? %>
-          <div class="toast toast-primary">
-            <p class="notice"><%#= notice %></p>
-          </div>
-        <%# end %>
-
-        <%# if alert.present? %>
-          <div class="toast toast-warning">
-            <p class="alert"><%#= alert %></p>
-          </div>
-        <%# end %>-->
-
         <%= yield %>
         <%= render partial: 'shared/footer' %>
       </div>
