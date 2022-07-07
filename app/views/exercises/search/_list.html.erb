@@ -1,6 +1,6 @@
-<ul class="exercises-list columns" data-hello-target="results">
+<ul role="list" class="grid grid-cols-3 gap-x-4 gap-y-4 grid-flow-row-dense" data-hello-target="results">
   <% exercises.each do |exercise| %>
-    <li class="exercises-list__item column col-sm-12 col-xl-6 col-3">
+    <li class="">
       <%= render partial: "exercises/card/default", locals: {exercise: exercise} %>
     </li>
   <% end %>

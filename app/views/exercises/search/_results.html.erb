@@ -1,26 +1,9 @@
 <%= turbo_frame_tag "results" do %>
-  <header class="columns">
-    <div class="column col-6 col-md-12">
-      <%= turbo_frame_tag "search_results_count", target: "search_results_count" do %>
-        Nous avons trouvé <%= @exercises.count %> résultats.
-      <% end %>
-      <%= link_to 'Créer un exercice', new_exercise_path, data: {turbo: false} if !current_user.nil? %>
-    </div>
-    <%= form_with(url: search_exercises_path,
-        data: {controller: "hello", hello_target: "form"}, class: "col-6 hide-md columns") do |form| %>
-      <%= form.select :order_by, [["Date d'ajout", "created_at"], ["Titre", "title"]], {selected: 'created_at'}, {
-          data: { action: "change->hello#search" },
-          class: "form-select select-lg col-6"
-        }
-      %>
-      <%= form.select :order, [["Descendant", "DESC"], ["Ascendant", "ASC"]], {selected: 'DESC'}, {
-          data: { action: "change->hello#search" },
-          class: "form-select select-lg col-6"
-        }
-      %>
+  <p class="m-2 mr-0 text-right">
+    <%= turbo_frame_tag "search_results_count", target: "search_results_count" do %>
+      Nous avons trouvé <%= @exercises.count %> résultats.
     <% end %>
-  </header>
-
+  </p>
   <%= turbo_frame_tag "search_results", target: "search_results" do %>
     <%= render partial: "exercises/search/list", locals: {exercises: @exercises} %>
   <% end %>

@@ -3,99 +3,145 @@
   content_for(:description, @exercise.description)
 %>
 
-<section class="exercise-show container">
-  <header class="exercise-show__header">
-    <div class="columns">
-      <div class="column col-4  hide-md text-right pt-2">
-        <%= render partial: "exercises/metas", locals: {exercise: @exercise} %>
-      </div>
-      <div class="column col-8 col-md-12">
-        <% if can? :manage, @exercise %>
-          <small><%= link_to 'Edit', edit_exercise_path(@exercise) %> | <%= link_to 'Destroy', @exercise, method: :delete, data: { confirm: 'Are you sure?' } %></small>
-        <% end %>
-        <h1 class="mt-0">
-          <%= @exercise.title %>
-        </h1>
-        <ul class="exercise-show__header__categories">
+<section class="">
+  <header class="w-full bg-gradient-to-r from-indigo-400 to-indigo-500 text-white px-10 pt-10 pb-10">
+    <%
+      links = [
+        {
+          label: "Exercices",
+          path: exercise_path
+        },
+        {
+          label: @exercise.title,
+          path: exercise_path(@exercise)
+        }
+      ]
+    %>
+    <%= render partial: "shared/breadcrump", locals: {links: links}  %>
+    <div class="lg:flex">
+      <div class="lg:w-3/6">
+        <ul class="exercise-show__header__categories mt-6">
           <% @exercise.categories.each do |category| %>
             <li>
               <a href="<%= by_slug_categories_path category.slug %>"
-                 title="<%= category.description %>">
-                <%= category.name %>
+                  title="<%= category.description %>" class="font-bold">
+                #<%= category.name %>
               </a>
             </li>
           <% end %>
         </ul>
 
-        <div class="exercise-show__header__infos columns col-gapless">
-          <div class="column col-4 col-md-6">
-            <span><%= @exercise.level %></span>
+        <h1 class="text-4xl font-lite mb-6">
+          <%= @exercise.title %>
+        </h1>
+
+        <p class="mb-10"><%= @exercise.description %></p>
+
+      </div>
+      <div class="lg:w-3/6 lg:self-end ">
+        <!-- METAS -->
+        <div class="flex mt-6 mb-10 lg:justify-end">
+
+          <div class="flex pr-6">
+            <div class="mr-4 flex-shrink-0 self-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+              </svg>
+            </div>
             <p class="mb-0">
+              <span class="text-xl font-bold"><%= @exercise.level %></span><br>
               Niveau
             </p>
           </div>
-          <div class="column col-4 col-md-6">
-            <span><%= @exercise.versions.count %></span>
+
+          <div class="flex pr-6">
+            <div class="mr-4 flex-shrink-0 self-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+              </svg>
+            </div>
             <p class="mb-0">
+              <span class="text-xl font-bold"><%= @exercise.versions.count %></span><br>
               Versions
             </p>
           </div>
-          <div class="column col-4 col-md-6">
-            <span><%= @exercise.comments.count %></span>
+
+          <div class="flex">
+            <div class="mr-4 flex-shrink-0 self-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+              </svg>
+            </div>
             <p class="mb-0">
+              <span class="text-xl font-bold"><%= @exercise.comments.count %></span>
+              <br>
               Commentaires
             </p>
           </div>
         </div>
-
-        <%= @exercise.description %>
+        <!-- METAS -->
       </div>
     </div>
+
+    <!-- author info -->
+    <div class="flex">
+      <div class="mr-4 flex-shrink-0 self-center">
+        <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
+          <%= render partial: "users/avatar", locals: {user: @exercise.user, size: :large} %>
+        </a>
+      </div>
+      <div>
+        <h4 class="text-lg font-bold"><%= @exercise.user.username %></h4>
+        <p class="mt-1 text-sm font-light">Publié le <%= l @exercise.created_at, format: :short %></p>
+      </div>
+    </div>
+    <!-- author info -->
   </header>
 
-  <article>
-    <header class="exercise-show__intro columns col-gapless">
-      <!-- VIDEO -->
-      <div class="exercise-show__intro__hero column col-md-12">
-        <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
-      </div>
-      <!-- VIDEO -->
-
+  <article class="lg:flex px-10">
+    <aside class="lg:w-4/12 pt-10 pr-6">
       <% if @exercise.versions_enabled %>
         <!-- VERSIONS LIST -->
-        <aside class="exercise-show__versions column col-4 hide-lg">
-            <%= turbo_frame_tag "exercise_versions" do %>
-              <%= render partial: "exercises/versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
-            <% end %>
-        </aside>
+          <%= turbo_frame_tag "exercise_versions" do %>
+            <%= render partial: "exercises/versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
+          <% end %>
         <!-- VERSIONS LIST -->
       <% end %>
+      <h3>Fichier partagés:</h3>
+      <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
+    </aside>
 
-      <!-- PRACTICE TOOLBAR -->
-      <div class="exercise-show__practice-toolbar column col-12 show-md">
-        <% if current_user.present? %>
-          <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: @exercise, extended: true } %>
-        <% end %>
-      </div>
-      <!-- PRACTICE TOOLBAR -->
-    </header>
-
-    <section class="exercise-show__content columns">
-      <aside class="column col-4 col-md-12">
-        <h3>Fichier partagés:</h3>
-        <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
-      </aside>
-      <section class="column col-8 col-md-12">
-        <%= sanitize renderHtml @exercise.body %>
-      </section>
+    <section class="lg:w-8/12 lg:-mt-20">
+      <!-- VIDEO -->
+      <header class="mb-6">
+        <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
+      </header>
+      <!-- VIDEO -->
+      <% if current_user.present? %>
+        <div class="mb-6">
+          <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: @exercise } %>
+        </div>
+      <% end %>
+      <%= sanitize renderHtml @exercise.body %>
     </section>
 
-    <div class="divider col-12"></div>
-    <footer class="exercise-show__comments">
-        <h2 class="text-center">
-          <i class="mdi mdi-forum-outline"></i>
-          Commentaires
-        </h2>
+  </article>
+
+  <footer class="px-10 pt-10 mt-10">
+    <div class="relative">
+      <div class="absolute inset-0 flex items-center" aria-hidden="true">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center">
+        <span class="px-2 bg-white text-sm text-gray-500"> Commentaires </span>
+      </div>
+    </div>
+      <h2 class="text-center text-3xl my-6">
+        <i class="mdi mdi-forum-outline"></i>
+        Partage ton expérience !
+      </h2>
+
+      <div class="md:w-3/4 md:pl-28 md:mx-auto">
         <% if user_signed_in? %>
             <%= turbo_frame_tag "comment_new" do %>
                 <%= render partial: "comments/form",
@@ -122,6 +168,6 @@
             <%=  render partial: "comments/comment", collection: @exercise.comments.where(parent_id: nil), as: :comment  %>
         <% end %>
         <!-- END COMMENT LIST -->
-    </footer>
-  </article>
+      </div>
+  </footer>
 </section>

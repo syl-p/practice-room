@@ -24,7 +24,11 @@ module PracticeRoom
 
     # Devise layouts
     config.to_prepare do
-      Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "dashboard" : "application" }
+      Devise::SessionsController.layout "guest"
+      Devise::RegistrationsController.layout proc{ |controller| user_signed_in? ? "application" : "guest" }
+      Devise::ConfirmationsController.layout "guest"
+      Devise::UnlocksController.layout "guest"
+      Devise::PasswordsController.layout "guest"
     end
   end
 end

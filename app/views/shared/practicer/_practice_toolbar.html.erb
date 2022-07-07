@@ -1,40 +1,37 @@
-<% extended = false if local_assigns[:extended].nil? %>
 <%= turbo_frame_tag "practice_toolbar_#{exercise.id}" do %>
-  <nav class="practice-toolbar columns">
-    <% if extended %>
-      <div class="column col-7 col-lg-12 mb-2">
-        <div class="input-group">
-          <label class="input-group-addon">Temps de pratique:</label>
-          <input type="time" class="form-input"
-          data-practice-toolbar-target="selectedTime" value="<%= exercise.duration ? Time.at(exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
-        </div>
-      </div>
-    <% else %>
-      <input type="hidden"
+  <nav class="flex content-end  items-stretch ">
+    <div class="w-6/12 pr-4">
+      <label class="mb-2 block">Temps de pratique:</label>
+      <input type="time" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       data-practice-toolbar-target="selectedTime" value="<%= exercise.duration ? Time.at(exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
-    <% end %>
-
-    <div class="btn-group btn-group-block <%= "column col-5 col-lg-12" if extended %>">
-      <!-- ADD TO PRACTICE -->
-      <a href="<%= add_to_practice_exercises_url(id: exercise.id) %>"
-        class="mb-2 btn <%= "tooltip tooltip-left" if extended.blank? %>"
-        data-practice-toolbar-target="btn"
-        data-tooltip="<%= "Ajouter à ma pratique du jour" if extended.blank?  %>">
-        <i class="mdi mdi-playlist-plus"></i> <%= "Ajouter à ma pratique du jour" if extended %>
-      </a>
-
-      <!-- FAVORITES ADD/REMOVE -->
-      <%
-        action = (current_user.favorites.include? exercise.id.to_s) ? 'remove' : 'add'
-        label = "#{(action == 'remove') ? 'Retirer' : 'Ajouter'} de mes favoris"
-        link = add_or_remove_favorite_exercises_url(id: exercise.id, add_or_remove: action)
-        icon = (action == 'remove') ? 'mdi-bookmark-remove' : 'mdi-bookmark-outline'
-      %>
-      <a href="<%= link %>"
-        class="mb-2 btn <%= "tooltip tooltip-left" if extended.blank? %>"
-        data-tooltip="<%= label if extended.blank?  %>">
-          <i class="mdi <%= icon %>"></i> <%= label if extended %>
-      </a>
     </div>
+
+    <!-- ADD TO PRACTICE -->
+    <a href="<%= add_to_practice_exercises_url(id: exercise.id) %>">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>Ajouter à ma pratique du jour
+    </a>
+
+    <!-- FAVORITES ADD/REMOVE -->
+    <%
+      action = (current_user.favorites.include? exercise.id.to_s) ? 'remove' : 'add'
+      label = "#{(action == 'remove') ? 'Retirer' : 'Ajouter'} de mes favoris"
+      link = add_or_remove_favorite_exercises_url(id: exercise.id, add_or_remove: action)
+      icon = if action == 'add'
+              '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              </svg>'
+            else
+              '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              </svg>'
+            end
+    %>
+    <a href="<%= link %>"
+      class="tooltip tooltip-left"
+      data-tooltip="<%= label %>">
+        <%= raw icon %> <%= label %>
+    </a>
   </nav>
 <% end %>

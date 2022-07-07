@@ -11,24 +11,6 @@
   </head>
 
   <body class="h-full">
-    <div class="flex"
-      data-controller="application"
-      data-application-root-value="<%= root_url %>">
-
-      <!-- Narrow -->
-      <%= render "shared/narrow_sidebar" %>
-      <!-- END Narrow -->
-
-      <!-- Content area -->
-      <div class="flex flex-col flex-1 lg:pl-20">
-        <main>
-          <%= yield %>
-          <%= render "shared/footer" %>
-        </main>
-      </div>
-      <!-- END Content area -->
-
-
-    </div>
+    <%= yield %>
   </body>
 </html>

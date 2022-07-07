@@ -1,51 +1,59 @@
-<div class="card exercise-card">
-  <div class="card-header">
-    <!-- user info -->
-    <small class="tile">
-      <a href="<%= user_url(exercise.user) %>" data-turbo="false" class="tile-icon">
-        <%= render partial: "users/avatar", locals: {user: exercise.user, size: :small} %>
+<article class="w-full border rounded-2xl p-4">
+  <header>
+    <div class="flex mb-3">
+      <!-- author infos -->
+      <a href="<%= user_url(exercise.user) %>" data-turbo="false">
+        <%= render partial: "users/avatar", locals: {user: exercise.user, size: :medium} %>
       </a>
-
-      <div class="tile-content pl-3">
-        <p class="tile-title mb-0">
-          <%= link_to exercise.user.username, user_path(exercise.user), data: {turbo: false}  %> le <%= l exercise.created_at, format: :short %></p>
-      </div>
-    </small>
-    <!-- end user info -->
-  </div>
-  <div class="card-image">
-    <% if current_user %>
-      <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: exercise } %>
-    <% end %>
-    <div class="exercise-card__categories">
-      <% exercise.categories.each do |category| %>
-        <a href="<%= by_slug_categories_path category.slug %>" title="<%= category.description %>"  data-turbo="false" class="chip"><%= category.name %></a>
-      <% end %>
+      <p class="tile-title mb-0 pl-3">
+       <%= link_to exercise.user.username, user_path(exercise.user), data: {turbo: false}  %>
+       <!-- le <%= l exercise.created_at, format: :short %> -->
+      </p>
+      <!-- end author infos -->
     </div>
-    <% img_link = exercise.video_link.present? ? "//img.youtube.com/vi/#{exercise.video_link}/0.jpg" : "https://via.placeholder.com/800x440.png" %>
-    <%= image_tag img_link, class: "img-responsive", alt: exercise.title %>
-  </div>
 
-  <div class="card-body">
-    <h2 class="card-title h5">
+    <h2 class="text-xl font-medium">
       <%= link_to exercise.title, exercise, data: {turbo: false} %>
     </h2>
-    <p class="card-subtitle  text-gray"><%= exercise.description.truncate(50) if exercise.description %></p>
-  </div>
+    <%#= link_to "voir l'exercice -->", exercise, class: "float-right border p-3", data: {turbo: false} %>
+  </header>
 
-  <div class="card-footer">
-    <% if exercise.level %>
-      <p class="mb-0">
-        <i class="mdi mdi-arm-flex"></i> Niveau:  <%= exercise.level %>
-      </p>
-    <% end %>
-    <% if exercise.duration %>
-      <p class="mb-0">
-        <i class="mdi mdi-timer-sand"></i> Durée:  <%= Time.at(exercise.duration).utc.strftime("%H:%M") %>
-      </p>
-    <% end %>
-    <p class="mb-0">
-      <i class="mdi mdi-forum-outline"></i> Commentaires:  <%= exercise.comments.count %>
-    </p>
-  </div>
-</div>
+  <% if exercise.video_link.present? %>
+    <figure class="my-3">
+      <% img_link = exercise.video_link.present? ? "//img.youtube.com/vi/#{exercise.video_link}/0.jpg" : "https://via.placeholder.com/800x440.png" %>
+      <%= image_tag img_link, class: "w-full h-auto rounded-2xl", alt: exercise.title %>
+    </figure>
+  <% end %>
+
+  <section class="mb-4">
+    <p class="card-subtitle  text-gray"><%= exercise.description.truncate(50) if exercise.description %></p>
+  </section>
+
+  <footer class="">
+    <ul class="text-gray-500 text-sm font-light flex list-inside list-disc">
+
+      <% if exercise.level %>
+        <li class="pr-2"><%= exercise.level %></li>
+      <% end %>
+
+      <% if exercise.duration %>
+        <li class="pr-2"><%= Time.at(exercise.duration).utc.strftime("%H:%M") %></li>
+      <% end %>
+
+      <li><%= exercise.comments.count %> messages</li>
+    </ul>
+
+    <ul class="mt-6 text-sm text-right">
+      <% exercise.categories.each do |category| %>
+        <li>
+          <a href="<%= by_slug_categories_path category.slug %>" title="<%= category.description %>"  data-turbo="false" class="chip">#<%= category.name %></a>
+        </li>
+      <% end %>
+    </ul>
+    <div>
+      <% if current_user %>
+        <%# = render partial: "shared/practicer/practice_toolbar", locals: {exercise: exercise, extended: true } %>
+      <% end %>
+    </div>
+  </footer>
+</article>
