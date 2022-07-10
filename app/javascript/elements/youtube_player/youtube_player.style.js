@@ -1,6 +1,11 @@
 export default `
   .youtube-player {
+    border-radius: 1rem;
     background-color: #000;
+    box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
+
     // margin-bottom: 30px;
     position: relative;
     padding-top: 56.25%;

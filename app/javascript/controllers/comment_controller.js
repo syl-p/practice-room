@@ -11,14 +11,13 @@ export default class extends Controller {
   display($event) {
     $event.preventDefault();
     const  commentsForm = document.querySelectorAll('.comment .comment_form')
-    commentsForm.forEach(cf => cf.classList.add('d-none'))
-    this.formTarget.classList.toggle('d-none')
+    commentsForm.forEach(cf => cf.classList.add('hidden'))
+    this.formTarget.classList.toggle('hidden')
   }
 
   cancel($event) {
-    console.log($event)
     $event.preventDefault()
-    this.formTarget.classList.add('d-none')
+    this.formTarget.classList.add('hidden')
     this.formTarget.querySelector('textarea').value = ''
   }
 }

@@ -5,8 +5,7 @@
 
 <section class="">
   <header class="w-full bg-gradient-to-r from-indigo-400 to-indigo-500 text-white px-10 pt-10 pb-10">
-    <%
-      links = [
+    <%= render partial: "shared/breadcrump", locals: {links: [
         {
           label: "Exercices",
           path: exercise_path
@@ -15,9 +14,7 @@
           label: @exercise.title,
           path: exercise_path(@exercise)
         }
-      ]
-    %>
-    <%= render partial: "shared/breadcrump", locals: {links: links}  %>
+      ]}  %>
     <div class="lg:flex">
       <div class="lg:w-3/6">
         <ul class="exercise-show__header__categories mt-6">
@@ -99,16 +96,23 @@
   </header>
 
   <article class="lg:flex px-10">
-    <aside class="lg:w-4/12 pt-10 pr-6">
+    <aside class="lg:w-4/12 pt-8 pr-6">
+      <tabs-section>
       <% if @exercise.versions_enabled %>
-        <!-- VERSIONS LIST -->
-          <%= turbo_frame_tag "exercise_versions" do %>
-            <%= render partial: "exercises/versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
-          <% end %>
-        <!-- VERSIONS LIST -->
+        <div slot="tab" data-tab-title="Versions alternatives">
+          <!-- VERSIONS LIST -->
+            <%= turbo_frame_tag "exercise_versions" do %>
+              <%= render partial: "exercises/versions/list", locals: {versions: @exercise.versions_filtered(current_user), exercise: @exercise } %>
+            <% end %>
+          <!-- VERSIONS LIST -->
+        </div>
       <% end %>
-      <h3>Fichier partagés:</h3>
-      <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
+
+        <div slot="tab" data-tab-title="Ressources">
+          <h3>Fichier partagés:</h3>
+          <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
+        </div>
+      <tabs-section>
     </aside>
 
     <section class="lg:w-8/12 lg:-mt-20">
@@ -132,42 +136,44 @@
       <div class="absolute inset-0 flex items-center" aria-hidden="true">
         <div class="w-full border-t border-gray-300"></div>
       </div>
+
       <div class="relative flex justify-center">
         <span class="px-2 bg-white text-sm text-gray-500"> Commentaires </span>
       </div>
     </div>
-      <h2 class="text-center text-3xl my-6">
-        <i class="mdi mdi-forum-outline"></i>
-        Partage ton expérience !
-      </h2>
 
-      <div class="md:w-3/4 md:pl-28 md:mx-auto">
-        <% if user_signed_in? %>
-            <%= turbo_frame_tag "comment_new" do %>
-                <%= render partial: "comments/form",
-                    locals: {
-                      comment: Comment.new, commentable: @exercise, first: true
-                    } %>
-            <% end %>
-        <% else %>
-            <div class="empty">
-                <div class="empty-icon">
-                    <i class="mdi mdi-account"></i>
-                </div>
-                <p class="empty-title h5">Vous devez être connecter pour pouvoir commenter.</p>
-                <p class="empty-subtitle">Si tu n'as pas de compte tu peux aussi t'inscrire gratuitement pour participer à la conversation.</p>
-                <div class="empty-action">
-                  <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary"  %>
-                  <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-link"  %>
-                </div>
-            </div>
-        <% end %>
+    <h2 class="text-center text-3xl my-6">
+      <i class="mdi mdi-forum-outline"></i>
+      Partage ton expérience !
+    </h2>
 
-        <!-- COMMENT LIST -->
-        <%= tag.div id: "#{dom_id(@exercise)}_comments" do %>
-            <%=  render partial: "comments/comment", collection: @exercise.comments.where(parent_id: nil), as: :comment  %>
+    <div class="md:w-4/6 md:mx-auto">
+      <% if user_signed_in? %>
+        <%= turbo_frame_tag "comment_new" do %>
+          <%= render partial: "comments/form",
+            locals: {
+              comment: Comment.new, commentable: @exercise, first: true
+            } %>
         <% end %>
-        <!-- END COMMENT LIST -->
-      </div>
+      <% else %>
+        <div class="empty">
+          <div class="empty-icon">
+              <i class="mdi mdi-account"></i>
+          </div>
+          <p class="empty-title h5">Vous devez être connecter pour pouvoir commenter.</p>
+          <p class="empty-subtitle">Si tu n'as pas de compte tu peux aussi t'inscrire gratuitement pour participer à la conversation.</p>
+          <div class="empty-action">
+            <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary"  %>
+            <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-link"  %>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- COMMENT LIST -->
+      <%= tag.div id: "#{dom_id(@exercise)}_comments" do %>
+        <%=  render partial: "comments/comment", collection: @exercise.comments.where(parent_id: nil), as: :comment  %>
+      <% end %>
+      <!-- END COMMENT LIST -->
+    </div>
   </footer>
 </section>
