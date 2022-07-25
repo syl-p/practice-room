@@ -184,16 +184,6 @@ GEM
     ruby-vips (2.1.4)
       ffi (~> 1.12)
     rubyzip (2.3.2)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
     selenium-webdriver (4.0.3)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -220,7 +210,6 @@ GEM
     tailwindcss-rails (2.0.10-x86_64-linux)
       railties (>= 6.0.0)
     thor (1.1.0)
-    tilt (2.0.10)
     turbo-rails (0.8.3)
       rails (>= 6.0.0)
     tzinfo (2.0.4)
@@ -264,7 +253,6 @@ DEPENDENCIES
   rails (~> 7.0.0.alpha2)
   redcarpet
   redis (~> 4.0)
-  sass-rails
   selenium-webdriver
   sidekiq
   spring

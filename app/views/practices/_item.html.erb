@@ -1,38 +1,65 @@
-<div class="timeline-item" id="session_index">
-  <div class="timeline-left">
-    <a class="timeline-icon icon-lg" href="#session_index">
-      <i class="mdi mdi-marker" style="font-size: 15px"></i>
-    </a>
-  </div>
-  <div class="timeline-content">
-    <div class="tile">
-      <strong class="tile-title">
-        Session à <u><time class="session__time"><%= l session.created_at, format: '%H:%M:%S' %></time></u>
-      </strong>
+<li>
+  <div class="relative pb-8">
+    <span class="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+    <div class="relative flex items-start space-x-3">
+      <div>
+        <div class="relative px-1">
+          <div class="h-8 w-8 bg-gray-100 rounded-full ring-8 ring-white flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="min-w-0 flex-1 py-1.5">
+        <div class="text-gray-500">
+          <span class="font-medium text-gray-900"><%= session.practices_exercises.count %> exercices</span> à
+          <span class="whitespace-nowrap"><time class="session__time"><%= l session.created_at, format: '%H:%M:%S' %></time></span>
+        </div>
+
+        <ul class="mt-2 divide-y divide-gray-200 border-t border-b border-gray-200">
+          <% session.practices_exercises.each_with_index do |practiced, index| %>
+            <%= turbo_frame_tag "practices_exercises_#{practiced.id}" do %>
+              <li class="flex items-center justify-between text-gray-500 py-3" data-practices-target="exercise" data-duration="<%= practiced.duration %>">
+                <div class="mr-3 ">
+                  <span class="text-lg">
+                    <%= Time.at(practiced.duration).utc.strftime("%H:%M:%S") %>
+                  </span>
+                  <br>
+                  <span class="text-sm">
+                    à <%= Time.at(practiced.created_at).utc.strftime("%H:%M:%S") %>
+                  </span>
+                </div>
+                <div class="flex-1">
+                  <p>
+                    <%= link_to practiced.exercise.title, exercise_path(practiced.exercise), data: {turbo: false} %>
+                  </p> 
+                  <ul class="text-sm">
+                    <% practiced.exercise.categories.each do |category| %>
+                      <li>
+                        <a href="<%= by_slug_categories_path category.slug %>"
+                            title="<%= category.description %>" class="font-bold">
+                          #<%= category.name %>
+                        </a>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
+
+                <%= link_to remove_from_practice_path(
+                  practices_exercises_id: practiced.id),
+                  method: :delete, class: "btn btn-secondary" do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                <% end %>
+
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+
+      </div>
     </div>
-    <ul class="tile-list">
-      <% session.practices_exercises.each_with_index do |practiced, index| %>
-        <%= turbo_frame_tag "practices_exercises_#{practiced.id}" do %>
-          <li class="tile tile-centered"
-              data-practices-target="exercise" data-duration="<%= practiced.duration %>">
-            <div class="tile-content">
-              <div class="tile-title">
-                <%= link_to practiced.exercise.title, exercise_path(practiced.exercise), data: {turbo: false} %>
-              </div>
-              <small class="tile-subtitle text-gray">
-                à <%= Time.at(practiced.created_at).utc.strftime("%H:%M:%S") %> Durée: <%= Time.at(practiced.duration).utc.strftime("%H:%M:%S") %>
-              </small>
-            </div>
-            <div class="tile-action dropdown dropdown-right" tabindex="0">
-              <%= link_to remove_from_practice_path(
-                practices_exercises_id: practiced.id),
-                method: :delete, class: "btn btn-link pr-0" do %>
-                <i class="mdi mdi-close"></i>
-              <% end %>
-            </div>
-          </li>
-        <% end %>
-      <% end %>
-    </ul>
   </div>
-</div>
+</li>

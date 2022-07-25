@@ -4,11 +4,10 @@
 <%= form_with model: model,
     id: record_id_gen(*model),
     data: local_assigns[:data], class: "comment_form #{local_assigns[:class]}"  do |f| %>
-
     <div class="flex space-x-4 mt-6">
       <div class="flex-shrink-0">
-        <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
-          <%= render partial: "users/avatar", locals: {user: @exercise.user, size: :large} %>
+        <a href="<%= user_url(current_user) %>" data-turbo="false">
+          <%= render partial: "users/avatar", locals: {user: current_user, size: :large} %>
         </a>
       </div>
       <div class="flex-1 min-w-0">
@@ -27,7 +26,7 @@
 
         <div class="text-right mt-6">
           <%= link_to "Annuler", comment, class: "btn", data: {action: "click->comment#cancel"} if !first %>
-          <%= f.submit "Commenter", disable_with: 'Submiting...', class: "btn btn-primary" %>
+          <%= f.submit "Commenter", disable_with: 'Submiting...', class: "btn btn-primary", data: {action: "click->comment#submit"} %>
         </div>
       </div>
     </div>

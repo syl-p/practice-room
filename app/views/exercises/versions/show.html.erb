@@ -8,7 +8,7 @@
     </div>
     <div class="flex-1 min-w-0">
       <p class="font-medium text-gray-900 truncate"><%= @exercise.title %></strong></p>
-      <p class="text-xs text-gray-500 font-light truncate">
+      <p class="text-gray-500 font-light truncate">
         Publié par <%= link_to @exercise.user.username, user_path(@exercise.user.id), data: {turbo: false}  %></small>
       </p>
     </div>
@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div class="my-4 text-sm text-gray-600 font-light line-clamp-2">
+  <div class="my-4 text-gray-600 font-light line-clamp-2">
     <% if notice.present? %>
       <div id="notice" class="toast toast-success">
         <button class="btn btn-clear float-right"></button>
@@ -39,7 +39,7 @@
     </p>
   </div>
 
-  <div class="text-xs uppercase font-bold">
+  <div class="text-sm uppercase font-bold text-right">
     <% if can? :manage, @exercise %>
       <%= link_to 'Modifier', edit_exercise_path(@exercise) %> | <%= link_to 'Supprimer', @exercise, method: :delete, data: { confirm: 'Are you sure?', turbo: true } %>
     <% end %>

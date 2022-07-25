@@ -134,14 +134,6 @@ ActiveRecord::Schema.define(version: 2022_06_12_182038) do
     t.index ["practice_id"], name: "index_practices_exercises_on_practice_id"
   end
 
-  create_table "sessions_of_the_days", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.json "sessions", default: [], array: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_sessions_of_the_days_on_user_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -170,5 +162,4 @@ ActiveRecord::Schema.define(version: 2022_06_12_182038) do
   add_foreign_key "practices", "users"
   add_foreign_key "practices_exercises", "exercises"
   add_foreign_key "practices_exercises", "practices"
-  add_foreign_key "sessions_of_the_days", "users"
 end

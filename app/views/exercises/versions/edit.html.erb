@@ -1,23 +1,24 @@
 
 <%= turbo_frame_tag "exercise_versions" do %>
-  <div class="panel">
-    <div class="panel-header">
-      <%= link_to list_versions_path(id: @exercise.original), class: "float-right", data: {
+  <div class="flex space-x-4 mb-6">
+    <div class="flex-1 min-w-0 flex-shrink-0 self-center">
+      <p class="text-gray-600 font-light pr-10">
+        Modification de votre version: <%= @exercise.title %></p>
+    </div>
+    <div class="self-center">
+      <!-- Close btn -->
+      <%= link_to  list_versions_path(id: @exercise.original), class: "float-right",
+        data: {
           video_id: @exercise.original.video_link,
           action: 'click->application#showVersion'
-        }  do %>
-        <i class="mdi mdi-close"></i>
+        } do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
       <% end %>
-      <h3>Modification de la version</h3>
-      <p>Mise à jour de l'exercice: <%= @exercise.title %></p>
-    </div>
-
-    <div class="panel-body">
-      <%= render 'exercises/versions/form', version: @exercise %>
-    </div>
-
-    <div class="panel-footer">
-      <%=  link_to 'Retour à la liste des versions', list_versions_path(id: @exercise.original) %>
+      <!-- end  Close btn -->
     </div>
   </div>
+
+  <%= render 'exercises/versions/form', version: @exercise %>
 <% end %>

@@ -2,7 +2,6 @@ class ExercisesController < ApplicationController
   before_action :set_exercise, only: %i[ show edit get_versions_list update destroy add_to_favorites add_to_practice]
   before_action :set_exerices, only: [:search, :list]
   before_action :set_categories, only: [:index, :search]
-  layout "layouts/dashboard", only: %i[edit new me]
   authorize_resource
 
   # GET /exercises or /exercises.json
@@ -101,11 +100,10 @@ class ExercisesController < ApplicationController
     @exercise.user_id = current_user.id
     # published false if is a version of an exercise
     @exercise.published = false if @exercise.original.present?
-    step = @exercise.original.present? ? '' : 'media'
 
     respond_to do |format|
       if @exercise.save
-        format.html { redirect_to edit_with_step_exercises_path(@exercise, step: step), notice: "Exercise was successfully created." }
+        format.html { redirect_to edit_exercise_path(@exercise), notice: "Exercise was successfully created." }
         format.json { render :show, status: :created, location: @exercise }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -119,20 +117,7 @@ class ExercisesController < ApplicationController
     respond_to do |format|
       if @exercise.update(exercise_params)
         format.html do
-          # get url
-          url = request.referer.split('/')
-          case url.last
-          when 'media'
-            redirect_to edit_with_step_exercises_path(@exercise, step: "versions"), notice: "Exercise was successfully updated."
-          when "versions"
-            redirect_to edit_with_step_exercises_path(@exercise, step: "visibility"), notice: "Exercise was successfully updated."
-          else
-            if url.last == 'visibility'
-              redirect_to edit_with_step_exercises_path(@exercise, step: "visibility"), notice: "Exercise was successfully updated."
-            else
-              redirect_to edit_with_step_exercises_path(@exercise, step: "media"), notice: "Exercise was successfully updated."
-            end
-          end
+          redirect_to edit_exercise_path(@exercise), notice: "Exercise was successfully updated."
         end
         format.json { render :show, status: :ok, location: @exercise }
       else

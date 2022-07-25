@@ -19,23 +19,23 @@
 
   <%= form.hidden_field :exercise_id %>
 
-  <div class="field form-group">
+  <div class="mb-6">
     <%= form.label :title, class: 'form-label' %>
     <%= form.text_field :title, class: 'form-input'  %>
   </div>
 
-  <div class="field form-group">
+  <div class="mb-6">
     <%= form.label :description, class: 'form-label'  %>
     <%= form.text_area :description, class: 'form-input'   %>
   </div>
 
-  <div class="field form-group">
+  <div class="mb-6">
     <%= form.label "vidéo (lien de partage youtube)", class: "form-label"  %>
     <%= form.text_field :video_link, class: "form-input"  %>
   </div>
 
   <% if can? :update, @version, :published %>
-    <div class="field form-group">
+    <div class="mb-6">
         <label class="form-label">
           <%= form.check_box :published %><i class="form-icon"></i>
           <%= form.label :published %>
@@ -43,7 +43,8 @@
     </div>
   <% end %>
 
-  <div class="actions">
+  <div class="flex space-x-4">
     <%= form.submit 'Envoyer' , class: 'btn btn-primary' %>
+    <%=  link_to 'Retour', list_versions_path(id: version.original), class:"text-sm uppercase font-bold self-center" %>
   </div>
 <% end %>

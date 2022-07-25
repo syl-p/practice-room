@@ -1,59 +1,73 @@
-<header class="w-full">
-  <div class="relative z-10 flex-shrink-0 h-16 flex">
+<header class="w-full z-100 <%= "top-0 left-0 bg-primary-gradient" if controller_name == 'exercises' && action_name == 'show' %>">
+  <div class="relative flex-shrink-0 h-16 flex">
     <button type="button" class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
       <span class="sr-only">Open sidebar</span>
       <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
       </svg>
     </button>
-    <div class="flex-1 flex justify-between px-4 sm:px-6">
+    <div class="flex-1 flex justify-between px-4 sm:px-10">
       <div class="flex-1 flex">
-<%
-=begin
-%>
+        <!-- FORM SEARCH -->
         <form class="w-full flex md:ml-0" action="#" method="GET">
           <label for="search-field" class="sr-only">Search all files</label>
           <div class="relative w-full text-gray-400 focus-within:text-gray-600">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center">
               <!-- Heroicon name: solid/search -->
-              <svg class="flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <svg class="flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="<%= controller_name == 'exercises' && action_name == 'show' ? "white" : "black" %>" aria-hidden="true">
                 <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
               </svg>
             </div>
-            <input name="search-field" id="search-field" class="bg-transparent h-full w-full border-transparent py-2 pl-8 pr-3 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent focus:placeholder-gray-400" placeholder="Search" type="search">
+            <input name="search-field" id="search-field" 
+              class="bg-transparent h-full w-full border-transparent py-2 pl-8 pr-3 text-base 
+              <%= controller_name == 'exercises' && action_name == 'show' ? "text-white placeholder-white focus:placeholder-white" : "text-gray-900 placeholder-gray-500 focus:placeholder-gray-400" %> focus:outline-none focus:ring-0 focus:border-transparent" 
+              placeholder="Recherche..." type="Recherche...">
           </div>
         </form>
-<%
-=end
-%>
+        <!-- FORM SEARCH -->
       </div>
       <div class="ml-2 flex items-center space-x-4 sm:ml-6 sm:space-x-6">
         <!-- Profile dropdown -->
         <div class="relative flex-shrink-0">
           <div>
-            <!-- avatar -->
-            <button type="button" class="bg-white group rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-              <span class="sr-only">Open user menu</span>
-              <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80" alt="">
+        
+            <% if user_signed_in? %>
+              <div class="flex">
 
-              <div class="origin-top-right invisible group-focus:visible absolute top-full right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
-                tabindex="-1">
-                <!-- Active: "bg-gray-100", Not Active: "" -->
-                <%= link_to "Votre espace", dashboard_path, class: "block px-4 py-2 text-sm text-gray-700" %>
-                <%= link_to "Modifiez vos informations", edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700" %>
-                <%= link_to "Se déconnecter", destroy_user_session_path, method: :delete, class: "block px-4 py-2 text-sm text-gray-700" %>
+                <div class="self-center px-4 mr-6 border-r">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="<%= controller_name == 'exercises' && action_name == 'show' ? "white" : "black" %>" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                </div>
+
+                <div class="self-center">
+                  <!-- avatar | dropdown-->
+                  <button type="button" 
+                    data-action="application#sidebarShow"
+                    class="bg-white group rounded-md flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                    <span class="sr-only">Open user menu</span>
+                    <%= render partial: "users/avatar", locals: {user: current_user, size: :large} %>
+                    <%#= render partial: "users/dropdown" %>
+                  </button>
+                  <!-- avatar | dropdown-->
+                </div>
+
+                <div class="self-center hidden md:block pl-4 <%= "text-white" if controller_name == 'exercises' && action_name == 'show' %>">
+                  <span class="font-bold"><%= current_user.username %></span>
+                  <!-- TIMER -->
+                  <div class="font-lite text-xs">
+                    <%= current_user.practice_time_today %>
+                  </div>
+                  <!-- end TIMER -->
+                </div>
+
               </div>
-
-            </button>
-
+            <% else %>
+              <%= link_to "Se connecter", new_user_session_path, class: "uppercase text-xs text-white mr-3"  %>
+              <%= link_to "S'inscrire", new_user_registration_path, class: "uppercase text-xs text-white"  %>
+            <% end %>
           </div>
-
-          <!--
-            Dropdown menu, show/hide based on menu state.
-          -->
-
         </div>
 
       </div>

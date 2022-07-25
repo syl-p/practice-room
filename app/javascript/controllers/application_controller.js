@@ -1,8 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
+import { leave, enter } from "../transistion"
 
 export default class extends Controller {
   static targets = ["videoPlayer", 'inputVersionsEnabled',
-    'versionsListEdit', 'videoPreviewer', "sidebar", "favorites"]
+    'versionsListEdit', 'videoPreviewer', "sidebar", "overlay", "favorites"]
 
   static values = {
     root: String,
@@ -10,6 +11,14 @@ export default class extends Controller {
   }
 
   connect() {
+  }
+
+  sidebarTargetConnected() {
+    // document.addEventListener('click', (event) => {
+    //   if (!this.sidebarTarget.contains(event.target)) {
+    //     console.log("hide")
+    //   }
+    // })
   }
 
   inputVersionsEnabledTargetConnected() {
@@ -22,10 +31,6 @@ export default class extends Controller {
     textInput.addEventListener('input', () => { // and change youtube-player video id
       this.videoPreviewerTarget.querySelector('youtube-player').setAttribute('video-id', textInput.value)
     })
-  }
-
-  get practicerSidebarController() {
-    return this.application.controllers.find(c => c.identifier === "practices")
   }
 
   get practicerNavControllers() {
@@ -41,9 +46,21 @@ export default class extends Controller {
     return this.rootValue
   }
 
-  togglePracticerSidebar($event) {
-    $event.stopPropagation()
-    this.sidebarTarget.classList.toggle("active")
+  sidebarShow() {
+    this.sidebarTarget.classList.remove('hidden')
+    this.overlayTarget.classList.remove('hidden')
+    enter(this.overlayTarget)
+    enter(this.sidebarTarget)
+  }
+
+  sidebarHide() {
+    Promise.all([
+      leave(this.sidebarTarget),
+      leave(this.overlayTarget)
+    ]).then(() => {
+      this.sidebarTarget.classList.add("hidden")
+      this.overlayTarget.classList.add("hidden")
+    })
   }
 
   // Version actions
