@@ -64,8 +64,10 @@
 
               </div>
             <% else %>
-              <%= link_to "Se connecter", new_user_session_path, class: "uppercase text-xs text-white mr-3"  %>
-              <%= link_to "S'inscrire", new_user_registration_path, class: "uppercase text-xs text-white"  %>
+              <div class="flex">
+                <%= link_to "Se connecter", new_user_session_path, class: "uppercase text-xs mr-3"  %>
+                <%= link_to "S'inscrire", new_user_registration_path, class: "uppercase text-xs"  %>
+              </div>
             <% end %>
           </div>
         </div>

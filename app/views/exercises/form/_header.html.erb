@@ -1,39 +1,54 @@
 <%
 active = active if local_assigns[:active].nil?
 %>
-<nav>
-  <p>
-    <%= link_to "Voir l'exercice", exercise_path(exercise)  %> |
-    <%= link_to "Retour à la liste", me_exercises_path %>
-  </p>
-  <ul class="step">
-    <li class="step-item <%= 'active' if (active.nil?) %>">
-      <a
-        href="<%= edit_exercise_path %>"
-        class="tooltip " data-tooltip="Renseignez votre exercice">
-        1. Contenu
-      </a>
-    </li>
-    <li class="step-item <%= 'active' if (active && active === 'media') %>">
-      <a
-        href="<%= edit_exercise_path + "/media" %>"
-        class="tooltip" data-tooltip="Associez vos ressources">
-        2. Ressources
-      </a>
-    </li>
-    <li class="step-item <%= 'active' if (active && active === 'versions') %>">
-      <a
-        href="<%= edit_exercise_path + "/versions" %>"
-        class="tooltip" data-tooltip="Managez les versions de votre exercice">
-        3. Versions
-      </a>
-    </li>
-    <li class="step-item <%= 'active' if (active && active === 'visibility') %>">
-      <a
-        href="<%= edit_exercise_path + "/visibility" %>"
-        class="tooltip" data-tooltip="Définissez vos paramètres de visibilité">
-        3. Visibilité
-      </a>
-    </li>
-  </ul>
+<%
+  links = [
+    {
+      label: "Contenu", 
+      path: @exercise.persisted? ? edit_exercise_path(@exercise) : new_exercise_path,
+      icon: '
+        <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+        </svg>
+      ' 
+    },
+    {
+      label: "Ressources", 
+      path: @exercise.persisted? ? edit_exercise_path(@exercise) : "#",
+      icon: '
+        <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+        </svg>
+      '
+    },
+    {
+      label: "Versions", 
+      path: @exercise.persisted? ? edit_exercise_path(@exercise) : "#",
+      icon: '
+        <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+        </svg>
+      '
+    },
+    {
+      label: "Visibilité", 
+      path: @exercise.persisted? ? edit_exercise_path(@exercise) : "#",
+      icon: '
+        <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>'
+    }
+  ]
+%>
+
+<nav class="space-y-1" aria-label="Sidebar">
+  <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+  <% links.each do |link| %>
+    <%= link_to link[:path], class: "text-gray-900 flex items-center px-3 py-2 text-sm font-medium rounded-md" do %>
+      
+      <%= raw link[:icon] %>
+      <span class="truncate"> <%= link[:label] %> </span>
+    <% end %>
+  <% end %>
 </nav>

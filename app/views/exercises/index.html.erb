@@ -3,7 +3,7 @@
 %>
 <section data-controller="hello" class="p-10">
   <header class="flex items-center">
-    <div class="flex-1 border-b border-gray-200">
+    <div class="flex-1">
       <%= form_with(url: search_exercises_path) do |form| %>
         <ul class="flex mb-3">
           <% @categories.each do |category| %>

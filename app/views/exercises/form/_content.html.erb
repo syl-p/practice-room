@@ -12,55 +12,56 @@
     </div>
   <% end %>
 
+  <div class="field form-group mb-6">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-input"  %>
+  </div>
 
-  <div class="columns">
+  <div class="field form-group columns mb-6">
+    <%= form.label :description, class: "form-label"  %>
+    <%= form.text_area :description, class: "form-input" %>
+  </div>
 
-    <div class="column col-6">
-      <div class="field form-group">
-        <%= form.label :title, class: "form-label" %>
-        <%= form.text_field :title, class: "form-input"  %>
-      </div>
+  <div class="md:flex">
 
-      <div class="field form-group columns">
-        <div class="column">
-          <%= form.label :description, class: "form-label"  %>
-          <%= form.text_area :description, class: "form-input" %>
-        </div>
-      </div>
-
-      <div class="field form-group">
+    <div class="md:w-3/6 pr-6">
+      <div class="field form-group mb-6">
         <%= form.label :categories, class: "form-label"  %>
-        <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => true, selected_value: nil}, :multiple => true, class: "form-select" %>
+        <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => true, selected_value: nil}, :multiple => true, class: "form-input" %>
+      </div>
+
+
+      <div class="field form-group">
+        <%= form.label "Niveau", class: "form-label"  %>
+        <ul>
+          <% Exercise.levels.keys.each do |level| %>
+            <li class="mb-3">
+              <%= form.radio_button :level, level %>
+              <%= form.label "#{:level}_#{level.parameterize.underscore}", level %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
 
-    <div class="column col-6">
+    <div class="md:w-3/6">
         <div class="field form-group" data-application-target="videoPreviewer">
           <%= form.label "vidéo (lien de partage youtube)", class: "form-label"  %>
-          <%= form.text_field :video_link, class: "form-input mb-2" %>
+          <%= form.text_field :video_link, class: "form-input mb-6" %>
           <youtube-player data-application-target="videoPlayer" video-id="<%= exercise.video_link %>"></youtube-player>
         </div>
-
-        <div class="field form-group">
-          <%= form.label :level, class: "form-label"  %>
-          <% Exercise.levels.keys.each do |level| %>
-            <%= form.radio_button :level, level %>
-            <%= form.label "#{:level}_#{level.parameterize.underscore}", level %>
-          <% end %>
-        </div>
-
     </div>
   </div>
 
   <div class="divider text-center" data-content="contenu"></div>
 
-  <div class="field form-group columns" data-controller="markdown">
-    <div class="column col-6">
+  <div class="flex my-10" data-controller="markdown">
+    <div class="md:w-3/6 pr-3">
       <%= form.label "Markdown", class: "form-label"  %>
       <%= form.text_area :body, class: "form-input mardown-textarea",
         data: {markdown_target: 'field', action: 'input->markdown#onChange'} %>
     </div>
-    <div class="column col-6">
+    <div class="md:w-3/6 pl-3">
       <label class="form-label">Aperçu</label>
       <!-- HTML RESULT FROM MARKDOWN -->
       <div data-markdown-target="result" class="pt-1"></div>
