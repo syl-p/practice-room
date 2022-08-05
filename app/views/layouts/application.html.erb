@@ -11,8 +11,8 @@
   </head>
 
   <body class="h-full">
-    <div class="flex relative z-10" 
-      aria-labelledby="slide-over-title" 
+    <div class="flex relative z-10"
+      aria-labelledby="slide-over-title"
       role="dialog" aria-modal="true"
       data-controller="application"
       data-application-root-value="<%= root_url %>">
@@ -32,7 +32,7 @@
       <!-- END Content area -->
 
       <!-- Practicer sidebar -->
-      <div 
+      <div
         data-application-target="overlay"
         data-transition-enter="ease-in-out duration-500"
         data-transition-enter-start="opacity-0"
@@ -41,8 +41,9 @@
         data-transition-leave-start="opacity-100"
         data-transition-leave-end="opacity-0"
 
-        class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
         <%= render "shared/practicer/practice_sidebar" %>
+      </div>
       <!-- END Practicer sidebar -->
     </div>
   </body>

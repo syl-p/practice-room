@@ -4,31 +4,32 @@
     <skeleton-box placeholder="Placeholder pour le nombre d'exercice"></skeleton-box>
   </div>
 </header>
-<ul class="exercises-list columns" data-hello-target="skeleton">
+<ul class="lg:grid lg:grid-cols-3 gap-x-4 gap-y-4 lg:grid-flow-row-dense" 
+  data-hello-target="skeleton">
   <% (0..4).each do %>
-  <li class="exercises-list__item column col-sm-12 col-xl-6 col-3">
-    <div class="card skeleton-card">
-      <div class="card-header">
-        <small class="tile">
-          <div class="tile-icon">
-            <skeleton-box width="24" height="24" rounded="true"></skeleton-box>
-          </div>
+    <li class="">
+      <div class="card skeleton-card">
+        <div class="card-header">
+          <small class="tile">
+            <div class="tile-icon">
+              <skeleton-box width="24" height="24" rounded="true"></skeleton-box>
+            </div>
 
-          <div class="tile-content pl-3">
-            <p class="tile-title mb-0">
-              <skeleton-box placeholder="publier par username"></skeleton-box>
-            </p>
-          </div>
-        </small>
+            <div class="tile-content pl-3">
+              <p class="tile-title mb-0">
+                <skeleton-box placeholder="publier par username"></skeleton-box>
+              </p>
+            </div>
+          </small>
+        </div>
+        <div class="card-image">
+          <skeleton-box  height="145"></skeleton-box>
+        </div>
+        <div class="card-body">
+          <skeleton-box placeholder="Wainting for title"></skeleton-box>
+          <skeleton-box lines="3"></skeleton-box>
+        </div>
       </div>
-      <div class="card-image">
-        <skeleton-box  height="145"></skeleton-box>
-      </div>
-      <div class="card-body">
-        <skeleton-box placeholder="Wainting for title"></skeleton-box>
-        <skeleton-box lines="3"></skeleton-box>
-      </div>
-    </div>
-  </li>
+    </li>
   <% end %>
 </ul>

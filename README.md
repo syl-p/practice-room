@@ -22,7 +22,7 @@ Ce concept est actuellement en cours de développement pour une communauté de m
 
 ## Pratiquez à plusieurs
 1. En effet, les membres de la plateforme peuvent mettre les exercices
-    - en public, afin de le partager avec toute la communauté de la plateforme
+    - en public, afin de les partager avec toute la communauté de la plateforme
     - en mode "amis seulement", pour ne les partager qu'à vos amis
     - en privé, pour qu'ils ne soient connus que par vous
 
@@ -33,7 +33,7 @@ Ce concept est actuellement en cours de développement pour une communauté de m
 ## Faites vous de nouveaux amis
 
 3. Ajouter des membres à **votre liste d'amis** pour leur:
-    - proposer des défis à vos amis
+    - proposer des défis
     - partager des exercices exclusivement à ces derniers
 
 4. Système d'abonement afin d'être notifié lorsqu'un utilisateur

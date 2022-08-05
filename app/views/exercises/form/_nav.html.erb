@@ -4,8 +4,9 @@ active = active if local_assigns[:active].nil?
 <%
   links = [
     {
-      label: "Contenu", 
-      path: @exercise.persisted? ? edit_exercise_path(@exercise) : new_exercise_path,
+      label: "Contenu",
+      active: active == "content",
+      path: exercise.persisted? ? edit_exercise_path(exercise) : new_exercise_path,
       icon: '
         <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -14,7 +15,8 @@ active = active if local_assigns[:active].nil?
     },
     {
       label: "Ressources", 
-      path: @exercise.persisted? ? edit_exercise_path(@exercise) : "#",
+      active: active == "media",
+      path: exercise.persisted? ? edit_exercise_path(exercise, step: "media") : "",
       icon: '
         <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
@@ -23,7 +25,8 @@ active = active if local_assigns[:active].nil?
     },
     {
       label: "Versions", 
-      path: @exercise.persisted? ? edit_exercise_path(@exercise) : "#",
+      active: active == "versions",
+      path: exercise.persisted? ? edit_exercise_path(exercise, step: "versions") : "",
       icon: '
         <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
@@ -32,7 +35,8 @@ active = active if local_assigns[:active].nil?
     },
     {
       label: "Visibilité", 
-      path: @exercise.persisted? ? edit_exercise_path(@exercise) : "#",
+      active: active == "visibility",
+      path: exercise.persisted? ? edit_exercise_path(exercise, step: "visibility") : "",
       icon: '
         <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -45,7 +49,7 @@ active = active if local_assigns[:active].nil?
 <nav class="space-y-1" aria-label="Sidebar">
   <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
   <% links.each do |link| %>
-    <%= link_to link[:path], class: "text-gray-900 flex items-center px-3 py-2 text-sm font-medium rounded-md" do %>
+    <%= link_to link[:path], class: "#{"bg-gray-100" if link[:active]} text-gray-900 flex items-center px-3 py-2 text-sm font-medium rounded-md" do %>
       
       <%= raw link[:icon] %>
       <span class="truncate"> <%= link[:label] %> </span>

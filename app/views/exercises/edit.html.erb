@@ -1,8 +1,26 @@
-<section class="dashboard-page exercise-edit">
-  <header class="dashboard-page__header">
-    <h1 class="text-center">Modifier l'exercice</h1>
-    <%= render partial: 'exercises/form/header', locals: {exercise: @exercise, active: nil} %>
-    <%= render partial: "shared/flash_messages" %>
+<section class="px-10 pt-8">
+  <header class="dashboard-page__header text-gray mb-10">
+    <%= render partial: "shared/breadcrump", locals: {links: [
+        {
+          label: "Mes exercices",
+          path: me_exercises_path
+        },
+        {
+          label: @exercise.title,
+          path: "#"
+        }
+      ]}  
+    %>
+    <h1 class="text-4xl">Modifier l' exercice</h1>
   </header>
-  <%= render 'exercises/form/content', exercise: @exercise %>
+  <section class="flex">
+    <aside class="w-2/12 pr-10">
+      <%= render partial: 'exercises/form/nav', 
+          locals: {exercise: @exercise, active: params[:step] ? params[:step] :  'content'} %>
+    </aside>
+    <div class="flex-1">
+      <%= render partial: "shared/flash_messages" %>
+      <%= render "exercises/form/#{params[:step] ? params[:step] :  'content'}", exercise: @exercise %>
+    </div>
+  </section>
 </section>

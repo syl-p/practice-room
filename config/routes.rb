@@ -45,6 +45,8 @@ Rails.application.routes.draw do
 
 
   delete "practice/remove/:practices_exercises_id", to: "practices#remove_from_practice", as: "remove_from_practice"
+
+  # Date selector for practice list
   get "practices/:previous_next/:date", to: "practices#get_week", as: "get_week"
   get "practices/:date", to: "practices#get_day", defaults: { format: :turbo_stream }, as: "get_day"
 

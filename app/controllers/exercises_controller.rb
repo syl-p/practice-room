@@ -77,20 +77,14 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1/edit
   def edit
-    if params[:step].present?
-      case params[:step]
-      when "media"
-        @medium = Medium.new
-        render "exercises/form/media"
-      when "versions"
-        render "exercises/form/versions"
-      when "visibility"
-        render "exercises/form/visibility"
-      end
-    else
-      if @exercise.original.present? # it's a version
-        render "exercises/versions/edit"
-      end
+    return unless ['media', "versions", "visibility"].include?(params[:step]) || params[:step].blank?
+    
+    if params[:step] == "media"
+      @medium = Medium.new
+    end
+
+    if @exercise.original.present? # it's a version
+      render "exercises/versions/edit"
     end
   end
 

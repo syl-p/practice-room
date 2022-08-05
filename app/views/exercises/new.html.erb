@@ -1,22 +1,22 @@
-<section class="px-10 pt-8">
+<section class="px-10 pt-10">
   <header class="dashboard-page__header text-gray mb-10">
     <%= render partial: "shared/breadcrump", locals: {links: [
         {
-          label: "Exercices",
+          label: "Mes exercices",
           path: me_exercises_path
         },
         {
           label: "Nouveau",
           path: "#"
         }
-      ]}  
+      ]}
     %>
     <h1 class="text-4xl">Créer un exercice</h1>
   </header>
   <section class="flex">
-    <aside class="w-1/6">
-      <%= render partial: 'exercises/form/header', 
-          locals: {exercise: @exercise, active: 'media'} %>
+    <aside class="w-2/12 pr-10">
+      <%= render partial: 'exercises/form/nav',
+          locals: {exercise: @exercise, active: "content"} %>
     </aside>
     <div class="flex-1">
       <%= render 'exercises/form/content', exercise: @exercise %>

@@ -1,37 +1,56 @@
-<section class="dashboard-page">
+<section class="p-10">
   <p id="notice"><%= notice %></p>
+  <header class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <%= render partial: "shared/breadcrump", locals: {links: [
+          {
+            label: "Exercices",
+            path: me_exercises_path
+          }
+        ]}
+      %>
+      <h1 class="text-4xl font-semibold text-gray-900">Exercices</h1>
+      <p class="mt-2 text-sm text-gray-700">Retrouvez ici tout les exercices que vous avez créés.</p>
+    </div>
+    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+      <%= link_to 'Nouveau Exercice', new_exercise_path, class: "inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto" %>
+    </div>
+  </header>
+  <div class="mt-8 flex flex-col">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0">title</th>
+              <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">published</th>
+              <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">description</th>
+              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 md:pr-0">action</th>
+            </tr>
+          </thead>
 
-  <header class="dashboard-page__header">
-      <h1> Mes exercices</h1>
-      <p>
-        <%= link_to 'New Exercise', new_exercise_path %>
-      </p>
-
-      <%= render partial: "shared/flash_messages" %>
-    </header>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>title</th>
-        <th>published</th>
-        <th>description</th>
-        <th>action</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @exercises.each do |exercise| %>
-        <tr>
-          <td><%= exercise.title %></td>
-          <td><%= exercise.published %></td>
-          <td><%= exercise.description %></td>
-          <td>
-            <%= link_to 'Show', exercise %>
-            <%= link_to 'Edit', edit_exercise_path(exercise) %>
-            <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<section>
+          <tbody class="divide-y divide-gray-200">
+            <% @exercises.each do |exercise| %>
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0">
+                  <%= exercise.title %>
+                </td>
+                <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500">
+                  <%= exercise.published %>
+                </td>
+                <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500">
+                  <%= exercise.description %>
+                </td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 md:pr-0">
+                  <%= link_to 'Show', exercise, class: "btn btn-secondary" %>
+                  <%= link_to 'Edit', edit_exercise_path(exercise), class: "btn btn-secondary" %>
+                  <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

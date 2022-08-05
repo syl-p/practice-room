@@ -5,29 +5,35 @@
 %>
 
 <%= turbo_frame_tag "practices_selector", target: "practices_selector"  do %>
-  <div class="day-selector">
-    <nav class="day-selector__month">
-      <span class="day-selector__month-name"><%= I18n.t("date.month_names")[current_month] %> <%= current_year %></span>
+  <div class="bg-gray-100 text-center rounded-md p-4 mb-8">
+    <nav class="mb-4">
+      <span class="text-lg font-bold"><%= I18n.t("date.month_names")[current_month] %> <%= current_year %></span>
     </nav>
-    <div class="day-selector__week">
-      <%= link_to get_week_path(previous_next: 'previous', date: current_date), class: 'day-selector__week-prev' do %>
+    <div class="flex justify-center items-center">
+      <%= link_to get_week_path(previous_next: 'previous', date: current_date) do %>
         &lt;
       <% end %>
       <% current_week.each do |day|
         with_data = practices_for_the_week.select { |p| p.created_at.all_day == day.all_day }.present?
         today = day.strftime("%Y-%m-%d") == Date.today.strftime("%Y-%m-%d")
+        it_current_date = day.strftime("%Y-%m-%d") == current_date.strftime("%Y-%m-%d")
       %>
-        <a href="<%= get_day_path(date: day) if with_data || today %>"
-         data-practices-target="dateLink"
-         data-date="<%= day.strftime("%Y-%m-%d") %>"
-         class="day-selector__week-day <%= "with_data" if with_data %>
-          <%=  "today" if today %>
-        ">
-          <span><%= Date::ABBR_DAYNAMES[day.wday][0,1] %></span>
-          <span><%= day.day %></span>
-        </a>
+       <%= link_to get_day_path(date: day),
+          class: "p-2 m-1 rounded-full #{ "bg-gray-200" if today } #{"border border-2 border-indigo-500" if it_current_date}",
+          data: {
+            pratices_target: "dateLink",
+            date: day.strftime("%Y-%m-%d")
+          } do %>
+          <span class="block text-sm text-gray"><%= Date::ABBR_DAYNAMES[day.wday][0,1] %></span>
+          <span class="block text-sm bg-white rounded-full py-1 px-2 relative">
+            <% if with_data %>
+              <span class="<%= "block absolute bottom-5 left-5 content-[''] bg-indigo-500 w-2 h-2 rounded-full" %>"> </span>
+            <% end %>
+            <%= day.day %>
+          </span>
+        <% end %>
       <% end %>
-      <%= link_to get_week_path(previous_next: 'next', date: current_date), class: 'day-selector__week-prev' do %>
+      <%= link_to get_week_path(previous_next: 'next', date: current_date) do %>
         &gt;
       <% end %>
     </div>

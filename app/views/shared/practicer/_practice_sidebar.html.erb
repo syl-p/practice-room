@@ -1,4 +1,4 @@
-<aside class="hidden pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"  
+<aside class="hidden pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
   data-application-target="sidebar"
   data-transition-enter="transform transition ease-in-out duration-500 sm:duration-700"
   data-transition-enter-start="translate-x-full"
@@ -8,7 +8,7 @@
   data-transition-leave-end="translate-x-full">
     <div class="pointer-events-auto w-screen max-w-md">
       <div class="flex h-full flex-col overflow-y-scroll bg-white pb-6 shadow-xl">
-      
+
         <% if user_signed_in? %>
           <div class="flex items-start justify-between bg-indigo-500 px-6 pt-10 pb-14">
               <h2 class="text-2xl uppercase text-white font-bold">Journal de pratique</h2>
@@ -32,7 +32,7 @@
                   <%= render partial: "users/avatar", locals: {user: current_user, size: :xlarge} %>
                 </div>
             </div>
-            
+
             <div class="mt-6 ml-6 flex-1">
 
                 <div class="flex items-center">
@@ -47,26 +47,38 @@
                   <%= current_user.email %>
                 </p>
                 <%= link_to "votre espace", dashboard_path, class: "btn btn-secondary py-1 px-3" %>
+                <%= link_to "votre profil", user_path(current_user), class: "btn btn-secondary py-1 px-3" %>
 
             </div>
 
           </div>
           <!-- end user sum -->
 
-          <!-- practice sessions list -->
-          <div class="relative mt-6 flex-1 px-4 sm:px-6">
-            <div class="absolute inset-0 px-4 sm:px-6">
-              <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
+
+          <tabs-section class="relative mt-6 flex-1 px-4 sm:px-6">
+
+            <!-- practice sessions list -->
+            <div data-tab-title="Aujourd'hui" slot="tab">
+              <div class="inset-0">
+                <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
+              </div>
             </div>
-          </div>
-          <!-- end practice sessions list -->
+            <!-- end practice sessions list -->
+
+            <!-- favorites list -->
+            <div data-tab-title="Favoris" slot="tab">
+              <%= render partial: "favorites/list", locals: {exercises: current_user.favorites_populated} %>
+            </div>
+            <!-- end favorites list -->
+
+          </tabs-section>
 
           <!-- bottom section-->
           <div class="flex flex-shrink-0 px-6">
             <%= link_to destroy_user_session_path, method: :delete, class: "rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 flex" do %>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg> 
+                </svg>
                 <span class="self-center">Se déconnecter</span>
             <% end %>
           </div>
