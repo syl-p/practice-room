@@ -16,17 +16,17 @@
               label: @exercise.title,
               path: exercise_path(@exercise)
             }
-          ]}  
+          ]}
         %>
-        <h1 class="text-4xl font-lite my-4">
+        <h1 class="text-4xl font-bold my-4">
           <%= @exercise.title %>
         </h1>
-        <p class="mb-10"><%= @exercise.description %></p>
-        <ul class="my-10">
+        <p class="mb-6"><%= @exercise.description %></p>
+        <ul class="mb-10 text-sm flex space-x-4">
           <% @exercise.categories.each do |category| %>
             <li>
               <a href="<%= by_slug_categories_path category.slug %>"
-                  title="<%= category.description %>" class="font-bold">
+                  title="<%= category.description %>">
                 #<%= category.name %>
               </a>
             </li>
@@ -98,7 +98,7 @@
     <!-- author info -->
   </header>
 
-  <article class="lg:flex px-10">
+  <article class="lg:flex px-8 space-x-10">
     <aside class="lg:w-4/12 pt-8 pr-6">
       <tabs-section>
         <% if @exercise.versions_enabled %>
@@ -137,20 +137,15 @@
   </article>
 
   <footer class="px-10 pt-10 mt-10">
-    <div class="relative">
+    <div class="relative mb-10">
       <div class="absolute inset-0 flex items-center" aria-hidden="true">
         <div class="w-full border-t border-gray-300"></div>
       </div>
 
       <div class="relative flex justify-center">
-        <span class="px-2 bg-white text-sm text-gray-500"> Commentaires </span>
+        <h2 class="px-6 bg-gray-50 text-3xl text-gray-500"> Partage ton expérience ! </h2>
       </div>
     </div>
-
-    <h2 class="text-center text-3xl my-6">
-      <i class="mdi mdi-forum-outline"></i>
-      Partage ton expérience !
-    </h2>
 
     <div class="md:w-4/6 md:mx-auto">
       <% if user_signed_in? %>

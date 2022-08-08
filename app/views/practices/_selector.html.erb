@@ -19,15 +19,15 @@
         it_current_date = day.strftime("%Y-%m-%d") == current_date.strftime("%Y-%m-%d")
       %>
        <%= link_to get_day_path(date: day),
-          class: "p-2 m-1 rounded-full #{ "bg-gray-200" if today } #{"border border-2 border-indigo-500" if it_current_date}",
+          class: "p-2 m-1 rounded-full #{ "bg-gray-700" if today }",
           data: {
             pratices_target: "dateLink",
             date: day.strftime("%Y-%m-%d")
           } do %>
-          <span class="block text-sm text-gray"><%= Date::ABBR_DAYNAMES[day.wday][0,1] %></span>
+          <span class="block text-sm <%= "text-white" if today  %>"><%= Date::ABBR_DAYNAMES[day.wday][0,1] %></span>
           <span class="block text-sm bg-white rounded-full py-1 px-2 relative">
             <% if with_data %>
-              <span class="<%= "block absolute bottom-5 left-5 content-[''] bg-indigo-500 w-2 h-2 rounded-full" %>"> </span>
+              <span class="<%= "block absolute bottom-5 left-5 content-[''] bg-indigo-400 w-2 h-2 rounded-full" %>"> </span>
             <% end %>
             <%= day.day %>
           </span>

@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "results" do %>
-  <p class="mt-10 mb-6">
+  <p class="mb-6">
     <%= turbo_frame_tag "search_results_count", target: "search_results_count" do %>
       Nous avons trouvé <%= @exercises.count %> résultats.
     <% end %>

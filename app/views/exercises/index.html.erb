@@ -2,41 +2,30 @@
   content_for :description, "Practice room; c'est une plateforme collaborative qui permet aux musiciens de créer et améliorer leur routine de pratique."
 %>
 <section data-controller="hello" class="p-10">
-  <header class="flex items-center">
-    <div class="flex-1">
-      <%= form_with(url: search_exercises_path) do |form| %>
-        <ul class="flex mb-3">
-          <% @categories.each do |category| %>
-            <li class="pr-6">
-              <label>
-                <%= form.check_box :category_ids, {
-                    multiple: true,
-                    data: {action: "change->hello#search"},
-                    checked: @category.present? && @category.id == category.id,
-                    class: "hidden peer"
-                  },
-                  category.id,
-                  false %>
-                  <span class="peer-checked:font-bold">#<%= category.name %></span>
-              </label>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-    </div>
-    <div class="relative">
-    </div>
+  <header class="relative z-10 flex items-baseline justify-between pb-6 border-b border-gray-200">
+    <h1 class="text-4xl font-bold text-gray-900">
+      Qu'allons nous pratiquer ?
+    </h1>
+    <%= render partial: "exercises/search/top_bar_filters" %>
   </header>
-  <section class="flex">
-    <aside class="hidden md:block pt-10 pr-10">
+
+  <!-- search results + sidebar filters -->
+  <section  class="pt-6 pb-24">
+    <h2 id="products-heading" class="sr-only">Les exercices</h2>
+    <div  class="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
+      <!-- sidebar -->
       <%= render partial: "exercises/search/aside" %>
-    </aside>
-    <div class="flex-1">
-      <!-- Results list -->
+      <!-- end sidebar -->
+
+      <div class="lg:col-span-3">
+        <!-- results list -->
         <%= turbo_frame_tag "results", src: list_exercises_path, loading: :lazy do %>
           <%= render partial: "exercises/search/results_skeleton" %>
         <% end %>
-      <!-- END Results list -->
+        <!-- END results list -->
+      </div>
     </div>
   </section>
+
+
 </section>
