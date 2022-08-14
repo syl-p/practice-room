@@ -55,19 +55,4 @@ export default `
     top: 0;
     left: 0;
   }
-
-  .no-video {
-    text-align: center;
-    height: 400px;
-    width: 100%;
-    background-color: #f5f5f5;
-    /* center content */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 1rem;
-    box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 30px 0px rgba(0,0,0,0.75);
-  }
 `
