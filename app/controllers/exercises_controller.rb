@@ -20,7 +20,7 @@ class ExercisesController < ApplicationController
     @exercises = @exercises
                       .where(original: nil)
                       .filtered(params)
-                      .order("#{params[:order_by]} #{params[:order]}")
+                      .order(params[:order])
 
     if params[:category_ids].present? && params[:category_ids].count > 0
       @exercises = @exercises.joins(:categories).where(categories: params[:category_ids])
@@ -78,7 +78,7 @@ class ExercisesController < ApplicationController
   # GET /exercises/1/edit
   def edit
     return unless ['media', "versions", "visibility"].include?(params[:step]) || params[:step].blank?
-    
+
     if params[:step] == "media"
       @medium = Medium.new
     end

@@ -1,45 +1,41 @@
 <div class="flex items-center">
   <div class="relative inline-block text-left">
-    <div>
-      <button type="button" class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900" id="menu-button" aria-expanded="false" aria-haspopup="true">
+    <div class="group p-2">
+      <button type="button"
+              class="peer inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
+              id="menu-button" aria-expanded="false" aria-haspopup="true">
         Sort
         <!-- Heroicon name: solid/chevron-down -->
         <svg class="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
         </svg>
       </button>
-    </div>
+      <div class="hidden group-hover:flex origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+        <div class="py-1" role="none">
+          <%= form_with(url: search_exercises_path, class: "") do |form| %>
+            <label>
+              <%= form.radio_button :order, "title ASC", checked: true, class: "hidden peer", data: {action: "change->hello#search"} %>
+              <span class="peer-checked:font-bold text-gray-500 block px-4 py-2 text-sm cursor-pointer">Titre : A - Z</span>
+            </label>
 
-    <!--
-      Dropdown menu, show/hide based on menu state.
+            <label>
+              <%= form.radio_button :order, "title DESC", class: "hidden peer", data: {action: "change->hello#search"} %>
+              <span class="peer-checked:font-bold text-gray-500 block px-4 py-2 text-sm cursor-pointer">Titre : Z - A</span>
+            </label>
 
-      Entering: "transition ease-out duration-100"
-        From: "transform opacity-0 scale-95"
-        To: "transform opacity-100 scale-100"
-      Leaving: "transition ease-in duration-75"
-        From: "transform opacity-100 scale-100"
-        To: "transform opacity-0 scale-95"
-    -->
-    <div class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-      <div class="py-1" role="none">
-        <!--
-          Active: "bg-gray-100", Not Active: ""
-
-          Selected: "font-medium text-gray-900", Not Selected: "text-gray-500"
-        -->
-        <a href="#" class="font-medium text-gray-900 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0"> Most Popular </a>
-
-        <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1"> Best Rating </a>
-
-        <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2"> Newest </a>
-
-        <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-3"> Price: Low to High </a>
-
-        <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-4"> Price: High to Low </a>
+            <label>
+              <%= form.radio_button :order, "created_at DESC", class: "hidden peer", data: {action: "change->hello#search"} %>
+              <span class="peer-checked:font-bold text-gray-500 block px-4 py-2 text-sm cursor-pointer">Les nouveaux</span>
+            </label>
+          <% end %>
+        </div>
       </div>
     </div>
-  </div>
 
+
+  </div>
+<%
+=begin
   <button type="button" class="p-2 -m-2 ml-5 sm:ml-7 text-gray-400 hover:text-gray-500">
     <span class="sr-only">View grid</span>
     <!-- Heroicon name: solid/view-grid -->
@@ -47,6 +43,7 @@
       <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
     </svg>
   </button>
+=end %>
   <button type="button" class="p-2 -m-2 ml-4 sm:ml-6 text-gray-400 hover:text-gray-500 lg:hidden">
     <span class="sr-only">Filters</span>
     <!-- Heroicon name: solid/filter -->

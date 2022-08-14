@@ -2,8 +2,8 @@
   content_for :description, "Practice room; c'est une plateforme collaborative qui permet aux musiciens de créer et améliorer leur routine de pratique."
 %>
 <section data-controller="hello" class="p-10">
-  <header class="relative z-10 flex items-baseline justify-between pb-6 border-b border-gray-200">
-    <h1 class="text-4xl font-bold text-gray-900">
+  <header class="relative flex items-baseline justify-between pb-6 border-b border-gray-200">
+    <h1 class="text-4xl font-bold">
       Qu'allons nous pratiquer ?
     </h1>
     <%= render partial: "exercises/search/top_bar_filters" %>
@@ -12,12 +12,12 @@
   <!-- search results + sidebar filters -->
   <section  class="pt-6 pb-24">
     <h2 id="products-heading" class="sr-only">Les exercices</h2>
-    <div  class="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
+    <div class="grid grid-cols-1 lg:grid-cols-6 gap-x-10 gap-y-10">
       <!-- sidebar -->
       <%= render partial: "exercises/search/aside" %>
       <!-- end sidebar -->
 
-      <div class="lg:col-span-3">
+      <div class="lg:col-span-5">
         <!-- results list -->
         <%= turbo_frame_tag "results", src: list_exercises_path, loading: :lazy do %>
           <%= render partial: "exercises/search/results_skeleton" %>

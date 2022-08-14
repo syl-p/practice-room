@@ -9,6 +9,7 @@ export default `
     justify-content: space-between;
     font-size: .875rem;
     font-weight: 500;
+    cursor: pointer;
   }
 
   button span:first-child {

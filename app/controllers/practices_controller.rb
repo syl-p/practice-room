@@ -117,16 +117,13 @@ class PracticesController < ApplicationController
   end
 
   def get_day
-    @practices = current_user.practices_of_the_day Date.parse(params[:date])
+    @current_date = Date.parse(params[:date])
+    @practices_of_the_week = current_user.practices.where(created_at: (@current_date.beginning_of_week..@current_date.end_of_week))
+    @practices_of_the_day = @practices_of_the_week.where(created_at: (@current_date.beginning_of_day..@current_date.end_of_day))
+
 
     respond_to do |format|
-      format.turbo_stream {
-        render turbo_stream: turbo_stream.replace(
-          "practices_of_the_day",
-          partial: 'practices/list',
-          locals: { practices_of_the_day: @practices }
-        )
-      }
+      format.turbo_stream
     end
   end
 

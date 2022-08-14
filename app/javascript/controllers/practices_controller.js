@@ -21,17 +21,6 @@ export default class extends ApplicationController {
     this.evalPracticeTime()
   }
 
-  dateValueChanged() {
-    const $dateLinks = document.querySelectorAll(`.day-selector a.day-selector__week-day`)
-    $dateLinks.forEach(($dl) => {
-      if ($dl.dataset.date == this.dateValue) {
-        $dl.classList.add('active')
-      } else {
-        $dl.classList.remove('active')
-      }
-    })
-  }
-
   convertHMS(value) {
     const sec = parseInt(value, 10); // convert value to number if it's string
     let hours   = Math.floor(sec / 3600); // get hours
