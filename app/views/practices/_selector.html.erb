@@ -1,17 +1,17 @@
 <%
-    current_month = current_date.month
-    current_year = current_date.year
-    current_week = (current_date.beginning_of_week..current_date.end_of_week).map.each { |day| day }
+  current_date = nil if local_assigns[:current_date].nil?
+  first_day = current_week.first
+  current_month = current_week.first.month
+  current_year = current_week.first.year
 %>
 
 <%= turbo_frame_tag "practices_selector", target: "practices_selector"  do %>
   <div class="bg-gray-100 text-center rounded-md p-4 mb-8">
     <nav class="mb-4">
       <span class="text-lg font-bold"><%= I18n.t("date.month_names")[current_month] %> <%= current_year %></span>
-      <%= current_date.strftime("%Y-%m-%d") %>
     </nav>
     <div class="flex justify-center items-center">
-      <%= link_to get_week_path(previous_next: 'previous', date: current_date) do %>
+      <%= link_to get_week_path(previous_next: 'previous', date: first_day) do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
@@ -20,9 +20,9 @@
       <% current_week.each do |day|
         with_data = practices_for_the_week.select { |p| p.created_at.all_day == day.all_day }.present?
         today = day.strftime("%Y-%m-%d") == Date.today.strftime("%Y-%m-%d")
-        it_current_date = day.strftime("%Y-%m-%d") == current_date.strftime("%Y-%m-%d")
+        it_current_date = day.strftime("%Y-%m-%d") == current_date.strftime("%Y-%m-%d") if current_date
       %>
-        <%= link_to get_day_path(date: day),
+        <%= link_to with_data || today ? get_day_path(date: day) : 'javascript:;',
           class: "p-2 m-1 rounded-full #{ "bg-gray-700" if today } #{ "border border-indigo-500" if it_current_date }",
           data: {
             pratices_target: "dateLink",
@@ -38,7 +38,7 @@
         <% end %>
       <% end %>
 
-      <%= link_to get_week_path(previous_next: 'next', date: current_date) do %>
+      <%= link_to get_week_path(previous_next: 'next', date: first_day) do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
         </svg>

@@ -1,6 +1,7 @@
 <%= turbo_stream.replace "practices_selector" do %>
   <%= render partial: "practices/selector", locals: {
     current_date: @current_date,
+    current_week: @current_week,
     practices_for_the_week: @practices_of_the_week
   } %>
 <% end %>
