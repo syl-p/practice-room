@@ -6,9 +6,10 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    can [:get_versions_list, :index, :search, :list], Exercise
+    can [:versions, :index, :search, :list], Exercise
     can :read, Exercise, {published: true}
-    can :read, Comment
+    can [:read, :index], Comment
+    can :index, Exercise
     can :read, User
     can :read, Medium
     can [:read, :get_by_slug], Category

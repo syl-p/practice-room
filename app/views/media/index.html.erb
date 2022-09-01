@@ -1,27 +1,38 @@
-<section class="dashboard-page container">
+<section class="p-10" data-controller="popup" data-popup-active-class="active">
   <p id="notice"><%= notice %></p>
-
-  <header class="dashboard-page__header">
-    <h1> Liste des medias </h1>
-    <div data-controller="popup" data-popup-active-class="active">
-      <%= link_to "#", class: "btn btn-primary",
-        data: { action: "click->popup#toggle", target: "#popup" } do %>
-        <i class="mdi mdi-plus"></i>
-        Ajouter une ressource
-      <% end %>
-      <div class="popup" data-popup-target="popup">
-        <div class="popup__content" data-popup-target="popupContent">
-          <%= turbo_frame_tag "medium-edit", src: new_medium_path, loading: :lazy do %>
-            Chargement...
-          <% end %>
-        </div>
-      </div>
+  <header class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <%= render partial: "shared/breadcrump", locals: {links: [
+        {
+          label: "Media",
+          path: media_path
+        }
+      ]}
+      %>
+      <h1 class="text-4xl font-semibold text-gray-900">Media</h1>
+      <p class="mt-2 text-sm text-gray-700">Retrouvez ici tout les ressources que vous avez mis en ligne.</p>
+    </div>
+    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+      <%= link_to "Ajouter une ressource", "javascript:;", class: "btn btn-primary",
+                  data: { action: "click->popup#toggle", target: "#popup" } %>
     </div>
   </header>
 
-  <article>
-    <%= turbo_frame_tag "media-list"  do %>
-      <%= render partial: "list", locals: {media: @media} %>
-    <% end %>
-  </article>
+  <div class="popup" data-popup-target="popup">
+    <div class="popup__content" data-popup-target="popupContent">
+      <%= turbo_frame_tag "medium-edit", src: new_medium_path, loading: :lazy do %>
+        Chargement...
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mt-8 flex flex-col">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+      <%= turbo_frame_tag "media-list"  do %>
+        <%= render partial: "list", locals: {media: @media} %>
+      <% end %>
+      </div>
+    </div>
+  </div>
 </section>

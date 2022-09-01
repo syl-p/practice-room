@@ -4,32 +4,36 @@
     <skeleton-box placeholder="Placeholder pour le nombre d'exercice"></skeleton-box>
   </div>
 </header>
-<ul class="lg:grid lg:grid-cols-3 gap-x-4 gap-y-4 lg:grid-flow-row-dense" 
+<ul class="lg:grid lg:grid-cols-2 gap-x-4 gap-y-4 lg:grid-flow-row-dense"
   data-hello-target="skeleton">
   <% (0..4).each do %>
     <li class="">
-      <div class="card skeleton-card">
-        <div class="card-header">
-          <small class="tile">
-            <div class="tile-icon">
-              <skeleton-box width="24" height="24" rounded="true"></skeleton-box>
-            </div>
+      <article class="bg-white rounded-xl px-4 py-5 sm:px-6 transition shadow-lg hover:shadow-xl">
+        <header class="flex space-x-4">
+          <figure class="flex-shrink-0 self-center">
+            <skeleton-box width="40" height="40"></skeleton-box>
+          </figure>
+          <div class="min-w-0 flex-1">
+            <h2 class="text-lg font-bold">
+              <skeleton-box placeholder="Wainting for title"></skeleton-box>
+            </h2>
+            <p class="text-sm text-gray-500 font-light">
+              <skeleton-box placeholder="Publié par ... Le ..."></skeleton-box>
+            </p>
+          </div>
+        </header>
 
-            <div class="tile-content pl-3">
-              <p class="tile-title mb-0">
-                <skeleton-box placeholder="publier par username"></skeleton-box>
-              </p>
-            </div>
-          </small>
-        </div>
-        <div class="card-image">
-          <skeleton-box  height="145"></skeleton-box>
-        </div>
-        <div class="card-body">
-          <skeleton-box placeholder="Wainting for title"></skeleton-box>
-          <skeleton-box lines="3"></skeleton-box>
-        </div>
-      </div>
+        <section class="mt-6 mb-8">
+          <skeleton-box lines="2"></skeleton-box>
+        </section>
+
+        <footer class="flex space-x-4 items-end">
+          <div class="flex-1">
+            <skeleton-box placeholder="Liste des catégories"></skeleton-box>
+            <skeleton-box placeholder="Liste des infos"></skeleton-box>
+          </div>
+        </footer>
+      </article>
     </li>
   <% end %>
 </ul>

@@ -45,6 +45,6 @@
 
   <div class="flex space-x-4">
     <%= form.submit 'Envoyer' , class: 'btn btn-primary' %>
-    <%=  link_to 'Retour', list_versions_path(id: version.original), class:"text-sm uppercase font-bold self-center" %>
+    <%=  link_to 'Retour', list_versions_path(id: version.original), class:"btn-secondary" %>
   </div>
 <% end %>

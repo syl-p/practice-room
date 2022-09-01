@@ -14,7 +14,6 @@
     "chart.js": "^3.8.0",
     "esbuild": "^0.13.12",
     "remarkable": "^2.0.1",
-    "spectre.css": "^0.5.9",
     "stimulus": "^2.0.0"
   },
   "version": "0.1.0"

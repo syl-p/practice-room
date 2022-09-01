@@ -10,7 +10,7 @@
       <div class="flex h-full flex-col overflow-y-scroll bg-white pb-6 shadow-xl">
 
         <% if user_signed_in? %>
-          <div class="flex items-start justify-between bg-indigo-500 px-6 pt-10 pb-14">
+          <div class="flex items-start justify-between bg-indigo-500 px-6 py-10">
               <h2 class="text-2xl uppercase text-white font-bold">Journal de pratique</h2>
               <div class="ml-3 flex h-7 items-center">
                 <button type="button" data-action="application#sidebarHide"
@@ -25,7 +25,7 @@
           </div>
 
           <!-- user sum -->
-          <div class="px-4 mb-6 -mt-6 flex items-end px-6">
+          <div class="px-4 mb-6 -mt-5 flex items-end px-6 space-x-4">
 
             <div class="flex">
                 <div class="inline-flex overflow-hidden rounded-lg border-4 border-white">
@@ -33,22 +33,19 @@
                 </div>
             </div>
 
-            <div class="mt-6 ml-6 flex-1">
-
+            <div class="mt-6 flex-1 pb-1">
                 <div class="flex items-center">
                     <h3 class="text-xl font-bold text-gray-900 sm:text-xl">
                       <%= current_user.username %>
                     </h3>
                     <span class="ml-2.5 inline-block h-2 w-2 flex-shrink-0 rounded-full bg-green-400">
-                    <span class="sr-only">Online</span>
+                      <span class="sr-only">Online</span>
                     </span>
                 </div>
-                <p class="text-xs text-gray-500 mb-2">
+                <p class="text-gray-400 mb-2">
                   <%= current_user.email %>
                 </p>
-                <%= link_to "votre espace", dashboard_path, class: "btn btn-primary py-1 px-3" %>
-                <%= link_to "votre profil", user_path(current_user), class: "btn btn-secondary py-1 px-3" %>
-
+                <%= link_to "votre espace", dashboard_path, class: "btn btn-primary" %>
             </div>
 
           </div>
@@ -75,7 +72,7 @@
 
           <!-- bottom section-->
           <div class="flex flex-shrink-0 px-6">
-            <%= link_to destroy_user_session_path, method: :delete, class: "rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 flex" do %>
+            <%= link_to destroy_user_session_path, method: :delete, class: "btn-secondary flex" do %>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>

@@ -1,8 +1,3 @@
-<%
-=begin%>
- <%= turbo_stream_from comment %>
-<%
-=end%>
 <%= turbo_frame_tag comment do %>
   <div class="flex mt-5 mb-7" data-controller="comment">
     <div class="mr-4">
@@ -11,15 +6,13 @@
       </a>
     </div>
     <div class="w-3/4">
-      <p class="tile-title -mt-2">
+      <p class="-mt-2">
         <a href="<%= user_url(comment.user) %>" class="font-bold" data-turbo="false"><%= comment.user.username %></a>
         <small>le <%= comment.created_at %></small>
       </p>
-      <p class="tile-subtitle mb-2">
+      <p class="mb-2">
           <%= comment.body %>
       </p>
-
-
       <p class="text-sm uppercase font-bold mt-3">
         <% if comment.parent_id.nil? %>
             <%= link_to "Répondre", "#", data: {action: "click->comment#display"} if user_signed_in? %>
@@ -38,8 +31,7 @@
       </div>
 
       <%= render partial: "comments/form",
-              locals: {commentable: comment, comment: Comment.new,
-              data: {comment_target: "form"}, class: 'hidden'} if comment.parent_id.nil? && user_signed_in? %>
+              locals: {commentable: comment, comment: Comment.new, class: 'hidden'} if comment.parent_id.nil? && user_signed_in? %>
     </div>
   </div>
 <% end %>

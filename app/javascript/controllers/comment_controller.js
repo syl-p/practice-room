@@ -11,13 +11,14 @@ export default class extends Controller {
 
   display($event) {
     $event.preventDefault();
-    const  commentsForm = document.querySelectorAll('.comment_form')
-    commentsForm.forEach(cf => cf.classList.add('hidden'))
+/*    const  commentsForm = document.querySelectorAll('.comment_form')
+    commentsForm.forEach(cf => cf.classList.add('hidden'))*/
     this.formTarget.classList.toggle('hidden')
   }
 
   submit($event) {
     // fire search
+    $event.preventDefault()
     this.timeout = setTimeout(() => {
       Rails.fire($event.target.closest("form"), 'submit')
       this.formTarget.classList.add('hidden')

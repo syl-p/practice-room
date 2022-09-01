@@ -1,9 +1,8 @@
 <% model = [local_assigns[:commentable], comment].compact %>
 <% first = local_assigns[:first].present? %>
 
-<%= form_with model: model,
-    id: record_id_gen(*model),
-    data: local_assigns[:data], class: "comment_form #{local_assigns[:class]}"  do |f| %>
+<%= form_with model: model, id: record_id_gen(*model), data: {turbo: true, comment_target: 'form'},
+              class: "comment_form #{local_assigns[:class]}"  do |f| %>
     <div class="flex space-x-4 mt-6">
       <div class="flex-shrink-0">
         <a href="<%= user_url(current_user) %>" data-turbo="false">
@@ -25,8 +24,8 @@
         </div>
 
         <div class="text-right mt-6">
-          <%= link_to "Annuler", comment, class: "btn", data: {action: "click->comment#cancel"} if !first %>
-          <%= f.submit "Commenter", disable_with: 'Submiting...', class: "btn btn-primary", data: {action: "click->comment#submit"} %>
+          <%= link_to "Annuler", comment, class: "btn-secondary", data: {action: "click->comment#cancel"} if !first %>
+          <%= f.submit "Commenter", disable_with: 'Submiting...', class: "btn-primary", data: {action: "click->comment#submit"} %>
         </div>
       </div>
     </div>
