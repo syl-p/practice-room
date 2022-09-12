@@ -63,3 +63,4 @@ gem 'jsbundling-rails'
 gem "sidekiq"
 
 gem "tailwindcss-rails", "~> 2.0"
+gem 'dotenv-rails'

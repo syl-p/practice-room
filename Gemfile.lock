@@ -95,6 +95,10 @@ GEM
     crass (1.0.6)
     cssbundling-rails (0.2.4)
       railties (>= 6.0.0)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.10.0)
     ffi (1.15.4)
     globalid (0.5.2)
@@ -243,6 +247,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   cssbundling-rails
   devise!
+  dotenv-rails
   hotwire-rails
   image_processing
   jbuilder (~> 2.7)
