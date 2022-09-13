@@ -1,9 +1,9 @@
 <%= turbo_frame_tag "exercise_comments" do %>
-  <% if @comments.present? %>
-    <%= tag.div id: "#{dom_id(@commentable)}_comments" do %>
+  <%= tag.div id: "#{dom_id(@commentable)}_comments" do %>
+    <% if @comments.present? %>
       <%=  render partial: "comments/comment", collection: @comments, as: :comment  %>
+    <% else %>
+      <p>Aucun commentaires pour le moment...</p>
     <% end %>
-  <% else %>
-    <p>Aucun commentaires pour le moment...</p>
   <% end %>
 <% end %>

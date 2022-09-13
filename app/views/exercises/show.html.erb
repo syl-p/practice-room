@@ -4,7 +4,7 @@
 %>
 
 <section>
-  <header class="w-full bg-primary-gradient text-white px-10 pt-8 pb-20">
+  <header class="px-10 pt-8">
     <%= render partial: "shared/breadcrump", locals: {links: [
       {
         label: "Exercices",
@@ -16,23 +16,10 @@
       }
     ]}
     %>
-    <h1 class="text-4xl font-bold my-4">
-      <%= @exercise.title %>
-    </h1>
-    <p class="mb-6"><%= @exercise.description %></p>
-    <ul class="mb-10 text-sm flex space-x-4">
-      <% @exercise.categories.each do |category| %>
-        <li>
-          <a href="<%= by_slug_categories_path category.slug %>" title="<%= category.description %>">
-            <%= category.name %>
-          </a>
-        </li>
-      <% end %>
-    </ul>
   </header>
 
   <article class="lg:flex lg:space-x-10 px-8">
-    <section class="lg:w-8/12 lg:-mt-20">
+    <section class="lg:w-8/12">
 
       <!-- VIDEO -->
       <header class="mb-10">
@@ -52,11 +39,25 @@
       <!-- INFORMATION + PRACTICE -->
       <div class="mb-6 md:flex md:space-x-4">
 
+        <!-- USER INFOS -->
         <div class="md:w-3/6 self-center md:border-r">
-          <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: @exercise} if current_user.present? %>
-
-
+          <div class="flex space-x-4">
+            <figure class="flex-shrink-0 self-center">
+              <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
+                <%= render partial: "users/avatar", locals: {user: @exercise.user, size: :large} %>
+              </a>
+            </figure>
+            <div class="min-w-0 flex-1">
+              <a href="<%= user_url(@exercise.user) %>" data-turbo="false" class="font-semibold">
+                <%= @exercise.user.username %>
+              </a>
+              <p class="text-xs">
+                Posté le <%= @exercise.created_at %>
+              </p>
+            </div>
+          </div>
         </div>
+        <!-- USER INFOS -->
 
         <!-- METAS -->
         <div class="md:flex lg:justify-end md:self-center md:w-3/6">
@@ -102,46 +103,24 @@
       <!-- END INFORMATION + PRACTICE -->
 
       <!-- DESCRIPTION -->
-      <%= sanitize renderHtml @exercise.body %>
-      <!-- END DESCRIPTION -->
-    </section>
-    <aside class="order-first md:order-last lg:w-4/12 pt-8">
-      <!-- author info -->
-      <div class="bg-gray-200 rounded-xl pt-6 pb-8 px-6">
-        <h3 class="text-xl mb-6">
-          Publié le <%= l @exercise.created_at, format: :short %> par
-        </h3>
-        <div class="flex space-x-4">
-          <figure class="flex-shrink-0 self-center">
-            <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
-              <%= render partial: "users/avatar", locals: {user: @exercise.user, size: :xlarge} %>
-            </a>
-          </figure>
-          <div class="min-w-0 flex-1">
-            <h4 class="text-lg font-bold">
-              <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
-                <%= @exercise.user.username %>
-              </a>
-            </h4>
-            <p class="my-3">
-              <%= @exercise.user.bio %>
-            </p>
-            <p>
-              <%= link_to "voir profil", user_url(@exercise.user), class: "btn btn-primary" %>
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- author info -->
-      <div class="relative my-6">
-        <div class="absolute inset-0 flex items-center" aria-hidden="true">
-          <div class="w-full border-t border-gray-300"></div>
-        </div>
-        <div class="relative flex justify-center">
-          <span class="px-3 bg-white text-lg font-medium text-gray-900"> Autres informations </span>
-        </div>
+      <div class="prose mb-10">
+        <%= sanitize renderHtml @exercise.body %>
       </div>
 
+      <ul class="mb-10 text-sm flex space-x-4">
+        <% @exercise.categories.each do |category| %>
+          <li>
+            <a href="<%= by_slug_categories_path category.slug %>" title="<%= category.description %>">
+              <%= category.name %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+      <!-- END DESCRIPTION -->
+    </section>
+
+    <aside class="order-first md:order-last lg:w-4/12">
+      <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: @exercise} if current_user.present? %>
       <tabs-section>
         <% if @exercise.versions_enabled %>
           <div slot="tab" data-tab-title="Versions alternatives">
@@ -161,7 +140,6 @@
         <% end %>
       </tabs-section>
     </aside>
-
   </article>
 
   <footer class="px-10 pt-10 mt-10">
@@ -203,7 +181,6 @@
       <%= turbo_frame_tag "exercise_comments", src: comments_list_exercises_path(@exercise), loading: :lazy do %>
         <%= render partial: "exercises/versions/list_skeleton" %>
       <% end %>
-
     </div>
   </footer>
 </section>

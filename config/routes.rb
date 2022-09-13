@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   resources :exercises do
-    resources :comments, module: :exercises
+    resources :comments, module: :exercises, only: :index
     collection do
       post "search"
       get "me"
