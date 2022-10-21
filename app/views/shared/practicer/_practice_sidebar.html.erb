@@ -11,9 +11,15 @@
 
         <% if user_signed_in? %>
 
-          <div class="flex items-start justify-between mb-6">
-            <h2 class="text-xl uppercase font-bold">Journal de pratique</h2>
-            <div class="ml-3 flex h-7 items-center">
+          <header class="flex space-x-3 pb-6">
+            <%= link_to user_path(current_user), class: "self-center" do %>
+              <%= render partial: "users/avatar", locals: {user: current_user, size: :large} %>
+            <% end %>
+            <div class="flex-1 self-center">
+              <h2 class="uppercase font-bold">Ici en tant que <%= link_to current_user.username, user_path(current_user) %></h2>
+              <p class="text-sm"><%= current_user.email %></p>
+            </div>
+            <div class="ml-3 flex h-7 self-center">
               <button type="button" data-action="application#sidebarHide"
                 class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 <span class="sr-only">Close panel</span>
@@ -23,7 +29,7 @@
                 </svg>
               </button>
             </div>
-          </div>
+          </header>
 
           <tabs-section class="relative flex-1">
 

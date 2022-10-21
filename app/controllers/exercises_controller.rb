@@ -154,19 +154,14 @@ class ExercisesController < ApplicationController
       if !current_user.favorites.include? params[:id]
         current_user.update_attribute(:favorites, current_user.favorites << params[:id])
         current_user.save
-      else
-        head 404, content_type: "text/html"
       end
     when "remove"
       if current_user.favorites.include? params[:id]
         current_user.update_attribute(:favorites, current_user.favorites - [params[:id]])
         current_user.save
-      else
-        head 404, content_type: "text/html"
       end
     end
 
-    # Send html for exercise favorite element
     respond_to do |format|
       format.turbo_stream
     end
