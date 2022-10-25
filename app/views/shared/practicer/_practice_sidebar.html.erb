@@ -6,25 +6,25 @@
   data-transition-leave="transform transition ease-in-out duration-500 sm:duration-700"
   data-transition-leave-start="translate-x-0"
   data-transition-leave-end="translate-x-full">
-    <div class="pointer-events-auto w-screen max-w-md">
-      <div class="flex h-full flex-col overflow-y-scroll bg-white pb-6 shadow-xl p-6">
+    <div class="w-screen max-w-md pointer-events-auto">
+      <div class="flex overflow-y-scroll flex-col pb-6 h-full bg-white shadow-xl">
 
         <% if user_signed_in? %>
 
-          <header class="flex space-x-3 pb-6">
+          <header class="flex p-6 pb-6 space-x-3">
             <%= link_to user_path(current_user), class: "self-center" do %>
               <%= render partial: "users/avatar", locals: {user: current_user, size: :large} %>
             <% end %>
             <div class="flex-1 self-center">
-              <h2 class="uppercase font-bold">Ici en tant que <%= link_to current_user.username, user_path(current_user) %></h2>
+              <h2 class="font-bold uppercase">Ici en tant que <%= link_to current_user.username, user_path(current_user) %></h2>
               <p class="text-sm"><%= current_user.email %></p>
             </div>
-            <div class="ml-3 flex h-7 self-center">
+            <div class="flex self-center ml-3 h-7">
               <button type="button" data-action="application#sidebarHide"
-                class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 <span class="sr-only">Close panel</span>
                 <!-- Heroicon name: outline/x -->
-                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -50,10 +50,10 @@
           <!-- bottom section-->
           <div class="flex flex-shrink-0">
             <%= link_to destroy_user_session_path, method: :delete, class: "btn-secondary flex" do %>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-                <span class="self-center">Se déconnecter</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="flex-1 mr-3 w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              <span class="self-center">Se déconnecter</span>
             <% end %>
           </div>
           <!-- end bottom section-->
