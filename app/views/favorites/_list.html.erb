@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "favorites" do %>
-  <div class="border-t pt-6"
+  <div class="border-t"
     data-controller="favorites">
-    <div class="bg-white shadow overflow-hidden sm:rounded-md">
+    <div class="overflow-hidden bg-white shadow sm:rounded-md">
 
       <ul role="list" class="divide-y divide-gray-200" data-favorites-target="favorites">
         <% exercises.each do |exercise| %>

@@ -17,15 +17,13 @@ Rails.application.routes.draw do
   end
 
   resources :exercises do
-    resources :comments, module: :exercises, only: :index
+    resources :comments, module: :exercises
     collection do
       post "search"
       get "me"
       get ":id/edit/:step", to: "exercises#edit", as: "edit_with_step"
       get "new/:step", to: "exercises#new", as: "new_with_step"
       get ":id/versions", to: "exercises#versions", as: "versions_list"
-      get ":id/comments", to: "exercises#comments", as: "comments_list"
-
       # route for stimulus actions
       get ":id/practice/add(/:time)", to: "practices#add_to_practice", defaults: { format: :turbo_stream }, as: "add_to_practice"
       get ":id/favorites/:add_or_remove", to: "exercises#add_or_remove_favorite", defaults: { format: :turbo_stream }, as: "add_or_remove_favorite"

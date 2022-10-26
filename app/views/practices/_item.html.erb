@@ -1,4 +1,4 @@
-<li class="px-6 pb-6 border-b">
+<li class="p-6 border-b">
   <div class="flex space-x-3">
     <div class="flex justify-center items-center w-10 h-10 bg-gray-400 rounded-full ring-8 ring-white">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
@@ -16,10 +16,25 @@
             <%= turbo_frame_tag "practices_exercises_#{practiced.id}" do %>
               <li class="flex p-3 mb-1 space-x-3 text-white bg-gray-500 rounded"
                 data-practices-target="exercise" data-duration="<%= practiced.duration %>">
+
                 <div class="flex-1">
-                  <p class="text-sm">
-                    <%= link_to practiced.exercise.title, exercise_path(practiced.exercise), data: {turbo: false} %>
+                  <div class="flex mb-2 space-x-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="self-center w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <%= link_to practiced.exercise.title, exercise_path(practiced.exercise), data: {turbo: false}, class: "block flex-1 self-center" %>
+                    <%= link_to remove_from_practice_path(
+                      practices_exercises_id: practiced.id),
+                      method: :delete, class: "self-center text-white" do %>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    <% end %>
+                  </div>
+                  <p class="mb-2 text-sm text-gray-300">
+                    <%= practiced.exercise.description %>
                   </p>
+
                   <p class="text-xs text-gray-300">
                     <span>
                       <%= Time.at(practiced.duration).utc.strftime("%H:%M:%S") %>
@@ -39,13 +54,6 @@
                     <% end %>
                   </ul>
                 </div>
-                <%= link_to remove_from_practice_path(
-                  practices_exercises_id: practiced.id),
-                  method: :delete, class: "btn btn-secondary self-center text-white hover:text-gray-500" do %>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                <% end %>
               </li>
             <% end %>
           <% end %>

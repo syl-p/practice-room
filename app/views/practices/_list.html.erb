@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "practices_of_the_day" do %>
-  <ul role="list" class="pt-6 -mb-8 border-t">
+  <ul role="list" class="-mb-8 border-t">
     <% if practices_of_the_day.present? %>
       <% practices_of_the_day.each_with_index do |practice, index| %>
         <%= turbo_frame_tag "practice_#{practice.id.to_s}" do %>
