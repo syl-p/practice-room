@@ -3,7 +3,7 @@ import { practice } from "./mixins/practice"
 
 export default class extends ApplicationController {
   static targets = ["exercises", "exercise", "challenges",
-  "favorites", "logNav", "practiceTime"]
+  "favorites", "practiceLink", "practiceTime", "selectedTime"]
 
   static values = {
     date: String,
@@ -19,6 +19,13 @@ export default class extends ApplicationController {
 
   exerciseTargetDisconnected() {
     this.evalPracticeTime()
+  }
+
+  selectedTimeTargetConnected() {
+    console.log("tested")
+    this.selectedTimeTarget.addEventListener('change', () => {
+      console.log("hello")
+    })
   }
 
   convertHMS(value) {

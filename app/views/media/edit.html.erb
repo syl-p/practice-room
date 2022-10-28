@@ -1,7 +1,17 @@
-<section class="container dashboard-page medium-edit">
-
-  <header class="dashboard-page__header">
-    <h1>Editing Medium</h1>
+<section class="px-10 pt-8">
+  <header class="mb-10 dashboard-page__header text-gray">
+    <%= render partial: "shared/breadcrump", locals: {links: [
+        {
+          label: "Media",
+          path: media_path
+        },
+        {
+          label: @medium.name,
+          path: "#"
+        }
+      ]}
+    %>
+    <h1 class="text-4xl font-semibold">Modifier la ressource</h1>
   </header>
 
   <%= render 'form', medium: @medium %>
