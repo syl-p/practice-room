@@ -11,7 +11,7 @@ class Ability
     can [:read, :index], Comment
     can :index, Exercise
     can :read, User
-    can :read, Medium
+    can :show, Medium
     can [:read, :get_by_slug], Category
 
     # Abilities for logged users

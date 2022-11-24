@@ -1,4 +1,8 @@
-<%= turbo_stream.replace "practice_toolbar_#{@exercise.id}" do %>
+<%= turbo_stream.replace "extended_practice_toolbar_#{@exercise.id}" do %>
+  <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise:  @exercise, extended: true} %>
+<% end %>
+
+<%= turbo_stream.replace "non_extended_practice_toolbar_#{@exercise.id}" do %>
   <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise:  @exercise} %>
 <% end %>
 

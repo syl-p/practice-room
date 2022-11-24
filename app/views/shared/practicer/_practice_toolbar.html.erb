@@ -1,5 +1,5 @@
 <% extended = false if local_assigns[:extended].nil? %>
-<%= turbo_frame_tag "practice_toolbar_#{exercise.id}" do %>
+<%= turbo_frame_tag "#{extended ? 'extended_' : 'non_extended_'}practice_toolbar_#{exercise.id}" do %>
   <nav class="md:flex md:space-x-4">
 
     <% if extended %>

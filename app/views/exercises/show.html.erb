@@ -120,10 +120,12 @@
     </section>
 
     <aside class="order-first md:order-last lg:w-4/12">
-      <div class="p-6 text-white bg-indigo-500 rounded" data-controller="practices">
-        <h3 class="mb-3 font-semibold uppercase">Pratiquer cet exercice</h3>
-        <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: @exercise, extended: true} if current_user.present? %>
-      </div>
+      <% if current_user.present? %>
+        <div class="p-6 text-white bg-indigo-500 rounded" data-controller="practices">
+          <h3 class="mb-3 font-semibold uppercase">Pratiquer cet exercice</h3>
+          <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: @exercise, extended: true} if current_user.present? %>
+        </div>
+      <% end %>
       <tabs-section>
         <% if @exercise.versions_enabled %>
           <div slot="tab" data-tab-title="Versions alternatives">
