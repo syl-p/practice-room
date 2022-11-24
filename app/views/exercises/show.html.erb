@@ -44,7 +44,7 @@
           <div class="flex space-x-4">
             <figure class="flex-shrink-0 self-center">
               <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
-                <%= render partial: "users/avatar", locals: {user: @exercise.user, size: :large} %>
+                <%= render partial: "users/avatar", locals: {user: @exercise.user, size: :medium} %>
               </a>
             </figure>
             <div class="flex-1 min-w-0">

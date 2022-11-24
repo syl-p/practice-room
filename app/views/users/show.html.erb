@@ -2,54 +2,59 @@
   content_for(:title, "Profil de #{@user.username}")
   content_for(:description, @user.bio)
 %>
-<section class="user-show">
-    <header class="hero mb-2 container">
-      <div class="hero-body columns">
-        <%= render partial: "users/avatar", locals: {user: @user, size: :xlarge} %>
-        <div class="user-show__header">
-          <h1 class="my-0">
+<section class="p-10">
+    <header class="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-full lg:px-0">
+      <!-- user title -->
+      <div class="flex-1 flex space-x-3">
+        <%= render partial: "users/avatar", locals: {user: @user, size: :large} %>
+        <div class="self-center">
+          <h1 class="text-2xl font-bold text-gray-900 capitalize">
             <%= @user.username %>
             <% if current_user.present? && current_user.id != @user.id %>
               <%= render partial: "users/friendships/friendship_with_current_user", locals: {user: @user} %>
             <% end %>
           </h1>
-          <p class="pt-0">Membre depuis <%= @user.created_at %></p>
-          <p class="pt-0 mb-0">Amis: </p>
+          <p class="text-sm font-medium text-gray-500">Membre depuis <%= @user.created_at %></p>
+          <p class="text-sm font-medium text-gray-500">Amis: </p>
           <%= render partial: "users/friendships/preview-list", locals: {user: @user} %>
         </div>
       </div>
+      <!-- user title -->
+
+      <!-- relation -->
+      <div class="justify-stretch">
+        <%= render partial: "users/friendships/friendship_with_current_user", locals: {user: @user} %>
+      </div>
+      <!-- relation -->
     </header>
-    <section class="container columns py-2">
-        <article class="column  col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Exercices publiés: </h2>
-                </div>
-                <div class="card-body">
-                    <% if @user.exercises.for_current_user(current_user) %>
-                    <ul class="m-0 pl-2">
-                      <% @user.exercises.for_current_user(current_user).each do |exercise| %>
-                        <li data-exercise-id="<%= exercise.id %>">
-                          <%= link_to exercise.title, exercise, class: 'tile-title' %>
-                          <% if can? :manage, exercise %>
-                            <a href="<%= edit_exercise_path(exercise) %>" class="btn btn-link" title="Editer l'exercice">
-                              <i class="mdi mdi-pencil"></i>
-                            </a>
-                          <% end %>
-                          <br>
-                          <small class="tile-subtitle"><%= exercise.description %></small>
-                        </li>
+    <section class="flex space-x-3 py-2">
+        <article class="bg-white shadow sm:rounded-lg px-4 py-5 lg:w-8/12">
+            <h2 class="text-lg font-medium leading-6 text-gray-900">Exercices publiés: </h2>
+            <div class="card-body">
+                <% if @user.exercises.for_current_user(current_user) %>
+                <ul class="m-0">
+                  <% @user.exercises.for_current_user(current_user).each do |exercise| %>
+                    <li data-exercise-id="<%= exercise.id %>">
+                      <%= link_to exercise.title, exercise, class: 'tile-title' %>
+                      <% if can? :manage, exercise %>
+                        <a href="<%= edit_exercise_path(exercise) %>" class="btn btn-link" title="Editer l'exercice">
+                          <i class="mdi mdi-pencil"></i>
+                        </a>
                       <% end %>
-                    </ul>
-                    <% else %>
-                        <p>Aucun exercice publié par cet utilisateur pour le moment.</p>
-                    <% end %>
-                </div>
-                <div class="card-footer">
-                </div>
+                      <br>
+                      <small class="tile-subtitle"><%= exercise.description %></small>
+                    </li>
+                  <% end %>
+                </ul>
+                <% else %>
+                    <p>Aucun exercice publié par cet utilisateur pour le moment.</p>
+                <% end %>
+            </div>
+            <div class="card-footer">
             </div>
         </article>
-        <aside class="column col-4 col-md-12">
+        <aside class="">
+        <aside class="">
             <div class="card mb-2">
                 <div class="card-header">
                     <div class="card-title h5">Bio et autres informations</div>

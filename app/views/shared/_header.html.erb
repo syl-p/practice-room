@@ -39,17 +39,23 @@
                   </svg>
                 </div>
 
-                <div class="self-center">
+                <div class="self-center flex space-x-3">
                   <!-- avatar | dropdown-->
                   <button type="button"
                     data-action="application#sidebarShow"
                     class="bg-white group rounded-md flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                     <span class="sr-only">Open user menu</span>
-                    <%= render partial: "users/avatar", locals: {user: current_user, size: :large} %>
+                    <%= render partial: "users/avatar", locals: {user: current_user, size: :medium} %>
                     <%#= render partial: "users/dropdown" %>
                   </button>
                   <!-- avatar | dropdown-->
+                  <div class="self-center">
+                    <p class="text-sm">Connecté</p>
+                    <a class="font-bold"
+                       href="javascript:void(0)"
+                       data-action="application#sidebarShow">Hello, <%= current_user.username %></a>
+                  </div>
                 </div>
 
               </div>
