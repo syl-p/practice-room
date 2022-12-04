@@ -3,7 +3,7 @@
   <div class="flex space-x-4">
     <div class="flex-shrink-0">
       <a href="<%= user_path(@exercise.user.id) %>" data-turbo="false">
-        <%= render partial: "users/avatar", locals: {user: @exercise.user, size: :large} %>
+        <%= render partial: "users/avatar", locals: {user: @exercise.user, size: :medium} %>
       </a>
     </div>
     <div class="flex-1 min-w-0">

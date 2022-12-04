@@ -33,29 +33,20 @@
             <% if user_signed_in? %>
               <div class="flex">
 
-                <div class="self-center px-4 mr-6 border-r">
+                <div class="self-center px-4 border-r">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="black" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                   </svg>
                 </div>
 
-                <div class="self-center flex space-x-3">
-                  <!-- avatar | dropdown-->
-                  <button type="button"
-                    data-action="application#sidebarShow"
-                    class="bg-white group rounded-md flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                    <span class="sr-only">Open user menu</span>
-                    <%= render partial: "users/avatar", locals: {user: current_user, size: :medium} %>
-                    <%#= render partial: "users/dropdown" %>
-                  </button>
-                  <!-- avatar | dropdown-->
-                  <div class="self-center">
-                    <p class="text-sm">Connecté</p>
-                    <a class="font-bold"
-                       href="javascript:void(0)"
-                       data-action="application#sidebarShow">Hello, <%= current_user.username %></a>
-                  </div>
+                <div class="self-center pl-4 hidden self-center md:flex space-x-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6  self-center">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p class="flex-1 flex flex-col">
+                    <span class="text-xs">Temps de pratique</span>
+                    <span><%= Time.at(current_user.practice_time_this_week.values.reduce(:+) / 7).utc.strftime("%H:%M:%S")%></span>
+                  </p>
                 </div>
 
               </div>

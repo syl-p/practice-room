@@ -29,10 +29,7 @@
                         <ul class="flex space-x-1 ml-1 before:content-['|'] before:pr-1">
                           <% practiced.exercise.categories.each do |category| %>
                             <li>
-                              <a href="<%= by_slug_categories_path category.slug %>"
-                                  title="<%= category.description %>">
-                                <%= category.name %>
-                              </a>
+                              <%= link_to category.name, by_slug_categories_path(category.slug), data: {turbo: false} %>
                             </li>
                           <% end %>
                         </ul>

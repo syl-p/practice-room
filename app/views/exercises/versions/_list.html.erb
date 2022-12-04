@@ -4,11 +4,11 @@
     <ul class="divide-y divide-gray-200">
       <% versions.each do |version| %>
         <li class="block hover:bg-gray-50">
-          <div class="flex items-center py-4">
+          <div class="flex items-center p-4">
             <div class="min-w-0 flex-1 flex">
               <div class="hidden md:block flex-shrink-0">
                 <a href="<%= user_path(version.user.id) %>" data-turbo="false">
-                  <%= render partial: "users/avatar", locals: {user: version.user, size: :large} %>
+                  <%= render partial: "users/avatar", locals: {user: version.user, size: :medium} %>
                 </a>
               </div>
               <div class="min-w-0 flex-1 px-4">

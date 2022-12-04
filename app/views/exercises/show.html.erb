@@ -4,7 +4,7 @@
 %>
 
 <section>
-  <header class="px-10 py-8">
+  <header class="px-10 py-6">
     <%= render partial: "shared/breadcrump", locals: {links: [
       {
         label: "Exercices",
@@ -16,6 +16,8 @@
       }
     ]}
     %>
+    <h1 class="text-4xl font-bold"><%= @exercise.title %></h1>
+    <p class="mt-3"><%= @exercise.description %></p>
   </header>
 
   <article class="px-8 lg:flex lg:space-x-10">
