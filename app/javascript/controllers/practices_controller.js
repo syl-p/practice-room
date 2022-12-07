@@ -22,7 +22,6 @@ export default class extends ApplicationController {
   }
 
   selectedTimeTargetConnected() {
-    console.log("tested")
     this.selectedTimeTarget.addEventListener('change', (e) => {
       const url = new URL(this.practiceLinkTarget.href)
       const search = url.searchParams

@@ -43,10 +43,12 @@
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6  self-center">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p class="flex-1 flex flex-col">
-                    <span class="text-xs">Temps de pratique</span>
-                    <span><%= Time.at(current_user.practice_time_this_week.values.reduce(:+) / 7).utc.strftime("%H:%M:%S")%></span>
-                  </p>
+                  <%= turbo_frame_tag "practice_time_today" do %>
+                    <p class="flex-1 flex flex-col">
+                      <span class="text-xs">Temps de pratique</span>
+                      <span><%= current_user.practice_time_today %></span>
+                    </p>
+                  <% end %>
                 </div>
 
               </div>

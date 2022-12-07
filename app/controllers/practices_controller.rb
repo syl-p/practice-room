@@ -46,15 +46,6 @@ class PracticesController < ApplicationController
       last_practice.practices_exercises << PracticesExercise.new(exercise: exercise, duration: duration)
       last_practice.save
     end
-
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "practices_of_the_day",
-          partial: 'practices/list',
-          locals: { practices_of_the_day: current_user.practices_of_the_day })
-      end
-    end
   end
 
   def remove_from_practice
