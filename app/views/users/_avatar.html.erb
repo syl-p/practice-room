@@ -13,7 +13,7 @@ class_size = case size
               ""
             end
 %>
-<% if user.avatar.attached? %>
+<% if current_user.present? && user.avatar.attached? %>
   <%= image_tag(url_for user.avatar, class: class_size) %>
 <% else %>
   <span class="inline-flex items-center justify-center <%= class_size %> rounded-md bg-gray-500">

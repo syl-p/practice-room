@@ -111,7 +111,7 @@ class ExercisesController < ApplicationController
     respond_to do |format|
       if @exercise.update(exercise_params)
         format.html do
-          redirect_to edit_exercise_path(@exercise), notice: "Exercise was successfully updated."
+          redirect_to request.referrer, notice: "Exercise was successfully updated."
         end
         format.json { render :show, status: :ok, location: @exercise }
       else

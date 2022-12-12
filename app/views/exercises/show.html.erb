@@ -141,7 +141,7 @@
 
         <% if @exercise.media.count > 0 %>
           <div slot="tab" data-tab-title="Ressources">
-            <h3>Fichier partagés:</h3>
+            <p class="mb-6 font-light text-gray-600">Ressources partagées par l'auteur de l'exercice:</p>
             <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
           </div>
         <% end %>
