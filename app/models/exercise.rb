@@ -24,8 +24,8 @@ class Exercise < ApplicationRecord
 
   enum visibility: {
     everyone: 0,
-    not_referenced: 1,
-    friends: 2
+    not_referenced: 1, # by url only
+    friends: 2 # access by friends only
   }
 
   before_destroy :remove_from_favorites

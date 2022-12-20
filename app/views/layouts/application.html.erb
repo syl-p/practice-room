@@ -10,10 +10,9 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class="h-full">
+  <body class="h-full bg-gradient-to-r from-purple-900 via-indigo-900 to-indigo-600">
     <div class="flex relative z-10"
       aria-labelledby="slide-over-title"
-      role="dialog" aria-modal="true"
       data-controller="application"
       data-application-root-value="<%= root_url %>">
 
@@ -22,8 +21,8 @@
       <!-- END Narrow -->
 
       <!-- Content area -->
-      <div class="flex flex-col flex-1 lg:pl-20">
-        <main class="relative">
+      <div class="flex flex-col flex-1 lg:pl-20 md:py-4 md:pr-4">
+        <main class="relative border-l rounded-2xl bg-white md:screen md:overflow-y-auto">
           <%= render "shared/header" %>
           <%= yield %>
           <%= render "shared/footer" %>
@@ -42,7 +41,7 @@
         data-transition-leave-end="opacity-0"
 
         class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
-        <%= render "shared/practicer/practice_sidebar" if current_user.present? %>
+        <%= render "shared/practice_sidebar" if current_user.present? %>
       </div>
       <!-- END Practicer sidebar -->
     </div>

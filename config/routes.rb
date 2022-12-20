@@ -61,6 +61,10 @@ Rails.application.routes.draw do
   post "friendship/request/:id", to: "friendships#create", as: "friendship_request"
   put "friendship/accept/:id", to: "friendships#accept", as: "accept_friendship"
 
+  # Follows
+  delete "unfollow/:id", to: "follows#destroy", as: "unfollow"
+  post "follow/:id", to: "follows#create", as: "follow"
+
   # Errors routes
   get '/404', to: 'errors#not_found'
   get '/500', to: 'errors#internal_server'

@@ -4,6 +4,13 @@
 
 
 @layer components {
+  .screen {
+    height: calc(100vh - theme('spacing.8'));
+  }
+
+  .screen-sm {
+    height: calc(100vh - theme('spacing.24'));
+  }
 
   /* DESIGN */
   .bg-primary-gradient {

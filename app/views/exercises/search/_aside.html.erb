@@ -18,29 +18,6 @@
     <% end %>
   </ul>
 
-  <!-- visibility -->
-  <div class="border-b border-gray-200 py-6">
-    <collapse-section title="Visibilité">
-      <ul class="exercises-index__content__aside__visibility-filter">
-        <li class="space-y-4">
-          <label>
-            <%= form.radio_button :visibility, "all", checked: true,
-                                  data: {action: "change->hello#search"} %>
-            <span class="ml-3 text-sm text-gray-600">Tous les exercices</span>
-          </label>
-        </li>
-        <li class="space-y-4">
-          <label>
-            <%= form.radio_button :visibility, "friends",
-                                  data: {action: "change->hello#search"} %>
-            <span class="ml-3 text-sm text-gray-600">Amis uniquement</span>
-          </label>
-        </li>
-      </ul>
-    </collapse-section>
-  </div>
-  <!-- end visibility -->
-
   <!-- Level -->
   <div class="border-b border-gray-200 py-6">
     <collapse-section title="Niveau">

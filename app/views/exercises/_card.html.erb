@@ -17,7 +17,7 @@
       </p>
     </div>
     <div class="flex-shrink-0 self-center flex">
-      <%= render partial: "shared/practicer/practice_toolbar", locals: {exercise: exercise ,extended: false} if current_user.present? %>
+      <%= render partial: "practices/toolbar", locals: {exercise: exercise ,extended: false} if current_user.present? %>
     </div>
   </header>
 
@@ -27,14 +27,7 @@
 
   <footer class="flex space-x-4 items-end">
     <div class="flex-1">
-      <ul class="text-sm flex space-x-3">
-        <% exercise.categories.each do |category| %>
-          <li>
-            <%= link_to category.name, by_slug_categories_path(category), data: {turbo: false}, class: "px-3 py-2 bg-blue-100 rounded" %>
-          </li>
-        <% end %>
-      </ul>
-
+      <%= render partial: "exercises/partials/categories_list", locals: {categories: exercise.categories} %>
       <ul class="flex-1 mt-3 text-gray-500 text-sm font-light flex pt-3 md:p-0">
         <% if exercise.level %>
           <li class="after:mx-2 after:content-['-']"><%= exercise.level %></li>
@@ -43,7 +36,6 @@
         <% if exercise.duration %>
           <li class="after:mx-2 after:content-['-']"><%= Time.at(exercise.duration).utc.strftime("%H:%M") %></li>
         <% end %>
-
         <li><%= exercise.comments.count %> messages</li>
       </ul>
     </div>

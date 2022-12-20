@@ -1,0 +1,9 @@
+<ul class="flex space-x-3">
+  <% user.followers.each do |follower| %>
+    <li class="">
+      <%= link_to user_path(follower), {title: follower.username} do %>
+        <%= render partial: "users/avatar", locals: {user: follower, size: :medium} %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
