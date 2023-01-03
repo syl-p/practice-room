@@ -10,7 +10,7 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class="h-full bg-gradient-to-r from-purple-900 via-indigo-900 to-indigo-600">
+  <body class="h-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900">
     <div class="flex relative z-10"
       aria-labelledby="slide-over-title"
       data-controller="application"
@@ -22,10 +22,10 @@
 
       <!-- Content area -->
       <div class="flex flex-col flex-1 lg:pl-20 md:py-4 md:pr-4">
-        <main class="relative border-l rounded-2xl bg-white md:screen md:overflow-y-auto">
-          <%= render "shared/header" %>
+        <main class="relative border-l md:rounded-2xl bg-white md:screen md:overflow-y-auto">
+          <%#= render "shared/header" %>
           <%= yield %>
-          <%= render "shared/footer" %>
+          <%#= render "shared/footer" %>
         </main>
       </div>
       <!-- END Content area -->

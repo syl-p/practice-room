@@ -1,4 +1,4 @@
-<aside class="z-[100] hidden pointer-events-none fixed inset-y-0 right-0 md:right-12 md:top-10 flex max-w-full pl-10"
+<aside class="z-[100] hidden pointer-events-none fixed right-0 inset-y-0 flex h-screen justify-center items-center max-w-full pl-10"
   data-application-target="sidebar"
   data-transition-enter="transform transition ease-in-out duration-500 sm:duration-700"
   data-transition-enter-start="translate-x-full"
@@ -6,7 +6,7 @@
   data-transition-leave="transform transition ease-in-out duration-500 sm:duration-700"
   data-transition-leave-start="translate-x-0"
   data-transition-leave-end="translate-x-full">
-    <div class="w-screen max-w-md pointer-events-auto h-screen md:screen-sm">
+    <div class="pointer-events-auto h-full md:py-10 md:pr-8">
       <div class="flex overflow-y-scroll flex-col h-full bg-white shadow-xl md:rounded-xl">
 
         <% if user_signed_in? %>
@@ -34,13 +34,13 @@
           <tabs-section class="relative flex-1">
 
             <!-- practice sessions list -->
-            <div data-tab-title="Aujourd'hui" slot="tab">
+            <div data-tab-title="Journal de pratique" slot="tab">
               <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
             </div>
             <!-- end practice sessions list -->
 
             <!-- favorites list -->
-            <div data-tab-title="Favoris" slot="tab">
+            <div data-tab-title="Vos favoris" slot="tab">
               <%= render partial: "favorites/list", locals: {exercises: current_user.favorites_populated} %>
             </div>
             <!-- end favorites list -->

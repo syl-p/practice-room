@@ -10,7 +10,7 @@ export default `
 ul.tab {
   list-style: none;
   margin: 20px 0;
-  padding: 0px;
+  padding: 0px 1.5rem;
 }
 
 ul.tab li{

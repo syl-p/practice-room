@@ -22,10 +22,11 @@ class Exercise < ApplicationRecord
     advanced: 2
   }
 
+  # private, public, restricted
   enum visibility: {
     everyone: 0,
     not_referenced: 1, # by url only
-    friends: 2 # access by friends only
+    restricted: 2, # TODO: filter by user list
   }
 
   before_destroy :remove_from_favorites

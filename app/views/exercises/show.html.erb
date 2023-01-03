@@ -122,8 +122,9 @@
 
     <aside class="order-first md:order-last lg:w-4/12">
       <% if current_user.present? %>
-        <div class="p-6 text-white bg-indigo-500 rounded" data-controller="practices">
-          <h3 class="mb-3 font-semibold uppercase">Pratiquer cet exercice</h3>
+        <div class="p-6 text-white bg-indigo-500 rounded-lg shadow-md" data-controller="practices">
+          <h3 class="font-semibold uppercase">Pratiquer cet exercice</h3>
+          <p class="text-sm mb-3">Ajoutez du temps de pratique ou faites de cet exercice un exercice favoris.</p>
           <%= render partial: "practices/toolbar", locals: {exercise: @exercise, extended: true} if current_user.present? %>
         </div>
       <% end %>

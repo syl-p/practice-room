@@ -9,13 +9,6 @@ class User < ApplicationRecord
   has_many :media, dependent: :destroy
   has_many :practices, dependent: :destroy
 
-  # friendships relation
-  has_many :friendships_as_requestor, class_name: "Friendship", foreign_key: "requestor_id", dependent: :destroy
-  has_many :requestors, through: :friendships_as_requestor
-
-  has_many :friendships_as_receiver, class_name: "Friendship", foreign_key: "receiver_id", dependent: :destroy
-  has_many :receivers, through: :friendships_as_receiver
-
   # follows relation
   has_many :follows_as_following, class_name: "Follow", foreign_key: "follower_id"
   has_many :following, through: :follows_as_following
