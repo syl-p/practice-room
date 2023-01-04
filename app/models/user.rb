@@ -9,13 +9,6 @@ class User < ApplicationRecord
   has_many :media, dependent: :destroy
   has_many :practices, dependent: :destroy
 
-  # friendships relation
-  has_many :friendships_as_requestor, class_name: "Friendship", foreign_key: "requestor_id", dependent: :destroy
-  has_many :requestors, through: :friendships_as_requestor
-
-  has_many :friendships_as_receiver, class_name: "Friendship", foreign_key: "receiver_id", dependent: :destroy
-  has_many :receivers, through: :friendships_as_receiver
-
   # follows relation
   has_many :follows_as_following, class_name: "Follow", foreign_key: "follower_id"
   has_many :following, through: :follows_as_following
@@ -31,31 +24,6 @@ class User < ApplicationRecord
     moderator: 2,
     admin: 3
   }
-
-  # friends methods
-  def friendships
-    self.friendships_as_requestor.where(accepted: true) + self.friendships_as_receiver.where(accepted: true)
-  end
-
-  def friends
-    self.friendships.map { |friendship| friendship.requestor_id == self.id ? friendship.receiver : friendship.requestor }
-  end
-
-  def following?(user)
-    self.friendships_as_requestor.where(receiver_id: user.id, accepted: true).first.present? || self.friendships_as_receiver.where(requestor_id: user.id, accepted: true).first.present?
-  end
-
-  def find_friendship(user)
-    self.friendships_as_requestor.where(receiver_id: user.id).first || self.friendships_as_receiver.where(requestor_id: user.id).first
-  end
-
-  def pending_requests
-    self.friendships_as_requestor.where(accepted: false)
-  end
-
-  def pending_invitations
-    self.friendships_as_receiver.where(accepted: false)
-  end
 
   # overwrite favorites
   def favorites_populated

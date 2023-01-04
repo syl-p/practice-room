@@ -27,9 +27,6 @@ class Ability
       can :manage, Medium, {user_id: user.id}
       can :delete_avatar, User, {id: user.id}
 
-      can :manage, Friendship, {requestor_id: user.id}
-      can :manage, Friendship, {receiver_id: user.id}
-
       # can :update, Version, :published, {exercise: {user_id: user.id}}
 
       # Abilities for admins

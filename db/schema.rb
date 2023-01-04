@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_19_130302) do
+ActiveRecord::Schema.define(version: 2023_01_02_131222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,17 +100,6 @@ ActiveRecord::Schema.define(version: 2022_12_19_130302) do
     t.index ["following_id"], name: "index_follows_on_following_id"
   end
 
-  create_table "friendships", force: :cascade do |t|
-    t.bigint "requestor_id"
-    t.bigint "receiver_id"
-    t.boolean "accepted", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["receiver_id"], name: "index_friendships_on_receiver_id"
-    t.index ["requestor_id", "receiver_id"], name: "index_friendships_on_requestor_id_and_receiver_id", unique: true
-    t.index ["requestor_id"], name: "index_friendships_on_requestor_id"
-  end
-
   create_table "media", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -168,8 +157,6 @@ ActiveRecord::Schema.define(version: 2022_12_19_130302) do
   add_foreign_key "exercises", "users"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "follows", "users", column: "following_id"
-  add_foreign_key "friendships", "users", column: "receiver_id"
-  add_foreign_key "friendships", "users", column: "requestor_id"
   add_foreign_key "media", "users"
   add_foreign_key "practices", "users"
   add_foreign_key "practices_exercises", "exercises"

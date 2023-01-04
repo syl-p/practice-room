@@ -23,7 +23,7 @@
 
   /* BTN */
   .btn-secondary {
-    @apply inline-block px-6 py-2.5 text-xs font-medium leading-tight text-blue-600 uppercase bg-transparent rounded transition duration-150 ease-in-out hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200;
+    @apply inline-block px-6 py-2.5 text-xs font-medium leading-tight uppercase bg-transparent rounded transition duration-150 ease-in-out hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200;
   }
 
   .btn-primary {

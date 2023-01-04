@@ -22,10 +22,11 @@ class Exercise < ApplicationRecord
     advanced: 2
   }
 
+  # private, public, restricted
   enum visibility: {
     everyone: 0,
     not_referenced: 1, # by url only
-    friends: 2 # access by friends only
+    restricted: 2, # TODO: filter by user list
   }
 
   before_destroy :remove_from_favorites
@@ -40,8 +41,7 @@ class Exercise < ApplicationRecord
 
   def self.for_current_user(user_id = nil)
     if user_id
-      # own exercises + (exercise visibility = 0 or (visibility = 2 and friends))
-      exercices = self.where("user_id = ? OR (published = true AND (visibility = 0 OR (visibility = 2 AND user_id IN (?))))", user_id, user_id.friends)
+      exercices = self.where("user_id = ? OR (published = true AND visibility = 0)", user_id)
     else
       exercices = self.where({published: true, visibility: 0, original: nil})
     end
