@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_02_131222) do
+ActiveRecord::Schema.define(version: 2023_01_06_074049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,7 +86,11 @@ ActiveRecord::Schema.define(version: 2023_01_02_131222) do
     t.integer "duration", default: 600
     t.integer "visibility", default: 0
     t.boolean "versions_enabled", default: true
+    t.float "goal_end"
+    t.float "goal_start"
+    t.bigint "goal_label_id"
     t.index ["exercise_id"], name: "index_exercises_on_exercise_id"
+    t.index ["goal_label_id"], name: "index_exercises_on_goal_label_id"
     t.index ["user_id"], name: "index_exercises_on_user_id"
   end
 
@@ -98,6 +102,21 @@ ActiveRecord::Schema.define(version: 2023_01_02_131222) do
     t.index ["follower_id", "following_id"], name: "index_follows_on_follower_id_and_following_id", unique: true
     t.index ["follower_id"], name: "index_follows_on_follower_id"
     t.index ["following_id"], name: "index_follows_on_following_id"
+  end
+
+  create_table "goal_labels", force: :cascade do |t|
+    t.string "label"
+  end
+
+  create_table "goal_settings", force: :cascade do |t|
+    t.bigint "exercise_id"
+    t.bigint "user_id"
+    t.float "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["exercise_id", "user_id"], name: "index_goal_settings_on_exercise_id_and_user_id", unique: true
+    t.index ["exercise_id"], name: "index_goal_settings_on_exercise_id"
+    t.index ["user_id"], name: "index_goal_settings_on_user_id"
   end
 
   create_table "media", force: :cascade do |t|

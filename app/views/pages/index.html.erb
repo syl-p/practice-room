@@ -1,0 +1,60 @@
+<%
+  content_for :description, "Practice room; c'est une plateforme collaborative qui permet aux musiciens de créer et améliorer leur routine de pratique."
+%>
+<section class="p-8" data-controller="hello" >
+  <header class="p-8 bg-indigo-600 rounded-lg text-white mb-6 flex space-x-3">
+    <div class="w-3/6">
+      <h1 class="text-4xl uppercase mb-3">
+        <%= "Hello #{current_user.username}, " if current_user.present? %>
+        <strong>pratiquons ensemble !</strong>
+      </h1>
+      <p>Ici, nous partageons nos exercices favoris pour que chacun puisse profiter des connaissances des autres librement.</p>
+      <div>
+
+      </div>
+    </div>
+    <div></div>
+  </header>
+  <article>
+    <header class="flex space-x-3 items-end justify-between mb-6">
+      <h2 class="text-xl font-medium">Continuer à pratiquer</h2>
+    </header>
+
+  </article>
+  <article>
+    <header class="flex space-x-3 items-end justify-between mb-6">
+      <h2 class="text-xl font-medium">Les derniers publiés</h2>
+      <%= form_with(url: search_exercises_path) do |form| %>
+        <ul class="font-medium text-gray-900 flex space-x-3">
+          <% @categories.each do |category| %>
+            <li>
+              <label>
+                <%= form.check_box :category_ids, {
+                  multiple: true,
+                  data: {action: "change->hello#search"},
+                  checked: @category.present? && @category.id == category.id,
+                  class: "hidden peer"
+                },
+                                   category.id,
+                                   false %>
+                <span class="p-2 peer-checked:font-bold peer-checked:border-b-4 peer-checked:border-indigo-600 cursor-pointer"><%= category.name %></span>
+              </label>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+      <p>
+        <%= turbo_frame_tag "search_results_count", target: "search_results_count" do %>
+          Nous avons trouvé <%= @exercises.count %> résultats.
+        <% end %>
+      </p>
+    </header>
+    <section class="">
+      <!-- results list -->
+      <%= turbo_frame_tag "results", src: list_exercises_path, loading: :lazy do %>
+        <%= render partial: "exercises/search/results_skeleton" %>
+      <% end %>
+      <!-- END results list -->
+    </section>
+  </article>
+</section>
