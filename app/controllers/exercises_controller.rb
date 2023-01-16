@@ -178,14 +178,6 @@ class ExercisesController < ApplicationController
     @exercise = Exercise.find(params[:id])
   end
 
-  def set_categories
-    @categories = Category.all
-  end
-
-  def set_exercises_filtered
-    @exercises = Exercise.for_current_user(current_user)
-  end
-
   # Only allow a list of trusted parameters through.
   def exercise_params
     params.fetch(:exercise, {}).permit(

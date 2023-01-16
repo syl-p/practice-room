@@ -1,9 +1,4 @@
 <%= turbo_frame_tag "results" do %>
-  <p class="mb-6">
-    <%= turbo_frame_tag "search_results_count", target: "search_results_count" do %>
-      Nous avons trouvé <%= @exercises.count %> résultats.
-    <% end %>
-  </p>
   <%= turbo_frame_tag "search_results", target: "search_results" do %>
     <%= render partial: "exercises/search/list", locals: {exercises: @exercises} %>
   <% end %>
