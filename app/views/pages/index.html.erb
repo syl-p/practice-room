@@ -25,29 +25,31 @@
     <header class="flex space-x-3 items-end justify-between mb-6">
       <h2 class="text-xl font-medium">Les derniers publiés</h2>
       <%= form_with(url: search_exercises_path) do |form| %>
-        <ul class="font-medium text-gray-900 flex space-x-3">
-          <% @categories.each do |category| %>
-            <li>
-              <label>
-                <%= form.check_box :category_ids, {
-                  multiple: true,
-                  data: {action: "change->hello#search"},
-                  checked: @category.present? && @category.id == category.id,
-                  class: "hidden peer"
-                },
-                                   category.id,
-                                   false %>
-                <span class="p-2 peer-checked:font-bold peer-checked:border-b-4 peer-checked:border-indigo-600 cursor-pointer"><%= category.name %></span>
-              </label>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-      <p>
-        <%= turbo_frame_tag "search_results_count", target: "search_results_count" do %>
-          Nous avons trouvé <%= @exercises.count %> résultats.
+        <% if @categories.present? %>
+          <ul class="font-medium text-gray-900 flex space-x-3">
+            <% @categories.each do |category| %>
+              <li>
+                <label>
+                  <%= form.check_box :category_ids, {
+                    multiple: true,
+                    data: {action: "change->hello#search"},
+                    checked: @category.present? && @category.id == category.id,
+                    class: "hidden peer"
+                  },
+                                     category.id,
+                                     false %>
+                  <span class="p-2 peer-checked:font-bold peer-checked:border-b-4 peer-checked:border-indigo-600 cursor-pointer"><%= category.name %></span>
+                </label>
+              </li>
+            <% end %>
+          </ul>
         <% end %>
-      </p>
+      <% end %>
+        <p>
+          <%= turbo_frame_tag "search_results_count", target: "search_results_count" do %>
+            <%= "Nous avons trouvé #{@exercises.count} résultats." if @exercises.present? %>
+          <% end %>
+        </p>
     </header>
     <section class="">
       <!-- results list -->

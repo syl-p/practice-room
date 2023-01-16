@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'goal_settings/new'
+  get 'goal_settings/create'
+  get 'goal_settings/update'
+  get 'goal_settings/edit'
+  get 'goal_settings/destroy'
   devise_for :users, :controllers => { :registrations => "registrations" }
   resources :categories do
     collection do
@@ -18,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :exercises do
     resources :comments, module: :exercises
+    resources :goal_settings, module: :exercises
     collection do
       post "search"
       get "me"
@@ -38,7 +44,7 @@ Rails.application.routes.draw do
     resources :comments, module: :comments
   end
 
-  root "exercises#index"
+  root "pages#index"
 
   get "users/:id", to: "users#show", as: "user"
   delete "users/:id/delete_avatar", to: "users#delete_avatar", as: "delete_avatar"
@@ -55,11 +61,6 @@ Rails.application.routes.draw do
 
   # Pages
   get "/pages/:slug", to: "pages#show", as: "page"
-
-  # Friendships
-  delete "friendship/remove/:id", to: "friendships#destroy", as: "remove_friendship"
-  post "friendship/request/:id", to: "friendships#create", as: "friendship_request"
-  put "friendship/accept/:id", to: "friendships#accept", as: "accept_friendship"
 
   # Follows
   delete "unfollow/:id", to: "follows#destroy", as: "unfollow"

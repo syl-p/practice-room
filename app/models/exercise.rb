@@ -9,6 +9,9 @@ class Exercise < ApplicationRecord
   has_and_belongs_to_many :categories
   belongs_to :user
 
+  belongs_to :goal_label
+  has_many :goal_settings, dependent: :destroy
+
   accepts_nested_attributes_for :versions, update_only: true
 
   belongs_to :original, class_name: 'Exercise', optional: true, foreign_key: :exercise_id

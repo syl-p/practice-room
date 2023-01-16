@@ -60,6 +60,11 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1 or /exercises/1.json
   def show
+    @goal_setting = @exercise.goal_settings.find_by(user_id: current_user.id)
+    unless @goal_setting.present?
+      @goal_setting = GoalSetting.new(exercise_id: @exercise.id, user_id: current_user)
+    end
+
     if params[:view].present?
       render "exercises/versions/show"
     end
@@ -184,7 +189,9 @@ class ExercisesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def exercise_params
     params.fetch(:exercise, {}).permit(
-      :body, :video_link, :title, :published, :visibility, :versions_enabled, :exercise_id, :description, :level, medium_ids: [], category_ids: [], levels: [], versions_attributes: %i[
+      :body, :video_link, :title, :published, :visibility, :versions_enabled, :exercise_id, :description, :level,
+      :goal_start, :goal_end, :goal_label_id,
+      medium_ids: [], category_ids: [], levels: [], versions_attributes: %i[
         published user_id id
       ]
     )

@@ -3,8 +3,8 @@
   content_for(:description, @exercise.description)
 %>
 
-<section>
-  <header class="px-10 py-6">
+<section class="p-8">
+  <header class="mb-6">
     <%= render partial: "shared/breadcrump", locals: {links: [
       {
         label: "Exercices",
@@ -20,7 +20,7 @@
     <p class="mt-3"><%= @exercise.description %></p>
   </header>
 
-  <article class="px-8 lg:flex lg:space-x-10">
+  <article class="lg:flex lg:space-x-10">
     <section class="lg:w-8/12">
 
       <!-- VIDEO -->
@@ -120,12 +120,18 @@
       <!-- END DESCRIPTION -->
     </section>
 
-    <aside class="order-first md:order-last lg:w-4/12">
+    <aside class="order-first md:order-last lg:w-4/12" data-controller="hello">
       <% if current_user.present? %>
         <div class="p-6 text-white bg-indigo-500 rounded-lg shadow-md" data-controller="practices">
           <h3 class="font-semibold uppercase">Pratiquer cet exercice</h3>
-          <p class="text-sm mb-3">Ajoutez du temps de pratique ou faites de cet exercice un exercice favoris.</p>
+          <p class="mb-3">Ajoutez du temps de pratique ou faites de cet exercice un exercice favoris.</p>
           <%= render partial: "practices/toolbar", locals: {exercise: @exercise, extended: true} if current_user.present? %>
+
+          <% if @exercise.goal_end.present? %>
+            <%= turbo_frame_tag "goal_setting_form" do %>
+              <%= render partial: "exercises/goal_settings/form", locals: {exercise: @exercise, goal_setting: @goal_setting} %>
+            <% end %>
+          <% end %>
         </div>
       <% end %>
       <tabs-section>

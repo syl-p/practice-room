@@ -5,23 +5,21 @@ class Exercises::GoalSettingsController < ApplicationController
     @goal_setting = GoalSetting.new(goal_setting_params)
     @goal_setting.user = current_user
     @goal_setting.save
-    byebug
-    # respond_to do |format|
-    #   if @goal_setting.save
-    #     format.html { redirect_to @goal_setting, notice: "Category was successfully created." }
-    #     format.json { render :show, status: :created, location: @goal_setting }
-    #   else
-    #     format.html { render :new, status: :unprocessable_entity }
-    #     format.json { render json: @goal_setting.errors, status: :unprocessable_entity }
-    #   end
-    # end
+
+    respond_to do |format|
+      if @goal_setting.save
+        format.turbo_stream { render_turbo_form @goal_setting }
+      else
+      #     format.html { render :new, status: :unprocessable_entity }
+      #     format.json { render json: @goal_setting.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
     respond_to do |format|
       if @goal_setting.update(goal_setting_params)
-        # format.html { redirect_to @category, notice: "Category was successfully updated." }
-        # format.json { render :show, status: :ok, location: @category }
+        format.turbo_stream { render_turbo_form @goal_setting }
       else
         # format.html { render :edit, status: :unprocessable_entity }
         # format.json { render json: @category.errors, status: :unprocessable_entity }
@@ -40,5 +38,16 @@ class Exercises::GoalSettingsController < ApplicationController
 
   def goal_setting_params
     params.require(:goal_setting).permit(:value, :exercise_id)
+  end
+
+  def render_turbo_form goal_setting
+      render turbo_stream: turbo_stream.replace(
+        "goal_setting_form",
+        partial: "exercises/goal_settings/form",
+        locals: {
+          exercise: @goal_setting.exercise,
+          goal_setting: @goal_setting
+        }
+      )
   end
 end
