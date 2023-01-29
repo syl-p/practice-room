@@ -1,5 +1,0 @@
-<%= turbo_frame_tag "results" do %>
-  <%= turbo_frame_tag "search_results", target: "search_results" do %>
-    <%= render partial: "exercises/search/list", locals: {exercises: @exercises} %>
-  <% end %>
-<% end %>

@@ -6,10 +6,7 @@ class ExercisesController < ApplicationController
 
   # GET /exercises or /exercises.json
   def index
-  end
-
-  def list
-    render partial: "exercises/search/results", locals: {exercises: @exercises}
+    @exercises = Exercise.for_current_user(current_user.id)
   end
 
   # POST /exercises/search
@@ -39,11 +36,11 @@ class ExercisesController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream
-
-      format.html {
-        render partial: "exercises/search/list", locals: {exercises: @exercises, categories: @categories}
-      }
     end
+  end
+
+  def last_practiced
+    @last_practiced = Exercise.joins(:goal_settings).where(goal_settings: {user_id: current_user.id}).order("updated_at desc").limit(3)
   end
 
   def versions
@@ -60,7 +57,7 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1 or /exercises/1.json
   def show
-    @goal_setting = @exercise.goal_settings.find_by(user_id: current_user.id)
+    @goal_setting = @exercise.goal_setting_for_current_user(current_user.id)
     unless @goal_setting.present?
       @goal_setting = GoalSetting.new(exercise_id: @exercise.id, user_id: current_user)
     end

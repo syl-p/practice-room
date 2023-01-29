@@ -35,8 +35,7 @@ Rails.application.routes.draw do
       get ":id/favorites/:add_or_remove", to: "exercises#add_or_remove_favorite", defaults: { format: :turbo_stream }, as: "add_or_remove_favorite"
 
       # route for turbo frame query
-      get "list"
-
+      get "last_practiced"
     end
   end
 

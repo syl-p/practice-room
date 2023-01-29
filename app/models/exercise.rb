@@ -63,6 +63,12 @@ class Exercise < ApplicationRecord
     end
   end
 
+  def goal_setting_for_current_user(user_id)
+    return unless user_id.present?
+    goal_settings.find_by(user_id: user_id)
+  end
+
+  private
   def remove_from_favorites
     User.all.each do |user|
       user.update(favorites: user.favorites.reject { |f| f == self.id.to_s })

@@ -15,12 +15,18 @@
     </div>
     <div></div>
   </header>
-  <article>
-    <header class="flex space-x-3 items-end justify-between mb-6">
-      <h2 class="text-xl font-medium">Continuer à pratiquer</h2>
-    </header>
-
-  </article>
+  <% if current_user.present? %>
+    <article class="mb-8">
+      <header class="flex space-x-3 items-end justify-between mb-6">
+        <h2 class="text-xl font-medium">Continuer à pratiquer</h2>
+      </header>
+      <section>
+        <%= turbo_frame_tag "last_practiced", src: last_practiced_exercises_path, loading: :lazy do %>
+          <%= render partial: "exercises/search/results_skeleton" %>
+        <% end %>
+      </section>
+    </article>
+  <% end %>
   <article>
     <header class="flex space-x-3 items-end justify-between mb-6">
       <h2 class="text-xl font-medium">Les derniers publiés</h2>
@@ -52,11 +58,9 @@
         </p>
     </header>
     <section class="">
-      <!-- results list -->
-      <%= turbo_frame_tag "results", src: list_exercises_path, loading: :lazy do %>
+      <%= turbo_frame_tag "exercises_list", src: exercises_path, loading: :lazy do %>
         <%= render partial: "exercises/search/results_skeleton" %>
       <% end %>
-      <!-- END results list -->
     </section>
   </article>
 </section>

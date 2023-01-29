@@ -1,0 +1,42 @@
+<article class="bg-white rounded-xl p-4 transition shadow-lg hover:shadow-xl">
+  <header class="flex space-x-4">
+    <figure class="flex-shrink-0 self-center">
+      <a href="<%= user_url(exercise.user) %>" data-turbo="false">
+        <%= render partial: "users/avatar", locals: {user: exercise.user, size: :medium} %>
+      </a>
+    </figure>
+    <div class="min-w-0 flex-1">
+      <h2 class="text-lg font-bold">
+        <%= link_to exercise.title, exercise, data: {turbo: false} %>
+      </h2>
+      <p class="text-xs text-gray-500 font-light">Publié par
+        <a href="<%= user_url(exercise.user) %>" data-turbo="false">
+          <%= exercise.user.username %>
+        </a>
+        le <%= l exercise.created_at, format: :short %>
+      </p>
+    </div>
+  </header>
+
+  <section class="my-6 text-sm text-gray-500 font-light">
+    <%
+      goal_setting = exercise.goal_setting_for_current_user(current_user.id)
+      if goal_setting.present? && exercise.goal_end %>
+      <div class="flex space-x-3 items-center mb-3">
+        <div class="bg-gray-200 rounded-full h-1 flex-1">
+          <div class="bg-blue-600 h-1 rounded-full dark:bg-blue-500"
+               style="width: <%= goal_setting.value * 100 / exercise.goal_end  %>%"></div>
+        </div>
+      </div>
+      <p class="">
+        <%= goal_setting.value %> <%= exercise.goal_label.label %> /  <%= exercise.goal_end %> <%= exercise.goal_label.label %>
+      </p>
+    <% end %>
+  </section>
+
+  <footer class="flex space-x-4 items-end">
+    <div class="flex-1">
+      <%= render partial: "exercises/categories_list", locals: {categories: exercise.categories} %>
+    </div>
+  </footer>
+</article>
