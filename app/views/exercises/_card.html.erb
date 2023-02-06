@@ -1,0 +1,55 @@
+<%
+  practiced = true if local_assigns[:practiced].nil?
+%>
+
+<article class="p-4 bg-white rounded-xl border shadow-lg transition hover:shadow-xl">
+  <header class="flex space-x-4">
+    <figure class="flex-shrink-0 self-center">
+      <a href="<%= user_url(exercise.user) %>" data-turbo="false">
+        <%= render partial: "users/avatar", locals: {user: exercise.user, size: :medium} %>
+      </a>
+    </figure>
+    <div class="flex-1 min-w-0">
+      <h2 class="text-lg font-bold">
+        <%= link_to exercise.title, exercise, data: {turbo: false} %>
+      </h2>
+      <p class="text-xs font-light text-gray-500">Publié par
+        <a href="<%= user_url(exercise.user) %>" data-turbo="false">
+          <%= exercise.user.username %>
+        </a>
+        le <%= l exercise.created_at, format: :short %>
+      </p>
+    </div>
+    <div class="flex flex-shrink-0 self-center">
+      <%= render partial: "practices/toolbar", locals: {exercise: exercise ,extended: false} if current_user.present? %>
+    </div>
+  </header>
+
+  <section class="mt-3 mb-6 text-sm font-light text-gray-500">
+    <p><%= exercise.description.truncate(100) if exercise.description %></p>
+  </section>
+
+  <% if practiced %>
+    <section class="my-6 text-sm font-light text-gray-500">
+      <%
+        goal_setting = exercise.goal_setting_for_current_user(current_user.id)
+        if goal_setting.present? && exercise.goal_end %>
+        <div class="flex items-center mb-3 space-x-3">
+          <div class="flex-1 h-1 bg-gray-200 rounded-full">
+            <div class="h-1 bg-blue-600 rounded-full dark:bg-blue-500"
+                style="width: <%= goal_setting.value * 100 / exercise.goal_end  %>%"></div>
+          </div>
+        </div>
+        <p class="">
+          <%= goal_setting.value %> <%= exercise.goal_label.label %> /  <%= exercise.goal_end %> <%= exercise.goal_label.label %>
+        </p>
+      <% end %>
+    </section>
+  <% end %>
+
+  <footer class="flex items-end space-x-4">
+    <div class="flex-1">
+      <%= render partial: "exercises/categories_list", locals: {categories: exercise.categories} %>
+    </div>
+  </footer>
+</article>

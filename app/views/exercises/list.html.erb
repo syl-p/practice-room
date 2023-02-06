@@ -1,8 +1,8 @@
 <%= turbo_frame_tag "exercises_list" do %>
-  <ul role="list" class="lg:grid xl:grid-cols-3 gap-x-4 gap-y-4 lg:grid-flow-row-dense" data-hello-target="results">
+  <ul role="list" class="gap-x-4 gap-y-4 lg:grid xl:grid-cols-3 lg:grid-flow-row-dense" data-hello-target="results">
     <% @exercises.each do |exercise| %>
       <li class="">
-        <%= render partial: "exercises/card/big", locals: {exercise: exercise} %>
+        <%= render partial: "exercises/card", locals: {exercise: exercise, practiced: false} %>
       </li>
     <% end %>
   </ul>

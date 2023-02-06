@@ -42,9 +42,9 @@ class Exercise < ApplicationRecord
     end
   end
 
-  def self.for_current_user(user_id = nil)
-    if user_id
-      exercices = self.where("user_id = ? OR (published = true AND visibility = 0)", user_id)
+  def self.for_current_user(user = nil)
+    if user.present?
+      exercices = self.where("user_id = ? OR (published = true AND visibility = 0)", user&.id)
     else
       exercices = self.where({published: true, visibility: 0, original: nil})
     end
@@ -63,9 +63,9 @@ class Exercise < ApplicationRecord
     end
   end
 
-  def goal_setting_for_current_user(user_id)
+  def goal_setting_for_current_user(user = nil)
     return unless user_id.present?
-    goal_settings.find_by(user_id: user_id)
+    goal_settings.find_by(user_id: user&.id)
   end
 
   private

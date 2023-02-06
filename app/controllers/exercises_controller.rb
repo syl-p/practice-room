@@ -6,7 +6,7 @@ class ExercisesController < ApplicationController
 
   # GET /exercises or /exercises.json
   def index
-    @exercises = Exercise.for_current_user(current_user.id)
+    @exercises = Exercise.for_current_user(current_user)
   end
 
   # POST /exercises/search
@@ -57,7 +57,7 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1 or /exercises/1.json
   def show
-    @goal_setting = @exercise.goal_setting_for_current_user(current_user.id)
+    @goal_setting = @exercise.goal_setting_for_current_user(current_user)
     unless @goal_setting.present?
       @goal_setting = GoalSetting.new(exercise_id: @exercise.id, user_id: current_user)
     end
