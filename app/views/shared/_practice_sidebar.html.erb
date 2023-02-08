@@ -1,4 +1,5 @@
-<aside class="z-[100] hidden pointer-events-none fixed right-0 inset-y-0 flex h-screen justify-center items-center max-w-full pl-10"
+<aside id="practice_sidebar"
+  class="z-[100] hidden pointer-events-none fixed right-0 inset-y-0 flex h-screen justify-center items-center max-w-full pl-10"
   data-application-target="sidebar"
   data-transition-enter="transform transition ease-in-out duration-500 sm:duration-700"
   data-transition-enter-start="translate-x-full"
@@ -6,7 +7,7 @@
   data-transition-leave="transform transition ease-in-out duration-500 sm:duration-700"
   data-transition-leave-start="translate-x-0"
   data-transition-leave-end="translate-x-full">
-    <div class="pointer-events-auto h-full md:py-10 md:pr-8">
+    <div class="h-full pointer-events-auto md:py-10 md:pr-8">
       <div class="flex overflow-y-scroll flex-col h-full bg-white shadow-xl md:rounded-xl">
 
         <% if user_signed_in? %>

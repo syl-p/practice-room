@@ -13,14 +13,6 @@ export default class extends Controller {
   connect() {
   }
 
-  sidebarTargetConnected() {
-    // document.addEventListener('click', (event) => {
-    //   if (!this.sidebarTarget.contains(event.target)) {
-    //     console.log("hide")
-    //   }
-    // })
-  }
-
   inputVersionsEnabledTargetConnected() {
     this.showVersionList(this.inputVersionsEnabledTarget.checked)
   }
@@ -46,20 +38,25 @@ export default class extends Controller {
     return this.rootValue
   }
 
-  sidebarShow() {
-    this.sidebarTarget.classList.remove('hidden')
+  sidebarShow({ params: { id }}) {
     this.overlayTarget.classList.remove('hidden')
     enter(this.overlayTarget)
-    enter(this.sidebarTarget)
+
+    const sidebar = this.sidebarTargets.find(s => s.getAttribute('id') == id)
+    sidebar.classList.remove('hidden')
+    enter(sidebar)
   }
 
-  sidebarHide() {
+  sidebarHide({ params: { id }}) {
+    const sidebar = this.sidebarTargets.find(s => s.getAttribute('id') == id)
+
     Promise.all([
-      leave(this.sidebarTarget),
+      leave(sidebar),
       leave(this.overlayTarget)
     ]).then(() => {
-      this.sidebarTarget.classList.add("hidden")
       this.overlayTarget.classList.add("hidden")
+      sidebar.classList.add('hidden')
+      enter(sidebar)
     })
   }
 

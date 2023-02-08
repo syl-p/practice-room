@@ -2,17 +2,17 @@
   content_for(:title, "Profil de #{@user.username}")
   content_for(:description, @user.bio)
 %>
-<section class="p-8 lg:flex lg:space-x-6">
+<section class="mt-6 lg:flex lg:space-x-6">
   <header class="lg:w-2/6">
     <!-- user title -->
-    <div class="mb-6 flex space-x-3">
+    <div class="flex mb-6 space-x-3">
       <%= render partial: "users/avatar", locals: {
         user: @user,
         size: :xlarge
       } %>
       <div class="">
-        <div class="flex space-x-3 justify-between">
-          <h1 class="flex-1 text-3xl font-bold text-gray-900 m-0 mb-3">
+        <div class="flex justify-between space-x-3">
+          <h1 class="flex-1 m-0 mb-3 text-3xl font-bold text-gray-900">
             <%= @user.username %>
           </h1>
           <% if current_user.present? && current_user != @user %>
@@ -20,17 +20,17 @@
             <%= render partial: "users/follows/bell", locals: {user: @user} %>
           <% end %>
         </div>
-        <ul class="flex space-x-3 justify-between text-center">
+        <ul class="flex justify-between space-x-3 text-center">
           <li>
-            <span class="font-bold text-xl block"><%= @user.followers.count %></span>
+            <span class="block text-xl font-bold"><%= @user.followers.count %></span>
             Suiveurs
           </li>
           <li>
-            <span class="font-bold text-xl block"><%= @user.following.count %></span>
+            <span class="block text-xl font-bold"><%= @user.following.count %></span>
             Suivis
           </li>
           <li>
-            <span class="font-bold text-xl block"><%= @user.exercises.count %></span>
+            <span class="block text-xl font-bold"><%= @user.exercises.count %></span>
             Exercices postés
           </li>
         </ul>
@@ -41,7 +41,7 @@
     <!-- relation -->
     <% if @user.followers.present? %>
       <div class="mb-6">
-        <h2 class="font-medium text-gray-500 mb-3">
+        <h2 class="mb-3 font-medium text-gray-500">
           Ces personnes le suivent
         </h2>
         <%#= render partial: "users/friendships/preview-list", locals: {user: @user} %>
@@ -52,7 +52,7 @@
 
     <!-- more about -->
     <div class="mb-6">
-      <header class="flex space-x-3 mb-3">
+      <header class="flex mb-3 space-x-3">
         <h2 class="flex-1 font-medium text-gray-500">
           Bio et autres informations
         </h2>
@@ -64,7 +64,7 @@
           <% end %>
         <% end %>
       </header>
-      <div class="bg-gray-100 p-4 rounded">
+      <div class="p-4 bg-gray-100 rounded">
         <p class="mb-3">
           <%= @user.bio %>
         </p>
@@ -79,8 +79,8 @@
   <section class="lg:flex-1 lg:w-4/6">
     <!-- Derniers exercices -->
     <article class="">
-      <header class="flex space-x-4 mb-6">
-        <h2 class="text-xl font-medium leading-6 flex-1">
+      <header class="flex mb-6 space-x-4">
+        <h2 class="flex-1 text-xl font-medium leading-6">
           Derniers exercices publiés sur la plateforme
         </h2>
         <p class="flex-shrink-0">Voir tous</p>
