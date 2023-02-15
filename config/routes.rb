@@ -43,7 +43,7 @@ Rails.application.routes.draw do
     resources :comments, module: :comments
   end
 
-  root "pages#index"
+  root "exercises#index"
 
   get "users/:id", to: "users#show", as: "user"
   delete "users/:id/delete_avatar", to: "users#delete_avatar", as: "delete_avatar"

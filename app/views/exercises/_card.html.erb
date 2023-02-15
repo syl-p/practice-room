@@ -29,23 +29,21 @@
     <p><%= exercise.description.truncate(100) if exercise.description %></p>
   </section>
 
-  <% if practiced %>
-    <section class="my-6 text-sm font-light text-gray-500">
-      <%
-        goal_setting = exercise.goal_setting_for_current_user(current_user.id)
-        if goal_setting.present? && exercise.goal_end %>
-        <div class="flex items-center mb-3 space-x-3">
-          <div class="flex-1 h-1 bg-gray-200 rounded-full">
-            <div class="h-1 bg-blue-600 rounded-full dark:bg-blue-500"
-                style="width: <%= goal_setting.value * 100 / exercise.goal_end  %>%"></div>
-          </div>
+  <section class="my-6 text-sm font-light text-gray-500">
+    <%
+      goal_setting = exercise.goal_setting_for_current_user(current_user)
+      if goal_setting.present? && exercise.goal_end %>
+      <div class="flex items-center mb-3 space-x-3">
+        <div class="flex-1 h-1 bg-gray-200 rounded-full">
+          <div class="h-1 bg-blue-600 rounded-full dark:bg-blue-500"
+              style="width: <%= goal_setting.value * 100 / exercise.goal_end  %>%"></div>
         </div>
-        <p class="">
-          <%= goal_setting.value %> <%= exercise.goal_label.label %> /  <%= exercise.goal_end %> <%= exercise.goal_label.label %>
-        </p>
-      <% end %>
-    </section>
-  <% end %>
+      </div>
+      <p class="">
+        <%= goal_setting.value %> <%= exercise.goal_label.label %> /  <%= exercise.goal_end %> <%= exercise.goal_label.label %>
+      </p>
+    <% end %>
+  </section>
 
   <footer class="flex items-end space-x-4">
     <div class="flex-1">

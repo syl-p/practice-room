@@ -7,13 +7,20 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 default_categories = [
-    {name: "Jazz skills", description: "", slug: "jazz-skills"},
-    {name: "Rythme et groove", description: "", slug: "rythme-et-groove"},
-    {name: "Freatboard", description: "", slug: "freatboard"}
+  {name: "Jazz skills", description: "", slug: "jazz-skills"},
+  {name: "Rythme et groove", description: "", slug: "rythme-et-groove"},
+  {name: "Freatboard", description: "", slug: "freatboard"}
 ]
 
 default_categories.each do |category|
-    Category.create(name: category[:name], 
-                    description: category[:description],
-                    slug: category[:slug])
+  Category.create(name: category[:name],
+                  description: category[:description],
+                  slug: category[:slug])
+
+end
+
+default_goal_label = %w(bpm minutes pages pourcent)
+
+default_goal_label.each do |goal_label|
+  GoalLabel.create(label: goal_label)
 end
