@@ -6,7 +6,7 @@ class AddGoalToExercise < ActiveRecord::Migration[7.0]
   def change
     add_column :exercises, :goal_end, :float
     add_column :exercises, :goal_start, :float
-    add_reference :exercises, :goal_label
+    add_reference :exercises, :goal_label, null: true, foreign_key: true
   end
 
   create_table :goal_settings do |t|

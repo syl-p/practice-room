@@ -71,8 +71,8 @@ class ExercisesController < ApplicationController
   def new
     @exercise = Exercise.new
 
-    if params[:exercise_id].present? # version ?
-      @exercise.exercise_id = params[:exercise_id]
+    if params[:original_id].present? # version ?
+      @exercise.exercise_id = params[:original_id]
       render "exercises/versions/new", locals: {exercise: @exercise}
     end
   end
@@ -103,6 +103,15 @@ class ExercisesController < ApplicationController
         format.json { render :show, status: :created, location: @exercise }
       else
         format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(
+            "exercise_versions_form",
+            partial: "exercises/versions/form",
+            locals: {
+              version: @exercise
+            }
+          )
+        }
         format.json { render json: @exercise.errors, status: :unprocessable_entity }
       end
     end

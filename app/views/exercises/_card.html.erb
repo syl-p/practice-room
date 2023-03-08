@@ -11,7 +11,7 @@
     </figure>
     <div class="flex-1 min-w-0">
       <h2 class="text-lg font-bold">
-        <%= link_to exercise.title, exercise, data: {turbo_frame: "exercise_show", action: "application#sidebarShow", application_id_param: "exercise_sidebar"} %>
+        <%= link_to exercise.title, exercise, data: {turbo_frame: "exercise_show"} %>
       </h2>
       <p class="text-xs font-light text-gray-500">Publié par
         <a href="<%= user_url(exercise.user) %>" data-turbo="false">

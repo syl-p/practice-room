@@ -25,7 +25,8 @@ Rails.application.routes.draw do
     resources :comments, module: :exercises
     resources :goal_settings, module: :exercises
     collection do
-      post "search"
+      post "search", defaults: { format: :turbo_stream }
+      get "search", defaults: { format: :turbo_stream }
       get "me"
       get ":id/edit/:step", to: "exercises#edit", as: "edit_with_step"
       get "new/:step", to: "exercises#new", as: "new_with_step"
@@ -54,9 +55,6 @@ Rails.application.routes.draw do
   # Date selector for practice list
   get "practices/:previous_next/:date", to: "practices#get_week", as: "get_week"
   get "practices/:date", to: "practices#get_day", defaults: { format: :turbo_stream }, as: "get_day"
-
-  # Here because use turbo ??
-  get "exercises/:id/versions", to: "exercises#get_versions_list", as: "list_versions"
 
   # Pages
   get "/pages/:slug", to: "pages#show", as: "page"

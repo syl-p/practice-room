@@ -7,7 +7,7 @@
     </div>
     <div class="self-center">
       <!-- Close btn -->
-      <%= link_to  list_versions_path(id: @exercise.original), class: "float-right",
+      <%= link_to  versions_list_exercises_path(id: @exercise.original), class: "float-right",
         data: {
           video_id: @exercise.original.video_link,
           action: 'click->application#showVersion'

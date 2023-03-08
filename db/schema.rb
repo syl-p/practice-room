@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_06_074049) do
+ActiveRecord::Schema.define(version: 2023_02_28_164311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,8 +89,10 @@ ActiveRecord::Schema.define(version: 2023_01_06_074049) do
     t.float "goal_end"
     t.float "goal_start"
     t.bigint "goal_label_id"
+    t.string "slug"
     t.index ["exercise_id"], name: "index_exercises_on_exercise_id"
     t.index ["goal_label_id"], name: "index_exercises_on_goal_label_id"
+    t.index ["slug"], name: "index_exercises_on_slug"
     t.index ["user_id"], name: "index_exercises_on_user_id"
   end
 
@@ -173,6 +175,7 @@ ActiveRecord::Schema.define(version: 2023_01_06_074049) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "exercises", "exercises"
+  add_foreign_key "exercises", "goal_labels"
   add_foreign_key "exercises", "users"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "follows", "users", column: "following_id"

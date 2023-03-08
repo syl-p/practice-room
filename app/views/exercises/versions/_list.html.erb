@@ -47,6 +47,6 @@
   <% end %>
   <div class="mt-6 text-center">
     <!-- buttons or inputs -->
-    <%= link_to "Proposez votre version", new_exercise_path(exercise_id: exercise), class: 'btn btn-secondary' if current_user.present? %>
+    <%= link_to "Proposez votre version", new_exercise_path(original_id: exercise), class: 'btn btn-secondary' if current_user.present? %>
   </div>
 <% end %>

@@ -3,7 +3,7 @@ import { leave, enter } from "../transistion"
 
 export default class extends Controller {
   static targets = ["videoPlayer", 'inputVersionsEnabled',
-    'versionsListEdit', 'videoPreviewer', "sidebar", "overlay", "favorites"]
+    'versionsListEdit', 'videoPreviewer', "sidebar", "favorites"]
 
   static values = {
     root: String,
@@ -11,6 +11,34 @@ export default class extends Controller {
   }
 
   connect() {
+    this.currentUrl = window.location.href
+
+    // TURBO Event listening
+    document.addEventListener('turbo:frame-load', (event) => {
+      // Open exercise_sidebar for frame exercise_show
+      if (event.target.id === "exercise_show") {
+        this.sidebarShow({params: {id: "exercise_sidebar"}})
+        window.history.pushState({url: event.target.src}, "", event.target.src);
+      }
+    });
+
+    // Go back btn, close the popup
+    window.addEventListener("popstate", (event) => {
+      window.history.replaceState({}, '', event.state.previousUrl);
+      this.sidebarHide({params: {id: "exercise_sidebar"}})
+    });
+  }
+
+  sidebarTargetConnected(sidebar) {
+    // Close on click outside a sidebar
+    sidebar.addEventListener('click', (event) => {
+      if (event.target !== event.currentTarget)
+      return;
+      this.sidebarHide({params: {id: sidebar.id}})
+      if(sidebar.id === 'exercise_sidebar') {
+        window.history.replaceState({}, '', this.currentUrl);
+      }
+    })
   }
 
   inputVersionsEnabledTargetConnected() {
@@ -39,24 +67,26 @@ export default class extends Controller {
   }
 
   sidebarShow({ params: { id }}) {
-    this.overlayTarget.classList.remove('hidden')
-    enter(this.overlayTarget)
-
     const sidebar = this.sidebarTargets.find(s => s.getAttribute('id') == id)
+    const sidebar_content = sidebar.querySelector('aside')
+
     sidebar.classList.remove('hidden')
     enter(sidebar)
+
+    sidebar_content.classList.remove('hidden')
+    enter(sidebar_content)
   }
 
   sidebarHide({ params: { id }}) {
     const sidebar = this.sidebarTargets.find(s => s.getAttribute('id') == id)
-
+    const sidebar_content = sidebar.querySelector('aside')
     Promise.all([
-      leave(sidebar),
-      leave(this.overlayTarget)
+      leave(sidebar_content),
+      leave(sidebar)
     ]).then(() => {
-      this.overlayTarget.classList.add("hidden")
-      sidebar.classList.add('hidden')
-      enter(sidebar)
+      // this.overlayTarget.classList.add("hidden")
+      // sidebar.classList.add('hidden')
+      // enter(sidebar)
     })
   }
 

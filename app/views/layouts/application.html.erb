@@ -29,37 +29,7 @@
         </main>
       </div>
       <!-- END Content area -->
-
-      <!-- Practicer sidebar -->
-      <div
-        data-application-target="overlay"
-        data-transition-enter="ease-in-out duration-500"
-        data-transition-enter-start="opacity-0"
-        data-transition-enter-end="opacity-100"
-        data-transition-leave="ease-in-out duration-500"
-        data-transition-leave-start="opacity-100"
-        data-transition-leave-end="opacity-0"
-        class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
-        <%= render "shared/practice_sidebar" if current_user.present? %>
-
-        <!-- Exercise content popup -->
-        <aside id="exercise_sidebar"
-          class="z-[2000] hidden pointer-events-none fixed right-0 inset-y-0 flex h-screen justify-center items-center max-w-full pl-10"
-          data-application-target="sidebar"
-          data-transition-enter="transform transition ease-in-out duration-500 sm:duration-700"
-          data-transition-enter-start="translate-x-full"
-          data-transition-enter-end="translate-x-0"
-          data-transition-leave="transform transition ease-in-out duration-500 sm:duration-700"
-          data-transition-leave-start="translate-x-0"
-          data-transition-leave-end="translate-x-full">
-          <div class="flex overflow-y-scroll flex-col p-10 w-full h-full bg-gray-200">
-            <%= turbo_frame_tag "exercise_show" do %>
-            <% end %>
-          </div>
-        </aside>
-        <!-- End Exercise content popup -->
-      </div>
-      <!-- END Practicer sidebar -->
+      <%= render "shared/practice_sidebar" if current_user.present? %>
     </div>
   </body>
 </html>

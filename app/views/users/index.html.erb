@@ -113,17 +113,6 @@
               </div>
             </div>
             <!-- Dailies and text -->
-
-            <!-- Favorites -->
-            <h5 class="mb-6 text-xl">... ou sélectionnez en un dans vos exercices favoris</h5>
-            <% if current_user.favorites.present? %>
-              <%= render partial: "exercises/search/list", locals: {exercises: current_user.favorites_populated} %>
-            <% else %>
-              Vous n'avez pas de favoris, créer un nouvel exercice ou
-              <%= link_to "recherchez en un", exercises_path %>...
-            <% end %>
-            <!-- End Favorites -->
-
           </div>
           <!-- END UPDATE PRACTICE -->
 

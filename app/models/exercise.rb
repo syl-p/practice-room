@@ -9,7 +9,7 @@ class Exercise < ApplicationRecord
   has_and_belongs_to_many :categories
   belongs_to :user
 
-  belongs_to :goal_label
+  belongs_to :goal_label, optional: true
   has_many :goal_settings, dependent: :destroy
 
   accepts_nested_attributes_for :versions, update_only: true
@@ -33,6 +33,7 @@ class Exercise < ApplicationRecord
   }
 
   before_destroy :remove_from_favorites
+  before_save :generate_slug
 
   def self.filtered(query_params)
     if query_params.present?
@@ -73,5 +74,9 @@ class Exercise < ApplicationRecord
     User.all.each do |user|
       user.update(favorites: user.favorites.reject { |f| f == self.id.to_s })
     end
+  end
+
+  def generate_slug
+    self.slug = title.parameterize
   end
 end
