@@ -1,0 +1,73 @@
+<div id="practice_sidebar"
+  data-application-target="sidebar"
+  data-transition-enter="ease-in-out duration-500"
+  data-transition-enter-start="opacity-0"
+  data-transition-enter-end="opacity-100"
+  data-transition-leave="ease-in-out duration-500"
+  data-transition-leave-start="opacity-100"
+  data-transition-leave-end="opacity-0"
+  class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+  <aside
+    class="z-[100] hidden pointer-events-none fixed right-0 inset-y-0 flex h-screen justify-center items-center max-w-full pl-10"
+    data-transition-enter="transform transition ease-in-out duration-500 sm:duration-700"
+    data-transition-enter-start="translate-x-full"
+    data-transition-enter-end="translate-x-0"
+    data-transition-leave="transform transition ease-in-out duration-500 sm:duration-700"
+    data-transition-leave-start="translate-x-0"
+    data-transition-leave-end="translate-x-full">
+      <div class="h-full pointer-events-auto md:py-10 md:pr-8">
+        <div class="flex overflow-y-scroll flex-col h-full bg-white shadow-xl md:rounded-xl">
+
+          <% if user_signed_in? %>
+
+            <header class="flex p-6 pb-6 space-x-3">
+              <%= link_to user_path(current_user), class: "self-center" do %>
+                <%= render partial: "users/avatar", locals: {user: current_user, size: :large} %>
+              <% end %>
+              <div class="flex-1 self-center">
+                <h2 class="text-xl font-bold">Hello, <%= link_to current_user.username, user_path(current_user) %></h2>
+                <p class=""><%= current_user.email %></p>
+              </div>
+              <div class="flex self-center ml-3 h-7">
+                <button type="button" data-action="application#sidebarHide"
+                  class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  <span class="sr-only">Close panel</span>
+                  <!-- Heroicon name: outline/x -->
+                  <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </header>
+
+            <tabs-section class="relative flex-1">
+
+              <!-- practice sessions list -->
+              <div data-tab-title="Journal de pratique" slot="tab">
+                <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
+              </div>
+              <!-- end practice sessions list -->
+
+              <!-- favorites list -->
+              <div data-tab-title="Vos favoris" slot="tab">
+                <%= render partial: "favorites/list", locals: {exercises: current_user.favorites_populated} %>
+              </div>
+              <!-- end favorites list -->
+
+            </tabs-section>
+
+            <!-- bottom section-->
+            <div class="flex flex-shrink-0 p-6">
+              <%= link_to destroy_user_session_path, method: :delete, class: "btn-secondary flex mx-auto" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="flex-1 mr-3 w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                <span class="self-center">Se déconnecter</span>
+              <% end %>
+            </div>
+            <!-- end bottom section-->
+          <% end %>
+        </div>
+      </div>
+    </aside>
+  </div>

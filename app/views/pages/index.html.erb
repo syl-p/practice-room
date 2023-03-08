@@ -1,0 +1,66 @@
+<%
+  content_for :description, "Practice room; c'est une plateforme collaborative qui permet aux musiciens de créer et améliorer leur routine de pratique."
+%>
+<section data-controller="hello">
+  <header class="flex p-8 my-6 space-x-3 text-white bg-indigo-600 rounded-lg">
+    <div class="w-3/6">
+      <h1 class="mb-3 text-4xl uppercase">
+        <%= "Hello #{current_user.username}, " if current_user.present? %>
+        <strong>pratiquons ensemble !</strong>
+      </h1>
+      <p>Ici, nous partageons nos exercices favoris pour que chacun puisse profiter des connaissances des autres librement.</p>
+      <div>
+
+      </div>
+    </div>
+    <div></div>
+  </header>
+  <% if current_user.present? %>
+    <article class="mb-8">
+      <header class="flex justify-between items-end mb-6 space-x-3">
+        <h2 class="text-xl font-medium">Continuer à pratiquer</h2>
+      </header>
+      <section>
+        <%= turbo_frame_tag "last_practiced", src: last_practiced_exercises_path, loading: :lazy do %>
+          <%= render partial: "exercises/search/results_skeleton" %>
+        <% end %>
+      </section>
+    </article>
+  <% end %>
+  <article>
+    <header class="flex justify-between items-end mb-6 space-x-3">
+      <h2 class="text-xl font-medium">Les derniers publiés</h2>
+      <%= form_with(url: search_exercises_path) do |form| %>
+        <% if @categories.present? %>
+          <ul class="flex space-x-3 font-medium text-gray-900">
+            <% @categories.each do |category| %>
+              <li>
+                <label>
+                  <%= form.check_box :category_ids, {
+                    multiple: true,
+                    data: {action: "change->hello#search"},
+                    checked: @category.present? && @category.id == category.id,
+                    class: "hidden peer"
+                  },
+                                     category.id,
+                                     false %>
+                  <span class="p-2 cursor-pointer peer-checked:font-bold peer-checked:border-b-4 peer-checked:border-indigo-600"><%= category.name %></span>
+                </label>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      <% end %>
+        <p>
+          <%= turbo_frame_tag "search_results_count", target: "search_results_count" do %>
+            <%= "Nous avons trouvé #{@exercises.count} résultats." if @exercises.present? %>
+          <% end %>
+        </p>
+    </header>
+    <section class="">
+      <%= turbo_frame_tag "exercises_list", src: exercises_path, loading: :lazy do %>
+        <%= render partial: "exercises/search/results_skeleton" %>
+      <% end %>
+    </section>
+  </article>
+</section>

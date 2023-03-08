@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show ]
-  layout "layouts/dashboard", only: %i[index]
   authorize_resource
   # GET /user or /user.json
   def index
-    redirect_to root_path unless current_user.present?
+    return redirect_to root_path unless !current_user.nil?
     @practices_of_the_week = current_user.practices.where(created_at: Date.today.beginning_of_week..Date.today.end_of_week)
   end
 

@@ -46,15 +46,6 @@ class PracticesController < ApplicationController
       last_practice.practices_exercises << PracticesExercise.new(exercise: exercise, duration: duration)
       last_practice.save
     end
-
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "practices_of_the_day",
-          partial: 'practices/list',
-          locals: { practices_of_the_day: current_user.practices_of_the_day })
-      end
-    end
   end
 
   def remove_from_practice
@@ -110,23 +101,23 @@ class PracticesController < ApplicationController
             end
 
     @practices = current_user.practices.where(created_at: (@current_date.beginning_of_week..@current_date.end_of_week))
+    @week_to_show = @current_date.beginning_of_week..@current_date.end_of_week
 
     respond_to do |format|
-      format.html { render partial: 'practices/selector', locals: { current_date: @current_date, practices_for_the_week: @practices } }
+      format.html { render partial: 'practices/selector', locals: { current_week: @week_to_show, practices_for_the_week: @practices } }
     end
   end
 
   def get_day
-    @practices = current_user.practices_of_the_day Date.parse(params[:date])
+    @current_date = Date.parse(params[:date])
+    @current_week = @current_date.beginning_of_week..@current_date.end_of_week
+
+    @practices_of_the_week = current_user.practices.where(created_at: (@current_date.beginning_of_week..@current_date.end_of_week))
+    @practices_of_the_day = @practices_of_the_week.where(created_at: (@current_date.beginning_of_day..@current_date.end_of_day))
+
 
     respond_to do |format|
-      format.turbo_stream {
-        render turbo_stream: turbo_stream.replace(
-          "practices_of_the_day",
-          partial: 'practices/list',
-          locals: { practices_of_the_day: @practices }
-        )
-      }
+      format.turbo_stream
     end
   end
 

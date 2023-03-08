@@ -1,0 +1,11 @@
+<%= turbo_stream.replace "extended_practice_toolbar_#{@exercise.id}" do %>
+  <%= render partial: "practices/toolbar", locals: {exercise:  @exercise, extended: true} %>
+<% end %>
+
+<%= turbo_stream.replace "non_extended_practice_toolbar_#{@exercise.id}" do %>
+  <%= render partial: "practices/toolbar", locals: {exercise:  @exercise} %>
+<% end %>
+
+<%= turbo_stream.replace "favorites" do %>
+  <%= render partial: "favorites/list", locals: {exercises: current_user.favorites_populated} %>
+<% end %>

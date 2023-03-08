@@ -1,0 +1,17 @@
+<%= form_for [exercise, goal_setting], data: {turbo: true} do |form| %>
+  <%= form.hidden_field :exercise_id, value: exercise.id %>
+  <div class="flex space-x-6 justify-between content-center">
+    <label class="block text-xs">
+      <%#= exercise.goal_start %> 0 <%= exercise.goal_label.label %>
+    </label>
+    <%= form.range_field :value, min: 0, max: exercise.goal_end,
+                          value: goal_setting.value.present? ? goal_setting.value : exercise.goal_start,
+                          data: {
+                            action: "change->hello#fireForm"
+                          },
+                          class: "w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer self-center" %>
+    <label class="block text-xs"><%= exercise.goal_end %>
+      <%= exercise.goal_label.label %>
+    </label>
+  </div>
+<% end %>

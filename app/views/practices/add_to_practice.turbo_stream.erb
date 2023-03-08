@@ -1,0 +1,14 @@
+<%= turbo_stream.replace "practices_of_the_day" do %>
+  <%= render partial: "practices/list", locals: {
+    practices_of_the_day: current_user.practices_of_the_day
+  } %>
+<% end %>
+
+<%= turbo_stream.replace "practice_time_today" do %>
+  <%= turbo_frame_tag "practice_time_today" do %>
+    <p class="flex-1 flex flex-col">
+      <span class="text-xs">Temps de pratique</span>
+      <span><%= current_user.practice_time_today %></span>
+    </p>
+  <% end %>
+<% end %>

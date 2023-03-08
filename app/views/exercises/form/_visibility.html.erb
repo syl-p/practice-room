@@ -1,0 +1,31 @@
+<%= form_with(model: @exercise, local: true) do |f| %>
+  <fieldset class="field form-group mb-10">
+    <%= f.label "Mettre en ligne ?", class: "form-label"  %>
+    <label class="form-switch">
+      <%= f.check_box :published %>
+      <i class="form-icon"></i> Mettre en ligne
+    </label>
+  </fieldset>
+
+  <fieldset class="field form-group">
+    <%= f.label "Type de visibilité:", class: "form-label"  %>
+    <div  class="bg-white rounded-md -space-y-px">
+      <% Exercise.visibilities.keys.each do |visibility| %>
+        <label class="rounded-tl-md rounded-tr-md relative border p-4 flex cursor-pointer focus:outline-none" for="<%= "exercise_visibility_#{visibility.parameterize.underscore}" %>">
+          <%= f.radio_button :visibility, visibility %>
+          <span class="ml-3 flex flex-col">
+            <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
+            <span id="privacy-setting-0-label" class="block text-sm font-medium"> <%= visibility %>
+            </span>
+            <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
+            <span id="privacy-setting-0-description" class="block text-sm"></span>
+          </span>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <div class="actions form-group mt-10 col-12">
+    <%= f.submit "Enregistrer les paramètres de visibilité", class: "btn btn-primary float-right"  %>
+  </div>
+<% end %>

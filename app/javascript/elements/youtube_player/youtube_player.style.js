@@ -50,16 +50,4 @@ export default `
     top: 0;
     left: 0;
   }
-
-  .no-video {
-    text-align: center;
-    height: 100%;
-    width: 100%;
-    background-color: #f5f5f5;
-    /* center content */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-  }
 `

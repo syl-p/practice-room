@@ -9,6 +9,9 @@ class Exercise < ApplicationRecord
   has_and_belongs_to_many :categories
   belongs_to :user
 
+  belongs_to :goal_label, optional: true
+  has_many :goal_settings, dependent: :destroy
+
   accepts_nested_attributes_for :versions, update_only: true
 
   belongs_to :original, class_name: 'Exercise', optional: true, foreign_key: :exercise_id
@@ -22,13 +25,15 @@ class Exercise < ApplicationRecord
     advanced: 2
   }
 
+  # private, public, restricted
   enum visibility: {
     everyone: 0,
-    not_referenced: 1,
-    friends: 2
+    not_referenced: 1, # by url only
+    restricted: 2, # TODO: filter by user list
   }
 
   before_destroy :remove_from_favorites
+  before_save :generate_slug
 
   def self.filtered(query_params)
     if query_params.present?
@@ -38,10 +43,9 @@ class Exercise < ApplicationRecord
     end
   end
 
-  def self.for_current_user(user_id = nil)
-    if user_id
-      # own exercises + (exercise visibility = 0 or (visibility = 2 and friends))
-      exercices = self.where("user_id = ? OR (published = true AND (visibility = 0 OR (visibility = 2 AND user_id IN (?))))", user_id, user_id.friends)
+  def self.for_current_user(user = nil)
+    if user.present?
+      exercices = self.where("user_id = ? OR (published = true AND visibility = 0)", user&.id)
     else
       exercices = self.where({published: true, visibility: 0, original: nil})
     end
@@ -60,9 +64,19 @@ class Exercise < ApplicationRecord
     end
   end
 
+  def goal_setting_for_current_user(user = nil)
+    return unless user_id.present?
+    goal_settings.find_by(user_id: user&.id)
+  end
+
+  private
   def remove_from_favorites
     User.all.each do |user|
       user.update(favorites: user.favorites.reject { |f| f == self.id.to_s })
     end
+  end
+
+  def generate_slug
+    self.slug = title.parameterize
   end
 end

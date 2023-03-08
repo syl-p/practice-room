@@ -1,6 +1,11 @@
 class Exercises::CommentsController < ApplicationController
     include Commentable
+    before_action :authenticate_user!, except: :index
     before_action :set_commentable
+
+    def index
+      @comments = @commentable.comments.where(parent_id: nil).order(updated_at: :desc)
+    end
 
     private
 

@@ -1,11 +1,30 @@
-<li class="tile" data-exercise-id="<%= exercise.id %>">
-  <div class="tile-content">
-    <p class="mb-0"><%= link_to exercise.title, exercise, class: 'tile-title' %></p>
-  </div>
-  <div class="tile-action">
-    <a href="<%= add_or_remove_favorite_exercises_url(id: exercise.id, add_or_remove: "remove") %>"
-      class="btn btn-link pr-0">
-      <i class="mdi mdi-close"></i>
-    </a>
+<li data-exercise-id="<%= exercise.id %>">
+  <div class="block hover:bg-gray-50">
+    <div class="flex items-center px-4 py-4 sm:px-6">
+      <div class="min-w-0 flex-1 flex items-center">
+        <div class="hidden md:block flex-shrink-0">
+          <%= link_to user_url(exercise.user), data: {turbo: false} do %>
+            <%= render partial: "users/avatar", locals: {user: exercise.user, size: :medium} %>
+          <% end %>
+        </div>
+        <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+          <div>
+            <p class="text-sm font-medium text-indigo-600">
+              <%= link_to exercise.title, exercise, data: {turbo: false} %>
+            </p>
+            <p class="mt-2 flex items-center text-sm text-gray-500">
+              <span>Publié le <%= l exercise.created_at, format: :short %></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <%= link_to add_or_remove_favorite_exercises_url(id: exercise.id, add_or_remove: "remove") do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        <% end %>
+      </div>
+    </div>
   </div>
 </li>

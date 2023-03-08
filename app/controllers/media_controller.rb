@@ -1,6 +1,5 @@
 class MediaController < ApplicationController
   before_action :set_medium, only: %i[ show edit update destroy ]
-  layout "layouts/dashboard"
   authorize_resource
 
   # GET /media or /media.json

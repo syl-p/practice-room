@@ -1,36 +1,5 @@
 <%= turbo_frame_tag "practices_of_the_day" do %>
-  <div class="timeline"
-    data-controller="practices"
-    data-practices-date-value="<%= practices_of_the_day.first.nil? || practices_of_the_day.first.created_at == Date.today ? Date.today : practices_of_the_day.first.created_at.strftime("%Y-%m-%d") %>">
-
-    <!-- TIME INDICATOR -->
-    <div class="timeline-item" id="timeline-example-1">
-      <div class="timeline-left">
-        <a class="timeline-icon" href="#timeline-example-1"></a>
-      </div>
-      <div class="timeline-content">
-        <h5>
-          <span>
-            <strong class="practice-sidebar__practice-time"
-              data-practices-target="practiceTime">
-              <%= current_user.practice_time_today %>
-            </strong><br>
-            <small>
-              de pratique
-              <%=
-                if practices_of_the_day.first.nil? || practices_of_the_day.first.created_at == Date.today
-                  "aujourd'hui"
-                else
-                  "le #{practices_of_the_day.first.created_at.strftime("%d/%m/%Y")}"
-                end
-              %>
-            </small>
-          </span>
-        </h5>
-      </div>
-    </div>
-    <!-- TIME INDICATOR -->
-
+  <ul role="list" class="-mb-8 border-t">
     <% if practices_of_the_day.present? %>
       <% practices_of_the_day.each_with_index do |practice, index| %>
         <%= turbo_frame_tag "practice_#{practice.id.to_s}" do %>
@@ -42,7 +11,5 @@
         <% end %>
       <% end %>
     <% end %>
-
-
-  </div>
+  </ul>
 <% end %>

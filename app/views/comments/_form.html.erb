@@ -1,24 +1,32 @@
 <% model = [local_assigns[:commentable], comment].compact %>
 <% first = local_assigns[:first].present? %>
-<%= form_with model: model,
-    id: record_id_gen(*model),
-    data: local_assigns[:data], class: "comment_form #{local_assigns[:class]}"  do |f| %>
 
-    <% # ERRORS
-    if f.object.errors.any? %>
-        <div class="alert bg-error">
-            <% f.object.errors.full_messages.each do |msg| %>
-                <p><%= msg %></p>
-            <% end %>
+<%= form_with model: model, id: record_id_gen(*model), data: {turbo: true, comment_target: 'form'},
+              class: "comment_form #{local_assigns[:class]}"  do |f| %>
+    <div class="flex space-x-4 mt-6">
+      <div class="flex-shrink-0">
+        <a href="<%= user_url(current_user) %>" data-turbo="false">
+          <%= render partial: "users/avatar", locals: {user: current_user, size: :large} %>
+        </a>
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="form-group">
+          <% # ERRORS
+          if f.object.errors.any? %>
+              <div class="alert bg-error">
+                  <% f.object.errors.full_messages.each do |msg| %>
+                      <p><%= msg %></p>
+                  <% end %>
+              </div>
+          <% end %>
+          <%= f.label "Votre commentaire", class: "sr-only" %>
+          <%= f.text_area :body, class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" %>
         </div>
-    <% end %>
 
-    <div class="form-group">
-        <%= f.label "Votre commentaire", class: "form-label mb-0" %>
-        <%= f.text_area :body, class: "form-input" %>
-    </div>
-    <div class="from-group">
-        <%= f.submit "Commenter", disable_with: 'Submiting...', class: "btn" %>
-        <%= link_to "Annuler", comment, class: "btn", data: {action: "click->comment#cancel"} if !first %>
+        <div class="text-right mt-6">
+          <%= link_to "Annuler", comment, class: "btn-secondary", data: {action: "click->comment#cancel"} if !first %>
+          <%= f.submit "Commenter", disable_with: 'Submiting...', class: "btn-primary", data: {action: "click->comment#submit"} %>
+        </div>
+      </div>
     </div>
 <% end %>

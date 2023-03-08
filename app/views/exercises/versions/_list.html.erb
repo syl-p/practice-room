@@ -1,47 +1,52 @@
 
 <%= turbo_frame_tag "exercise_versions" do %>
-  <div class="panel">
-    <div class="panel-header">
-      <h3 class="panel-title mb-0">Autres versions (<%= versions.count %>)</h3>
-      <small>Pour aller plus loin, découvrez des variantes de cet exercice</small>
-    </div>
-    <div class="panel-nav">
-      <!-- navigation components: tabs, breadcrumbs or pagination -->
-    </div>
-    <div class="panel-body">
-      <ul class="tile-list">
-        <% versions.each do |version| %>
-          <li class="p-2 <%=  "bg-secondary" if !version.published %>">
-            <div class="tile py-0">
-              <div class="tile-action">
+  <% if versions.present? %>
+    <ul class="divide-y divide-gray-200">
+      <% versions.each do |version| %>
+        <li class="block hover:bg-gray-50">
+          <div class="flex items-center p-4">
+            <div class="min-w-0 flex-1 flex">
+
+              <div class="hidden md:block flex-shrink-0">
                 <a href="<%= user_path(version.user.id) %>" data-turbo="false">
-                  <%= render partial: "users/avatar", locals: {user: version.user} %>
+                  <%= render partial: "users/avatar", locals: {user: version.user, size: :medium} %>
                 </a>
               </div>
-              <div class="tile-content">
-                <p class="tile-title mb-0">
-                  <strong><%= version.title %></strong>
-                  <% if !version.published %>
-                    <small class="text-right">( En cours de validation par l'auteur de l'exercice )</small> <br>
-                  <% end %>
-                  <small>Publié par <%= link_to version.user.username, user_path(version.user.id), data: {turbo: false}  %></small>
-                </p>
-                <p class="tile-subtitle">
-                  <%= version.description %>
-                  <%= link_to "Voir la version", exercise_path(version, view: "version"), data: {
+
+              <div class="min-w-0 flex-1 px-4">
+                <p class="font-medium text-gray-900 -mt-1">
+                  <%= link_to version.title, exercise_path(version, view: "version"), data: {
                     video_id: version.video_link,
                     action: 'click->application#showVersion'
-                  } %>
+                    } %>
+                </p>
+                <p class="text-xs text-gray-500 font-light truncate">
+                  publié par <%= link_to version.user.username, user_path(version.user.id), data: {turbo: false}  %>
+                  <% if !version.published %>
+                    ( En cours de validation  )
+                  <% end %>
+                </p>
+                <p class="mt-1 text-sm text-gray-600 font-light line-clamp-2 truncate">
+                  <%= version.description %>
                 </p>
               </div>
             </div>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-    <div class="panel-footer text-center">
-      <!-- buttons or inputs -->
-      <%= link_to "Proposez votre version", new_exercise_path(exercise_id: exercise), class: 'btn' if current_user.present? %>
-    </div>
+
+            <div>
+              <%= link_to "Voir", exercise_path(version, view: "version"), data: {
+                video_id: version.video_link,
+                action: 'click->application#showVersion'
+              }, class: "inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50" %>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>Aucune version alternative</p>
+  <% end %>
+  <div class="mt-6 text-center">
+    <!-- buttons or inputs -->
+    <%= link_to "Proposez votre version", new_exercise_path(original_id: exercise), class: 'btn btn-secondary' if current_user.present? %>
   </div>
 <% end %>

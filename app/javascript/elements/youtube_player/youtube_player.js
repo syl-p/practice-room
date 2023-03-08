@@ -49,9 +49,7 @@ export class YoutubePlayer extends HTMLElement {
         } else {
           this.shadow.innerHTML = `
             <style>${styles}</style>
-            <div class="no-video">
-              <p>Aucune vidéo par defaut n'a été définie pour cette exercice.</p>
-            </div>
+             <slot name="empty"></slot>
           `
         }
     }

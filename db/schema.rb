@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_12_182038) do
+ActiveRecord::Schema.define(version: 2023_02_28_164311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,19 +86,39 @@ ActiveRecord::Schema.define(version: 2022_06_12_182038) do
     t.integer "duration", default: 600
     t.integer "visibility", default: 0
     t.boolean "versions_enabled", default: true
+    t.float "goal_end"
+    t.float "goal_start"
+    t.bigint "goal_label_id"
+    t.string "slug"
     t.index ["exercise_id"], name: "index_exercises_on_exercise_id"
+    t.index ["goal_label_id"], name: "index_exercises_on_goal_label_id"
+    t.index ["slug"], name: "index_exercises_on_slug"
     t.index ["user_id"], name: "index_exercises_on_user_id"
   end
 
-  create_table "friendships", force: :cascade do |t|
-    t.bigint "requestor_id"
-    t.bigint "receiver_id"
-    t.boolean "accepted", default: false
+  create_table "follows", force: :cascade do |t|
+    t.bigint "follower_id"
+    t.bigint "following_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["receiver_id"], name: "index_friendships_on_receiver_id"
-    t.index ["requestor_id", "receiver_id"], name: "index_friendships_on_requestor_id_and_receiver_id", unique: true
-    t.index ["requestor_id"], name: "index_friendships_on_requestor_id"
+    t.index ["follower_id", "following_id"], name: "index_follows_on_follower_id_and_following_id", unique: true
+    t.index ["follower_id"], name: "index_follows_on_follower_id"
+    t.index ["following_id"], name: "index_follows_on_following_id"
+  end
+
+  create_table "goal_labels", force: :cascade do |t|
+    t.string "label"
+  end
+
+  create_table "goal_settings", force: :cascade do |t|
+    t.bigint "exercise_id"
+    t.bigint "user_id"
+    t.float "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["exercise_id", "user_id"], name: "index_goal_settings_on_exercise_id_and_user_id", unique: true
+    t.index ["exercise_id"], name: "index_goal_settings_on_exercise_id"
+    t.index ["user_id"], name: "index_goal_settings_on_user_id"
   end
 
   create_table "media", force: :cascade do |t|
@@ -134,14 +154,6 @@ ActiveRecord::Schema.define(version: 2022_06_12_182038) do
     t.index ["practice_id"], name: "index_practices_exercises_on_practice_id"
   end
 
-  create_table "sessions_of_the_days", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.json "sessions", default: [], array: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_sessions_of_the_days_on_user_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -163,12 +175,12 @@ ActiveRecord::Schema.define(version: 2022_06_12_182038) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "exercises", "exercises"
+  add_foreign_key "exercises", "goal_labels"
   add_foreign_key "exercises", "users"
-  add_foreign_key "friendships", "users", column: "receiver_id"
-  add_foreign_key "friendships", "users", column: "requestor_id"
+  add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "follows", "users", column: "following_id"
   add_foreign_key "media", "users"
   add_foreign_key "practices", "users"
   add_foreign_key "practices_exercises", "exercises"
   add_foreign_key "practices_exercises", "practices"
-  add_foreign_key "sessions_of_the_days", "users"
 end

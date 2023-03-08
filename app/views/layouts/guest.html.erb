@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html class="h-full">
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : 'Bienvenue' %> - Practice Room</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="description" content="<%= content_for(:description) ? yield(:description) : '' %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body class="h-full">
+    <%= yield %>
+  </body>
+</html>

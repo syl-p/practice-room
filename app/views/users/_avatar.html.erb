@@ -1,28 +1,22 @@
 <%
 size = nil if local_assigns[:size].nil?
-ui = nil if local_assigns[:ui].nil?
 class_size = case size
             when :small
-              "avatar-sm"
+              "h-6 w-6"
             when :medium
-              "avatar-md"
+              "h-10 w-10"
             when :large
-              "avatar-lg"
+              "h-16 w-16"
             when :xlarge
-              "avatar-xl"
+              "h-24 w-24"
             else
               ""
             end
 %>
-<figure class="avatar <%= class_size %>"
-  data-initial="xx" style="background-color: #5755d9;">
-  <% if user.avatar.attached? %>
-    <%= image_tag(url_for user.avatar) %>
-    <% if ui.present? %>
-      <!-- delete link rails ujs -->
-      <%= link_to delete_avatar_url(id: current_user.id), method: :delete, class: 'avatar-delete avatar-icon' do %>
-        <i class="mdi mdi-close"></i>
-      <% end %>
-    <% end %>
-  <% end %>
-</figure>
+<% if current_user.present? && user.avatar.attached? %>
+  <%= image_tag(url_for user.avatar, class: class_size) %>
+<% else %>
+  <span class="inline-flex items-center justify-center <%= class_size %> rounded-md bg-gray-500">
+    <span class="text-xs font-medium leading-none text-white">TW</span>
+  </span>
+<% end %>

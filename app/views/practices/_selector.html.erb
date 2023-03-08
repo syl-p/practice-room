@@ -1,34 +1,47 @@
 <%
-    current_month = current_date.month
-    current_year = current_date.year
-    current_week = (current_date.beginning_of_week..current_date.end_of_week).map.each { |day| day }
+  current_date = nil if local_assigns[:current_date].nil?
+  first_day = current_week.first
+  current_month = current_week.first.month
+  current_year = current_week.first.year
 %>
 
 <%= turbo_frame_tag "practices_selector", target: "practices_selector"  do %>
-  <div class="day-selector">
-    <nav class="day-selector__month">
-      <span class="day-selector__month-name"><%= I18n.t("date.month_names")[current_month] %> <%= current_year %></span>
+  <div class="bg-gray-100 text-center rounded-md p-4 mb-8">
+    <nav class="mb-4">
+      <span class="text-lg font-bold"><%= I18n.t("date.month_names")[current_month] %> <%= current_year %></span>
     </nav>
-    <div class="day-selector__week">
-      <%= link_to get_week_path(previous_next: 'previous', date: current_date), class: 'day-selector__week-prev' do %>
-        &lt;
+    <div class="flex justify-center items-center space-x-2">
+      <%= link_to get_week_path(previous_next: 'previous', date: first_day) do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
       <% end %>
+
       <% current_week.each do |day|
         with_data = practices_for_the_week.select { |p| p.created_at.all_day == day.all_day }.present?
         today = day.strftime("%Y-%m-%d") == Date.today.strftime("%Y-%m-%d")
+        it_current_date = day.strftime("%Y-%m-%d") == current_date.strftime("%Y-%m-%d") if current_date
       %>
-        <a href="<%= get_day_path(date: day) if with_data || today %>"
-         data-practices-target="dateLink"
-         data-date="<%= day.strftime("%Y-%m-%d") %>"
-         class="day-selector__week-day <%= "with_data" if with_data %>
-          <%=  "today" if today %>
-        ">
-          <span><%= Date::ABBR_DAYNAMES[day.wday][0,1] %></span>
-          <span><%= day.day %></span>
-        </a>
+        <%= link_to with_data || today ? get_day_path(date: day) : 'javascript:;',
+          class: "p-1 rounded-full #{ "bg-gray-700" if today } #{ "border border-indigo-500" if it_current_date }",
+          data: {
+            pratices_target: "dateLink",
+            date: day.strftime("%Y-%m-%d")
+          } do %>
+          <span class="block text-sm <%= "text-white" if today  %>"><%= Date::ABBR_DAYNAMES[day.wday][0,1] %></span>
+          <span class="block text-sm bg-white rounded-full py-1 px-2 relative">
+            <% if with_data %>
+              <span class="<%= "block absolute bottom-5 left-5 content-[''] bg-indigo-400 w-2 h-2 rounded-full" %>"> </span>
+            <% end %>
+            <%= day.day %>
+          </span>
+        <% end %>
       <% end %>
-      <%= link_to get_week_path(previous_next: 'next', date: current_date), class: 'day-selector__week-prev' do %>
-        &gt;
+
+      <%= link_to get_week_path(previous_next: 'next', date: first_day) do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
       <% end %>
     </div>
   </div>

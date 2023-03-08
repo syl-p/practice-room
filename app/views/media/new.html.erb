@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "medium-edit" do %>
   <%= form_with(model: @medium, local: true, html: { data: { controller: "upload-async" } }) do |form| %>
-    <h2>Ajouter une ressource</h2>
+    <h2 class="mb-6 text-xl">Ajouter une ressource</h2>
     <% if @medium.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@medium.errors.count, "error") %> prohibited this medium from being saved:</h2>

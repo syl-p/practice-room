@@ -9,11 +9,12 @@ class User < ApplicationRecord
   has_many :media, dependent: :destroy
   has_many :practices, dependent: :destroy
 
-  has_many :friendships_as_requestor, class_name: "Friendship", foreign_key: "requestor_id", dependent: :destroy
-  has_many :friendships_as_receiver, class_name: "Friendship", foreign_key: "receiver_id", dependent: :destroy
+  # follows relation
+  has_many :follows_as_following, class_name: "Follow", foreign_key: "follower_id"
+  has_many :following, through: :follows_as_following
 
-  has_many :requestors, through: :friendships_as_requestor
-  has_many :receivers, through: :friendships_as_receiver
+  has_many :follows_as_follower, class_name: "Follow", foreign_key: "following_id"
+  has_many :followers, through: :follows_as_follower
 
   has_one_attached :avatar
 
@@ -24,40 +25,12 @@ class User < ApplicationRecord
     admin: 3
   }
 
-  # get friends
-  def friendships
-    self.friendships_as_requestor.where(accepted: true) + self.friendships_as_receiver.where(accepted: true)
-  end
-
-  def friends
-    self.friendships.map { |friendship| friendship.requestor_id == self.id ? friendship.receiver : friendship.requestor }
-  end
-
-  def following?(user)
-    self.friendships_as_requestor.where(receiver_id: user.id, accepted: true).first.present? || self.friendships_as_receiver.where(requestor_id: user.id, accepted: true).first.present?
-  end
-
-  def find_friendship(user)
-    self.friendships_as_requestor.where(receiver_id: user.id).first || self.friendships_as_receiver.where(requestor_id: user.id).first
-  end
-
-  def pending_requests
-    self.friendships_as_requestor.where(accepted: false)
-  end
-
-  def pending_invitations
-    self.friendships_as_receiver.where(accepted: false)
-  end
-
   # overwrite favorites
   def favorites_populated
-    res = []
-    read_attribute(:favorites).each do |id|
-      res << Exercise.find(id)
-    end
-    res
+    Exercise.where(id: read_attribute(:favorites))
   end
 
+  # pratices methods
   def practices_of_the_day(date = Date.today)
     self.practices.where(created_at: date.all_day)
   end

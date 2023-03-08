@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'goal_settings/new'
+  get 'goal_settings/create'
+  get 'goal_settings/update'
+  get 'goal_settings/edit'
+  get 'goal_settings/destroy'
   devise_for :users, :controllers => { :registrations => "registrations" }
   resources :categories do
     collection do
@@ -18,19 +23,20 @@ Rails.application.routes.draw do
 
   resources :exercises do
     resources :comments, module: :exercises
+    resources :goal_settings, module: :exercises
     collection do
-      post "search"
+      post "search", defaults: { format: :turbo_stream }
+      get "search", defaults: { format: :turbo_stream }
       get "me"
       get ":id/edit/:step", to: "exercises#edit", as: "edit_with_step"
       get "new/:step", to: "exercises#new", as: "new_with_step"
-
+      get ":id/versions", to: "exercises#versions", as: "versions_list"
       # route for stimulus actions
       get ":id/practice/add(/:time)", to: "practices#add_to_practice", defaults: { format: :turbo_stream }, as: "add_to_practice"
       get ":id/favorites/:add_or_remove", to: "exercises#add_or_remove_favorite", defaults: { format: :turbo_stream }, as: "add_or_remove_favorite"
 
       # route for turbo frame query
-      get "list"
-
+      get "last_practiced"
     end
   end
 
@@ -45,19 +51,17 @@ Rails.application.routes.draw do
 
 
   delete "practice/remove/:practices_exercises_id", to: "practices#remove_from_practice", as: "remove_from_practice"
+
+  # Date selector for practice list
   get "practices/:previous_next/:date", to: "practices#get_week", as: "get_week"
   get "practices/:date", to: "practices#get_day", defaults: { format: :turbo_stream }, as: "get_day"
-
-  # Here because use turbo ??
-  get "exercises/:id/versions", to: "exercises#get_versions_list", as: "list_versions"
 
   # Pages
   get "/pages/:slug", to: "pages#show", as: "page"
 
-  # Friendships
-  delete "friendship/remove/:id", to: "friendships#destroy", as: "remove_friendship"
-  post "friendship/request/:id", to: "friendships#create", as: "friendship_request"
-  put "friendship/accept/:id", to: "friendships#accept", as: "accept_friendship"
+  # Follows
+  delete "unfollow/:id", to: "follows#destroy", as: "unfollow"
+  post "follow/:id", to: "follows#create", as: "follow"
 
   # Errors routes
   get '/404', to: 'errors#not_found'

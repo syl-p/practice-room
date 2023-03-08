@@ -3,7 +3,7 @@ import { practice } from "./mixins/practice"
 
 export default class extends ApplicationController {
   static targets = ["exercises", "exercise", "challenges",
-  "favorites", "logNav", "practiceTime"]
+  "favorites", "practiceLink", "practiceTime", "selectedTime"]
 
   static values = {
     date: String,
@@ -21,14 +21,15 @@ export default class extends ApplicationController {
     this.evalPracticeTime()
   }
 
-  dateValueChanged() {
-    const $dateLinks = document.querySelectorAll(`.day-selector a.day-selector__week-day`)
-    $dateLinks.forEach(($dl) => {
-      if ($dl.dataset.date == this.dateValue) {
-        $dl.classList.add('active')
-      } else {
-        $dl.classList.remove('active')
-      }
+  selectedTimeTargetConnected() {
+    this.selectedTimeTarget.addEventListener('change', (e) => {
+      const url = new URL(this.practiceLinkTarget.href)
+      const search = url.searchParams
+
+      search.set('time', this.selectedTimeTarget.value)
+
+      url.search = search.toString()
+      this.practiceLinkTarget.href = url
     })
   }
 

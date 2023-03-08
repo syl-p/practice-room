@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "exercise_comments" do %>
+  <%= tag.div id: "#{dom_id(@commentable)}_comments" do %>
+    <%=  render partial: "comments/comment", collection: @comments, as: :comment  %>
+  <% end %>
+<% end %>

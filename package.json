@@ -2,8 +2,7 @@
   "name": "practice_room",
   "private": true,
   "scripts": {
-    "build": "esbuild app/javascript/application.js --bundle --outdir=app/assets/builds",
-    "build:css": "cp -r ./node_modules/@mdi/font/fonts ./public; sass ./app/assets/stylesheets/application.sass.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+    "build": "esbuild app/javascript/application.js --bundle --outdir=app/assets/builds"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
@@ -12,11 +11,11 @@
     "@rails/actioncable": "^7.0.0-alpha2",
     "@rails/activestorage": "^7.0.0-alpha2",
     "@rails/ujs": "^7.0.0-alpha2",
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/typography": "^0.5.7",
     "chart.js": "^3.8.0",
     "esbuild": "^0.13.12",
     "remarkable": "^2.0.1",
-    "sass": "^1.43.4",
-    "spectre.css": "^0.5.9",
     "stimulus": "^2.0.0"
   },
   "version": "0.1.0"

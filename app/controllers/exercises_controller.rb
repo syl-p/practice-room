@@ -1,16 +1,12 @@
 class ExercisesController < ApplicationController
-  before_action :set_exercise, only: %i[ show edit get_versions_list update destroy add_to_favorites add_to_practice]
-  before_action :set_exerices, only: [:search, :list]
+  before_action :set_exercise, only: %i[ show edit versions update destroy add_to_favorites add_to_practice]
+  before_action :set_exercises_filtered, only: [:search, :list]
   before_action :set_categories, only: [:index, :search]
-  layout "layouts/dashboard", only: %i[edit new me]
   authorize_resource
 
   # GET /exercises or /exercises.json
   def index
-  end
-
-  def list
-    render partial: "exercises/search/results", locals: {exercises: @exercises}
+    @exercises = Exercise.for_current_user(current_user)
   end
 
   # POST /exercises/search
@@ -21,7 +17,7 @@ class ExercisesController < ApplicationController
     @exercises = @exercises
                       .where(original: nil)
                       .filtered(params)
-                      .order("#{params[:order_by]} #{params[:order]}")
+                      .order(params[:order])
 
     if params[:category_ids].present? && params[:category_ids].count > 0
       @exercises = @exercises.joins(:categories).where(categories: params[:category_ids])
@@ -40,14 +36,14 @@ class ExercisesController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream
-
-      format.html {
-        render partial: "exercises/search/list", locals: {exercises: @exercises, categories: @categories}
-      }
     end
   end
 
-  def get_versions_list
+  def last_practiced
+    @last_practiced = Exercise.joins(:goal_settings).where(goal_settings: {user_id: current_user.id}).order("updated_at desc").limit(3)
+  end
+
+  def versions
     render partial: "exercises/versions/list", locals: {
       versions: @exercise.versions_filtered(current_user),
       exercise: @exercise
@@ -61,6 +57,11 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1 or /exercises/1.json
   def show
+    @goal_setting = @exercise.goal_setting_for_current_user(current_user)
+    unless @goal_setting.present?
+      @goal_setting = GoalSetting.new(exercise_id: @exercise.id, user_id: current_user)
+    end
+
     if params[:view].present?
       render "exercises/versions/show"
     end
@@ -70,28 +71,22 @@ class ExercisesController < ApplicationController
   def new
     @exercise = Exercise.new
 
-    if params[:exercise_id].present? # version ?
-      @exercise.exercise_id = params[:exercise_id]
+    if params[:original_id].present? # version ?
+      @exercise.exercise_id = params[:original_id]
       render "exercises/versions/new", locals: {exercise: @exercise}
     end
   end
 
   # GET /exercises/1/edit
   def edit
-    if params[:step].present?
-      case params[:step]
-      when "media"
-        @medium = Medium.new
-        render "exercises/form/media"
-      when "versions"
-        render "exercises/form/versions"
-      when "visibility"
-        render "exercises/form/visibility"
-      end
-    else
-      if @exercise.original.present? # it's a version
-        render "exercises/versions/edit"
-      end
+    return unless ['media', "versions", "visibility"].include?(params[:step]) || params[:step].blank?
+
+    if params[:step] == "media"
+      @medium = Medium.new
+    end
+
+    if @exercise.original.present? # it's a version
+      render "exercises/versions/edit"
     end
   end
 
@@ -101,14 +96,22 @@ class ExercisesController < ApplicationController
     @exercise.user_id = current_user.id
     # published false if is a version of an exercise
     @exercise.published = false if @exercise.original.present?
-    step = @exercise.original.present? ? '' : 'media'
 
     respond_to do |format|
       if @exercise.save
-        format.html { redirect_to edit_with_step_exercises_path(@exercise, step: step), notice: "Exercise was successfully created." }
+        format.html { redirect_to edit_exercise_path(@exercise), notice: "Exercise was successfully created." }
         format.json { render :show, status: :created, location: @exercise }
       else
         format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(
+            "exercise_versions_form",
+            partial: "exercises/versions/form",
+            locals: {
+              version: @exercise
+            }
+          )
+        }
         format.json { render json: @exercise.errors, status: :unprocessable_entity }
       end
     end
@@ -119,20 +122,7 @@ class ExercisesController < ApplicationController
     respond_to do |format|
       if @exercise.update(exercise_params)
         format.html do
-          # get url
-          url = request.referer.split('/')
-          case url.last
-          when 'media'
-            redirect_to edit_with_step_exercises_path(@exercise, step: "versions"), notice: "Exercise was successfully updated."
-          when "versions"
-            redirect_to edit_with_step_exercises_path(@exercise, step: "visibility"), notice: "Exercise was successfully updated."
-          else
-            if url.last == 'visibility'
-              redirect_to edit_with_step_exercises_path(@exercise, step: "visibility"), notice: "Exercise was successfully updated."
-            else
-              redirect_to edit_with_step_exercises_path(@exercise, step: "media"), notice: "Exercise was successfully updated."
-            end
-          end
+          redirect_to request.referrer, notice: "Exercise was successfully updated."
         end
         format.json { render :show, status: :ok, location: @exercise }
       else
@@ -175,19 +165,14 @@ class ExercisesController < ApplicationController
       if !current_user.favorites.include? params[:id]
         current_user.update_attribute(:favorites, current_user.favorites << params[:id])
         current_user.save
-      else
-        head 404, content_type: "text/html"
       end
     when "remove"
       if current_user.favorites.include? params[:id]
         current_user.update_attribute(:favorites, current_user.favorites - [params[:id]])
         current_user.save
-      else
-        head 404, content_type: "text/html"
       end
     end
 
-    # Send html for exercise favorite element
     respond_to do |format|
       format.turbo_stream
     end
@@ -199,19 +184,12 @@ class ExercisesController < ApplicationController
     @exercise = Exercise.find(params[:id])
   end
 
-  def set_categories
-    @categories = Category.all
-  end
-
-  def set_exerices
-    # if connected show published exercise and my private exercise
-    @exercises = Exercise.for_current_user(current_user)
-  end
-
   # Only allow a list of trusted parameters through.
   def exercise_params
     params.fetch(:exercise, {}).permit(
-      :body, :video_link, :title, :published, :visibility, :versions_enabled, :exercise_id, :description, :level, medium_ids: [], category_ids: [], levels: [], versions_attributes: %i[
+      :body, :video_link, :title, :published, :visibility, :versions_enabled, :exercise_id, :description, :level,
+      :goal_start, :goal_end, :goal_label_id,
+      medium_ids: [], category_ids: [], levels: [], versions_attributes: %i[
         published user_id id
       ]
     )

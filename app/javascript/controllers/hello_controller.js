@@ -16,15 +16,19 @@ export default class extends Controller {
 
   search($event) {
     clearTimeout(this.timeout)
-    const parentForm = $event.target.closest("form")
     console.log(this.cloneSkeleton)
 
     // insert custom element skeleton in the results target DOM
     this.resultsTarget.innerHTML = this.cloneSkeleton.innerHTML
 
     // fire search
+    this.fireForm($event, 500)
+  }
+
+  fireForm($event, timeout = 200) {
+    const parentForm = $event.target.closest("form")
     this.timeout = setTimeout(() => {
       Rails.fire(parentForm, 'submit')
-    }, 500)
+    }, timeout)
   }
 }

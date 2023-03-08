@@ -1,46 +1,37 @@
-<%
-=begin%>
- <%= turbo_stream_from comment %>
-<%
-=end%>
 <%= turbo_frame_tag comment do %>
-    <div class="comment tile" data-controller="comment">
-        <div class="tile-icon">
-          <a href="<%= user_url(comment.user) %>" data-turbo="false">
-            <%= render partial: "users/avatar", locals: {user: comment.user, size: :large} %>
-          </a>
-        </div>
-        <div class="tile-content pl-3">
-            <p class="tile-title mb-0">
-                <a href="<%= user_url(comment.user) %>" class="text-bold" data-turbo="false"><%= comment.user.username %></a>
-                <br>
-                <small>le <%= comment.created_at %></small>
-            </p>
-            <p class="tile-subtitle mb-2">
-                <%= comment.body %>
-            </p>
-
-
-            <p>
-                <% if comment.parent_id.nil? %>
-                    <%= link_to "Répondre", "#", class: "btn btn-primary btn-sm", data: {action: "click->comment#display"} if user_signed_in? %>
-                <% end %>
-
-                <% if can? :manage, comment %>
-                    <%= link_to "Editer", edit_comment_path(comment), class: "btn btn-sm" %>
-                    <%= link_to "Delete", comment_path(comment), method: :delete, data: {confirm: "Tu es sûr(e) ?"}, class: "btn btn-sm" %>
-                <% end %>
-            </p>
-
-            <!-- COMMENT REPLY SECTION -->
-            <div id="<%= dom_id(comment) %>_comments">
-                <%= render partial: "comments/comment",
-                    collection: comment.comments, as: :comment  %>
-            </div>
-            <%= render partial: "comments/form",
-                    locals: {commentable: comment, comment: Comment.new,
-                    data: {comment_target: "form"}, class: 'd-none'} if comment.parent_id.nil? && user_signed_in? %>
-        </div>
-        <hr>
+  <div class="flex mt-5 mb-7" data-controller="comment">
+    <div class="mr-4">
+      <a href="<%= user_url(comment.user) %>" data-turbo="false">
+        <%= render partial: "users/avatar", locals: {user: comment.user, size: :medium} %>
+      </a>
     </div>
+    <div class="w-3/4">
+      <p class="-mt-2">
+        <a href="<%= user_url(comment.user) %>" class="font-bold" data-turbo="false"><%= comment.user.username %></a>
+        <small>le <%= comment.created_at %></small>
+      </p>
+      <p class="mb-2">
+          <%= comment.body %>
+      </p>
+      <p class="mt-3 text-sm font-bold uppercase">
+        <% if comment.parent_id.nil? %>
+            <%= link_to "Répondre", "#", data: {action: "click->comment#display"} if user_signed_in? %>
+        <% end %>
+        <% if can? :manage, comment %>
+          <%= '|' if comment.parent_id.nil? %>
+          <%= link_to "Modifier", edit_comment_path(comment) %>
+          <%= link_to "Supprimer", comment_path(comment), method: :delete, data: {confirm: "Tu es sûr(e) ?"} %>
+        <% end %>
+      </p>
+
+      <!-- COMMENT REPLY SECTION -->
+      <div id="<%= dom_id(comment) %>_comments">
+          <%= render partial: "comments/comment",
+              collection: comment.comments, as: :comment  %>
+      </div>
+
+      <%= render partial: "comments/form",
+              locals: {commentable: comment, comment: Comment.new, class: 'hidden'} if comment.parent_id.nil? && user_signed_in? %>
+    </div>
+  </div>
 <% end %>

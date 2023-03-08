@@ -12,19 +12,20 @@
       </div>
     <% end %>
 
-    <div class="columns">
-      <div class="col col-7">
-        <div class="field form-group">
+    <div class="mb-6 md:flex md:space-x-3">
+      <div class="w-3/6">
+
+        <div class="mb-6 field form-group">
           <%= form.label :name, class: "form-label" %>
-          <%= form.text_field :name, class: "form-input"  %>
+          <%= form.text_field :name, class: "form-input w-full"  %>
         </div>
 
-        <div class="field form-group">
+        <div class="mb-6 field form-group">
           <%= form.label :description, class: "form-label" %>
-          <%= form.text_area :description, class: "form-input" %>
+          <%= form.text_area :description, class: "form-input w-full" %>
         </div>
       </div>
-      <div class="col col-5 medium-edit__preview">
+      <div class="">
         <% if medium.file.representable? %>
           <%= image_tag url_for medium.file %>
         <% else %>
@@ -38,8 +39,8 @@
         <% end %>
       </div>
     </div>
-    <div class="actions">
-      <%= form.submit nil, class: "form-input", data: { action: !medium.persisted? ? "click->uploader-async#showProgress" :  '' } %>
+    <div class="form-group">
+      <%= form.submit nil, class: "btn btn-primary  float-right", data: { action: !medium.persisted? ? "click->uploader-async#showProgress" :  '' } %>
     </div>
   <% end %>
 <% end %>

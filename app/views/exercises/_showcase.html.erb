@@ -1,0 +1,31 @@
+<section>
+  <!-- Turbo load comments list + Skeleton -->
+  <%= turbo_frame_tag "exercises_list", src: search_exercises_path, loading: :lazy do %>
+    <%= render partial: "exercises/versions/list_skeleton" %>
+  <% end %>
+
+  <div id="exercise_sidebar"
+    data-application-target="sidebar"
+    data-transition-enter="ease-in-out duration-500"
+    data-transition-enter-start="opacity-0"
+    data-transition-enter-end="opacity-100"
+    data-transition-leave="ease-in-out duration-500"
+    data-transition-leave-start="opacity-100"
+    data-transition-leave-end="opacity-0"
+    class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+    <aside
+      class="hidden fixed right-0 inset-y-0 flex h-screen justify-center items-center sm:min-w-[50%] pl-10"
+      data-transition-enter="transform transition ease-in-out duration-500"
+      data-transition-enter-start="translate-x-full"
+      data-transition-enter-end="translate-x-0"
+      data-transition-leave="transform transition ease-in-out duration-500"
+      data-transition-leave-start="translate-x-0"
+      data-transition-leave-end="translate-x-full">
+      <div class="flex overflow-y-scroll flex-col w-full h-full bg-gray-200">
+        <%= turbo_frame_tag "exercise_show" do %>
+          <%= yield %>
+        <% end %>
+      </div>
+    </aside>
+  </div>
+</section>
