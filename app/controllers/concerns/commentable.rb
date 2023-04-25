@@ -20,7 +20,7 @@ module Commentable
 
                 format.turbo_stream {  
                     render turbo_stream: turbo_stream
-                        .append("#{dom_id(@parent || @commentable)}_comments",
+                        .prepend("#{dom_id(@parent || @commentable)}_comments",
                             partial: "comments/comment",
                             locals: {comment: @comment, commentable: replace_target })
                         # .replace(record_id_gen(replace_target, comment), # Replace form by empty form fields
