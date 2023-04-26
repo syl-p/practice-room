@@ -1,3 +1,5 @@
 <%= turbo_frame_tag @comment do %>
-    <%= render @comment %>
+  <%= tag.ul id: "#{dom_id(@commentable)}_comments", class: "mt-6" do %>
+    <%=  render partial: "comments/comment", collection: @comments, as: :comment  %>
+  <% end %>
 <% end %>
