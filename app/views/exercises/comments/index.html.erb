@@ -1,5 +1,5 @@
-<%= turbo_frame_tag "exercise_comments" do %>
-  <%= tag.ul id: "#{dom_id(@commentable)}_comments", class: "mt-6" do %>
+<%= turbo_frame_tag "#{dom_id(@commentable)}_comments" do %>
+  <ul class="mt-6">
     <%=  render partial: "comments/comment", collection: @comments, as: :comment  %>
     <li class="flex relative gap-x-4">
       <div class="flex absolute top-0 left-0 justify-center w-6 h-6">
@@ -13,5 +13,5 @@
       <p class="flex-1 flex-auto py-0.5 text-xs leading-5 text-gray-500"><span class="font-medium text-gray-900"><%= @commentable.user.username %></span> a posté cet exercice.</p>
       <time datetime="<%= @commentable.created_at %>" class="flex-none py-0.5 text-xs leading-5 text-gray-500"><%= @commentable.created_at %></time>
     </li>
-  <% end %>
+  </ul>
 <% end %>

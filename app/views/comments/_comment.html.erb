@@ -1,9 +1,11 @@
 <li data-controller="comment">
   <%= turbo_frame_tag comment do %>
     <div class="flex relative gap-x-4 pt-8" >
-      <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
-        <div class="w-px bg-gray-500"></div>
-      </div>
+      <% unless comment.parent_id.present? %>
+        <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
+          <div class="w-px bg-gray-500"></div>
+        </div>
+      <% end %>
 
       <%= link_to user_url(comment.user), data: {turbo: false}, class: "flex-none relative " do %>
         <%= render partial: "users/avatar", locals: {user: current_user, size: :small} %>
@@ -48,16 +50,20 @@
 
     <!-- REPLY -->
       <div class="flex relative gap-x-4">
-        <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
-          <div class="w-px border-l border-gray-500 border-dashed"></div>
-        </div>
+        <% unless comment.parent_id.present? %>
+          <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
+            <div class="w-px border-l border-gray-500 border-dashed"></div>
+          </div>
+        <% end %>
 
         <div class="relative flex-none">
         </div>
 
         <div class="flex-1 flex-auto py-6">
           <% if comment.comments.present? %>
-            <%= link_to "Voir les réponses (#{comment.comments.size})", comment_path(comment), class: "block w-full text-center text-sm  py-6" %>
+            <%= turbo_frame_tag "#{dom_id(comment)}_comments" do %>
+              <%= link_to "Voir les réponses (#{comment.comments.size})", comment_path(comment), class: "block w-full text-center text-sm  py-6" %>
+            <% end %>
           <% end %>
 
           <div class="pl-6">

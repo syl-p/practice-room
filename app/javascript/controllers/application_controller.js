@@ -13,6 +13,13 @@ export default class extends Controller {
   connect() {
     this.currentUrl = window.location.href
 
+    // Open exercise_sidebar if we are on exercise page
+    const exerciseRegex = /^\/exercises\/\d+$/; // expression régulière pour correspondre à /exercises/[nombre entier]
+    if (exerciseRegex.test(window.location.pathname)) {
+      // const exerciseId = parseInt(window.location.pathname.split("/")[2]);
+      this.sidebarShow({params: {id: "exercise_sidebar"}})
+    }
+
     // TURBO Event listening
     document.addEventListener('turbo:frame-load', (event) => {
       // Open exercise_sidebar for frame exercise_show

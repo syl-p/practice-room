@@ -149,7 +149,7 @@
           <% end %>
 
           <!-- Turbo load comments list + Skeleton -->
-          <%= turbo_frame_tag "exercise_comments", src: exercise_comments_path(@exercise), loading: :lazy do %>
+          <%= turbo_frame_tag "#{dom_id(@exercise)}_comments", src: exercise_comments_path(@exercise), loading: :lazy do %>
             <%= render partial: "exercises/versions/list_skeleton" %>
           <% end %>
         </div>

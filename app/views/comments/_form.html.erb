@@ -4,9 +4,9 @@
 <%= form_with model: model, id: record_id_gen(*model), data: {turbo: true, comment_target: 'form'},
               class: "comment_form #{local_assigns[:class]} flex relative gap-x-4"  do |f| %>
 
-    <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
+    <%# <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
       <div class="w-px bg-gray-500"></div>
-    </div>
+    </div> %>
 
     <%= link_to user_url(current_user), data: {turbo: false}, class: "flex-none relative" do %>
       <%= render partial: "users/avatar", locals: {user: current_user, size: :small} %>
