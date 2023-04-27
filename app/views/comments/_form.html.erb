@@ -1,38 +1,35 @@
 <% model = [local_assigns[:commentable], comment].compact %>
 <% first = local_assigns[:first].present? %>
 
-<%= form_with model: model, id: record_id_gen(*model), data: {turbo: true, comment_target: 'form'},
-              class: "comment_form #{local_assigns[:class]} flex relative gap-x-4"  do |f| %>
+<%= form_with model: model, id: record_id_gen(*model),
+  data: {turbo: true, comment_target: 'form'},
+  class: "comment_form #{local_assigns[:class]} flex relative gap-x-4 mb-6"  do |f| %>
 
-    <%# <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
-      <div class="w-px bg-gray-500"></div>
-    </div> %>
+  <%= link_to user_url(current_user), data: {turbo: false}, class: "flex-none relative" do %>
+    <%= render partial: "users/avatar", locals: {user: current_user, size: :small} %>
+  <% end %>
 
-    <%= link_to user_url(current_user), data: {turbo: false}, class: "flex-none relative" do %>
-      <%= render partial: "users/avatar", locals: {user: current_user, size: :small} %>
-    <% end %>
-
-    <div class="relative flex-1 flex-auto">
-      <div class="overflow-hidden pb-12 rounded-lg ring-1 ring-inset ring-gray-300 shadow-sm focus-within:ring-2 focus-within:ring-indigo-600">
-        <% # ERRORS
-        if f.object.errors.any? %>
-          <div class="alert bg-error">
-            <% f.object.errors.full_messages.each do |msg| %>
-              <p><%= msg %></p>
-            <% end %>
-          </div>
-        <% end %>
-
-        <%= f.label "Votre commentaire", class: "sr-only" %>
-        <%= f.text_area :body, row: 2, placeholder: "Votre commentaire...", class: "block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" %>
-      </div>
-
-      <div class="flex absolute inset-x-0 bottom-0 justify-between py-2 pr-2 pl-3">
-        <div class="flex items-center space-x-5"></div>
-        <div class="mt-6 text-right">
-          <%#= link_to "Annuler", comment, class: "btn-secondary", data: {action: "click->comment#cancel"} if !first %>
-          <%= f.submit "Commenter", disable_with: 'Submiting...', class: "btn-primary", data: {action: "click->comment#submit"} %>
+  <div class="relative flex-1 flex-auto">
+    <div class="overflow-hidden pb-12 rounded-lg ring-1 ring-inset ring-gray-300 shadow-sm focus-within:ring-2 focus-within:ring-indigo-600">
+      <% # ERRORS
+      if f.object.errors.any? %>
+        <div class="alert bg-error">
+          <% f.object.errors.full_messages.each do |msg| %>
+            <p><%= msg %></p>
+          <% end %>
         </div>
+      <% end %>
+
+      <%= f.label "Votre commentaire", class: "sr-only" %>
+      <%= f.text_area :body, row: 2, placeholder: "Votre commentaire...", class: "block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" %>
+    </div>
+
+    <div class="flex absolute inset-x-0 bottom-0 justify-between py-2 pr-2 pl-3">
+      <div class="flex items-center space-x-5"></div>
+      <div class="mt-6 text-right">
+        <%#= link_to "Annuler", comment, class: "btn-secondary", data: {action: "click->comment#cancel"} if !first %>
+        <%= f.submit "Commenter", disable_with: 'Submiting...', class: "btn-primary", data: {action: "click->comment#submit"} %>
       </div>
     </div>
+  </div>
 <% end %>

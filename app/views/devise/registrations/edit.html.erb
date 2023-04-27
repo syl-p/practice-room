@@ -7,7 +7,7 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, data: {turbo: false}) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
-      <section class="flex space-x-3 mb-6">
+      <section class="flex space-x-3 mb-6 justify-between justify-items-stretch">
         <!-- infos -->
         <div class="column">
           <div class="form-group mb-3">
@@ -45,7 +45,7 @@
         <!-- infos -->
 
         <!-- passwords -->
-        <div class="column border-l pl-3">
+        <div class="column pl-3">
           <div class="form-group mb-3">
             <%= f.label :password, class: "form-label" %>
 

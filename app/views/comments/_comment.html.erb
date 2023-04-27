@@ -1,6 +1,6 @@
-<li data-controller="comment">
+<div data-controller="comment">
   <%= turbo_frame_tag comment do %>
-    <div class="flex relative gap-x-4 pt-8" >
+    <div class="flex relative gap-x-4 mb-6">
       <% unless comment.parent_id.present? %>
         <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
           <div class="w-px bg-gray-500"></div>
@@ -13,11 +13,11 @@
 
       <div class="flex-1 flex-auto">
         <div class="p-2 rounded-md ring-1 ring-inset ring-gray-200">
-          <div class="flex gap-x-4 justify-between">
+          <div class="flex gap-x-4 justify-between text-sm">
             <div class="py-0.5 leading-5 text-gray-500">
               <%= link_to comment.user.username, user_url(comment.user), class: "text-gray-900" %> dit
             </div>
-            <time datetime="<%= comment.created_at %>" class="flex-none py-0.5 text-xs leading-5 text-gray-500"><%= l comment.created_at, format: :short %></time>
+            <time datetime="<%= comment.created_at %>" class="flex-none py-0.5 leading-5 text-gray-500"><%= l comment.created_at, format: :short %></time>
           </div>
 
           <p class="mt-3 leading-6 text-gray-500">
@@ -47,30 +47,26 @@
         <% end %>
       </div>
     </div>
-
-    <!-- REPLY -->
-      <div class="flex relative gap-x-4">
-        <% unless comment.parent_id.present? %>
-          <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
-            <div class="w-px border-l border-gray-500 border-dashed"></div>
-          </div>
-        <% end %>
-
-        <div class="relative flex-none">
+  <% end %>
+  <!-- REPLY -->
+    <div class="flex relative gap-x-4">
+      <% unless comment.parent_id.present? %>
+        <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
+          <div class="w-px border-l border-gray-500 rounded-xl"></div>
         </div>
+      <% end %>
 
-        <div class="flex-1 flex-auto py-6">
-          <% if comment.comments.present? %>
-            <%= turbo_frame_tag "#{dom_id(comment)}_comments" do %>
-              <%= link_to "Voir les réponses (#{comment.comments.size})", comment_path(comment), class: "block w-full text-center text-sm  py-6" %>
-            <% end %>
-          <% end %>
+      <div class="relative flex-none">
+      </div>
 
-          <div class="pl-6">
-            <%= render partial: "comments/form", locals: {commentable: comment, comment: Comment.new, class: 'hidden'} if comment.parent_id.nil? && user_signed_in? %>
-          </div>
+      <div class="flex-1 flex-auto pl-6">
+        <%= turbo_frame_tag "#{dom_id(comment)}_comments", src: comment_path(comment) do %>
+          ...
+        <% end %>
+        <div>
+          <%= render partial: "comments/form", locals: {commentable: comment, comment: Comment.new, class: 'hidden'} if comment.parent_id.nil? && user_signed_in? %>
         </div>
       </div>
-    <!-- END REPLY -->
-  <% end %>
-</li>
+    </div>
+  <!-- END REPLY -->
+</div>

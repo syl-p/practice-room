@@ -1,15 +1,3 @@
 <%= turbo_frame_tag "#{dom_id(@comment)}_comments" do %>
-  <div class="p-6">
-    <div class="relative">
-      <div class="absolute inset-0 flex items-center" aria-hidden="true">
-        <div class="w-full border-t border-gray-500 border-dashed"></div>
-      </div>
-      <div class="relative flex justify-center">
-        <span class="bg-white px-2 text-sm text-gray-500">réponses</span>
-      </div>
-    </div>
-    <ul>
-      <%= render partial: "comments/comment", collection: @comment.comments, as: :comment  %>
-    </ul>
-  </div>
+  <%= render partial: "comments/comment", collection: @comment.comments, as: :comment  %>
 <% end %>
