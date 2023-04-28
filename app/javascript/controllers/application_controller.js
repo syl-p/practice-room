@@ -13,27 +13,27 @@ export default class extends Controller {
   connect() {
     this.currentUrl = window.location.href
 
-    // Open exercise_sidebar if we are on exercise page
-    const exerciseRegex = /^\/exercises\/\d+$/; // expression régulière pour correspondre à /exercises/[nombre entier]
-    if (exerciseRegex.test(window.location.pathname)) {
-      // const exerciseId = parseInt(window.location.pathname.split("/")[2]);
-      this.sidebarShow({params: {id: "exercise_sidebar"}})
-    }
+    // // Open exercise_sidebar if we are on exercise page
+    // const exerciseRegex = /^\/exercises\/\d+$/; // expression régulière pour correspondre à /exercises/[nombre entier]
+    // if (exerciseRegex.test(window.location.pathname)) {
+    //   // const exerciseId = parseInt(window.location.pathname.split("/")[2]);
+    //   this.sidebarShow({params: {id: "exercise_sidebar"}})
+    // }
 
-    // TURBO Event listening
-    document.addEventListener('turbo:frame-load', (event) => {
-      // Open exercise_sidebar for frame exercise_show
-      if (event.target.id === "exercise_show") {
-        this.sidebarShow({params: {id: "exercise_sidebar"}})
-        window.history.pushState({url: event.target.src}, "", event.target.src);
-      }
-    });
+    // // TURBO Event listening
+    // document.addEventListener('turbo:frame-load', (event) => {
+    //   // Open exercise_sidebar for frame exercise_show
+    //   if (event.target.id === "exercise_show") {
+    //     this.sidebarShow({params: {id: "exercise_sidebar"}})
+    //     window.history.pushState({url: event.target.src}, "", event.target.src);
+    //   }
+    // });
 
-    // Go back btn, close the popup
-    window.addEventListener("popstate", (event) => {
-      window.history.replaceState({}, '', event.state.previousUrl);
-      this.sidebarHide({params: {id: "exercise_sidebar"}})
-    });
+    // // Go back btn, close the popup
+    // window.addEventListener("popstate", (event) => {
+    //   window.history.replaceState({}, '', event.state.previousUrl);
+    //   this.sidebarHide({params: {id: "exercise_sidebar"}})
+    // });
   }
 
   sidebarTargetConnected(sidebar) {

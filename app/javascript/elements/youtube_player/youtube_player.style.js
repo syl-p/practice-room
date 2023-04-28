@@ -1,18 +1,20 @@
 export default `
   .youtube-player {
     background-color: #000;
-    // margin-bottom: 30px;
-    position: relative;
-    padding-top: 56.25%;
-    overflow: hidden;
-    cursor: pointer;
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
   }
   .youtube-player img {
-    width: 100%;
+    height: 100%;
     top: -16.84%;
     left: 0;
-    opacity: 0.7;
+    opacity: 0.5;
   }
+
   .youtube-player .play-button {
     width: 90px;
     height: 60px;
