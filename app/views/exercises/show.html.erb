@@ -2,9 +2,9 @@
   content_for(:title, @exercise.title)
   content_for(:description, @exercise.description)
 %>
-<section class="grid grid-cols-3 gap-4">
-  <article class="col-span-2">
-    <header class="flex flex-col h-[500px] bg-indigo-600 rounded-xl text-white p-8 justify-end relative overflow-hidden">
+<section class="lg:grid lg:grid-cols-3 lg:gap-4">
+  <article class="lg:col-span-2">
+    <header class="flex flex-col h-[500px] w-full bg-indigo-600 rounded-3xl text-white p-8 justify-end relative overflow-hidden">
       <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
       <div class="z-20">
         <div class="mb-6">
@@ -21,9 +21,22 @@
         <p><%= @exercise.description %></p>
       </div>
     </header>
-    <section class="flex my-6 space-x-6">
-      <aside>
-        <%= render partial: "practices/toolbar", locals: {exercise: @exercise , extended: true} if current_user.present? %>
+    <section class="my-8 lg:grid lg:grid-cols-3 lg:gap-4">
+      <aside class="p-6 mt-16 bg-white rounded-3xl border">
+        <% if current_user.present? %>
+          <button class="flex flex-col justify-center items-center mx-auto -mt-16 w-20 h-20 bg-indigo-500 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+            </svg>
+          </button>
+
+          <div class="my-6">
+            <%= render partial: "practices/adding_time", locals: {exercise: @exercise} if current_user.present? %>
+          </div>
+
+        <% end %>
+        <%= render partial: "practices/toolbar", locals: {exercise: @exercise , extended: false} if current_user.present? %>
+
         <% if @exercise.goal_end.present? %>
           <%= turbo_frame_tag "goal_setting_form" do %>
             <%= render partial: "exercises/goal_settings/form", locals: {exercise: @exercise, goal_setting: @goal_setting} %>
@@ -37,47 +50,46 @@
           </div>
         <% end %>
       </aside>
-      <section>
+      <section class="lg:col-span-2">
         <div class="px-8" class="prose">
           <%= sanitize renderHtml @exercise.body %>
         </div>
       </section>
     </section>
     <footer>
-      <div class="px-8">
-        <% if user_signed_in? %>
-          <%= turbo_frame_tag "comment_new" do %>
-            <%= render partial: "comments/form",
-              locals: {
-                comment: Comment.new, commentable: @exercise, first: true
-              } %>
-          <% end %>
-        <% else %>
-          <!-- empty state: not signed in -->
-          <div class="flex flex-col justify-center items-center p-24 mb-10 bg-gray-200 rounded-md">
-            <div class="text-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              <p class="my-6 text-sm font-light text-center">Vous devez être connecter pour pouvoir commenter.</p>
-              <div class="flex justify-center items-center space-x-3">
-                <%= link_to "Se connecter", new_user_session_path, data: {turbo: false}, class: "btn btn-primary"  %>
-                <%= link_to "S'inscrire", new_user_registration_path, data: {turbo: false}, class: "btn btn-secondary"  %>
-              </div>
+      <% if user_signed_in? %>
+        <%= turbo_frame_tag "comment_new" do %>
+          <%= render partial: "comments/form",
+            locals: {
+              comment: Comment.new, commentable: @exercise, first: true
+            } %>
+        <% end %>
+      <% else %>
+        <!-- empty state: not signed in -->
+        <div class="flex flex-col justify-center items-center p-24 mb-10 bg-gray-200 rounded-md">
+          <div class="text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <p class="my-6 text-sm font-light text-center">Vous devez être connecter pour pouvoir commenter.</p>
+            <div class="flex justify-center items-center space-x-3">
+              <%= link_to "Se connecter", new_user_session_path, data: {turbo: false}, class: "btn btn-primary"  %>
+              <%= link_to "S'inscrire", new_user_registration_path, data: {turbo: false}, class: "btn btn-secondary"  %>
             </div>
           </div>
-        <% end %>
+        </div>
+      <% end %>
 
-        <!-- Turbo load comments list + Skeleton -->
-        <%= turbo_frame_tag "#{dom_id(@exercise)}_comments", src: exercise_comments_path(@exercise), loading: :lazy do %>
-          <%= render partial: "exercises/versions/list_skeleton" %>
-        <% end %>
-      </div>
+      <!-- Turbo load comments list + Skeleton -->
+      <%= turbo_frame_tag "#{dom_id(@exercise)}_comments", src: exercise_comments_path(@exercise), loading: :lazy do %>
+        <%= render partial: "exercises/versions/list_skeleton" %>
+      <% end %>
     </footer>
   </article>
-  <aside class="">
+  <aside class="h-full">
     <% if @exercise.versions_enabled %>
-      <div class="p-6 rounded-xl border" slot="tab">
+      <div class="p-6 bg-white rounded-3xl border">
+        <h3 class="mb-6 text-2xl">Autres versions</h3>
         <!-- Turbo load version list + Skeleton -->
         <%= turbo_frame_tag "exercise_versions", src: versions_list_exercises_path(@exercise), loading: :lazy do %>
           <%= render partial: "exercises/versions/list_skeleton" %>
