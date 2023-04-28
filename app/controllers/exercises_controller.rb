@@ -39,10 +39,6 @@ class ExercisesController < ApplicationController
     end
   end
 
-  def last_practiced
-    @last_practiced = Exercise.joins(:goal_settings).where(goal_settings: {user_id: current_user.id}).order("updated_at desc").limit(3)
-  end
-
   def versions
     render partial: "exercises/versions/list", locals: {
       versions: @exercise.versions_filtered(current_user),
