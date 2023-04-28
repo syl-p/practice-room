@@ -44,16 +44,12 @@
         <% end %>
 
         <% if @exercise.media.count > 0 %>
-          <div class="px-8">
-            <p class="mb-6 font-light text-gray-600">Ressources partagées par l'auteur de l'exercice:</p>
-            <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
-          </div>
+          <p class="mb-6 font-light text-gray-600">Ressources partagées par l'auteur de l'exercice:</p>
+          <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
         <% end %>
       </aside>
       <section class="lg:col-span-2">
-        <div class="px-8" class="prose">
-          <%= sanitize renderHtml @exercise.body %>
-        </div>
+        <%= sanitize renderHtml @exercise.body %>
       </section>
     </section>
     <footer>
