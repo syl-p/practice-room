@@ -8,7 +8,7 @@
       <% end %>
 
       <%= link_to user_url(comment.user), data: {turbo: false}, class: "flex-none relative " do %>
-        <%= render partial: "users/avatar", locals: {user: current_user, size: :small} %>
+        <%= render partial: "users/avatar", locals: {user: comment.user, size: :small} %>
       <% end %>
 
       <div class="flex-1 flex-auto">
@@ -52,7 +52,7 @@
     <div class="flex relative gap-x-4">
       <% unless comment.parent_id.present? %>
         <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
-          <div class="w-px border-l border-gray-500 rounded-xl"></div>
+          <div class="w-px rounded-xl border-l border-gray-500"></div>
         </div>
       <% end %>
 
