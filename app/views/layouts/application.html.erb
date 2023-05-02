@@ -22,11 +22,11 @@
 
       <!-- Content area -->
       <div class="flex flex-col flex-1 lg:pl-20">
-        <main class="relative px-8 py-6 bg-gray-50 border-l md:screen md:overflow-y-auto">
+        <main class="relative px-12 py-6 bg-gray-50 border-l md:screen md:overflow-y-auto">
           <%= render "shared/header" %>
           <%= yield %>
-          <%#= render "shared/footer" %>
         </main>
+        <%= render "shared/footer" %>
       </div>
       <!-- END Content area -->
       <%= render "shared/practice_sidebar" if current_user.present? %>

@@ -9,9 +9,10 @@ export default `
     z-index: 0;
   }
   .youtube-player img {
-    height: 100%;
-    top: -16.84%;
-    left: 0;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate3d( -50%, -50%, 0 );
     opacity: 0.5;
   }
 

@@ -1,6 +1,5 @@
 <section data-controller="hello">
   <header class="flex justify-between items-end mb-6 space-x-3">
-    <h2 class="text-xl font-medium">Les derniers publiés</h2>
     <%= form_with(url: search_exercises_path) do |form| %>
       <% if @categories.present? %>
         <ul class="flex space-x-3 font-medium text-gray-900">
