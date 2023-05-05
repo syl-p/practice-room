@@ -10,8 +10,8 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class="h-full">
-    <div class="flex relative z-10"
+  <body class="h-full" data-controller="hello">
+    <div class="flex relative"
       aria-labelledby="slide-over-title"
       data-controller="application"
       data-application-root-value="<%= root_url %>">
@@ -22,11 +22,13 @@
 
       <!-- Content area -->
       <div class="flex flex-col flex-1 lg:pl-20">
-        <main class="relative px-12 py-6 bg-gray-50 border-l md:screen md:overflow-y-auto">
+        <main class="relative py-6 border-l md:screen md:overflow-y-auto">
           <%= render "shared/header" %>
-          <%= yield %>
+          <div class="px-12">
+            <%= yield %>
+          </div>
+          <%= render "shared/footer" %>
         </main>
-        <%= render "shared/footer" %>
       </div>
       <!-- END Content area -->
       <%= render "shared/practice_sidebar" if current_user.present? %>

@@ -1,5 +1,6 @@
 <%
-size = nil if local_assigns[:size].nil?
+size = :medium if local_assigns[:size].nil?
+square = false if local_assigns[:square].nil?
 class_size = case size
             when :small
               "h-6 w-6"
@@ -16,7 +17,7 @@ class_size = case size
 <% if current_user.present? && user.avatar.attached? %>
   <%= image_tag(url_for user.avatar, class: class_size) %>
 <% else %>
-  <span class="inline-flex items-center justify-center <%= class_size %> rounded-full bg-gray-500">
+  <span class="inline-flex items-center justify-center <%= class_size %> <%= square ? "rounded-md" : "rounded-full" %> bg-gray-500">
     <span class="text-xs font-medium leading-none text-white"><%= user.username[0..1] %></span>
   </span>
 <% end %>

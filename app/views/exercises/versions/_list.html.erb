@@ -1,42 +1,33 @@
 
 <%= turbo_frame_tag "exercise_versions" do %>
   <% if versions.present? %>
-    <ul class="divide-y divide-gray-200">
+    <ul class="">
       <% versions.each do |version| %>
-        <li class="block hover:bg-gray-50">
-          <div class="flex items-center p-4">
+        <li class="block py-4">
+          <div class="flex items-center p-3">
             <div class="flex flex-1 min-w-0">
-
-              <div class="hidden flex-shrink-0 md:block">
+              <div class="flex-shrink-0">
                 <a href="<%= user_path(version.user.id) %>" data-turbo="false">
-                  <%= render partial: "users/avatar", locals: {user: version.user, size: :medium} %>
+                  <%= render partial: "users/avatar", locals: {user: version.user, size: :large, square: true} %>
                 </a>
               </div>
-
               <div class="flex-1 px-4 min-w-0">
-                <p class="-mt-1 font-medium text-gray-900">
+                <p class="-mt-1 font-medium">
                   <%= link_to version.title, exercise_path(version, view: "version"), data: {
                     video_id: version.video_link,
                     action: 'click->application#showVersion'
                     } %>
                 </p>
-                <p class="text-xs font-light text-gray-500 truncate">
+                <p class="text-xs font-light truncate">
                   publié par <%= link_to version.user.username, user_path(version.user.id), data: {turbo: false}  %>
                   <% if !version.published %>
                     ( En cours de validation  )
                   <% end %>
                 </p>
-                <p class="mt-1 text-sm font-light text-gray-600 truncate line-clamp-2">
+                <p class="mt-1 text-sm text-white truncate mix-blend-difference line-clamp-2">
                   <%= version.description %>
                 </p>
               </div>
-            </div>
-
-            <div>
-              <%= link_to "Voir", exercise_path(version, view: "version"), data: {
-                video_id: version.video_link,
-                action: 'click->application#showVersion'
-              }, class: "inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50" %>
             </div>
           </div>
         </li>
