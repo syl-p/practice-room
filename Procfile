@@ -1,4 +1,3 @@
-web: bundle exec puma -C config/puma.rb
-worker: bundle exec sidekiq
-js: npm run build -- --watch
+web: bundle exec rails s -b 0.0.0.0
 css: bin/rails tailwindcss:watch
+js: npm run build -- --watch

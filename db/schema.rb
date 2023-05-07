@@ -158,8 +158,8 @@ ActiveRecord::Schema.define(version: 2023_02_28_164311) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: 6
+    t.datetime "remember_created_at", precision: 6
     t.string "username"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(version: 2023_02_28_164311) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "exercises", "exercises"
+  add_foreign_key "exercises", "goal_labels"
   add_foreign_key "exercises", "users"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "follows", "users", column: "following_id"
