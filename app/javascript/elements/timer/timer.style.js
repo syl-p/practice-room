@@ -3,6 +3,10 @@ export default `
     text-align: center;
   }
 
+  .timer button {
+    cursor: pointer;
+  }
+
   .timer button:not(.timer__reset) {
     width: 100px;
     height: 100px;
@@ -13,7 +17,6 @@ export default `
     border: 0;
     display: block;
     margin: auto;
-    cursor: pointer;
   }
 
   .timer button:not(.timer__reset) svg {
@@ -21,12 +24,27 @@ export default `
   }
 
   .timer__show {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .timer__show p{
     font-weight: bold;
     font-size: 25px;
   }
 
-  .timer button.timer__reset {
-    display: inline;
+  button.timer__reset {
+    border: none;
+    background: none;
     cursor: pointer;
+    margin: 0;
+    padding: 0;
+  }
+
+  button.timer__reset svg {
+    width: 20px;
   }
 `
