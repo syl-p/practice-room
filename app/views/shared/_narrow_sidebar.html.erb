@@ -1,12 +1,12 @@
-<aside class="hidden w-20 h-full bg-transparent shadow lg:flex lg:flex-shrink-0 lg:fixed">
+<aside class="hidden h-screen w-40 lg:flex lg:flex-shrink-0">
   <div class="flex overflow-y-auto flex-col flex-1 h-full min-h-0">
     <div class="flex-1">
-      <a href="<%= root_path %>" class="flex justify-center items-center py-6">
+      <a href="<%= root_path %>" class="flex justify-center items-center py-8">
         <img class="w-auto h-8" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo" alt="Workflow">
       </a>
 
       <nav aria-label="Sidebar"
-        class="flex flex-col items-center py-8 space-y-3">
+        class="flex flex-col space-y-3">
         <%
           nav_links = [
             {
@@ -14,7 +14,7 @@
               path: dashboard_path,
               must_be_logged: true,
               logo: '
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.1" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
               </svg>
               '
@@ -24,7 +24,7 @@
               path: me_exercises_path,
               must_be_logged: true,
               logo: '
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>'
             },
@@ -33,19 +33,19 @@
               path: media_path,
               must_be_logged: true,
               logo: '
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                 </svg>'
             },
-            {
-              must_be_logged: true,
-              divider: true
-            },
+            # {
+            #   must_be_logged: true,
+            #   divider: true
+            # },
             {
               label: "A propos",
               path: page_path('a-propos'),
               logo: '
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.1" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
               </svg>
               '
@@ -54,7 +54,7 @@
               label: "Contact",
               path: page_path('contact'),
               logo: '
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.1" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
               </svg>
               '
@@ -63,24 +63,11 @@
         %>
         <% nav_links.each do |link|
           next unless link[:must_be_logged].nil? || (link[:must_be_logged].present? & current_user.present?)
-
-          if link[:divider].present? %>
-            <div class="relative">
-              <div class="flex absolute inset-0 items-center" aria-hidden="true">
-                <div class="w-full border-t border-slate-300"></div>
-              </div>
-              <div class="flex relative justify-center">
-                <span class="p-2 bg-transparent">
-                  <!-- Heroicon name: mini/plus -->
-                </span>
-              </div>
-            </div>
-          <% else %>
-            <a href="<%= link[:path] %>" class="flex flex-col items-center p-3 text-xs font-medium rounded-md rounded-lg hover:bg-primary">
-              <%= raw link[:logo] %>
-              <span class="sr-only"><%= link[:label]%></span>
-            </a>
-          <% end%>
+          %>
+          <a href="<%= link[:path] %>" class="flex gap-x-3 px-4 py-3 text-xs font-medium leading-6 rounded-r-full hover:bg-primary hover:text-white">
+            <%= raw link[:logo] %>
+            <span><%= link[:label]%></span>
+          </a>
         <% end%>
       </nav>
 

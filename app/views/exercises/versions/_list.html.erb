@@ -4,7 +4,7 @@
     <ul class="">
       <% versions.each do |version| %>
         <li class="block py-4">
-          <div class="flex items-center p-3">
+          <div class="flex items-center">
             <div class="flex flex-1 min-w-0">
               <div class="flex-shrink-0">
                 <a href="<%= user_path(version.user.id) %>" data-turbo="false">
@@ -24,7 +24,7 @@
                     ( En cours de validation  )
                   <% end %>
                 </p>
-                <p class="mt-1 text-sm text-white truncate mix-blend-difference line-clamp-2">
+                <p class="mt-1 text-sm truncate">
                   <%= version.description %>
                 </p>
               </div>
