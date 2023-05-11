@@ -8,7 +8,7 @@
     <div class="lg:flex lg:space-x-12 xl:mx-auto">
       <div class="flex-1 relative lg:col-span-2 shadow-xl rounded-2xl bg-white">
         <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>">
-          <div class="flex items-center justify-center h-full" slot="empty">
+          <div class="flex items-center justify-center min-h-full" slot="empty">
             <div class="text-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
@@ -34,18 +34,13 @@
     <aside class="bg-white rounded-3xl border">
       <% if current_user.present? %>
         <div class="p-6">
-          <div class="-mt-[70px]">
-            <timer-watch></timer-watch>
-          </div>
-          <div class="mt-6">
-            <%= render partial: "practices/adding_time", locals: {exercise: @exercise} %>
-            <p class="my-6 text-sm font-light text-gray-600">Mettre à jour vos objectifs</p>
-            <% if @exercise.goal_end.present? %>
-              <%= turbo_frame_tag "goal_setting_form" do %>
-                <%= render partial: "exercises/goal_settings/form", locals: {exercise: @exercise, goal_setting: @goal_setting} %>
-              <% end %>
+          <%= render partial: "practices/adding_time", locals: {exercise: @exercise} %>
+          <p class="my-6 text-sm font-light text-gray-600">Mettre à jour vos objectifs</p>
+          <% if @exercise.goal_end.present? %>
+            <%= turbo_frame_tag "goal_setting_form" do %>
+              <%= render partial: "exercises/goal_settings/form", locals: {exercise: @exercise, goal_setting: @goal_setting} %>
             <% end %>
-          </div>
+          <% end %>
         </div>
       <% end %>
 

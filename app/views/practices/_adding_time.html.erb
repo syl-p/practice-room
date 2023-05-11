@@ -1,12 +1,17 @@
-<div data-controller="practices" class="flex space-x-3">
-  <div class="flex-1 flex-shrink-0 min-w-0">
-    <input type="time" class="block px-3 py-2 w-full placeholder-gray-400 text-black rounded-md border border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    data-practices-target="selectedTime" value="<%= exercise.duration ? Time.at(exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
+<div data-controller="practices">
+  <div class="-mt-[70px]">
+    <timer-watch data-practices-target="timer"></timer-watch>
   </div>
+  <div class="flex space-x-3">
+    <div class="flex-1 flex-shrink-0 min-w-0">
+      <input type="time" class="block px-3 py-2 w-full placeholder-gray-400 text-black rounded-md border border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      data-practices-target="selectedTime" value="<%= exercise.duration ? Time.at(exercise.duration).utc.strftime("%H:%M") : "00:10" %>"/>
+    </div>
 
-  <%= link_to add_to_practice_exercises_url(id: exercise.id), data: {practices_target: 'practiceLink'}, class: "self-center" do %>
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-    </svg> <%= "Ajouter à ma pratique du jour" if false %>
-  <% end %>
+    <%= link_to add_to_practice_exercises_url(id: exercise.id), data: {practices_target: 'practiceLink'}, class: "self-center" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg> <%= "Ajouter à ma pratique du jour" if false %>
+    <% end %>
+  </div>
 </div>

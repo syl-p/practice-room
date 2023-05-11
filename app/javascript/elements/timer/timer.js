@@ -57,8 +57,6 @@ export class Timer extends HTMLElement {
       this.btnStop.style.display = "none"
       this.btnPlay.style.display = "block"
     })
-
-    this.event = new CustomEvent('change', {elapsedTime: this.elapsedTime, timerShow: this.timerShow.innerHTML})
   }
 
   start() {
@@ -66,7 +64,9 @@ export class Timer extends HTMLElement {
       this.elapsedTime += 1000
       const value = this.formattedElapsedTime(this.elapsedTime)
       this.timerShow.innerHTML = value
-      this.dispatchEvent(this.event)
+      this.dispatchEvent(new CustomEvent('change', {
+        detail: {elapsedTime: this.elapsedTime, timerShow: this.timerShow.innerHTML}
+      }))
     }, 1000);
   }
 
@@ -79,6 +79,7 @@ export class Timer extends HTMLElement {
     this.stop()
     this.elapsedTime = 0
     this.timerShow.innerHTML = "00:00:00"
+    this.dispatchEvent(new CustomEvent('reset'))
   }
 
   formattedElapsedTime(value) {

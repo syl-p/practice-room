@@ -2,8 +2,7 @@ import ApplicationController from "./application_controller"
 import { practice } from "./mixins/practice"
 
 export default class extends ApplicationController {
-  static targets = ["exercises", "exercise", "challenges",
-  "favorites", "practiceLink", "practiceTime", "selectedTime"]
+  static targets = ["exercise", "practiceLink", "practiceTime", "selectedTime", "timer"]
 
   static values = {
     date: String,
@@ -17,20 +16,38 @@ export default class extends ApplicationController {
     this.evalPracticeTime()
   }
 
+  timerTargetConnected() {
+    this.timerTarget.addEventListener('change', e => {
+      this.changePracticeLinkTimeParams(e.detail.timerShow)
+    })
+
+    this.timerTarget.addEventListener('reset', () => {
+      this.changePracticeLinkTimeParams(null)
+    })
+  }
+
   exerciseTargetDisconnected() {
     this.evalPracticeTime()
   }
 
   selectedTimeTargetConnected() {
     this.selectedTimeTarget.addEventListener('change', (e) => {
-      const url = new URL(this.practiceLinkTarget.href)
-      const search = url.searchParams
-
-      search.set('time', this.selectedTimeTarget.value)
-
-      url.search = search.toString()
-      this.practiceLinkTarget.href = url
+      this.changePracticeLinkTimeParams(this.selectedTimeTarget.value)
     })
+  }
+
+  changePracticeLinkTimeParams(time = null) {
+    const url = new URL(this.practiceLinkTarget.href)
+    const search = url.searchParams
+    url.search = search.toString()
+
+    if (time) {
+      search.set('time', time)
+    } else {
+      search.delete(time)
+    }
+
+    this.practiceLinkTarget.href = url
   }
 
   convertHMS(value) {
