@@ -12,9 +12,6 @@ application.register("comment", CommentController)
 import HelloController from "./hello_controller.js"
 application.register("hello", HelloController)
 
-import MarkdownController from "./markdown_controller.js"
-application.register("markdown", MarkdownController)
-
 import PracticesController from "./practices_controller.js"
 application.register("practices", PracticesController)
 

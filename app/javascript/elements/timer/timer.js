@@ -7,7 +7,6 @@ export class Timer extends HTMLElement {
   }
 
   connectedCallback() {
-    const title = this.getAttribute('title')
     const defaultTime = this.getAttribute('value') ?? "00:10:00"
 
     this.shadow.innerHTML = `

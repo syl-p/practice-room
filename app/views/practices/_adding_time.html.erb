@@ -1,13 +1,11 @@
 <div data-controller="practices">
   <div class="-mt-[70px]">
-    <timer-watch data-practices-target="timer"></timer-watch>
+    <timer-watch data-practices-target="timer" value="<%= Time.at(exercise.duration).utc.strftime("%H:%M") if exercise.duration %>"></timer-watch>
   </div>
-  <div class="flex space-x-3">
-    <%= button_to add_to_practice_exercises_url(id: exercise.id), data: {turbo: true, practices_target: 'practiceLink'}, class: "flex justify-center space-x-3 self-center border p-3 rounded-lg w-full" do %>
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-      </svg>
-      <span class="self-center text-sm font-medium">Ajouter mon temps de pratique</span>
-    <% end %>
-  </div>
+  <%= button_to add_to_practice_exercises_url(id: exercise.id), data: {turbo: true, practices_target: 'practiceLink'}, class: "flex justify-center space-x-3 self-center border p-3 rounded-lg w-full" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+    <span class="self-center text-sm font-medium">Ajouter mon temps de pratique</span>
+  <% end %>
 </div>

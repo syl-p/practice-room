@@ -32,7 +32,7 @@ Rails.application.routes.draw do
       get "new/:step", to: "exercises#new", as: "new_with_step"
       get ":id/versions", to: "exercises#versions", as: "versions_list"
       # route for stimulus actions
-      get ":id/practice/add(/:time)", to: "practices#add_to_practice", defaults: { format: :turbo_stream }, as: "add_to_practice"
+      post ":id/practice/add(/:time)", to: "practices#add_to_practice", defaults: { format: :turbo_stream }, as: "add_to_practice"
       get ":id/favorites/:add_or_remove", to: "exercises#add_or_remove_favorite", defaults: { format: :turbo_stream }, as: "add_or_remove_favorite"
     end
   end
