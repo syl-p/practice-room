@@ -6,7 +6,7 @@ export default `
     padding-top: 56.25%;
     overflow: hidden;
     cursor: pointer;
-    border-radius: 35px;
+    border-radius: 1rem;
   }
   .youtube-player img {
     width: 100%;

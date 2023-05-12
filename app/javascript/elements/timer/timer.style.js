@@ -31,9 +31,11 @@ export default `
     gap: 10px;
   }
 
-  .timer__show p{
+  .timer__show input{
     font-weight: bold;
-    font-size: 25px;
+    font-size: 35px;
+    margin: 10px 0;
+    border: none;
   }
 
   button.timer__reset {

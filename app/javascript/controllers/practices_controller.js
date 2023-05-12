@@ -20,10 +20,6 @@ export default class extends ApplicationController {
     this.timerTarget.addEventListener('change', e => {
       this.changePracticeLinkTimeParams(e.detail.timerShow)
     })
-
-    this.timerTarget.addEventListener('reset', () => {
-      this.changePracticeLinkTimeParams(null)
-    })
   }
 
   exerciseTargetDisconnected() {
@@ -37,7 +33,8 @@ export default class extends ApplicationController {
   }
 
   changePracticeLinkTimeParams(time = null) {
-    const url = new URL(this.practiceLinkTarget.href)
+    const form = this.practiceLinkTarget.parentNode
+    const url = new URL(form.action)
     const search = url.searchParams
     url.search = search.toString()
 
@@ -47,7 +44,7 @@ export default class extends ApplicationController {
       search.delete(time)
     }
 
-    this.practiceLinkTarget.href = url
+    form.action = url
   }
 
   convertHMS(value) {

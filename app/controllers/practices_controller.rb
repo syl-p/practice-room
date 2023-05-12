@@ -129,6 +129,6 @@ class PracticesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def practice_params
-      params.fetch(:practice, {})
+      params.fetch(:practice, {}).permit(:time)
     end
 end
