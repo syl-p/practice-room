@@ -6,7 +6,7 @@
   class: "comment_form #{local_assigns[:class]} flex relative gap-x-4 mb-6"  do |f| %>
 
   <%= link_to user_url(current_user), data: {turbo: false}, class: "flex-none relative" do %>
-    <%= render partial: "users/avatar", locals: {user: current_user, size: :small} %>
+    <%= render partial: "users/avatar", locals: {user: current_user, size: 6} %>
   <% end %>
 
   <div class="relative flex-1 flex-auto">

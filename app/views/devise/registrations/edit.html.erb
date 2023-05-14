@@ -25,7 +25,7 @@
 
             <div class="flex space-x-3">
               <!-- avatar preview -->
-              <%= render partial: "users/avatar", locals: {user: resource, size: :large, ui: true} %>
+              <%= render partial: "users/avatar", locals: {user: resource, size: 16, ui: true} %>
 
               <!-- field -->
               <%= f.file_field :avatar, class: "form-input "%>

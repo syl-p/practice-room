@@ -1,5 +1,5 @@
 <div data-controller="practices">
-  <div class="-mt-[70px]">
+  <div class="mb-6">
     <timer-watch data-practices-target="timer" value="<%= Time.at(exercise.duration).utc.strftime("%H:%M") if exercise.duration %>"></timer-watch>
   </div>
   <%= button_to add_to_practice_exercises_url(id: exercise.id), data: {turbo: true, practices_target: 'practiceLink'}, class: "flex justify-center space-x-3 self-center border p-3 rounded-lg w-full" do %>

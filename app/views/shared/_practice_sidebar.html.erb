@@ -22,7 +22,7 @@
 
             <header class="flex p-6 pb-6 space-x-3">
               <%= link_to user_path(current_user), class: "self-center" do %>
-                <%= render partial: "users/avatar", locals: {user: current_user, size: :large} %>
+                <%= render partial: "users/avatar", locals: {user: current_user, size: 16} %>
               <% end %>
               <div class="flex-1 self-center">
                 <h2 class="text-xl font-bold">Hello, <%= link_to current_user.username, user_path(current_user) %></h2>

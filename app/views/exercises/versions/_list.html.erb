@@ -3,12 +3,12 @@
   <% if versions.present? %>
     <ul class="">
       <% versions.each do |version| %>
-        <li class="block py-4">
+        <li class="block py-3">
           <div class="flex items-center">
             <div class="flex flex-1 min-w-0">
               <div class="flex-shrink-0">
                 <a href="<%= user_path(version.user.id) %>" data-turbo="false">
-                  <%= render partial: "users/avatar", locals: {user: version.user, size: :large, square: true} %>
+                  <%= render partial: "users/avatar", locals: {user: version.user, size: 10, square: true} %>
                 </a>
               </div>
               <div class="flex-1 px-4 min-w-0">
@@ -33,11 +33,5 @@
         </li>
       <% end %>
     </ul>
-  <% else %>
-    <p>Aucune version alternative</p>
   <% end %>
-  <div class="my-6 text-center">
-    <!-- buttons or inputs -->
-    <%= link_to "Proposez votre version", new_exercise_path(original_id: exercise), class: 'btn btn-secondary' if current_user.present? %>
-  </div>
 <% end %>

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .banner-height {
-  height: calc(50% + theme('spacing.6'));
+  height: calc(50% - theme('spacing.12'));
 }
 
 @layer components {

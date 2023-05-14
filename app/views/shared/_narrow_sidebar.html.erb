@@ -1,4 +1,4 @@
-<aside class="hidden h-screen w-40 lg:flex lg:flex-shrink-0">
+<aside class="hidden h-screen lg:flex lg:flex-shrink-0">
   <div class="flex overflow-y-auto flex-col flex-1 h-full min-h-0">
     <div class="flex-1">
       <a href="<%= root_path %>" class="flex justify-center items-center py-8">
@@ -39,7 +39,7 @@
         <% nav_links.each do |link| %>
           <a href="<%= link[:path] %>" class="flex gap-x-3 px-4 py-3 text-xs font-medium leading-6 rounded-r-full <%= 'bg-white' if current_page?(link[:path]) %> hover:bg-primary hover:text-white">
             <%= raw link[:logo] %>
-            <span><%= link[:label]%></span>
+            <span class="hidden xl:block"><%= link[:label]%></span>
           </a>
         <% end%>
       </nav>

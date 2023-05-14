@@ -21,7 +21,7 @@ RUN bundle check || bundle install
 
 COPY package.json ./
 
-# RUN npm install
+RUN npm install
 
 COPY . ./
 ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]

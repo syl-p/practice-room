@@ -4,7 +4,7 @@
       <div class="min-w-0 flex-1 flex items-center">
         <div class="hidden md:block flex-shrink-0">
           <%= link_to user_url(exercise.user), data: {turbo: false} do %>
-            <%= render partial: "users/avatar", locals: {user: exercise.user, size: :medium} %>
+            <%= render partial: "users/avatar", locals: {user: exercise.user, size: 10} %>
           <% end %>
         </div>
         <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">

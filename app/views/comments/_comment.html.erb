@@ -8,7 +8,7 @@
       <% end %>
 
       <%= link_to user_url(comment.user), data: {turbo: false}, class: "flex-none relative " do %>
-        <%= render partial: "users/avatar", locals: {user: comment.user, size: :small} %>
+        <%= render partial: "users/avatar", locals: {user: comment.user, size: 6} %>
       <% end %>
 
       <div class="flex-1 flex-auto">

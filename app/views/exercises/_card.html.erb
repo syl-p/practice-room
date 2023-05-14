@@ -6,7 +6,7 @@
   <header class="flex space-x-4">
     <figure class="flex-shrink-0 self-center">
       <a href="<%= user_url(exercise.user) %>" data-turbo="false">
-        <%= render partial: "users/avatar", locals: {user: exercise.user, size: :medium} %>
+        <%= render partial: "users/avatar", locals: {user: exercise.user, size: 10} %>
       </a>
     </figure>
     <div class="flex-1 min-w-0">
@@ -47,7 +47,13 @@
 
   <footer class="flex items-end space-x-4">
     <div class="flex-1">
-      <%= render partial: "exercises/categories_list", locals: {categories: exercise.categories} %>
+      <ul class="text-sm flex space-x-3">
+        <% exercise.categories.each do |category| %>
+          <li>
+            <%= link_to category.name, by_slug_categories_path(category), data: {turbo: false}, class: "px-2 py-1 bg-blue-100 rounded-lg text-xs" %>
+          </li>
+        <% end %>
+      </ul>
     </div>
     <dl class="flex flex-none gap-x-3 justify-between w-full sm:w-auto">
       <div class="flex -space-x-0.5">
@@ -55,7 +61,7 @@
         <% exercise.comments.limit(6).map(&:user).uniq.each do |user| %>
           <dd>
             <a href="<%= user_url(user) %>" data-turbo="false">
-              <%= render partial: "users/avatar", locals: {user: user, size: :small} %>
+              <%= render partial: "users/avatar", locals: {user: user, size: 6} %>
             </a>
           </dd>
         <% end %>

@@ -34,19 +34,19 @@ class PracticesController < ApplicationController
     end
   end
 
-  def add_to_practice
-    duration = params[:time].present? ? Time.parse(params[:time]).seconds_since_midnight : 600
-    exercise = Exercise.find(params[:id])
+def add_to_practice
+  duration = params[:time].present? ? Time.parse(params[:time]).seconds_since_midnight : 10.minutes
+  exercise = Exercise.find(params[:id])
+  last_practice = current_user.practices_of_the_day&.last
 
-    last_practice = current_user.practices_of_the_day ? current_user.practices_of_the_day.last : nil
-    if last_practice.present? && ((Time.now - last_practice.created_at.to_time) <= 1.hour)
-      last_practice.practices_exercises << PracticesExercise.new(exercise: exercise, duration: duration)
-    else
-      last_practice = Practice.new(user: current_user)
-      last_practice.practices_exercises << PracticesExercise.new(exercise: exercise, duration: duration)
-      last_practice.save
-    end
+  if last_practice && (Time.now - last_practice.created_at < 1.hour)
+    last_practice.practices_exercises.create(exercise: exercise, duration: duration)
+  else
+    last_practice = current_user.practices_of_the_day.build
+    last_practice.practices_exercises.build(exercise: exercise, duration: duration)
+    last_practice.save
   end
+end
 
   def remove_from_practice
     practices_exercises_id = params[:practices_exercises_id]
