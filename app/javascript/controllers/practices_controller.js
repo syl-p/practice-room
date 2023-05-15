@@ -3,7 +3,7 @@ import ApplicationController from "./application_controller"
 import { practice } from "./mixins/practice"
 
 export default class extends ApplicationController {
-  static targets = ["exercise", "practiceLink", "practiceTime", "selectedTime", "timer"]
+  static targets = ["practiceLink", "practiceTime", "selectedTime", "timer"]
 
   static values = {
     date: String,
@@ -13,18 +13,10 @@ export default class extends ApplicationController {
     practice(this)
   }
 
-  exerciseTargetConnected() {
-    this.evalPracticeTime()
-  }
-
   timerTargetConnected() {
     this.timerTarget.addEventListener('change', e => {
       this.changePracticeLinkTimeParams(e.detail.timerShow)
     })
-  }
-
-  exerciseTargetDisconnected() {
-    this.evalPracticeTime()
   }
 
   selectedTimeTargetConnected() {
@@ -46,13 +38,5 @@ export default class extends ApplicationController {
     }
 
     form.action = url
-  }
-
-  evalPracticeTime() {
-    let res = 0
-    this.exerciseTargets.forEach(e => {
-      res += parseInt(e.dataset.duration);
-    })
-    this.practiceTimeTarget.innerHTML = helper.convertHMS(res)
   }
 }
