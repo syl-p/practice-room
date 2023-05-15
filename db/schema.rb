@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2023_05_13_201832) do
     t.boolean "published", default: true
     t.text "description"
     t.integer "level", default: 0
-    t.interval "duration"
+    t.interval "duration", default: "PT0S"
     t.integer "visibility", default: 0
     t.boolean "versions_enabled", default: true
     t.float "goal_end"
@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(version: 2023_05_13_201832) do
   create_table "practices_exercises", force: :cascade do |t|
     t.bigint "practice_id", null: false
     t.bigint "exercise_id", null: false
-    t.interval "duration", null: false
+    t.interval "duration", default: "PT0S", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["exercise_id"], name: "index_practices_exercises_on_exercise_id"
@@ -175,7 +175,6 @@ ActiveRecord::Schema.define(version: 2023_05_13_201832) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "exercises", "exercises"
-  add_foreign_key "exercises", "goal_labels"
   add_foreign_key "exercises", "users"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "follows", "users", column: "following_id"
