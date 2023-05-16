@@ -1,6 +1,5 @@
 import helper from "../helper"
 import ApplicationController from "./application_controller"
-import { practice } from "./mixins/practice"
 
 export default class extends ApplicationController {
   static targets = ["practiceLink", "practiceTime", "selectedTime", "timer"]
@@ -10,7 +9,6 @@ export default class extends ApplicationController {
   }
 
   connect() {
-    practice(this)
   }
 
   timerTargetConnected() {

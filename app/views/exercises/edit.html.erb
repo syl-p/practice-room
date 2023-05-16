@@ -1,4 +1,4 @@
-<section class="px-10 pt-8">
+<section class="w-full">
   <header class="mb-10 dashboard-page__header text-gray">
     <%= render partial: "shared/breadcrump", locals: {links: [
         {
@@ -13,8 +13,8 @@
     %>
     <h1 class="text-4xl font-semibold">Modifier l' exercice</h1>
   </header>
-  <section class="flex">
-    <aside class="pr-10 w-2/12">
+  <section class="flex space-x-6">
+    <aside>
       <%= render partial: 'exercises/form/nav',
           locals: {exercise: @exercise, active: params[:step] ? params[:step] :  'content'} %>
     </aside>

@@ -1,5 +1,5 @@
-<dl class="flex w-full flex-none justify-between gap-x-8 sm:w-auto">
-  <div class="flex -space-x-0.5">
+<dl class="flex w-full flex-none justify-end gap-x-4 sm:w-auto">
+  <div class="hidden xl:flex -space-x-0.5">
     <dt class="sr-only">Commenters</dt>
     <% exercise.comments.map(&:user)[0..5].uniq.each do |user| %>
       <dd>
@@ -9,7 +9,7 @@
       </dd>
     <% end %>
   </div>
-  <div class="flex w-16 gap-x-2.5">
+  <div class="hidden xl:flex w-16 gap-x-2.5">
     <dt>
       <span class="sr-only">Total comments</span>
       <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">

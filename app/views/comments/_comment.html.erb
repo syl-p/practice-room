@@ -1,27 +1,26 @@
 <div data-controller="comment">
   <%= turbo_frame_tag comment do %>
     <div class="flex relative gap-x-4 mb-6">
-      <% unless comment.parent_id.present? %>
-        <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
-          <div class="w-px bg-gray-500"></div>
-        </div>
-      <% end %>
-
-      <%= link_to user_url(comment.user), data: {turbo: false}, class: "flex-none relative " do %>
-        <%= render partial: "users/avatar", locals: {user: comment.user, size: 6} %>
-      <% end %>
-
       <div class="flex-1 flex-auto">
-        <div class="p-6 bg-white rounded-xl ring-1 ring-inset ring-gray-200">
-          <div class="flex gap-x-4 justify-between text-sm">
-            <div class="py-0.5 leading-5 text-gray-500">
-              <%= link_to comment.user.username, user_url(comment.user), class: "text-gray-900" %> dit
+        <div class="p-6 bg-white rounded-3xl">
+          <div class="flex space-x-6 mb-3">
+            <div>
+              <%= link_to user_url(comment.user), data: {turbo: false}, class: "flex-none relative " do %>
+                <%= render partial: "users/avatar", locals: {user: comment.user, size: 10} %>
+              <% end %>
+              <%#= link_to comment.user.username, user_url(comment.user), data: {turbo: false}, class: "text-gray-900" %>
             </div>
-            <time datetime="<%= comment.created_at %>" class="flex-none py-0.5 leading-5 text-gray-500"><%= l comment.created_at, format: :short %></time>
+            <div class="flex-1">
+              <p class="prose max-w-none">
+                <%=  sanitize renderHtml comment.body %>
+              </p>
+            </div>
           </div>
-
-          <p class="mt-3 leading-6 text-gray-500">
-            <%= comment.body %>
+          <p class="text-right text-xs">
+            <%= link_to comment.user.username, user_url(comment.user), data: {turbo: false}, class: "text-gray-900" %>,
+            <time datetime="<%= comment.created_at %>" class="text-gray-500">
+              <%= l comment.created_at, format: :long %>
+            </time>
           </p>
         </div>
 
@@ -49,17 +48,8 @@
     </div>
   <% end %>
   <!-- REPLY -->
-    <div class="flex relative gap-x-4">
-      <% unless comment.parent_id.present? %>
-        <div class="flex absolute top-0 left-0 -bottom-6 justify-center w-6">
-          <div class="w-px rounded-xl border-l border-gray-500"></div>
-        </div>
-      <% end %>
-
-      <div class="relative flex-none">
-      </div>
-
-      <div class="flex-1 flex-auto pl-6">
+    <div class="flex relative space-x-6">
+      <div class="flex-1 flex-auto pl-24">
         <%= turbo_frame_tag "#{dom_id(comment)}_comments", src: comment_path(comment) do %>
           ...
         <% end %>
