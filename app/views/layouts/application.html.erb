@@ -17,12 +17,12 @@
       data-application-root-value="<%= root_url %>">
 
       <!-- Narrow -->
-      <%= render "shared/narrow_sidebar" if current_user.present? %>
+      <%= render "shared/narrow_sidebar" %>
       <!-- END Narrow -->
 
       <!-- Content area -->
       <main class="flex-1 md:h-screen md:overflow-y-auto">
-        <div class="px-6 lg:px-8 xl:px-14">
+        <div class="px-6 lg:px-8">
           <%= render "shared/header" %>
           <%= yield %>
         </div>
