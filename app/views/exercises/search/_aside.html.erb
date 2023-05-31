@@ -1,6 +1,6 @@
 <%= form_with(url: search_exercises_path, class: "hidden lg:block") do |form| %>
   <h3 class="sr-only">Catégories</h3>
-  <ul class="text-sm font-medium text-gray-900 space-y-4 pb-6 border-b border-gray-200">
+  <ul class="pb-6 space-y-4 text-sm font-medium text-gray-900 border-b border-gray-200">
     <% @categories.each do |category| %>
       <li class="pr-6">
         <label>
@@ -12,31 +12,29 @@
           },
                              category.id,
                              false %>
-          <span class="peer-checked:font-bold cursor-pointer"><%= category.name %></span>
+          <span class="cursor-pointer peer-checked:font-bold"><%= category.name %></span>
         </label>
       </li>
     <% end %>
   </ul>
 
   <!-- Level -->
-  <div class="border-b border-gray-200 py-6">
-    <collapse-section title="Niveau">
-      <ul>
-        <% Exercise.levels.each do |level| %>
-          <li class="mb-1">
-            <label>
-              <%= form.check_box :levels, {
-                multiple: true,
-                data: {action: "change->hello#search"}
-              },
-                                 level.second,
-                                 false %>
-              <span class="ml-3 text-sm text-gray-600"><%= level.first %></span>
-            </label>
-          </li>
-        <% end %>
-      </ul>
-    </collapse-section>
+  <div class="py-6 border-b border-gray-200">
+    <ul>
+      <% Exercise.levels.each do |level| %>
+        <li class="mb-1">
+          <label>
+            <%= form.check_box :levels, {
+              multiple: true,
+              data: {action: "change->hello#search"}
+            },
+                                level.second,
+                                false %>
+            <span class="ml-3 text-sm text-gray-600"><%= level.first %></span>
+          </label>
+        </li>
+      <% end %>
+    </ul>
   </div>
   <!-- Level -->
 <% end %>

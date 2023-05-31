@@ -3,7 +3,7 @@
   content_for(:description, @exercise.description)
 %>
 <section>
-  <header class="relative z-0">
+  <header class="mb-8">
     <!-- TITLE -->
     <div class="flex mb-6 space-x-4">
       <figure class="flex-shrink-0 self-center">
@@ -30,13 +30,13 @@
   </header>
   <section>
     <!-- VIDEO AND PRACTICE TOOLS -->
-    <div class="grid-cols-3 gap-8 mb-6 lg:grid">
+    <div class="grid-cols-3 gap-8 mb-8 lg:grid">
       <div class="relative col-span-2 h-full">
         <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>">
         </youtube-player>
       </div>
-      <aside class="hidden flex-col space-y-6 h-full lg:flex">
-        <div class="overflow-hidden bg-white rounded-3xl border">
+      <aside class="hidden flex-col space-y-6 h-full bg-white rounded-3xl border lg:flex">
+        <div class="overflow-hidden">
           <% if current_user.present? %>
             <div class="p-6">
               <%= render partial: "practices/adding_time", locals: {exercise: @exercise} %>
@@ -60,9 +60,10 @@
         </div>
       </aside>
     </div>
-    <!-- VIDEO AND PRACTICE TOOLS -->
+    <!-- END VIDEO AND PRACTICE TOOLS -->
+    <!-- CONTENT -->
     <div class="my-3 lg:flex lg:space-x-8">
-      <aside>
+      <aside class="lg:w-2/6">
         <div class="p-6 w-full bg-white rounded-3xl">
           <div class="flex space-x-6">
             <div class="flex-1 mb-6">
@@ -83,15 +84,16 @@
           <% end %>
         </div>
       </aside>
-      <section class="flex-1 grow">
+      <section class="flex-1">
         <div class="max-w-none prose">
           <%= sanitize renderHtml @exercise.body %>
         </div>
       </section>
     </div>
+    <!-- END CONTENT -->
   </section>
 
-  <div class="relative my-8">
+  <div class="relative mb-8">
     <div class="flex absolute inset-0 items-center" aria-hidden="true">
       <div class="w-full border-t border-gray-300"></div>
     </div>
@@ -99,6 +101,7 @@
       <span class="px-2 text-gray-500 bg-light">Discutons en !</span>
     </div>
   </div>
+
   <footer class="flex space-x-8">
     <section class="flex-1">
       <% if user_signed_in? %>

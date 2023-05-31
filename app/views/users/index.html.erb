@@ -17,7 +17,7 @@
       <!-- stats -->
       <section class="mb-10 sm:flex sm:space-x-6" id="stats">
         <!-- stats by week -->
-        <article class="p-4 bg-primary rounded-md border shadow-sm sm:w-3/6 sm">
+        <article class="p-4 rounded-md border shadow-sm bg-primary sm:w-3/6 sm">
           <h2 class="mb-6 text-lg font-semibold">Ces 7 derniers jours</h2>
           <div class="flex justify-center items-center space-x-6">
             <% if current_user.practice_time_this_week.present? %>
@@ -133,10 +133,5 @@
         </tabs-section>
       </article>
     </article>
-    <aside class="hidden p-6 rounded-md shadow-sm lg:block border">
-      <h2 class="mb-6 text-3xl">Journal de pratique</h2>
-      <%= render partial: "practices/selector", locals: {current_week: Date.today.beginning_of_week..Date.today.end_of_week, practices_for_the_week: @practices_of_the_week } %>
-      <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
-    </aside>
   </section>
 </section>

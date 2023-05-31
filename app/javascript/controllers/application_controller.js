@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import { leave, enter } from "../transistion"
 
 export default class extends Controller {
-  static targets = ["videoPlayer", 'inputVersionsEnabled',
+  static targets = ['inputVersionsEnabled',
     'versionsListEdit', 'videoPreviewer', "sidebar", "favorites"]
 
   static values = {
@@ -73,14 +73,6 @@ export default class extends Controller {
       // sidebar.classList.add('hidden')
       // enter(sidebar)
     })
-  }
-
-  // Version actions
-  showVersion($event) {
-    const versionVideoId = $event.target.dataset.videoId
-    if (versionVideoId && this.videoPlayerTarget) {
-      this.videoPlayerTarget.setAttribute('video-id', versionVideoId)
-    }
   }
 
   toggleVersionsEnabled($event) {

@@ -49,23 +49,11 @@ class PracticesController < ApplicationController
   end
 
   def remove_from_practice
-    practices_exercises_id = params[:practices_exercises_id]
-    practices_exercise = PracticesExercise.find(practices_exercises_id)
-    practices_exercise.destroy
+    @practices_exercise = PracticesExercise.find(params[:practices_exercises_id])
+    @practices_exercise.destroy
 
-    if practices_exercise.practice.practices_exercises.count <= 0
-      practices_exercise.practice.destroy
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.remove("practice_#{practices_exercise.practice.id}")
-        end
-      end
-    else
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.remove("practices_exercises_#{params[:practices_exercises_id]}")
-        end
-      end
+    if @practices_exercise.practice.practices_exercises.count <= 0
+      @practices_exercise.practice.destroy
     end
   end
 

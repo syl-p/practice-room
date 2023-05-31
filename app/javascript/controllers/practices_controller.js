@@ -1,8 +1,7 @@
-import helper from "../helper"
 import ApplicationController from "./application_controller"
 
 export default class extends ApplicationController {
-  static targets = ["practiceLink", "practiceTime", "selectedTime", "timer"]
+  static targets = ["practiceLink", "selectedTime", "timer"]
 
   static values = {
     date: String,
