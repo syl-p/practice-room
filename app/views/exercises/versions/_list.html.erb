@@ -1,9 +1,9 @@
 
 <%= turbo_frame_tag "exercise_versions" do %>
   <% if versions.present? %>
-    <ul class="">
+    <ul class="divide-y divide-gray-200">
       <% versions.each do |version| %>
-        <li class="block py-3">
+        <li class="block py-3 pl-6 hover:bg-gray-50">
           <div class="flex items-center">
             <div class="flex flex-1 min-w-0">
               <div class="flex-shrink-0">
@@ -34,6 +34,8 @@
       <% end %>
     </ul>
   <% else %>
-    <p class="p-6 text-xs text-gray-500 text-light">Aucune version alternative</p>
+    <p class="p-6 text-xs text-gray-500 text-light">
+      Aucune version alternative
+    </p>
   <% end %>
 <% end %>

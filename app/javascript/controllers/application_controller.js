@@ -75,6 +75,14 @@ export default class extends Controller {
     })
   }
 
+  // Version actions
+  showVersion($event) {
+    const versionVideoId = $event.target.dataset.videoId
+    if (versionVideoId && this.videoPlayerTarget) {
+      this.videoPlayerTarget.setAttribute('video-id', versionVideoId)
+    }
+  }
+
   toggleVersionsEnabled($event) {
     this.showVersionList($event.target.checked)
   }

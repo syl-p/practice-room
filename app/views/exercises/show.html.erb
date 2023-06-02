@@ -30,11 +30,39 @@
   </header>
   <section>
     <!-- VIDEO AND PRACTICE TOOLS -->
-    <div class="grid-cols-3 gap-8 mb-8 lg:grid">
+    <div class="grid-cols-3 gap-0 mb-8 lg:grid">
       <div class="relative col-span-2 h-full">
         <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>">
         </youtube-player>
       </div>
+      <aside class="relative bg-white rounded-r-3xl">
+        <div class="flex absolute top-0 left-0 flex-col w-full h-full">
+          <div class="px-6 py-3">
+            <div class="flex space-x-6">
+              <div class="flex-1 mb-6">
+                <h3 class="mb-1 text-xl">Versions Alternatives</h3>
+                <p class="text-xs font-light text-gray-500">Découvrez ici des versions améliorées, modifiées de ce même exercice !"</p>
+              </div>
+              <div class="self-center">
+                <%= link_to new_exercise_path(original_id: @exercise), data: {turbo_frame: "exercise_versions"}, class: 'block rounded-full border p-1' do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="overflow-hidden overflow-y-auto">
+            <%= turbo_frame_tag "exercise_versions", src: versions_list_exercises_path(@exercise), loading: :lazy do %>
+              <%= render partial: "exercises/versions/list_skeleton" %>
+            <% end %>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <!-- END VIDEO AND PRACTICE TOOLS -->
+    <!-- CONTENT -->
+    <div class="my-3 lg:flex lg:space-x-8">
       <aside class="hidden flex-col space-y-6 h-full bg-white rounded-3xl border lg:flex">
         <div class="overflow-hidden">
           <% if current_user.present? %>
@@ -56,31 +84,6 @@
               <p class="m-6 text-sm font-light text-gray-600">Ressources partagées par l'auteur de l'exercice</p>
               <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
             <div>
-          <% end %>
-        </div>
-      </aside>
-    </div>
-    <!-- END VIDEO AND PRACTICE TOOLS -->
-    <!-- CONTENT -->
-    <div class="my-3 lg:flex lg:space-x-8">
-      <aside class="lg:w-2/6">
-        <div class="p-6 w-full bg-white rounded-3xl">
-          <div class="flex space-x-6">
-            <div class="flex-1 mb-6">
-              <h3 class="mb-1 text-xl">Versions Alternatives</h3>
-              <p class="text-xs font-light text-gray-500">Découvrez ici des versions améliorées, modifiées de ce même exercice.
-                Vous pouvez même proposer votre propre version !"</p>
-            </div>
-            <div class="self-center">
-              <%= link_to new_exercise_path(original_id: @exercise), data: {turbo_frame: "exercise_versions"}, class: 'block rounded-full border p-1' do %>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-              <% end %>
-            </div>
-          </div>
-          <%= turbo_frame_tag "exercise_versions", src: versions_list_exercises_path(@exercise), loading: :lazy do %>
-            <%= render partial: "exercises/versions/list_skeleton" %>
           <% end %>
         </div>
       </aside>

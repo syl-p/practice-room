@@ -6,7 +6,7 @@ export default `
     padding-bottom: 56.25%; /* aspect ratio 16:9 */
     overflow: hidden;
     cursor: pointer;
-    border-radius: 1.5rem;
+    border-radius: 1.5rem 0 0 1.5rem;
   }
 
   .youtube-player img {

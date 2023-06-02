@@ -11,29 +11,18 @@
   </head>
 
   <body class="h-full bg-light" data-controller="hello">
-    <div class="flex relative space-x-8"
+    <div class="flex relative z-0 space-x-8"
       aria-labelledby="slide-over-title"
       data-controller="application"
       data-application-root-value="<%= root_url %>">
-      <!-- Narrow -->
-      <%= render "shared/narrow_sidebar" %>
-      <!-- END Narrow -->
-
-      <!-- Content area -->
-      <main class="relative flex-1">
-
-        <div class="flex z-0 space-x-8">
-          <div class="flex-1">
-            <%= render "shared/header" %>
-            <%= yield %>
-          </div>
-
-          <div class="hidden relative w-3/12 h-screen lg:block">
-            <%= render "shared/practice_sidebar" if current_user.present? %>
-          </div>
+      <main class="flex relative flex-1 pt-24 space-x-8">
+        <%= render "shared/header" %>
+        <%= render "shared/narrow_sidebar" if current_user.present? %>
+        <div class="w-full">
+          <%= yield %>
         </div>
       </main>
-      <!-- END Content area -->
+      <%= render "shared/practice_sidebar" if current_user.present? %>
     </div>
   </body>
 </html>
