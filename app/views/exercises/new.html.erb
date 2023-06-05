@@ -1,25 +1,16 @@
-<section class="px-10 pt-10">
-  <header class="mb-10 dashboard-page__header text-gray">
-    <%= render partial: "shared/breadcrump", locals: {links: [
-        {
-          label: "Mes exercices",
-          path: me_exercises_path
-        },
-        {
-          label: "Nouveau",
-          path: "#"
-        }
-      ]}
-    %>
-    <h1 class="text-4xl font-semibold">Créer un exercice</h1>
-  </header>
-  <section class="flex">
-    <aside class="pr-10 w-2/12">
-      <%= render partial: 'exercises/form/nav',
-          locals: {exercise: @exercise, active: "content"} %>
-    </aside>
-    <div class="flex-1">
-      <%= render 'exercises/form/content', exercise: @exercise %>
-    </div>
+<%= turbo_frame_tag "exercise-edit" do %>
+  <section>
+    <header class="py-6 text-center">
+      <h1 class="text-3xl font-semibold">Création de votre exercice</h1>
+    </header>
+    <section  class="flex space-x-12">
+      <aside class="flex flex-col items-center text-gray">
+        <%= render partial: 'exercises/form/nav',
+            locals: {exercise: @exercise, active: "content"} %>
+      </aside>
+      <article class="flex-1">
+        <%= render 'exercises/form/content', exercise: @exercise %>
+      </article>
+    </section>
   </section>
-</section>
+<% end %>
