@@ -1,7 +1,7 @@
 <%
-size = 10 if local_assigns[:size].nil?
+size = "10" if local_assigns[:size].nil?
 square = false if local_assigns[:square].nil?
-class_size = "h-#{size} w-#{size}"
+class_size = "h-#{size.to_s} w-#{size.to_s}"
 %>
 
 <% if current_user.present? && user.avatar.attached? %>
