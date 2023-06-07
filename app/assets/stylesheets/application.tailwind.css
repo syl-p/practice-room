@@ -8,7 +8,11 @@
 
 @layer components {
   .form-label {
-    @apply block mb-2 text-sm font-medium text-gray-700;
+    @apply block mb-2 text-sm font-medium leading-6 text-gray-900;
+  }
+
+  .form-input {
+    @apply block py-1.5 w-full text-gray-900 rounded-md border-0 ring-1 ring-inset ring-gray-300 shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6;
   }
 
   .btn-secondary {
@@ -16,6 +20,6 @@
   }
 
   .btn-primary {
-    @apply inline-block px-6 py-2.5 text-xs font-medium leading-tight text-white uppercase bg-primary rounded shadow-md transition duration-150 ease-in-out hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-darker active:shadow-lg;
+    @apply inline-block px-6 py-2.5 text-xs font-medium leading-tight text-white uppercase rounded shadow-md transition duration-150 ease-in-out bg-primary hover:bg-primary-darker hover:shadow-lg focus:bg-primary-darker focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-darker active:shadow-lg;
   }
 }

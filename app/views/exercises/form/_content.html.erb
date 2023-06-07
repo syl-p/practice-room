@@ -11,27 +11,27 @@
     </div>
   <% end %>
 
-  <div class="mb-6 field form-group">
+  <div class="mb-6 form-group">
     <%= form.label "titre", class: "form-label" %>
     <%= form.text_field :title, class: "form-input"  %>
   </div>
 
-  <div class="mb-6 field form-group columns">
+  <div class="mb-6 form-group">
     <%= form.label :description, class: "form-label"  %>
     <%= form.text_area :description, class: "form-input" %>
   </div>
 
-  <div class="mb-6 field form-group columns">
-    <%= form.label :video_link, class: "form-label"  %>
+  <div class="mb-6 form-group">
+    <%= form.label "Vidéo youtube", class: "form-label"  %>
     <%= form.text_field :video_link, class: "form-input" %>
   </div>
 
-  <div class="mb-6 field form-group">
+  <div class="mb-6 form-group">
     <%= form.label :categories, class: "form-label"  %>
     <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => false, selected_value: nil}, :multiple => true, class: "form-input" %>
   </div>
 
-  <div class="mb-6 field form-group">
+  <div class="mb-6 form-group">
     <%= form.label "Niveau", class: "form-label"  %>
     <ul>
       <% Exercise.levels.keys.each do |level| %>
@@ -43,23 +43,23 @@
     </ul>
   </div>
 
-  <div class="mb-6 field form-group">
+  <div class="mb-6 form-group">
     <%= form.label :goal_label, class: "form-label"  %>
     <%= form.select :goal_label_id, GoalLabel.all.collect { |x| [x.label, x.id]}, class: "form-input" %>
   </div>
 
-  <div class="mb-6 field form-group">
+  <div class="mb-6 form-group">
     <%= form.label :goal_start, class: "form-label"  %>
     <%= form.number_field :goal_start, class: "form-input" %>
   </div>
 
-  <div class="mb-6 field form-group">
+  <div class="mb-6 form-group">
     <%= form.label :goal_end, class: "form-label"  %>
     <%= form.number_field :goal_end, class: "form-input" %>
   </div>
 
-  <div class="pr-3 md:w-3/6">
-    <%= form.label "Markdown", class: "form-label"  %>
+  <div class="mb-6">
+    <%= form.label "Contenu", class: "form-label"  %>
     <%= form.text_area :body, class: "form-input w-full" %>
   </div>
 
