@@ -39,13 +39,6 @@ class ExercisesController < ApplicationController
     end
   end
 
-  def versions
-    render partial: "exercises/versions/list", locals: {
-      versions: @exercise.versions_filtered(current_user).limit(4),
-      exercise: @exercise
-    }
-  end
-
   def me
     @exercises = current_user.exercises.where(original: nil)
     render :me

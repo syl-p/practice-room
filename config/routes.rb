@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :exercises do
     resources :comments, module: :exercises
+    resources :versions, module: :exercises
     resources :goal_settings, module: :exercises
     collection do
       post "search", defaults: { format: :turbo_stream }
@@ -30,7 +31,6 @@ Rails.application.routes.draw do
       get "me"
       get ":id/edit/:step", to: "exercises#edit", as: "edit_with_step"
       get "new/:step", to: "exercises#new", as: "new_with_step"
-      get ":id/versions", to: "exercises#versions", as: "versions_list"
       # route for stimulus actions
       post ":id/practice/add(/:time)", to: "practices#add_to_practice", defaults: { format: :turbo_stream }, as: "add_to_practice"
       get ":id/favorites/:add_or_remove", to: "exercises#add_or_remove_favorite", defaults: { format: :turbo_stream }, as: "add_or_remove_favorite"
