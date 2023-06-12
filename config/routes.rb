@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-  get 'goal_settings/new'
-  get 'goal_settings/create'
-  get 'goal_settings/update'
-  get 'goal_settings/edit'
-  get 'goal_settings/destroy'
   devise_for :users, :controllers => { :registrations => "registrations" }
   resources :categories do
     collection do
@@ -45,7 +40,6 @@ Rails.application.routes.draw do
 
   get "users/:id", to: "users#show", as: "user"
   delete "users/:id/delete_avatar", to: "users#delete_avatar", as: "delete_avatar"
-
 
   delete "practice/remove/:practices_exercises_id", to: "practices#remove_from_practice", as: "remove_from_practice"
 

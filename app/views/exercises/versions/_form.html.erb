@@ -45,6 +45,6 @@
 
   <div class="flex space-x-4">
     <%= form.submit 'Envoyer' , class: 'btn btn-primary' %>
-    <%=  link_to 'Retour', versions_list_exercises_path(id: version.original), class:"btn-secondary" %>
+    <%=  link_to 'Retour', exercise_versions_path(exercise_id: version.original), class:"btn-secondary" %>
   </div>
 <% end %>
