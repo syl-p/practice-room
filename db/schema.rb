@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(version: 2023_02_28_164311) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "exercises", "exercises"
+  add_foreign_key "exercises", "goal_labels"
   add_foreign_key "exercises", "users"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "follows", "users", column: "following_id"
