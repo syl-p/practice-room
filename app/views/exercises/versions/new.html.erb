@@ -5,9 +5,9 @@
     </div>
     <div class="self-center">
       <!-- Close btn -->
-      <%= link_to exercise_versions_path(@exercise), class: "float-right",
+      <%= link_to exercise_versions_path(@version, exercise_id: @exercise), class: "float-right",
         data: {
-          video_id: @exercise.video_link,
+          video_id: @version.video_link,
           action: 'click->application#showVersion'
         } do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

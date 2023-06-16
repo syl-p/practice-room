@@ -31,10 +31,19 @@
   <section>
     <!-- VIDEO AND PRACTICE TOOLS -->
     <div class="grid-cols-3 gap-0 mb-8 lg:grid">
-      <div class="relative col-span-2 h-full">
-        <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>"></youtube-player>
+      <div class="h-full col-span-2">
+        <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>">
+          <div class="bg-white flex items-center justify-center h-[450px] rounded-l-3xl" slot="empty">
+            <div class="text-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+              </svg>
+              <p class="my-6 text-sm font-light text-center">Aucune vidéo disponible</p>
+            </div>
+          </div>
+        </youtube-player>
       </div>
-      <aside class="relative bg-white rounded-r-3xl">
+      <aside class="bg-white rounded-r-3xl">
         <%= turbo_frame_tag "exercise_versions", src: exercise_versions_path(@exercise) do %>
           <%#= render partial: "exercises/versions/list_skeleton" %>
         <% end %>
@@ -42,7 +51,7 @@
     </div>
     <!-- END VIDEO AND PRACTICE TOOLS -->
     <!-- CONTENT -->
-    <div class="my-3 lg:flex lg:space-x-8">
+    <div class="my-8 lg:flex lg:space-x-8">
       <aside class="hidden flex-col space-y-6 h-full bg-white rounded-3xl border lg:flex">
         <div class="overflow-hidden">
           <% if current_user.present? %>
@@ -63,7 +72,7 @@
             <div>
               <p class="m-6 text-sm font-light text-gray-600">Ressources partagées par l'auteur de l'exercice</p>
               <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
-            <div>
+            </div>
           <% end %>
         </div>
       </aside>

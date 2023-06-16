@@ -3,19 +3,19 @@
   <article class="px-6">
     <div class="flex space-x-4">
       <div class="flex-shrink-0">
-        <a href="<%= user_path(@exercise.user.id) %>" data-turbo="false">
-          <%= render partial: "users/avatar", locals: {user: @exercise.user, size: 10} %>
+        <a href="<%= user_path(@version.user.id) %>" data-turbo="false">
+          <%= render partial: "users/avatar", locals: {user: @version.user, size: 10} %>
         </a>
       </div>
       <div class="flex-1 min-w-0">
-        <p class="font-medium text-gray-900 truncate"><%= @exercise.title %></strong></p>
+        <p class="font-medium text-gray-900 truncate"><%= @version.title %></strong></p>
         <p class="text-gray-500 font-light truncate">
-          Publié par <%= link_to @exercise.user.username, user_path(@exercise.user.id), data: {turbo: false}  %></small>
+          Publié par <%= link_to @version.user.username, user_path(@exercise.user.id), data: {turbo: false}  %></small>
         </p>
       </div>
       <div class="self-center">
         <!-- Close btn -->
-        <%= link_to  versions_list_exercises_path(id: @exercise.original), class: "float-right",
+        <%= link_to  exercise_versions_path(id: @exercise.original), class: "float-right",
                      data: {
                        video_id: @exercise.original.video_link,
                        action: 'click->application#showVersion'
@@ -36,13 +36,13 @@
         </div>
       <% end %>
       <p>
-        <%= @exercise.description %>
+        <%= @version.description %>
       </p>
     </div>
 
     <div class="text-sm uppercase font-bold text-right">
-      <% if can? :manage, @exercise %>
-        <%= link_to 'Modifier', edit_exercise_path(@exercise) %> | <%= link_to 'Supprimer', @exercise, method: :delete, data: { confirm: 'Are you sure?', turbo: true } %>
+      <% if can? :manage, @version %>
+        <%= link_to 'Modifier', edit_exercises_versions_path(@version) %> | <%= link_to 'Supprimer', @exercise, method: :delete, data: { confirm: 'Are you sure?', turbo: true } %>
       <% end %>
     </div>
   </article>

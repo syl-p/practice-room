@@ -1,7 +1,7 @@
 class CreateMediaExercises < ActiveRecord::Migration[6.0]
   def change
     create_table :media_exercises do |t|
-      t.integer 10_id
+      t.integer :medium_id
       t.integer :exercise_id
     end
 

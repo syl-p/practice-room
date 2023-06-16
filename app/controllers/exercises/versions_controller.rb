@@ -1,5 +1,6 @@
 class Exercises::VersionsController < ApplicationController
-  before_action :set_exercise , only: %i[index new]
+  before_action :set_exercise , only: %i[index new edit]
+  before_action :set_version , only: %i[edit]
   def index
     @versions = @exercise.versions_filtered(current_user)
   end
@@ -7,6 +8,10 @@ class Exercises::VersionsController < ApplicationController
   def new
     @version = Exercise.new
     @version.original = @exercise
+  end
+
+  def edit
+
   end
 
   def create
@@ -32,8 +37,24 @@ class Exercises::VersionsController < ApplicationController
     end
   end
 
+  def update
+    if @version.update(exercise_params)
+      format.html do
+        redirect_to request.referrer, notice: "Version was successfully updated."
+      end
+      format.json { render :show, status: :ok, location: @exercise }
+    else
+      format.html { render :edit, status: :unprocessable_entity }
+      format.json { render json: @exercise.errors, status: :unprocessable_entity }
+    end
+  end
+
   private
   def set_exercise
     @exercise = Exercise.find(params[:exercise_id])
+  end
+
+  def set_version
+    @version = Exercise.find(params[:id])
   end
 end

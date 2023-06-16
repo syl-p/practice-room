@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="overflow-hidden overflow-y-auto">
-      <% render partial: "exercises/versions/list", locals: {versions: @versions, exercise: @exercise} %>
+      <%= render partial: "exercises/versions/list", locals: {versions: @versions, exercise: @exercise} %>
     </div>
   </div>
 <% end %>
