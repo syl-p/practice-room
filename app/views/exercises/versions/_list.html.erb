@@ -6,12 +6,12 @@
           <div class="flex flex-1 min-w-0">
             <div class="flex-shrink-0">
               <a href="<%= user_path(version.user.id) %>" data-turbo="false">
-                <%= render partial: "users/avatar", locals: {user: version.user, size: 10, square: true} %>
+                <%= render partial: "users/avatar", locals: {user: version.user, square: true} %>
               </a>
             </div>
             <div class="flex-1 px-4 min-w-0">
               <p class="-mt-1 font-medium">
-                <%= link_to version.title, exercise_path(version, view: "version"), data: {
+                <%= link_to version.title, exercise_version_path(version.id, exercise_id: version.original.id), data: {
                   video_id: version.video_link,
                   action: 'click->application#showVersion'
                   } %>

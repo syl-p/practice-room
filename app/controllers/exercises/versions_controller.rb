@@ -1,12 +1,17 @@
 class Exercises::VersionsController < ApplicationController
-  before_action :set_exercise , only: %i[index new edit]
-  before_action :set_version , only: %i[edit]
+  before_action :set_exercise , only: %i[index new edit update destroy]
+  before_action :set_version , only: %i[edit show edit update destroy]
   def index
     @versions = @exercise.versions_filtered(current_user)
   end
 
+  def show
+
+  end
+
   def new
     @version = Exercise.new
+    @version.user = current_user
     @version.original = @exercise
   end
 
@@ -23,15 +28,6 @@ class Exercises::VersionsController < ApplicationController
         format.json { render :show, status: :created, location: @version }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace(
-            "exercise_versions",
-            partial: "exercises/versions/form",
-            locals: {
-              version: @version
-            }
-          )
-        }
         format.json { render json: @version.errors, status: :unprocessable_entity }
       end
     end
@@ -46,6 +42,14 @@ class Exercises::VersionsController < ApplicationController
     else
       format.html { render :edit, status: :unprocessable_entity }
       format.json { render json: @exercise.errors, status: :unprocessable_entity }
+    end
+  end
+
+  def destroy
+    @version.destroy
+    respond_to do |format|
+      format.html { redirect_to exercise_versions_path(@exercise), notice: "Exercise was successfully destroyed." }
+      format.json { head :no_content }
     end
   end
 

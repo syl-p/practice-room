@@ -8,7 +8,7 @@
     <div class="flex mb-6 space-x-4">
       <figure class="flex-shrink-0 self-center">
         <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
-          <%= render partial: "users/avatar", locals: {user: @exercise.user, size: 10} %>
+          <%= render partial: "users/avatar", locals: {user: @exercise.user, size: 12} %>
         </a>
       </figure>
       <div class="flex-1 min-w-0">
@@ -43,7 +43,7 @@
           </div>
         </youtube-player>
       </div>
-      <aside class="bg-white rounded-r-3xl">
+      <aside class="bg-white rounded-r-3xl relative">
         <%= turbo_frame_tag "exercise_versions", src: exercise_versions_path(@exercise) do %>
           <%#= render partial: "exercises/versions/list_skeleton" %>
         <% end %>

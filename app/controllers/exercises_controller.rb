@@ -50,20 +50,11 @@ class ExercisesController < ApplicationController
     unless @goal_setting.present?
       @goal_setting = GoalSetting.new(exercise_id: @exercise.id, user_id: current_user)
     end
-
-    if params[:view].present?
-      render "exercises/versions/show"
-    end
   end
 
   # GET /exercises/new
   def new
     @exercise = Exercise.new
-
-    if params[:original_id].present? # version ?
-      @exercise.exercise_id = params[:original_id]
-      render "exercises/versions/new", locals: {exercise: @exercise}
-    end
   end
 
   # GET /exercises/1/edit
@@ -73,18 +64,12 @@ class ExercisesController < ApplicationController
     if params[:step] == "media"
       @medium = Medium.new
     end
-
-    if @exercise.original.present? # it's a version
-      render "exercises/versions/edit"
-    end
   end
 
   # POST /exercises or /exercises.json
   def create
     @exercise = Exercise.new(exercise_params)
     @exercise.user_id = current_user.id
-    # published false if is a version of an exercise
-    @exercise.published = false if @exercise.original.present?
 
     respond_to do |format|
       if @exercise.save
@@ -92,15 +77,6 @@ class ExercisesController < ApplicationController
         format.json { render :show, status: :created, location: @exercise }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace(
-            "exercise_versions_form",
-            partial: "exercises/versions/form",
-            locals: {
-              version: @exercise
-            }
-          )
-        }
         format.json { render json: @exercise.errors, status: :unprocessable_entity }
       end
     end
@@ -123,25 +99,8 @@ class ExercisesController < ApplicationController
 
   # DELETE /exercises/1 or /exercises/1.json
   def destroy
-    original = @exercise.original
     @exercise.destroy
     respond_to do |format|
-
-      if original.present? # it's a version
-        # turbo respond for get_versions_list
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace(
-            "exercise_versions",
-              partial: "exercises/versions/list",
-              locals: {
-                exercise: original,
-                versions: original.versions_filtered(current_user)
-              }
-            )
-        }
-      end
-
-      # normal
       format.html { redirect_to me_exercises_path, notice: "Exercise was successfully destroyed." }
       format.json { head :no_content }
     end
