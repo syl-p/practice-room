@@ -1,4 +1,4 @@
-<%= form_for exercise_versions_path(exercise_id: @exercise.id, id: @version.id) do |form| %>
+<%= form_with model:@version, url: exercise_versions_path(exercise_id: @exercise.id, id: @version.id) do |form| %>
   <% if @version.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@version.errors.count, "error") %> prohibited this @version from being saved:</h2>

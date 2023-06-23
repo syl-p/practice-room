@@ -20,11 +20,11 @@ class Exercises::VersionsController < ApplicationController
   end
 
   def create
-    @version = Exercise.new(exercise_params)
+    @version = Exercise.new(version_params)
     @version.user_id = current_user.id
     respond_to do |format|
-      if @exercise.save
-        format.html { redirect_to edit_exercise_version_path(@version), notice: "Exercise was successfully created." }
+      if @version.save
+        format.html { redirect_to exercise_version_path(id: @version.id, exercise_id: @version.original.id), notice: "Exercise was successfully created." }
         format.json { render :show, status: :created, location: @version }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -34,14 +34,14 @@ class Exercises::VersionsController < ApplicationController
   end
 
   def update
-    if @version.update(exercise_params)
-      format.html do
-        redirect_to request.referrer, notice: "Version was successfully updated."
+    respond_to do |format|
+      if @version.update(version_params)
+        format.html { redirect_to edit_exercise_version_path(@version), notice: "Exercise was successfully updated." }
+        format.json { render :show, status: :ok, location: @version }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @version.errors, status: :unprocessable_entity }
       end
-      format.json { render :show, status: :ok, location: @exercise }
-    else
-      format.html { render :edit, status: :unprocessable_entity }
-      format.json { render json: @exercise.errors, status: :unprocessable_entity }
     end
   end
 
@@ -60,5 +60,15 @@ class Exercises::VersionsController < ApplicationController
 
   def set_version
     @version = Exercise.find(params[:id])
+  end
+
+  def version_params
+    params.fetch(:exercise, {}).permit(
+      :body, :video_link, :title, :published, :visibility, :versions_enabled, :exercise_id, :description, :level,
+      :goal_start, :goal_end, :goal_label_id,
+      medium_ids: [], category_ids: [], levels: [], versions_attributes: %i[
+        published user_id id
+      ]
+    )
   end
 end

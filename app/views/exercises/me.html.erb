@@ -6,26 +6,9 @@
       <p class="mt-2 text-sm text-gray-700">Retrouvez ici tout les exercices que vous avez créés.</p>
     </div>
     <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-      <%= link_to "Ajouter un exercice", "javascript:;", class: "btn btn-primary",
-                data: { action: "click->popup#toggle", target: "#popup" } %>
+      <%= link_to "Ajouter un exercice", new_exercise_path, class: "btn btn-primary" %>
     </div>
   </header>
-
-  <!-- MODAL -->
-  <div class="relative invisible popup" data-popup-target="popup">
-    <div class="fixed inset-0 z-50 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-    <div class="overflow-y-auto fixed inset-0 z-50">
-      <div class="flex justify-center items-end p-4 min-h-full text-center sm:items-center">
-        <div class="overflow-hidden relative p-6 w-full text-left bg-white rounded-lg shadow-xl transition-all transform lg:my-8 lg:w-4/6"
-          data-popup-target="popupContent">
-            <%= turbo_frame_tag "exercise-edit", src: new_exercise_path, loading: :lazy do %>
-              Chargement...
-            <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- END MODAL -->
 
   <div class="flex flex-col mt-8">
     <div class="overflow-x-auto -mx-4 -my-2 sm:-mx-6 lg:-mx-8">
