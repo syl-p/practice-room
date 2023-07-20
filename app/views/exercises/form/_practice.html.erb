@@ -1,0 +1,54 @@
+<%= form_with(model: @exercise, local: true, class: 'h-full flex flex-col justify-between') do |form| %>
+  <div class="mb-6">
+    <h2 class="text-xl">Pratique</h2>
+    <p>Précisez ici les modalités de pratique (objectif, tempo maximum...).</p>
+
+    <% if @exercise.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
+
+        <ul>
+          <% @exercise.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="overflow-y-auto overflow-hidden">
+    <div class="mb-6 form-group">
+      <%= form.label "Niveau", class: "form-label"  %>
+      <ul>
+        <% Exercise.levels.keys.each do |level| %>
+          <li class="mb-3">
+            <%= form.radio_button :level, level %>
+            <%= form.label "#{:level}_#{level.parameterize.underscore}", level %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="mb-6 form-group">
+      <%= form.label :goal_label, class: "form-label"  %>
+      <%= form.select :goal_label_id, GoalLabel.all.collect { |x| [x.label, x.id]}, class: "form-input" %>
+    </div>
+
+    <div class="mb-6 form-group">
+      <%= form.label :goal_start, class: "form-label"  %>
+      <%= form.number_field :goal_start, class: "form-input" %>
+    </div>
+
+    <div class="mb-6 form-group">
+      <%= form.label :goal_end, class: "form-label"  %>
+      <%= form.number_field :goal_end, class: "form-input" %>
+    </div>
+  </div>
+  <div class="mt-2 actions form-group" data-markdown-target="result">
+    <% if @exercise.persisted? %>
+      <%= form.submit "Modifier l'exercice", class: "btn btn-primary  float-right" %>
+    <% else %>
+      <%= form.submit "Créer l'exercice", class: "btn btn-primary  float-right" %>
+    <% end %>
+  </div>
+<% end %>

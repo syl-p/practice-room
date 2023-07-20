@@ -1,79 +1,85 @@
-<%= form_with(model: @exercise, local: true) do |f| %>
-  <div class="flex">
-
-    <!-- Versions enable/disable -->
-    <fieldset class="w-2/6">
-      <legend class="sr-only">Autoriser les versions ?</legend>
-      <div class="bg-white rounded-md -space-y-px">
-        <label class="rounded-tl-md rounded-tr-md relative border p-4 flex cursor-pointer focus:outline-none">
-          <%= f.radio_button :versions_enabled, true, class: "h-4 w-4 mt-0.5 cursor-pointer shrink-0 text-indigo-600 border-gray-300 focus:ring-indigo-500" %>
-
-            <span class="ml-3 flex flex-col">
-              <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
-              <span id="privacy-setting-0-label" class="block text-sm font-medium"> Autoriser les versions </span>
-              <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
-              <span id="privacy-setting-0-description" class="block text-sm"> Les autres utilisateurs de la plateforme et vous mêmes sont autorisés à proposer des versions alternatives / ou des corrections. Ces dernières seront donc visibles sur la page de votre exercice.</span>
-            </span>
-        </label>
-
-        <label class="rounded-tl-md rounded-tr-md relative border p-4 flex cursor-pointer focus:outline-none">
-          <%= f.radio_button :versions_enabled, {data: {
-            'application-target': 'inputVersionsEnabled',
-            'action': 'click->application#toggleVersionsEnabled'
-            }}, class: "h-4 w-4 mt-0.5 cursor-pointer shrink-0 text-indigo-600 border-gray-300 focus:ring-indigo-500" %>
-
-            <span class="ml-3 flex flex-col">
-              <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
-              <span id="privacy-setting-0-label" class="block text-sm font-medium"> Ne pas autoriser </span>
-              <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
-              <span id="privacy-setting-0-description" class="block text-sm">Vous ne pourrez ni proposer de version alternative ni donner la possibilité à d'autres utilisateurs d'en proposer une.</span>
-            </span>
-        </label>
-      </div>
-    </fieldset>
-    <!-- Versions enable/disable -->
-
-
-    <!-- Versions -->
-    <fieldset class="flex-1 pl-6">
-      <ul class="exercise-edit__versions-list" data-application-target="versionsListEdit">
-        <%= f.fields_for :versions do |version| %>
-          <li class="flex border rounded-md mb-3 p-6">
-            <aside href="<%= version.object.video_link %>" class="w-1/6" data-turbo="false">
-              <% img_link = version.object.video_link.present? ? "//img.youtube.com/vi/#{version.object.video_link}/0.jpg" : "https://via.placeholder.com/800x440.png" %>
-              <%= image_tag img_link, class: "img-responsive", alt: version.object.title %>
-            </aside>
-            <article class="pl-6 flex-1">
-              <header class="flex space-x-4">
-                <div class="flex-shrink-0">
-                  <a href="<%= user_path(version.object.user.id) %>" data-turbo="false">
-                    <%= render partial: "users/avatar", locals: {user: version.object.user, size: 10} %>
-                  </a>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="font-medium text-gray-900 truncate -mt-1">
-                    <%= version.object.title %>
-                  </p>
-                  <p class="text-xs text-gray-500 font-light truncate">
-                    publié par <%= link_to version.object.user.username, user_path(version.object.user.id), data: {turbo: false}  %>
-                  </p>
-                </div>
-                <label>
-                  Afficher <%= version.check_box :published %>
-                </label>
-              </header>
-              <section class="mt-3">
-                <p class="text-sm text-gray-600 font-light line-clamp-2">
-                  <%= version.object.description %>
-                </p>
-              </section>
-            </article>
-          </li>
-        <% end %>
-      </ul>
-    </fieldset>
-    <!-- Versions -->
+<%= form_with(model: @exercise, local: true, class: 'h-full flex flex-col justify-between') do |f| %>
+  <div class="mb-6">
+    <h2 class="text-xl">Système de version</h2>
+    <p>Souhaitez vous laisser les autres utilisateurs proposer des versions différentes de votre exercice ?</p>
   </div>
+
+  <tabs-section>
+    <div data-tab-title="Activation" slot="tab">
+      <fieldset class="w-2/6">
+        <legend class="sr-only">Autoriser les versions ?</legend>
+        <div class="bg-white rounded-md -space-y-px">
+          <label class="rounded-tl-md rounded-tr-md relative border p-4 flex cursor-pointer focus:outline-none">
+            <%= f.radio_button :versions_enabled, true, class: "h-4 w-4 mt-0.5 cursor-pointer shrink-0 text-indigo-600 border-gray-300 focus:ring-indigo-500" %>
+
+              <span class="ml-3 flex flex-col">
+                <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
+                <span id="privacy-setting-0-label" class="block text-sm font-medium"> Autoriser les versions </span>
+                <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
+                <span id="privacy-setting-0-description" class="block text-sm"> Les autres utilisateurs de la plateforme et vous mêmes sont autorisés à proposer des versions alternatives / ou des corrections. Ces dernières seront donc visibles sur la page de votre exercice.</span>
+              </span>
+          </label>
+
+          <label class="rounded-tl-md rounded-tr-md relative border p-4 flex cursor-pointer focus:outline-none">
+            <%= f.radio_button :versions_enabled, {data: {
+              'application-target': 'inputVersionsEnabled',
+              'action': 'click->application#toggleVersionsEnabled'
+              }}, class: "h-4 w-4 mt-0.5 cursor-pointer shrink-0 text-indigo-600 border-gray-300 focus:ring-indigo-500" %>
+
+              <span class="ml-3 flex flex-col">
+                <!-- Checked: "text-indigo-900", Not Checked: "text-gray-900" -->
+                <span id="privacy-setting-0-label" class="block text-sm font-medium"> Ne pas autoriser </span>
+                <!-- Checked: "text-indigo-700", Not Checked: "text-gray-500" -->
+                <span id="privacy-setting-0-description" class="block text-sm">Vous ne pourrez ni proposer de version alternative ni donner la possibilité à d'autres utilisateurs d'en proposer une.</span>
+              </span>
+          </label>
+        </div>
+      </fieldset>
+      <!-- Versions enable/disable -->
+    </div>
+
+    <div data-tab-title="Liste des versions" slot="tab">
+      <!-- Versions -->
+      <fieldset class="flex-1 pl-6">
+        <ul class="exercise-edit__versions-list" data-application-target="versionsListEdit">
+          <%= f.fields_for :versions do |version| %>
+            <li class="flex border rounded-md mb-3 p-6">
+              <aside href="<%= version.object.video_link %>" class="w-1/6" data-turbo="false">
+                <% img_link = version.object.video_link.present? ? "//img.youtube.com/vi/#{version.object.video_link}/0.jpg" : "https://via.placeholder.com/800x440.png" %>
+                <%= image_tag img_link, class: "img-responsive", alt: version.object.title %>
+              </aside>
+              <article class="pl-6 flex-1">
+                <header class="flex space-x-4">
+                  <div class="flex-shrink-0">
+                    <a href="<%= user_path(version.object.user.id) %>" data-turbo="false">
+                      <%= render partial: "users/avatar", locals: {user: version.object.user, size: 8} %>
+                    </a>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="font-medium text-gray-900 truncate -mt-1">
+                      <%= version.object.title %>
+                    </p>
+                    <p class="text-xs text-gray-500 font-light truncate">
+                      publié par <%= link_to version.object.user.username, user_path(version.object.user.id), data: {turbo: false}  %>
+                    </p>
+                  </div>
+                  <label>
+                    Afficher <%= version.check_box :published %>
+                  </label>
+                </header>
+                <section class="mt-3">
+                  <p class="text-sm text-gray-600 font-light line-clamp-2">
+                    <%= version.object.description %>
+                  </p>
+                </section>
+              </article>
+            </li>
+          <% end %>
+        </ul>
+      </fieldset>
+      <!-- Versions -->
+    </div>
+  </tabs-section>
 
   <div class="w-full mt-10">
     <%= f.submit "Enregistrer les paramètres pour les versions", class: "btn btn-primary float-right"  %>

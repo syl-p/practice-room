@@ -16,7 +16,6 @@ export default class extends Controller {
 
   search($event) {
     clearTimeout(this.timeout)
-    console.log(this.cloneSkeleton)
 
     // insert custom element skeleton in the results target DOM
     this.resultsTarget.innerHTML = this.cloneSkeleton.innerHTML

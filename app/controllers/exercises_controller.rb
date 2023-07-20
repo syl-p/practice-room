@@ -59,7 +59,7 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1/edit
   def edit
-    return unless ['media', "versions", "visibility"].include?(params[:step]) || params[:step].blank?
+    return unless %w[presentation practice content media versions visibility].include?(params[:step]) || params[:step].blank?
 
     if params[:step] == "media"
       @medium = Medium.new

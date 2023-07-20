@@ -1,137 +1,55 @@
-<section class="px-10 pt-10">
+<section>
   <header class="mb-10">
-    <%= render partial: "shared/breadcrump", locals: {links: [
-      {
-        label: "Votre espace personnel",
-        path: dashboard_path
-      }
-    ]}
-    %>
     <h1 class="text-4xl font-semibold">Votre espace</h1>
   </header>
 
-  <!--update -->
-  <section class="grid grid-cols-1 gap-x-6 mb-10 lg:grid-cols-3">
-
-    <article class="lg:col-span-2">
-      <!-- stats -->
-      <section class="mb-10 sm:flex sm:space-x-6" id="stats">
-        <!-- stats by week -->
-        <article class="p-4 rounded-md border shadow-sm bg-primary sm:w-3/6 sm">
-          <h2 class="mb-6 text-lg font-semibold">Ces 7 derniers jours</h2>
-          <div class="flex justify-center items-center space-x-6">
-            <% if current_user.practice_time_this_week.present? %>
-              <div class="w-3/6">
-                <h2 class="text-4xl font-bold">
-                  <%= Time.at(current_user.practice_time_this_week.values.reduce(:+) / 7).utc.strftime("%H:%M:%S")%>
-                </h2>
-                <p>Temps de pratique moyen</p>
-              </div>
-              <div class="mt-0 mt-10 w-3/6">
-                <stat-box
-                  labels="<%= current_user.practice_time_this_week.keys.map{ |date| date.to_datetime }.to_json %>"
-                  values="<%= current_user.practice_time_this_week.values.to_json %>"
-                  type="line">
-                </stat-box>
-              </div>
-            <% else %>
-              <p style="display:block; width: 100%">
-                Aucune donnée disponible pour afficher les statistiques hebdomadaire...
-              </p>
-            <% end %>
+  <section class="mb-10 sm:flex sm:space-x-6">
+    <!-- stats by week -->
+    <article class="p-4 rounded-md border shadow-sm bg-primary sm:w-3/6 text-white">
+      <h2 class="mb-6 text-lg font-semibold">Ces 7 derniers jours</h2>
+      <div class="flex justify-center items-center space-x-6">
+        <% if current_user.practice_time_this_week.present? %>
+          <div class="w-3/6">
+            <h2 class="text-4xl font-bold">
+              <%= Time.at(current_user.practice_time_this_week.values.reduce(:+) / 7).utc.strftime("%H:%M:%S")%>
+            </h2>
+            <p>Temps de pratique moyen</p>
           </div>
-        </article>
-        <!-- end stats by week -->
-        <!-- stats by category -->
-        <article class="p-4 bg-orange-200 rounded-md border shadow-sm sm:w-3/6">
-          <div class="mb-6">
-            <h2 class="text-lg font-semibold">Répartition par catégorie</h2>
+          <div class="mt-0 mt-10 w-3/6">
+            <stat-box
+              labels="<%= current_user.practice_time_this_week.keys.map{ |date| date.to_datetime }.to_json %>"
+              values="<%= current_user.practice_time_this_week.values.to_json %>"
+              type="line">
+            </stat-box>
           </div>
-          <div class="flex">
-            <% if current_user.practice_time_by_category.present? %>
-              <stat-box
-                labels="<%= current_user.practice_time_by_category.keys.to_json %>"
-                values="<%= current_user.practice_time_by_category.values.to_json %>"
-                type="doughnut">
-              </stat-box>
-            <% else %>
-              <p style="display:block; width: 100%">
-                Aucune donnée disponible pour afficher les statistiques par catégorie...
-              </p>
-            <% end %>
-          </div>
-        </article>
-        <!-- end stats by category -->
-      </section>
-      <!-- end stats -->
-      <article id="update">
-        <h2 class="text-2xl">Qu'allons nous faire aujourd'hui ?</h2>
-        <tabs-section tab-list-class="tab tab-block" tab-link-class="tab-item">
-
-          <!-- UPDATE PRACTICE -->
-          <div data-tab-title="Vous améliorer" slot="tab">
-            <!-- Dailies and text -->
-            <div class="mb-10 md:flex md:space-x-10">
-              <!-- dailies-->
-              <div class="flex md:w-3/6">
-                <div class="p-6 mr-3 rounded-md border">
-                  <div class="card-header">
-                    <i class="mdi mdi-check"></i>
-                  </div>
-                  <div class="card-body">
-                    Plus de 10 minutes de pratique
-                  </div>
-                </div>
-                <div class="p-6 mr-3 rounded-md border">
-                  <div class="card-header">
-                    <i class="mdi mdi-close"></i>
-                  </div>
-                  <div class="card-body">
-                    minimum 3 exercices par jour
-                  </div>
-                </div>
-                <div class="p-6 mr-3 rounded-md border">
-                  <div class="card-header">
-                    <i class="mdi mdi-close"></i>
-                  </div>
-                  <div class="card-body">
-                    1 exercice dans chaque catégorie
-                  </div>
-                </div>
-              </div>
-              <!-- dailies-->
-              <div class="mt-10 md:flex-1 md:w-3/6 md:mt-0">
-                <h5 class="mb-6 text-xl">
-                  Trouvez ici des idées pour augmenter l'efficacité<br> de votre temps de pratique...
-                </h5>
-                <p>
-                  Nous développons actuellement plusieurs solutions pour vous motiver,
-                  vous inspirer et vous aider à améliorer pratique.
-                  <br>
-                  Grâce aux dailies, vous aurez déjà une piste de réussite...
-                </p>
-              </div>
-            </div>
-            <!-- Dailies and text -->
-          </div>
-          <!-- END UPDATE PRACTICE -->
-
-          <!-- UPDATE CONTENT -->
-          <div data-tab-title="Votre contenu" slot="tab">
-            <div class="columns">
-              <div class="column">
-                test
-              </div><div class="column">
-              lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </div>
-            </div>
-          </div>
-          <!-- END UPDATE CONTENT -->
-        </tabs-section>
-      </article>
+        <% else %>
+          <p style="display:block; width: 100%">
+            Aucune donnée disponible pour afficher les statistiques hebdomadaire...
+          </p>
+        <% end %>
+      </div>
     </article>
+    <!-- end stats by week -->
+
+    <!-- stats by category -->
+    <article class="p-4 bg-orange-200 rounded-md border shadow-sm sm:w-3/6">
+      <div class="mb-6">
+        <h2 class="text-lg font-semibold">Répartition par catégorie</h2>
+      </div>
+      <div class="flex">
+        <% if current_user.practice_time_by_category.present? %>
+          <stat-box
+            labels="<%= current_user.practice_time_by_category.keys.to_json %>"
+            values="<%= current_user.practice_time_by_category.values.to_json %>"
+            type="doughnut">
+          </stat-box>
+        <% else %>
+          <p style="display:block; width: 100%">
+            Aucune donnée disponible pour afficher les statistiques par catégorie...
+          </p>
+        <% end %>
+      </div>
+    </article>
+    <!-- end stats by category -->
   </section>
 </section>

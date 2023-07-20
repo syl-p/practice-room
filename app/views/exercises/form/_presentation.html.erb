@@ -1,0 +1,40 @@
+<%= form_with(model: @exercise, local: true) do |form| %>
+  <div class="mb-6">
+    <h2 class="text-xl">Présentation</h2>
+    <p></p>
+  </div>
+  <% if @exercise.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
+
+      <ul>
+        <% @exercise.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-6 form-group">
+    <%= form.label "titre", class: "form-label" %>
+    <%= form.text_field :title, class: "form-input"  %>
+  </div>
+
+  <div class="mb-6 form-group">
+    <%= form.label :description, class: "form-label"  %>
+    <%= form.text_area :description, class: "form-input" %>
+  </div>
+
+  <div class="mb-6 form-group">
+    <%= form.label :categories, class: "form-label"  %>
+    <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => false, selected_value: nil}, :multiple => true, class: "form-input" %>
+  </div>
+
+  <div class="mt-2 actions form-group" data-markdown-target="result">
+    <% if @exercise.persisted? %>
+      <%= form.submit "Modifier l'exercice", class: "btn btn-primary  float-right" %>
+    <% else %>
+      <%= form.submit "Créer l'exercice", class: "btn btn-primary  float-right" %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,12 +1,19 @@
 <%
-active = active if local_assigns[:active].nil?
-%>
-<%
   links = [
+    {
+      label: "Présentation",
+      active: active == "presentation",
+      path: exercise.persisted? ? edit_with_step_exercises_path(exercise, step: "presentation") : new_exercise_path
+    },
     {
       label: "Contenu",
       active: active == "content",
-      path: exercise.persisted? ? edit_exercise_path(exercise) : new_exercise_path
+      path: exercise.persisted? ? edit_exercise_path(exercise, step: "content") : "javascript:;"
+    },
+    {
+      label: "Pratique",
+      active: active == "practice",
+      path: exercise.persisted? ? edit_with_step_exercises_path(exercise, step: "practice") : "javascript:;"
     },
     {
       label: "Ressources",
@@ -26,7 +33,7 @@ active = active if local_assigns[:active].nil?
   ]
 %>
 
-<nav class="flex justify-center">
+<nav>
   <ol role="list" class="space-y-6">
     <% links.each do |link| %>
       <li>

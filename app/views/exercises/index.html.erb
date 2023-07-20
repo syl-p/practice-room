@@ -30,6 +30,6 @@
 
   <!-- Turbo load comments list + Skeleton -->
   <%= turbo_frame_tag "exercises_list", src: search_exercises_path, loading: :lazy do %>
-    <%#= render partial: "exercises/versions/list_skeleton" %>
+    <%= render partial: "exercises/search/results_skeleton" %>
   <% end %>
 </section>

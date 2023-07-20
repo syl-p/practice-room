@@ -1,0 +1,24 @@
+<div id="practice_sidebar"
+  data-application-target="sidebar"
+  data-transition-enter="ease-in-out duration-500"
+  data-transition-enter-start="opacity-0"
+  data-transition-enter-end="opacity-100"
+  data-transition-leave="ease-in-out duration-500"
+  data-transition-leave-start="opacity-100"
+  data-transition-leave-end="opacity-0"
+  class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+  <aside
+    class="z-[100] hidden pointer-events-none fixed right-0 inset-y-0 flex h-screen justify-center items-center max-w-full pl-10"
+    data-transition-enter="transform transition ease-in-out duration-500 sm:duration-700"
+    data-transition-enter-start="translate-x-full"
+    data-transition-enter-end="translate-x-0"
+    data-transition-leave="transform transition ease-in-out duration-500 sm:duration-700"
+    data-transition-leave-start="translate-x-0"
+    data-transition-leave-end="translate-x-full">
+      <div class="h-full pointer-events-auto">
+        <div class="flex overflow-y-scroll flex-col justify-center h-full bg-white shadow-xl">
+          <%= render partial: "shared/sidebar/content" %>
+        </div>
+      </div>
+  </aside>
+</div>

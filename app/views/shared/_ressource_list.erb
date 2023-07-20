@@ -16,14 +16,19 @@
             </p>
           </div>
         </div>
-        <div class="relative">
-          <button type="button" class="flex items-center text-gray-400 bg-gray-100 rounded-full hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100" id="menu-button" aria-expanded="true" aria-haspopup="true">
+
+        <div class="relative" data-controller="dropdown" data-dropdown-toggle-class="hidden">
+          <button type="button" data-dropdown-target="button"
+            data-action="click->dropdown#toggle"
+            class="flex items-center text-gray-400 bg-gray-100 rounded-full hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100" id="menu-button" aria-expanded="true" aria-haspopup="true">
             <span class="sr-only">Open options</span>
             <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
             </svg>
           </button>
-          <div style="display: none;" class="absolute right-0 z-10 mt-2 w-56 bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+          <div
+            data-dropdown-target="menu"
+            class="hidden absolute right-0 z-10 mt-2 w-56 bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
             <div class="py-1" role="none">
               <%= link_to "Ouvrir", url_for(medium.file), { target: '_blank', data: {turbo: false}, class: "block px-4 py-2 text-sm text-gray-700" } %>
               <%= link_to "Téléchargement", medium.file, { target: '_blank', data: {turbo: false}, download: true, class: "block px-4 py-2 text-sm text-gray-700" } %>

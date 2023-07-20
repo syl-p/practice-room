@@ -23,3 +23,6 @@ application.register("upload-async", UploadAsyncController)
 
 import Popup from "./popup_controller"
 application.register("popup", Popup)
+
+import Dropdown from "./dropdown_controller"
+application.register("dropdown", Dropdown)

@@ -16,7 +16,6 @@ export default class extends Controller {
   }
 
   toggle($event) {
-    $event.stopPropagation()
     if ($event.target) {
       document.activeElement.blur()
     }

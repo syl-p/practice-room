@@ -1,69 +1,34 @@
-<%= form_with(model: exercise, local: true) do |form| %>
-  <% if exercise.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
-
-      <ul>
-        <% exercise.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="mb-6 form-group">
-    <%= form.label "titre", class: "form-label" %>
-    <%= form.text_field :title, class: "form-input"  %>
-  </div>
-
-  <div class="mb-6 form-group">
-    <%= form.label :description, class: "form-label"  %>
-    <%= form.text_area :description, class: "form-input" %>
-  </div>
-
-  <div class="mb-6 form-group">
-    <%= form.label "Vidéo youtube", class: "form-label"  %>
-    <%= form.text_field :video_link, class: "form-input" %>
-  </div>
-
-  <div class="mb-6 form-group">
-    <%= form.label :categories, class: "form-label"  %>
-    <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => false, selected_value: nil}, :multiple => true, class: "form-input" %>
-  </div>
-
-  <div class="mb-6 form-group">
-    <%= form.label "Niveau", class: "form-label"  %>
-    <ul>
-      <% Exercise.levels.keys.each do |level| %>
-        <li class="mb-3">
-          <%= form.radio_button :level, level %>
-          <%= form.label "#{:level}_#{level.parameterize.underscore}", level %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-
-  <div class="mb-6 form-group">
-    <%= form.label :goal_label, class: "form-label"  %>
-    <%= form.select :goal_label_id, GoalLabel.all.collect { |x| [x.label, x.id]}, class: "form-input" %>
-  </div>
-
-  <div class="mb-6 form-group">
-    <%= form.label :goal_start, class: "form-label"  %>
-    <%= form.number_field :goal_start, class: "form-input" %>
-  </div>
-
-  <div class="mb-6 form-group">
-    <%= form.label :goal_end, class: "form-label"  %>
-    <%= form.number_field :goal_end, class: "form-input" %>
-  </div>
-
+<%= form_with(model: @exercise, local: true) do |form| %>
   <div class="mb-6">
-    <%= form.label "Contenu", class: "form-label"  %>
-    <%= form.text_area :body, class: "form-input w-full" %>
+    <h2 class="text-xl">Contenu de votre exercice</h2>
+    <p>Définissez le contenu de votre exercice, définissez la catégorie dans laquelle il se trouve etc...</p>
+
+    <% if @exercise.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
+
+        <ul>
+          <% @exercise.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </div>
 
-  <div class="mt-2 actions form-group" data-markdown-target="result">
+  <div>
+    <div class="mb-6 form-group">
+      <%= form.label "Vidéo youtube", class: "form-label"  %>
+      <%= form.text_field :video_link, class: "form-input" %>
+    </div>
+
+    <div class="mb-6">
+      <%= form.label "Contenu", class: "form-label"  %>
+      <%= form.text_area :body, class: "form-input w-full" %>
+    </div>
+  </div>
+
+  <div class="mt-2 actions form-group">
     <% if @exercise.persisted? %>
       <%= form.submit "Modifier l'exercice", class: "btn btn-primary  float-right" %>
     <% else %>

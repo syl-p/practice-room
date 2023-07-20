@@ -1,14 +1,7 @@
-<section class="p-10" data-controller="popup" data-popup-inactive-class="invisible" data-popup-active-class="visible">
+<section data-controller="popup" data-popup-inactive-class="invisible" data-popup-active-class="visible">
   <p id="notice"><%= notice %></p>
   <header class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
-      <%= render partial: "shared/breadcrump", locals: {links: [
-        {
-          label: "Media",
-          path: media_path
-        }
-      ]}
-      %>
       <h1 class="text-4xl font-semibold text-gray-900">Media</h1>
       <p class="mt-2 text-sm text-gray-700">Retrouvez ici tout les ressources que vous avez mis en ligne.</p>
     </div>

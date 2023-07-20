@@ -1,36 +1,36 @@
-<% if @exercise.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
+<div class="mb-6">
+  <h2 class="text-xl">Ressources</h2>
+  <p>Définissez le contenu de votre exercice, définissez la catégorie dans laquelle il se trouve etc...</p>
+</div>
 
-    <ul>
-      <% exercise.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
-<div class="md:flex">
-  <div class="md:w-2/6 pr-6">
-    <%= form_with(model: @medium, local: true, html: { data: { controller: "upload-async" } }) do |form| %>
-      <%= form.hidden_field :exercise_id, value: @exercise.id %>
-      <%= form.label "Nouvelle ressource ?", class: "form-label"  %>
-      <p class="my-2 text-sm text-gray-700">
-        Choisisser vos nouvelles ressources, l'upload sera automatique.
-      </p>
-
-      <%= render partial: "shared/drag_and_drop", locals: {form: form, auto_upload: true} %>
-    <% end %>
-  </div>
-
-  <div class="md:w-4/6">
+<tabs-section>
+  <div data-tab-title="Liste des ressources" slot="tab">
     <%= form_with(model: @exercise, local: true) do |form| %>
-      <%= form.label "Choisissez vos ressources pour cet exercice:", class: "form-label"  %>
       <%= form.select :medium_ids,
                       Medium.all.collect { |x| [x.name ? x.name : x.file.filename, x.id]},
                       {:include_blank => true, selected_value: nil},
                       class: "form-input", :multiple => true %>
-      <%= form.submit "Associer ces ressources à l'exercice", class: "btn btn-primary mt-6"  %>
+      <%= form.submit "Associer ces ressources à l'exercice", class: "btn btn-primary mt-6 float-right"  %>
     <% end %>
   </div>
-</div>
+
+  <!-- practice sessions list -->
+  <div data-tab-title="Ajouter un fichier" slot="tab">
+    <%= form_with(model: @medium, local: true, html: { data: { controller: "upload-async" } }) do |form| %>
+      <% if @exercise.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
+
+          <ul>
+            <% exercise.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= form.hidden_field :exercise_id, value: @exercise.id %>
+      <%= render partial: "shared/drag_and_drop", locals: {form: form, auto_upload: true} %>
+    <% end %>
+  </div>
+  <!-- end practice sessions list -->
+</tabs-section>

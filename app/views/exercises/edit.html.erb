@@ -1,16 +1,17 @@
-<%= turbo_frame_tag "exercise-edit" do %>
-  <section>
-    <header class="pt-3 pb-12 text-center">
-      <h1 class="text-4xl font-semibold">Modifier l' exercice</h1>
-    </header>
-    <section class="flex space-x-12">
-      <aside class="flex flex-col items-center text-gray">
-        <%= render partial: 'exercises/form/nav',
-            locals: {exercise: @exercise, active: params[:step] ? params[:step] :  'content'} %>
-      </aside>
-      <div class="flex-1">
-        <%= render "exercises/form/#{params[:step] ? params[:step] :  'content'}", exercise: @exercise %>
-      </div>
-    </section>
+<% step = params[:step] ? params[:step] :  'presentation' %>
+<section>
+  <header class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-4xl font-semibold">Modification de votre exercice</h1>
+    </div>
+  </header>
+  <section class="flex space-x-12 mt-8">
+    <aside>
+      <%= render partial: 'exercises/form/nav',
+                locals: {exercise: @exercise, active: step } %>
+    </aside>
+    <article class="flex-1 relative">
+      <%= render "exercises/form/#{step}", exercise: @exercise %>
+    </article>
   </section>
-<% end %>
+</section>

@@ -18,11 +18,12 @@
       <main class="flex relative">
         <%= render "shared/header" %>
         <%= render "shared/narrow_sidebar" if current_user.present? %>
-        <div class="flex relative flex-1 space-x-8">
+        <div class="flex relative flex-1">
           <div class="flex-1 pt-24 pr-8">
             <%= yield %>
+            <%= render "shared/footer" %>
           </div>
-          <%= render "shared/practice_sidebar" if current_user.present? %>
+          <%= render "shared/sidebar/#{controller_name == "users" && action_name == "index" ? 'integrated' : 'overlayed'}" %>
         </div>
       </main>
     </div>
