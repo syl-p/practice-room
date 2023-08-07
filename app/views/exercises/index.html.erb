@@ -1,31 +1,34 @@
-<section>
-  <header class="flex justify-between items-end mb-6 space-x-3">
-    <%= form_with(url: search_exercises_path) do |form| %>
-      <% if @categories.present? %>
-        <ul class="flex space-x-3 font-medium text-gray-900">
-          <% @categories.each do |category| %>
-            <li>
-              <label>
-                <%= form.check_box :category_ids, {
-                  multiple: true,
-                  data: {action: "change->hello#search"},
-                  checked: @category.present? && @category.id == category.id,
-                  class: "hidden peer"
-                },
-                                    category.id,
-                                    false %>
-                <span class="p-2 cursor-pointer peer-checked:font-bold peer-checked:border-b-4 peer-checked:border-indigo-600"><%= category.name %></span>
-              </label>
-            </li>
+<section data-controller="exercises">
+  <header class="mb-6">
+    <%= form_with(url: search_exercises_path, data: {turbo: true, turbo_frame: "exercises_list"}) do |form| %>
+      <div class="flex space-x-6 items-center justify-around">
+        <% if @categories.present? %>
+          <ul class="flex space-x-3 font-medium text-gray-900 flex-1">
+            <% @categories.each do |category| %>
+              <li>
+                <label>
+                  <%= form.check_box :category_ids, {
+                    multiple: true,
+                    data: {action: "change->exercises#search"},
+                    checked: @category.present? && @category.id == category.id,
+                    class: "hidden peer"
+                  },
+                                      category.id,
+                                      false %>
+                  <span class="p-2 cursor-pointer peer-checked:font-bold peer-checked:border-b-4 peer-checked:border-primary"><%= category.name %></span>
+                </label>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+
+        <p class="">
+          <%= turbo_frame_tag "search_results_count", target: "search_results_count" do %>
+            <%= "Nous avons trouvé #{@exercises.count} résultats." if @exercises.present? %>
           <% end %>
-        </ul>
-      <% end %>
+        </p>
+      </div>
     <% end %>
-    <p>
-      <%= turbo_frame_tag "search_results_count", target: "search_results_count" do %>
-        <%= "Nous avons trouvé #{@exercises.count} résultats." if @exercises.present? %>
-      <% end %>
-    </p>
   </header>
 
   <!-- Turbo load comments list + Skeleton -->

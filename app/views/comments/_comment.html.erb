@@ -2,8 +2,8 @@
   <%= turbo_frame_tag comment do %>
     <div class="flex relative gap-x-4 mb-6">
       <div class="flex-1 flex-auto">
-        <div class="p-6 bg-white rounded-lg">
-          <div class="flex space-x-6 mb-3">
+        <div class="p-6 bg-white rounded-lg shadow">
+          <div class="flex space-x-4 mb-3">
             <div>
               <%= link_to user_url(comment.user), data: {turbo: false}, class: "flex-none relative " do %>
                 <%= render partial: "users/avatar", locals: {user: comment.user, size: 8} %>

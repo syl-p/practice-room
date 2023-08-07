@@ -31,13 +31,11 @@ export class Stat extends HTMLElement {
     this.values = JSON.parse(this.getAttribute('values'));
     this.type = this.getAttribute('type');
     switch (this.type) {
-      case "line":
-        this.config = lineConfig;
-        break;
       case "doughnut":
         this.config = doughnutConfig;
         break;
       default:
+        this.config = lineConfig;
         break;
     }
     this.render();
@@ -49,7 +47,7 @@ export class Stat extends HTMLElement {
 
     // gradient color for area
     const gradient = this.ctx.createLinearGradient(0, 0, 0, 140);
-    gradient.addColorStop(0, 'rgb(87, 85, 217, 0.8)');
+    gradient.addColorStop(0, 'rgb(72, 149, 247)');
     gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
     if(this.type === 'line') {
       this.config.dataset.backgroundColor = gradient;

@@ -35,14 +35,6 @@ class Exercise < ApplicationRecord
   before_destroy :remove_from_favorites
   before_save :generate_slug
 
-  def self.filtered(query_params)
-    if query_params.present?
-      self.where("title ILIKE :text OR body ILIKE :text", text: "%#{query_params[:text]}%")
-    else
-      self.all.order("created_at DESC")
-    end
-  end
-
   def self.for_current_user(user = nil)
     if user.present?
       exercices = self.where("user_id = ? OR (published = true AND visibility = 0)", user&.id)

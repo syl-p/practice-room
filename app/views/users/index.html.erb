@@ -1,38 +1,26 @@
-<section>
-  <header class="mb-10">
-    <h1 class="text-4xl font-semibold">Votre espace</h1>
+<section class="mr-6">
+  <header class="mb-6 border px-4 py-6 rounded-lg flex space-x-3 bg-primary text-white">
+    <div>
+      <h1 class="text-4xl font-semibold mb-3">Bonjour <%= current_user.username.capitalize %></h1>
+      <p>Bienvenue sur votre espace personnel. Ici, vous trouverez les statistiques en temps réeel de votre pratique mais aussi des conseils et des idées pour vous améliorer.</p>
+    </div>
   </header>
 
-  <section class="mb-10 sm:flex sm:space-x-6">
-    <!-- stats by week -->
-    <article class="p-4 rounded-md border shadow-sm bg-primary sm:w-3/6 text-white">
-      <h2 class="mb-6 text-lg font-semibold">Ces 7 derniers jours</h2>
-      <div class="flex justify-center items-center space-x-6">
-        <% if current_user.practice_time_this_week.present? %>
-          <div class="w-3/6">
-            <h2 class="text-4xl font-bold">
-              <%= Time.at(current_user.practice_time_this_week.values.reduce(:+) / 7).utc.strftime("%H:%M:%S")%>
-            </h2>
-            <p>Temps de pratique moyen</p>
-          </div>
-          <div class="mt-0 mt-10 w-3/6">
-            <stat-box
-              labels="<%= current_user.practice_time_this_week.keys.map{ |date| date.to_datetime }.to_json %>"
-              values="<%= current_user.practice_time_this_week.values.to_json %>"
-              type="line">
-            </stat-box>
-          </div>
-        <% else %>
-          <p style="display:block; width: 100%">
-            Aucune donnée disponible pour afficher les statistiques hebdomadaire...
-          </p>
-        <% end %>
-      </div>
-    </article>
-    <!-- end stats by week -->
+  <section class="mb-6 sm:flex sm:space-x-6 justify-between">
+    <div class="border rounded-lg p-4 bg-white shadow">
+      <p>10 mn de pratique</p>
+    </div>
+    <div class="border rounded-lg p-4 bg-white shadow">
+      <p>1 exercice dans chaque catégorie</p>
+    </div>
+    <div class="border rounded-lg p-4 bg-white shadow">
+      <p>3 exercices différents</p>
+    </div>
+  </section>
 
+  <section class="mb-6 sm:flex sm:space-x-6">
     <!-- stats by category -->
-    <article class="p-4 bg-orange-200 rounded-md border shadow-sm sm:w-3/6">
+    <article class="p-4 rounded-lg border bg-white shadow sm:w-2/6">
       <div class="mb-6">
         <h2 class="text-lg font-semibold">Répartition par catégorie</h2>
       </div>
@@ -51,5 +39,24 @@
       </div>
     </article>
     <!-- end stats by category -->
+
+    <!-- stats by week -->
+    <article class="p-4 rounded-lg border shadow bg-white sm:w-4/6">
+      <h2 class="mb-6 text-lg font-semibold">Ces 7 derniers jours</h2>
+      <div class="mt-10">
+        <% if current_user.practice_time_this_week.present? %>
+          <stat-box
+            labels="<%= current_user.practice_time_this_week.keys.map{ |date| date.to_datetime }.to_json %>"
+            values="<%= current_user.practice_time_this_week.values.to_json %>"
+            type="line">
+          </stat-box>
+        <% else %>
+          <p style="display:block; width: 100%">
+            Aucune donnée disponible pour afficher les statistiques hebdomadaire...
+          </p>
+        <% end %>
+      </div>
+    </article>
+    <!-- end stats by week -->
   </section>
 </section>

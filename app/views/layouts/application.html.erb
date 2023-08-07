@@ -10,11 +10,9 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class="h-full bg-light" data-controller="hello">
+  <body class="h-full bg-light">
     <div
-      aria-labelledby="slide-over-title"
-      data-controller="application"
-      data-application-root-value="<%= root_url %>">
+      aria-labelledby="slide-over-title" data-controller="application">
       <main class="flex relative">
         <%= render "shared/header" %>
         <%= render "shared/narrow_sidebar" if current_user.present? %>

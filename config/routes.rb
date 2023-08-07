@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get 'users/show'
   get 'dashboard', to: "users#index", as: "dashboard"
+  get 'search/index', defaults: { format: :turbo_stream }
 
   resources :media do
     collection do

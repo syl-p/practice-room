@@ -23,7 +23,7 @@
         it_current_date = day.strftime("%Y-%m-%d") == current_date.strftime("%Y-%m-%d") if current_date
       %>
         <%= link_to with_data || today ? get_day_path(date: day) : 'javascript:;',
-          class: "p-1 rounded-full #{ "bg-gray-700" if today } #{ "border border-indigo-500" if it_current_date }",
+          class: "p-1 rounded-full #{ "bg-gray-700" if today } #{ "border border-primary" if it_current_date }",
           data: {
             pratices_target: "dateLink",
             date: day.strftime("%Y-%m-%d")

@@ -1,15 +1,17 @@
 <header class="fixed top-0 left-0 z-10 py-8 pr-6 pl-6 w-full xl:pl-32">
   <div class="flex relative flex-shrink-0">
-    <button type="button" class="px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 lg:hidden">
+    <button type="button" class="px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary lg:hidden">
       <span class="sr-only">Open sidebar</span>
       <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
       </svg>
     </button>
     <div class="flex flex-1 justify-between">
-      <div class="flex flex-1 space-x-6">
+      <div class="flex flex-1 space-x-6" >
         <!-- FORM SEARCH -->
-        <div class="w-full max-w-lg lg:max-w-xs">
+        <%= form_tag search_index_path, method: :get,
+          data: {controller: "search", turbo: true, turbo_frame: "search_results"},
+          class:"relative w-full max-w-lg lg:max-w-xs" do %>
           <label for="search" class="sr-only">Search</label>
           <div class="relative">
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -17,9 +19,15 @@
                 <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"></path>
               </svg>
             </div>
-            <input id="search" name="search" class="block py-1.5 pr-3 pl-10 w-full text-gray-900 bg-white rounded-xl border-0 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Search" type="search">
+            <%= text_field_tag :search, params[:search], placeholder: "Recherche...",
+              data: {action: "input->search#start"},
+              class:"block py-1.5 pr-3 pl-10 w-full text-gray-900 bg-white rounded-xl border-0 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6" %>
           </div>
-        </div>
+          <div class="absolute bg-white z-10 w-full shadow">
+            <%= turbo_frame_tag "search_results", data: {search_target: "results"} do %>
+            <% end %>
+          </div>
+        <% end %>
         <!-- FORM SEARCH -->
         <nav class="hidden items-center space-x-6 xl:flex">
           <%
@@ -68,7 +76,7 @@
                   <button type="button"
                     data-action="application#sidebarShow"
                     data-application-id-param="practice_sidebar"
-                    class="flex text-sm bg-white rounded-full group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="flex text-sm bg-white rounded-full group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                     id="user-menu-button">
                     <span class="sr-only">Open user menu</span>
                     <%= render partial: "users/avatar", locals: {user: current_user} %>
