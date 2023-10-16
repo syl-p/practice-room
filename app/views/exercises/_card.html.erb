@@ -4,24 +4,32 @@
   goal_setting = exercise.goal_setting_for_current_user(current_user)
 %>
 
-<article class="bg-white rounded-lg border shadow-lg transition hover:shadow-xl flex space-x-0">
-  <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover bg-primary rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden relative"
+<article class="bg-white rounded-lg shadow-lg transition hover:shadow-xl md:flex md:space-x-0">
+  <div class="h-48 md:w-48 p-4 bg-cover bg-primary rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden flex md:flex-col justify-between"
     style="background-image: url(<%= exercise.video_link.present? ? bg_url : '' %>)" title="<%= exercise.title %>">
-    <div class="absolute top-0 right-0 text-white p-4 z-10">
+    <div class="text-white z-10">
       <%= render partial: "practices/toolbar", locals: {exercise: exercise ,extended: false} if current_user.present? %>
     </div>
-    <ul class="text-sm p-4 absolute left-0 bottom-0">
-      <% exercise.categories.each do |category| %>
-        <li>
-          <%= link_to category.name, by_slug_categories_path(category), data: {turbo: false}, class: "px-2 py-1 bg-blue-100 rounded-lg text-xs" %>
-        </li>
-      <% end %>
-    </ul>
+
+
+    <% if goal_setting.present? && exercise.goal_end %>
+      <div class="text-sm font-light text-white">
+        <div class="flex items-center mb-1 space-x-3">
+          <div class="flex-1 h-1 bg-gray-200 rounded-full">
+            <div class="h-1 bg-blue-600 rounded-full dark:bg-blue-500"
+                style="width: <%= goal_setting.value * 100 / exercise.goal_end  %>%"></div>
+          </div>
+        </div>
+        <p>
+          <%= goal_setting.value %> <%= exercise.goal_label.label %> /  <%= exercise.goal_end %> <%= exercise.goal_label.label %>
+        </p>
+      </div>
+    <% end %>
   </div>
-  <div class="p-4 flex-1">
-    <header class="flex space-x-4">
+  <div class="p-4 flex-1 flex flex-col">
+    <header class="flex space-x-6">
       <div class="flex-1 min-w-0">
-      <p class="text-xs font-light text-gray-500">Publié par
+      <p class="text-xs font-light text-gray-500">Publié par <%= link_to exercise.user.username, user_path(exercise.user) %>
         le <%= l exercise.created_at, format: :short %>
       </p>
         <h2 class="text-xl font-medium">
@@ -30,28 +38,21 @@
       </div>
     </header>
 
-    <section class="mt-3 mb-6 text-sm font-light text-gray-500">
+    <section class="flex-1 text-sm font-light text-gray-500">
       <p><%= exercise.description.truncate(100) if exercise.description %></p>
     </section>
 
 
-    <footer class="flex justify-end space-x-4">
+    <footer class="flex justify-between items-center space-x-6">
+      <ul class="text-sm flex space-x-6">
+        <% exercise.categories.each do |category| %>
+          <li>
+            <%= link_to category.name, by_slug_categories_path(slug: category.slug), data: {turbo: false}, class: "px-2 py-1 bg-blue-100 rounded-lg text-xs" %>
+          </li>
+        <% end %>
+      </ul>
+
       <%= render partial: "exercises/comments/commenters", locals: {exercise:  exercise} %>
     </footer>
-
-    <% if goal_setting.present? && exercise.goal_end %>
-      <section class="text-sm font-light text-gray-500 pt-3 border-t mt-6">
-        <p class="mb-1">Votre pratique:</p>
-        <div class="flex items-center mb-1 space-x-3">
-          <div class="flex-1 h-1 bg-gray-200 rounded-full">
-            <div class="h-1 bg-blue-600 rounded-full dark:bg-blue-500"
-                style="width: <%= goal_setting.value * 100 / exercise.goal_end  %>%"></div>
-          </div>
-        </div>
-        <p class="">
-          <%= goal_setting.value %> <%= exercise.goal_label.label %> /  <%= exercise.goal_end %> <%= exercise.goal_label.label %>
-        </p>
-      </section>
-    <% end %>
   </div>
 </article>

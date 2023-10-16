@@ -10,20 +10,40 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class="h-full bg-light">
-    <div
-      aria-labelledby="slide-over-title" data-controller="application">
-      <main class="flex relative">
+  <body class="min-h-[712px] bg-gray-100">
+    <div class="min-h-full" aria-labelledby="slide-over-title" data-controller="application">
+      <header class="bg-primary pb-32">
         <%= render "shared/header" %>
-        <%= render "shared/narrow_sidebar" if current_user.present? %>
-        <div class="flex relative flex-1">
-          <div class="flex-1 pt-24 pr-8">
-            <%= yield %>
-            <%= render "shared/footer" %>
+        <div class="py-10">
+          <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+            <div class="flex items-center space-x-6">
+              <div class="flex-1 text-white">
+                <h1 class="text-2xl lg:text-4xl font-bold tracking-tight text-white pb-3">
+                  <%= content_for?(:title) ? yield(:title) : "Qu'allons nous travailler aujourd'hui ?" %>
+                </h1>
+                <div class="">
+                  <%= content_for?(:description) ? yield(:description) : nil %>
+                </div>
+              </div>
+            </div>
           </div>
-          <%= render "shared/sidebar/#{controller_name == "users" && action_name == "index" ? 'integrated' : 'overlayed'}" %>
+        </div>
+      </header>
+
+      <main class="-mt-32 pb-24">
+        <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+            <%= yield %>
         </div>
       </main>
+
+      <footer>
+        <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+          <div class="border-t border-gray-200 py-8 text-center text-sm text-gray-500 sm:text-left">
+            <%= render "shared/footer" %>
+          </div>
+        </div>
+      </footer>
+      <%= render "shared/sidebar/overlayed" if current_user.present? %>
     </div>
   </body>
 </html>

@@ -19,13 +19,17 @@
                 <div class="flex-1">
                   <div class="block flex text-xs text-gray-300">
                     <%= Time.at(practiced.duration).utc.strftime("%H:%M:%S") %>
-                    <ul class="flex space-x-1 ml-1 before:content-['|'] before:pr-1">
+                    <%
+=begin%>
+ <ul class="flex space-x-1 ml-1 before:content-['|'] before:pr-1">
                       <% practiced.exercise.categories.each do |category| %>
                         <li>
                           <%= link_to category.name, by_slug_categories_path(category.slug), data: {turbo: false} %>
                         </li>
                       <% end %>
                     </ul>
+<%
+=end%>
                   </div>
                   <%= link_to practiced.exercise.title, exercise_path(practiced.exercise), data: {turbo: false}, class: "text-sm block flex-1 self-center" %>
                 </div>

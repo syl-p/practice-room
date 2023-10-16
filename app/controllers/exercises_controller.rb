@@ -18,19 +18,16 @@ class ExercisesController < ApplicationController
                       .where(original: nil)
                       .order(params[:order])
 
+    if params[:favorites] && current_user.present?
+      @exercises = @exercises.where(id: current_user.favorites)
+    end
+
     if params[:category_ids].present? && params[:category_ids].count > 0
       @exercises = @exercises.joins(:categories).where(categories: params[:category_ids])
     end
 
     if params[:levels].present? && params[:levels].count > 0
       @exercises = @exercises.where(level: params[:levels])
-    end
-
-    if params[:visibility].present?
-      case params[:visibility]
-      when "friends"
-        @exercises = @exercises.joins(:user).where(users: {id: current_user.friends})
-      end
     end
 
     respond_to do |format|

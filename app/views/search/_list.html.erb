@@ -1,10 +1,12 @@
 <%= turbo_frame_tag "search_results", data: {search_target: "results"} do %>
-  <ul class="max-h-80 scroll-pb-2 scroll-pt-11 space-y-2 overflow-y-auto pb-2" id="options" role="listbox">
-    <% results.keys.each do |key|
-      next unless results[key].present? %>
-      <li>
-        <%= render partial: "search/list/#{key}", locals: {key: key, results: results} %>
-      </li>
-    <% end %>
-  </ul>
+  <% if @results.present? %>
+    <ul class="max-h-80 scroll-pb-2 scroll-pt-11 space-y-2 overflow-y-auto pb-2" id="options" role="listbox">
+      <% results.keys.each do |key|
+        next unless results[key].present? %>
+        <li>
+          <%= render partial: "search/list/#{key}", locals: {key: key, results: results} %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 <% end %>

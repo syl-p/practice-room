@@ -1,0 +1,21 @@
+<nav class="hidden items-center space-x-6 xl:flex text-white">
+  <%
+    links = [
+      {
+        label: "Explorer",
+        path: exercises_path
+      },
+      {
+        label: "En savoir plus",
+        path: page_path('a-propos')
+      },
+      {
+        label: "Contact",
+        path: page_path('contact')
+      }
+    ]
+  %>
+  <% links.each do |link| %>
+    <%= link_to link[:label], link[:path], class: "rounded-md py-2 px-3 text-sm font-medium hover:bg-gray-100 hover:bg-opacity-75 hover:text-black rounded-md py-2 px-3 text-sm font-medium #{current_page?(link[:path]) ? 'bg-white text-black' : ''}" %>
+  <% end%>
+</nav>

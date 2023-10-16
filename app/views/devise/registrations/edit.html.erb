@@ -1,101 +1,132 @@
-<section class="p-8">
-  <header class="mb-6">
-    <h1 class="text-4xl font-semibold">Vos informations</h1>
-  </header>
+<%
+  content_for(:title, "Mes paramètres")
+%>
+<section class="rounded-lg bg-white px-5 py-6 shadow sm:px-6">
+  <%= render "devise/shared/error_messages", resource: resource %>
   <article>
-    <h2 class="text-2xl mb-6"> Modification de vos informations</h2>
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, data: {turbo: false}) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
+    <div class="divide-y divide-black/5">
+      <!-- USERS INFOS -->
+      <div class="grid grid-cols-1 gap-x-8 gap-y-10 pb-16 md:grid-cols-3">
+        <div>
+          <h2 class="text-base font-semibold leading-7 text-black">Personal Information</h2>
+          <p class="mt-1 text-sm leading-6 text-gray-400">Use a permanent address where you can receive mail.</p>
+        </div>
 
-      <section class="flex space-x-3 mb-6 justify-between justify-items-stretch">
-        <!-- infos -->
-        <div class="column">
-          <div class="form-group mb-3">
-            <%= f.label :email, class: "form-label"  %>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-input" %>
-          </div>
+        <%= form_for(resource, as: resource_name,
+                     url: registration_path(resource_name),
+                     html: { method: :put, class: "md:col-span-2" }, data: {turbo: false}) do |f| %>
 
-          <div class="form-group mb-3">
-            <%= f.label :username, class: "form-label"  %>
-            <%= f.text_field :username, class: "form-input" %>
-          </div>
+          <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+            <!-- Avatar -->
+            <div class="col-span-full flex items-center gap-x-8">
+              <%= render partial: "users/avatar", locals: {user: resource, size: 18, ui: true, classes: "h-24 w-24 flex-none rounded-lg bg-gray-800 object-cover"} %>
+              <div>
+                <%= f.file_field :avatar, class: "rounded-md bg-black/10 px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-black/20"%>
+                <p class="mt-2 text-xs leading-5 text-gray-400">JPG, GIF or PNG. 1MB max.</p>
+              </div>
+            </div>
 
-          <div class="form-group mb-3">
-            <%= f.label :avatar, class: "form-label"  %>
+            <div class="sm:col-span-3">
+              <%= f.label :username, class: "block text-sm font-medium leading-6 text-black" %>
+              <div class="mt-2">
+                <div class="flex rounded-md bg-black/5 ring-1 ring-inset ring-black/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
+                  <span class="flex select-none items-center pl-3 text-gray-400 sm:text-sm">practice.com/</span>
+                  <%= f.text_field :username, class: "flex-1 border-0 bg-transparent py-1.5 pl-1 text-black focus:ring-0 sm:text-sm sm:leading-6" %>
+                </div>
+              </div>
+            </div>
 
-            <div class="flex space-x-3">
-              <!-- avatar preview -->
-              <%= render partial: "users/avatar", locals: {user: resource, size: 16, ui: true} %>
+            <div class="sm:col-span-3">
 
-              <!-- field -->
-              <%= f.file_field :avatar, class: "form-input "%>
-              <!-- field -->
+            </div>
+
+            <div class="col-span-full">
+              <%= f.label :email, class: "block text-sm font-medium leading-6 text-black" %>
+              <div class="mt-2">
+                <%= f.email_field :email, class: "block w-full rounded-md border-0 bg-black/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" %>
+              </div>
+            </div>
+
+            <div class="col-span-full">
+              <%= f.label :bio, class: "block text-sm font-medium leading-6 text-black" %>
+              <div class="mt-2">
+                <%= f.text_area :bio, class: "block w-full rounded-md border-0 bg-black/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" %>
+              </div>
             </div>
           </div>
 
-          <div class="form-group mb-3">
-            <%= f.label :bio, class: "form-label"  %>
-            <%= f.text_area :bio, class: "w-full" %>
+          <div class="mt-8 flex">
+            <%= f.submit "Mise à jour", class: "frounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" %>
           </div>
+        <% end %>
+      </div>
+      <!-- END USERS INFOS -->
 
-          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-          <% end %>
+
+      <!-- PASSWORD -->
+      <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+        <div>
+          <h2 class="text-base font-semibold leading-7 text-black">Change password</h2>
+          <p class="mt-1 text-sm leading-6 text-gray-400">Update your password associated with your account.</p>
         </div>
-        <!-- infos -->
 
-        <!-- passwords -->
-        <div class="column pl-3">
-          <div class="form-group mb-3">
-            <%= f.label :password, class: "form-label" %>
 
-            <small class="block">
-              <i>(Laisser blanc si vous ne souhaitez pas le changer)</i>
-            </small>
+        <%= form_for(resource, as: resource_name,
+                     url: registration_path(resource_name),
+                     html: { method: :put, class: "md:col-span-2" }, data: {turbo: false}) do |f| %>
 
-            <%= f.password_field :password, autocomplete: "new-password", class: "form-input"  %>
-            <% if @minimum_password_length %>
-              <br />
-              <small><%= @minimum_password_length %> characters minimum</small>
-            <% end %>
+          <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+            <div class="col-span-full">
+              <%= f.label :current_password, class: "block text-sm font-medium leading-6 text-black" %>
+              <div class="mt-2">
+                <%= f.password_field :current_password,
+                                     autocomplete: "password",
+                                     class: "block w-full rounded-md border-0 bg-black/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" %>
+              </div>
+            </div>
+
+            <div class="col-span-full">
+              <%= f.label :password, class: "block text-sm font-medium leading-6 text-black" %>
+              <div class="mt-2">
+                <%= f.password_field :password,
+                                     autocomplete: "new password",
+                                     class: "block w-full rounded-md border-0 bg-black/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" %>
+              </div>
+            </div>
+
+            <div class="col-span-full">
+              <%= f.label :password_confirmation, class: "block text-sm font-medium leading-6 text-black" %>
+              <div class="mt-2">
+                <%= f.password_field :password_confirmation,
+                                     autocomplete: "password confirmation",
+                                     class: "block w-full rounded-md border-0 bg-black/5 py-1.5 text-black shadow-sm ring-1 ring-inset ring-black/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" %>
+              </div>
+            </div>
           </div>
 
-          <div class="form-group">
-            <%= f.label :password_confirmation, class: "form-label"  %>
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-input"  %>
+          <div class="mt-8 flex">
+            <%= f.submit "Mise à jour",
+                         class: "frounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" %>
           </div>
+        <% end %>
+      </div>
+      <!-- END PASSWORD -->
+
+      <!-- DELETE ACCOUNT -->
+      <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+        <div>
+          <h2 class="text-base font-semibold leading-7 text-black">Delete account</h2>
+          <p class="mt-1 text-sm leading-6 text-gray-400">No longer want to use our service? You can delete your account here. This action is not reversible. All information related to this account will be deleted permanently.</p>
         </div>
-        <!-- passwords -->
-      </section>
 
-      <section class="mt-6">
-        <div data-content="confirmation">
-          <div class="field form-group mb-6">
-            <%= f.label "Mot de passe actuel", class: "form-label"  %>
-            <small>
-              <i>(Nous avons besoin de votre mot de passe pour confirmer les changements)</i>
-            </small>
-            <br />
-            <%= f.password_field :current_password, autocomplete: "current-password", class: "form-input"  %>
-          </div>
-
-          <div class="form-group">
-            <%= f.submit "Mise à jour", class: "form-input btn btn-primary" %>
-          </div>
+        <div class="flex items-start md:col-span-2">
+          <%= button_to "Yes, delete my account",
+                        registration_path(resource_name), data: { confirm: "Are you sure?" },
+                        method: :delete,
+                        class: "rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-red-400" %>
         </div>
-      </section>
-    <% end %>
+      </div>
+      <!-- END DELETE ACCOUNT -->
   </article>
-
-  <article class="mt-6 border p-6 rounded">
-    <header class="mb-6">
-      <h3 class="text-2xl">Suppression du compte</h3>
-      <p>
-        En cliquant sur ce lien, l'ensemble de vos données et autres informations en lien avec votre compte (exercices, commentaires...) seront supprimées de la base de données.
-      </p>
-    </header>
-    <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn-secondary border border-red-600 text-red-600" %>
-  </article>
-
   <%#= link_to "Back", :back %>
 </section>

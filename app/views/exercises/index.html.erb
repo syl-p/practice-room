@@ -1,28 +1,36 @@
 <section data-controller="exercises">
   <header class="mb-6">
     <%= form_with(url: search_exercises_path, data: {turbo: true, turbo_frame: "exercises_list"}) do |form| %>
-      <div class="flex space-x-6 items-center justify-around">
-        <% if @categories.present? %>
-          <ul class="flex space-x-3 font-medium text-gray-900 flex-1">
-            <% @categories.each do |category| %>
-              <li>
-                <label>
-                  <%= form.check_box :category_ids, {
-                    multiple: true,
-                    data: {action: "change->exercises#search"},
-                    checked: @category.present? && @category.id == category.id,
-                    class: "hidden peer"
-                  },
-                                      category.id,
-                                      false %>
-                  <span class="p-2 cursor-pointer peer-checked:font-bold peer-checked:border-b-4 peer-checked:border-primary"><%= category.name %></span>
-                </label>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
+      <div class="flex items-center justify-around">
+        <% if current_user %>
+          <label class="border-r">
+            <%= form.check_box :favorites, {
+              data: {action: "change->exercises#search"},
+              class: "hidden peer"
+            }, true, false %>
 
-        <p class="">
+            <span class="p-2 cursor-pointer peer-checked:font-bold peer-checked:border-b-4 peer-checked:border-primary">Favoris</span>
+          </label>
+        <% end %>
+        <ul class="hidden md:flex space-x-3 font-medium text-gray-900 flex-1">
+          <% Category.all.each do |category| %>
+            <li>
+              <label>
+                <%= form.check_box :category_ids, {
+                  multiple: true,
+                  data: {action: "change->exercises#search"},
+                  checked: @category.present? && @category.id == category.id,
+                  class: "hidden peer"
+                },
+                category.id,
+                false %>
+                <span class="p-2 cursor-pointer peer-checked:font-bold peer-checked:border-b-4 peer-checked:border-primary"><%= category.name %></span>
+              </label>
+            </li>
+          <% end %>
+        </ul>
+
+        <p class="hidden md:block">
           <%= turbo_frame_tag "search_results_count", target: "search_results_count" do %>
             <%= "Nous avons trouvé #{@exercises.count} résultats." if @exercises.present? %>
           <% end %>
@@ -32,7 +40,7 @@
   </header>
 
   <!-- Turbo load comments list + Skeleton -->
-  <%= turbo_frame_tag "exercises_list", src: search_exercises_path, loading: :lazy do %>
+  <%= turbo_frame_tag "exercises_list", src: search_exercises_path(category_ids: @category ? [@category.id] : nil), loading: :lazy do %>
     <%= render partial: "exercises/search/results_skeleton" %>
   <% end %>
 </section>

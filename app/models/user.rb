@@ -46,7 +46,7 @@ class User < ApplicationRecord
         res += practice.duration
       end
     end
-    Time.at(res).utc.strftime("%H:%M:%S")
+    res
   end
 
   def practice_time_by_category

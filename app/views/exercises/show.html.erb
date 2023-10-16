@@ -2,105 +2,136 @@
   content_for(:title, @exercise.title)
   content_for(:description, @exercise.description)
 %>
-<section>
-  <header class="mb-8">
-    <!-- TITLE -->
-    <div class="flex mb-6 space-x-4">
-      <figure class="flex-shrink-0 self-center">
-        <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
-          <%= render partial: "users/avatar", locals: {user: @exercise.user, size: 12} %>
-        </a>
-      </figure>
-      <div class="flex-1 min-w-0">
-        <p class="text-xs font-light text-gray-500">
-          le <%= l @exercise.created_at, format: :short %>
-        </p>
-        <h1 class="text-3xl font-bold">
-          <%= link_to @exercise.title, @exercice, data: {turbo: false} %>
-        </h1>
-        <div class="flex mt-1 space-x-6 text-sm">
-          <a href="<%= user_url(@exercise.user) %>" data-turbo="false" class="py-1 font-medium">
-            <%= @exercise.user.username %>
-          </a>
-          <p class="py-1 pl-6 text-gray-500 border-l"><%= @exercise.user.followers.count %> abonnés</p>
-        </div>
-      </div>
-    </div>
-    <!-- END TITLE -->
-  </header>
-  <section>
-    <!-- VIDEO AND PRACTICE TOOLS -->
-    <div class="grid-cols-3 gap-0 mb-8 lg:grid">
-      <div class="h-full col-span-2">
-        <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>">
-          <div class="bg-white flex items-center justify-center h-[450px] rounded-l-lg" slot="empty">
-            <div class="text-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
-              </svg>
-              <p class="my-6 text-sm font-light text-center">Aucune vidéo disponible</p>
-            </div>
+<div class="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
+  <!-- Left column -->
+  <div class="grid grid-cols-1 gap-4 lg:col-span-2">
+    <section aria-labelledby="section-1-title">
+      <h2 class="sr-only" id="section-1-title">Section title</h2>
+      <!-- VIDEO AND PRACTICE TOOLS -->
+      <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>">
+        <div class="bg-white flex items-center justify-center h-[450px] rounded-lg shadow-lg" slot="empty">
+          <div class="text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+            </svg>
+            <p class="my-6 text-sm font-light text-center">Aucune vidéo disponible</p>
           </div>
-        </youtube-player>
-      </div>
-      <aside class="bg-white rounded-r-lg relative">
-        <%= turbo_frame_tag "exercise_versions", src: exercise_versions_path(@exercise) do %>
-          <%#= render partial: "exercises/versions/list_skeleton" %>
-        <% end %>
-      </aside>
-    </div>
-    <!-- END VIDEO AND PRACTICE TOOLS -->
+        </div>
+      </youtube-player>
+      <!-- END VIDEO AND PRACTICE TOOLS -->
 
-    <tabs-section>
-      <div slot="tab" data-tab-title="Pratiquer">
-        <div class="lg:flex lg:space-x-8 mb-6">
-          <aside class="hidden flex-col space-y-6 h-full bg-white rounded-lg border lg:flex">
-            <div>
-              <% if current_user.present? %>
-                <div class="p-6">
-                  <%= render partial: "practices/adding_time", locals: {exercise: @exercise} %>
-                  <% if @exercise.goal_end.present? %>
-                    <div class="pt-6">
-                      <p class="mb-6 text-sm font-light text-gray-600">Mise à jour de l'objectif</p>
-                      <%= turbo_frame_tag "goal_setting_form" do %>
-                        <%= render partial: "exercises/goal_settings/form", locals: {exercise: @exercise, goal_setting: @goal_setting} %>
-                      <% end %>
-                    </div>
-                  <% end %>
-                </div>
-              <% end %>
-
-              <% if @exercise.media.count > 0 %>
-                <div>
-                  <p class="m-6 text-sm font-light text-gray-600">Ressources partagées par l'auteur de l'exercice</p>
-                  <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
-                </div>
-              <% end %>
-            </div>
-          </aside>
-          <section class="flex-1">
-            <div class="max-w-none prose">
-              <%= sanitize renderHtml @exercise.body %>
-            </div>
-          </section>
+      <!-- TITLE -->
+      <div class="flex mb-6 space-x-4 items-center mt-6">
+        <figure class="flex-shrink-0">
+          <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
+            <%= render partial: "users/avatar", locals: {user: @exercise.user, size: 12} %>
+          </a>
+        </figure>
+        <div class="flex-1 min-w-0">
+          <p class="font-light text-gray-500 mb-3">
+            Posté par
+            <a href="<%= user_url(@exercise.user) %>" data-turbo="false" class="py-1 font-medium">
+              <%= @exercise.user.username %>
+            </a>, le <%= l @exercise.created_at, format: :short %> dans:
+          </p>
+          <ul class="text-sm flex space-x-3">
+            <% @exercise.categories.each do |category| %>
+              <li>
+                <%= link_to category.name, by_slug_categories_path(category), data: {turbo: false}, class: "px-2 py-1 bg-blue-100 rounded-lg text-xs" %>
+              </li>
+            <% end %>
+          </ul>
         </div>
       </div>
+      <!-- END TITLE -->
+    </section>
+  </div>
 
-      <div slot="tab" data-tab-title="Discutions">
-        <% if user_signed_in? %>
-          <%= turbo_frame_tag "comment_new" do %>
-            <%= render partial: "comments/form",
-              locals: {
-                comment: Comment.new, commentable: @exercise, first: true
-              } %>
-          <% end %>
-        <% end %>
+  <!-- Right column -->
+  <div class="grid grid-cols-1 gap-4">
+    <section aria-labelledby="section-2-title">
+      <h2 class="sr-only" id="section-2-title">Section title</h2>
+      <div class="rounded-lg bg-white shadow-lg">
+        <div class="p-6">
+          <div>
+            <% if current_user.present? %>
+              <div class="p-6">
+                <%= render partial: "practices/adding_time", locals: {exercise: @exercise} %>
+                <% if @exercise.goal_end.present? %>
+                  <div class="pt-6">
+                    <p class="mb-6 text-sm font-light text-gray-600">Mise à jour de l'objectif</p>
+                    <%= turbo_frame_tag "goal_setting_form" do %>
+                      <%= render partial: "exercises/goal_settings/form", locals: {exercise: @exercise, goal_setting: @goal_setting} %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
 
-        <!-- Turbo load comments list + Skeleton -->
-        <%= turbo_frame_tag "#{dom_id(@exercise)}_comments", src: exercise_comments_path(@exercise), loading: :lazy do %>
-          <%#= render partial: "exercises/versions/list_skeleton" %>
-        <% end %>
+            <% if @exercise.media.count > 0 %>
+              <div>
+                <p class="m-6 text-sm font-light text-gray-600">Ressources partagées par l'auteur de l'exercice</p>
+                <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
-    </tabs-section>
-  </section>
-</section>
+    </section>
+  </div>
+</div>
+
+<div class="relative my-16">
+  <div class="absolute inset-0 flex items-center" aria-hidden="true">
+    <div class="w-full border-t border-gray-300"></div>
+  </div>
+  <div class="relative flex justify-center">
+    <span class="bg-gray-100 px-2 text-sm text-gray-500">Contenu</span>
+  </div>
+</div>
+
+<div class="prose">
+  <%= sanitize renderHtml @exercise.body %>
+</div>
+
+<div class="relative my-16">
+  <div class="absolute inset-0 flex items-center" aria-hidden="true">
+    <div class="w-full border-t border-gray-300"></div>
+  </div>
+  <div class="relative flex justify-center">
+    <span class="bg-gray-100 px-2 text-sm text-gray-500">Autres versions</span>
+  </div>
+</div>
+
+<div>
+  <%= turbo_frame_tag "exercise_versions", src: exercise_versions_path(@exercise) do %>
+    <%#= render partial: "exercises/versions/list_skeleton" %>
+  <% end %>
+</div>
+
+
+<div class="relative my-16">
+  <div class="absolute inset-0 flex items-center" aria-hidden="true">
+    <div class="w-full border-t border-gray-300"></div>
+  </div>
+  <div class="relative flex justify-center">
+    <span class="bg-gray-100 px-2 text-sm text-gray-500">Discutons ensemble</span>
+  </div>
+</div>
+
+<footer>
+  <% if user_signed_in? %>
+    <%= turbo_frame_tag "comment_new" do %>
+      <%= render partial: "comments/form",
+        locals: {
+          comment: Comment.new, commentable: @exercise, first: true
+        } %>
+    <% end %>
+  <% end %>
+
+  <!-- Turbo load comments list + Skeleton -->
+  <%= turbo_frame_tag "#{dom_id(@exercise)}_comments", src: exercise_comments_path(@exercise), loading: :lazy do %>
+    <%#= render partial: "exercises/versions/list_skeleton" %>
+  <% end %>
+</footer>
+
