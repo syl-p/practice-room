@@ -2,11 +2,23 @@
   content_for(:title, @exercise.title)
   content_for(:description, @exercise.description)
 %>
+
+<%
+  if @exercise.original
+  sidebloc = capture do %>
+    <%= link_to exercise_path(@exercise.original.id), class: "bg-white rounded-lg shadow-lg text-black p-3" do %>
+        <span class=" text-sm">Version originale:</span>
+        <%= @exercise.original.title %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% content_for(:exercise_sidebloc, sidebloc) %>
+
 <div class="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
   <!-- Left column -->
   <div class="grid grid-cols-1 gap-4 lg:col-span-2">
     <section aria-labelledby="section-1-title">
-      <h2 class="sr-only" id="section-1-title">Section title</h2>
       <!-- VIDEO AND PRACTICE TOOLS -->
       <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>">
         <div class="bg-white flex items-center justify-center h-[450px] rounded-lg shadow-lg" slot="empty">
@@ -51,31 +63,27 @@
   <div class="grid grid-cols-1 gap-4">
     <section aria-labelledby="section-2-title">
       <h2 class="sr-only" id="section-2-title">Section title</h2>
-      <div class="rounded-lg bg-white shadow-lg">
-        <div class="p-6">
-          <div>
-            <% if current_user.present? %>
-              <div class="p-6">
-                <%= render partial: "practices/adding_time", locals: {exercise: @exercise} %>
-                <% if @exercise.goal_end.present? %>
-                  <div class="pt-6">
-                    <p class="mb-6 text-sm font-light text-gray-600">Mise à jour de l'objectif</p>
-                    <%= turbo_frame_tag "goal_setting_form" do %>
-                      <%= render partial: "exercises/goal_settings/form", locals: {exercise: @exercise, goal_setting: @goal_setting} %>
-                    <% end %>
-                  </div>
+      <div class="rounded-lg bg-white shadow-lg p-6">
+        <% if current_user.present? %>
+          <div class="p-6">
+            <%= render partial: "practices/adding_time", locals: {exercise: @exercise} %>
+            <% if @exercise.goal_end.present? %>
+              <div class="pt-6">
+                <p class="mb-6 text-sm font-light text-gray-600">Mise à jour de l'objectif</p>
+                <%= turbo_frame_tag "goal_setting_form" do %>
+                  <%= render partial: "exercises/goal_settings/form", locals: {exercise: @exercise, goal_setting: @goal_setting} %>
                 <% end %>
               </div>
             <% end %>
-
-            <% if @exercise.media.count > 0 %>
-              <div>
-                <p class="m-6 text-sm font-light text-gray-600">Ressources partagées par l'auteur de l'exercice</p>
-                <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
-              </div>
-            <% end %>
           </div>
-        </div>
+        <% end %>
+
+        <% if @exercise.media.count > 0 %>
+          <div>
+            <p class="m-6 text-sm font-light text-gray-600">Ressources partagées par l'auteur de l'exercice</p>
+            <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
+          </div>
+        <% end %>
       </div>
     </section>
   </div>
@@ -86,7 +94,9 @@
     <div class="w-full border-t border-gray-300"></div>
   </div>
   <div class="relative flex justify-center">
-    <span class="bg-gray-100 px-2 text-sm text-gray-500">Contenu</span>
+    <span class="bg-gray-100 px-2 text-sm text-gray-500">
+      <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Contenu de l'exercice</h2>
+    </span>
   </div>
 </div>
 
@@ -99,7 +109,9 @@
     <div class="w-full border-t border-gray-300"></div>
   </div>
   <div class="relative flex justify-center">
-    <span class="bg-gray-100 px-2 text-sm text-gray-500">Autres versions</span>
+    <span class="bg-gray-100 px-2 text-sm text-gray-500">
+      <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Autres versions</h2>
+    </span>
   </div>
 </div>
 
@@ -115,7 +127,9 @@
     <div class="w-full border-t border-gray-300"></div>
   </div>
   <div class="relative flex justify-center">
-    <span class="bg-gray-100 px-2 text-sm text-gray-500">Discutons ensemble</span>
+    <span class="bg-gray-100 px-2 text-sm text-gray-500">
+      <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion (<%= @exercise.comments.count %>)</h2>
+    </span>
   </div>
 </div>
 

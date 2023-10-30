@@ -5,10 +5,6 @@ class Exercises::VersionsController < ApplicationController
     @versions = @exercise.versions_filtered(current_user)
   end
 
-  def show
-
-  end
-
   def new
     @version = Exercise.new
     @version.user = current_user

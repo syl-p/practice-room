@@ -1,57 +1,57 @@
 <%
   content_for(:title, "Profil de #{@user.username}")
+  content_for(:description, @user.bio)
 %>
+
+<% user_avatar = capture do %>
+  <div class="relative">
+    <%= render partial: "users/avatar", locals: {
+      user: @user,
+      size: 24,
+      classes: "ring-4 ring-white mx-auto mb-3"
+    } %>
+    <div class="absolute -bottom-1.5 -right-1.5">
+      <%= render partial: "users/follows/bell", locals: {user: @user} if @user != current_user %>
+    </div>
+  </div>
+<% end %>
+
+<% content_for(:user_profile_avatar, user_avatar) %>
 
 <section>
   <div class="lg:flex lg:space-x-6">
-    <article class="lg:w-1/6 text-center mt-16 mb-6">
-      <div class="my-6">
-        <%= render partial: "users/avatar", locals: {
-          user: @user,
-          size: 24,
-          classes: "ring-4 ring-white mx-auto mb-3"
-        } %>
-        <p>
-          <%= @user.bio %>
-        </p>
-      </div>
-      <ul class="flex justify-between space-x-3 text-center mb-6">
+    <article class="lg:w-2/6 flex flex-col">
+      <ul class="flex justify-between space-x-3 text-center px-3 mb-6">
         <li>
-          <span class="block"><%= @user.followers.count %></span>
-          <span class="text-xs">Suiveurs</span>
+          <span class="block font-bold text-2xl"><%= @user.followers.count %></span>
+          <span class="">Suiveurs</span>
         </li>
         <li>
-          <span class="block"><%= @user.following.count %></span>
-          <span class="text-xs">Suivis</span>
+          <span class="block font-bold text-2xl"><%= @user.following.count %></span>
+          <span class="">Suivis</span>
         </li>
         <li>
-          <span class="block"><%= @user.exercises.count %></span>
-          <span class="text-xs">Exercices</span>
+          <span class="block font-bold text-2xl"><%= @user.exercises.count %></span>
+          <span class="">Exercices</span>
         </li>
       </ul>
-
-      <!-- relation -->
-      <% if @user.followers.present? %>
-        <div class="mb-6">
-          <h2 class="mb-3 font-medium text-gray-500">
-            Ces personnes le suivent
-          </h2>
-          <%#= render partial: "users/friendships/preview-list", locals: {user: @user} %>
-          <%= render partial: "users/follows/preview-list", locals: {user: @user} %>
-        </div>
-      <% end %>
-      <!-- relation -->
-
-      <!-- more about -->
-      <p class="text-sm text-gray-500">
-        Membre depuis <%= @user.created_at %>
-      </p>
-      <!-- more about -->
+      <div class="rounded-lg shadow-lg bg-white text-center p-5 flex-1">
+        <!-- relation -->
+        <% if @user.followers.present? %>
+          <div class="mb-6">
+            <h2 class="mb-3 text-gray-500">
+              Ces personnes le suivent
+            </h2>
+            <%= render partial: "users/follows/preview-list", locals: {user: @user} %>
+          </div>
+        <% end %>
+        <!-- relation -->
+      </div>
     </article>
 
     <article class="lg:flex-1 lg:w-4/6">
       <div class="rounded-lg shadow-lg bg-white overflow-hidden">
-      <!-- Derniers exercices -->
+        <!-- Derniers exercices -->
         <% if @user.exercises.for_current_user(current_user) %>
           <%= render layout: 'shared/tiles_list', locals: {
             items: @user.exercises.for_current_user(current_user).map do |exercise|

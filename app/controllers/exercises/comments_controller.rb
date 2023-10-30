@@ -4,7 +4,7 @@ class Exercises::CommentsController < ApplicationController
     before_action :set_commentable
 
     def index
-      @comments = @commentable.comments.where(parent_id: nil).order(updated_at: :desc)
+      @comments = @commentable.comments.where(parent_id: nil).order(created_at: :desc)
     end
 
     private

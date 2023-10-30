@@ -1,31 +1,14 @@
 <% model = [local_assigns[:commentable], comment].compact %>
-<% first = local_assigns[:first].present? %>
 
 <%= form_with model: model, id: record_id_gen(*model),
-  data: {turbo: true, comment_target: 'form'},
-  class: "comment_form #{local_assigns[:class]} flex items-start space-x-4 mb-10"  do |f| %>
-  <div class="flex-shrink-0">
-    <%= render partial: "users/avatar", locals: {user: current_user} %>
+              data: {turbo: true, comment_target: 'form'},
+              class: "comment_form #{local_assigns[:class]} mb-12"  do |f| %>
+  <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+    <label for="comment" class="sr-only">Votre commentaire</label>
+    <%= f.text_area :body, row: 6, placeholder: "Votre commentaire...",
+                    class: "px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800" %>
   </div>
-  <div class="min-w-0 flex-1">
-    <div class="relative">
-      <div class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-primary">
-        <%= f.label "Votre commentaire", class: "sr-only" %>
-        <%= f.text_area :body, row: 2, placeholder: "Votre commentaire...", class: "block w-full h-full border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" %>
-
-        <div class="py-2" aria-hidden="true">
-          <div class="py-px">
-            <div class="h-9"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
-        <div class="flex items-center space-x-5"></div>
-        <div class="flex-shrink-0">
-          <%= f.submit "Commenter", disable_with: 'Submiting...', class: "inline-flex items-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary", data: {action: "click->comment#submit"} %>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= f.submit "Commenter", disable_with: 'Envoi un cours...',
+               class: "inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-white hover:bg-primary",
+               data: {action: "click->comment#submit"} %>
 <% end %>

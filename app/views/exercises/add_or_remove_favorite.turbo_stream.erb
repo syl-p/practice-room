@@ -6,6 +6,6 @@
   <%= render partial: "practices/toolbar", locals: {exercise:  @exercise} %>
 <% end %>
 
-<%= turbo_stream.replace "favorites" do %>
+<%= turbo_stream.replace "favorites_list" do %>
   <%= render partial: "favorites/list", locals: {exercises: current_user.favorites_populated} %>
 <% end %>

@@ -9,7 +9,7 @@ export default class extends Controller {
 
   connect() {
     document.addEventListener('click', (e) => {
-      if (!this.element.contains(e.target)) {
+      if (!this.element.contains(e.target) && this.hasResultsTarget) {
         this.resultsTarget.innerHTML = ''
       }
     })
@@ -35,6 +35,9 @@ export default class extends Controller {
 
   fireForm($event, timeout = 200) {
     const parentForm = $event.target.closest("form")
+    if (!parentForm)
+      return
+
     this.timeout = setTimeout(() => {
       Rails.fire(parentForm, 'submit')
     }, timeout)

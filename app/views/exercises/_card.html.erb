@@ -1,6 +1,6 @@
 <%
   practiced = true if local_assigns[:practiced].nil?
-  bg_url = "https://img.youtube.com/vi/"+ exercise.video_link + "/sddefault.jpg"
+  bg_url = exercise.video_link ? "https://img.youtube.com/vi/"+ exercise.video_link + "/sddefault.jpg" : nil
   goal_setting = exercise.goal_setting_for_current_user(current_user)
 %>
 
@@ -29,7 +29,7 @@
   <div class="p-4 flex-1 flex flex-col">
     <header class="flex space-x-6">
       <div class="flex-1 min-w-0">
-      <p class="text-xs font-light text-gray-500">Publié par <%= link_to exercise.user.username, user_path(exercise.user) %>
+      <p class="text-xs font-light text-gray-500">Publié par <%= link_to exercise.user.username, user_path(exercise.user), data: {turbo: false} %>
         le <%= l exercise.created_at, format: :short %>
       </p>
         <h2 class="text-xl font-medium">

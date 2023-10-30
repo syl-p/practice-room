@@ -1,15 +1,15 @@
 <dl class="flex w-full flex-none justify-end gap-x-4 sm:w-auto">
-  <div class="hidden xl:flex -space-x-0.5">
+  <div class="isolate flex -space-x-1">
     <dt class="sr-only">Commenters</dt>
     <% exercise.comments.map(&:user)[0..5].uniq.each do |user| %>
       <dd>
         <a href="<%= user_url(user) %>" data-turbo="false">
-          <%= render partial: "users/avatar", locals: {user: user, size: 6} %>
+          <%= render partial: "users/avatar", locals: {user: user, size: 6, classes: "ring-2 ring-white"} %>
         </a>
       </dd>
     <% end %>
   </div>
-  <div class="hidden xl:flex w-16 gap-x-2.5">
+  <div class="flex gap-x-2.5 justify-end">
     <dt>
       <span class="sr-only">Total comments</span>
       <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
