@@ -2,7 +2,7 @@
   content_for(:title, "Bonjour Sylvain")
   content_for(:description, "Bienvenue sur votre espace personnel. Ici, vous trouverez les statistiques en temps réeel de votre pratique mais aussi des conseils et des idées pour vous améliorer.")
 %>
-<section class="rounded-lg bg-white px-5 py-6 shadow-lg sm:px-6">
+<section class="rounded-lg bg-white p-6 shadow-lg">
   <section class="mb-6 sm:flex sm:space-x-6">
     <%= render partial: "users/dashboard/goal_stat", locals: {
       done: @more_than_10_mn_today[0],

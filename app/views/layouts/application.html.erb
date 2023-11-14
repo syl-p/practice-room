@@ -22,16 +22,13 @@
               <% end %>
               <div class="flex-1 text-white flex space-x-6">
                 <div class="flex-1">
-                  <h1 class="text-2xl lg:text-4xl font-bold tracking-tight text-white pb-3">
+                  <h1 class="text-2xl lg:text-4xl font-bold tracking-tight text-white">
                     <%= content_for?(:title) ? yield(:title) : "Qu'allons nous travailler aujourd'hui ?" %>
                   </h1>
                   <div class="flex space-x-6">
                     <p><%= content_for?(:description) ? yield(:description) : nil %></p>
                   </div>
                 </div>
-                <% if controller_name == "exercises" && action_name == "show" %>
-                  <%= yield(:exercise_sidebloc) if content_for(:exercise_sidebloc) %>
-                <% end %>
               </div>
             </div>
           </div>

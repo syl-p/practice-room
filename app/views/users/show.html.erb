@@ -19,8 +19,8 @@
 <% content_for(:user_profile_avatar, user_avatar) %>
 
 <section>
-  <div class="lg:flex lg:space-x-6">
-    <article class="lg:w-2/6 flex flex-col">
+  <div class="grid grid-cols-1 items-start gap-8 lg:grid-cols-3">
+    <article class="grid-cols-1">
       <ul class="flex justify-between space-x-3 text-center px-3 mb-6">
         <li>
           <span class="block font-bold text-2xl"><%= @user.followers.count %></span>
@@ -49,7 +49,7 @@
       </div>
     </article>
 
-    <article class="lg:flex-1 lg:w-4/6">
+    <article class="grid-cols-1 lg:col-span-2">
       <div class="rounded-lg shadow-lg bg-white overflow-hidden">
         <!-- Derniers exercices -->
         <% if @user.exercises.for_current_user(current_user) %>
