@@ -1,67 +1,62 @@
-# PRACTICE ROOM
-**"Practice room"** est une plateforme communautaire et open source. Elle permet de créer et lister des exercices (musique, sport...) et d'enregistrer le temps passé sur chacun d'eux afin d'avoir du recul sur notre propre routine de pratique. Cette plateforme à pour objectif d'encourager le partage d'expériences mais aussi de donner aux utilisateurs la possibilité de se mettre au "challenge" mutuellement.
+# Practice Room
 
-> Pratice room est une plateforme ou les utilisateurs peuvent participer à l'évolution des uns et des autres
+**"Practice Room"** est une plateforme communautaire et open source qui simplifie la pratique personnelle. Que vous soyez musicien, sportif, ou passionné d'autres activités, cette plateforme vous permet de créer, partager, et découvrir des exercices. Enregistrez votre temps de pratique pour suivre votre progression.
 
-Ce concept est actuellement en cours de développement pour une communauté de musicien. Il vous est donc possible d'envoyer vos pull requests.
+> Nous développons actuellement Practice Room pour une communauté de musiciens. Vous êtes invités à contribuer en envoyant vos suggestions via des pull requests.
 
-> Lien d'invitation au serveur discord:  [https://discord.gg/8vCbhQUK7M](https://discord.gg/8vCbhQUK7M)
+> Lien Discord : [https://discord.gg/8vCbhQUK7M](https://discord.gg/8vCbhQUK7M)
 
-## Renseignez vos exercices personnels ou trouvez en de nouveaux
+## Votre espace d'entraînement personnel
 
-- Liste des exercices proposées par les utilisateurs
-- Possibilité d'en ajouter à vos favoris pour les retrouvez plus facilement
-- Des ressources (pdf, mp3...) peuvent être attachés aux exercices afin d'avoir un support complet pour le travailler.
+- Explorez une liste d'exercices partagés par d'autres utilisateurs.
+- Ajoutez des exercices à vos favoris pour un accès rapide.
+- Attachez des ressources (pdf, mp3, etc.) aux exercices pour un support complet.
 
-## Gérez votre temps de pratique
-- Un journal de pratique est à votre disposition pour pouvoir enregistrer le temps passé sur vos exercices.
-- Retrouvez dans votre **espace personnel** des statistiques pour avoir un feedback quotidien sur votre temps de pratique
+## Gérez votre temps d'entraînement
 
-> D'autres features, sont actuellement en pleine étape de réflection. N'hésitez pas à proposer à l'équipe vos idées depuis le serveur discord.
+- Utilisez un journal de pratique pour enregistrer le temps passé sur chaque exercice.
+- Consultez vos statistiques personnelles pour suivre votre temps d'entraînement quotidien.
 
-## Pratiquez à plusieurs
-1. En effet, les membres de la plateforme peuvent mettre les exercices
-    - en brouillon, seul l'auteur peut voir l'exercice
-    - en public, afin de les partager avec toute la communauté de la plateforme
-    - en privé, pour qu'ils ne soient connus que par ceux possédant l'adresse url
+> Nous réfléchissons à d'autres fonctionnalités. Partagez vos idées sur notre serveur Discord.
 
-2. Les membres qui constituent la communauté de la plateforme:
-    - proposer une **version alternative** à chaque exercice
-    - noter et discuter à propos d'un exercice (système de commentaire)
+## Pratiquez ensemble
 
-## Suivez les personnes qui vous inspirent
-Système d'abonement afin d'être notifié lorsqu'un utilisateur:
+1. Partagez vos exercices :
+  - En mode brouillon (visible uniquement par vous).
+  - En public pour la communauté.
+  - En privé avec un lien d'accès spécifique.
 
-  - ajoute un exercice en publique
-  - propose une version d'un exercice que vous pratiquez
-  - publie un défi sur la plateforme
+2. Les membres peuvent :
+  - Proposer des versions alternatives.
+  - Noter et discuter des exercices avec des commentaires.
 
-## Gamification (WIP)
-L'objectif est de **récompenser les utilisateurs** en fonction de:
-- leur pratique respective
-- leur participation à la création de contenu
-- leur participation à la vie communautaire sur l'app.
+## Suivez et soyez notifié
 
-Mais aussi de leurs donner des axes de travail:
-- badge pour avoir réaliser une ou plusieurs actions précises
-- "dayli": des actions à faire chaque jours (facultatif)
-- ...
+Utilisez le système d'abonnement pour être notifié lorsque :
 
-> D'autres features, sont actuellement en pleine étape de réflection. N'hésitez pas à proposer à l'équipe vos idées depuis le serveur discord.
+- Un utilisateur ajoute un exercice en public.
+- Propose une version d'un exercice que vous pratiquez.
+- Publie un défi sur la plateforme.
+
+## Gamification (En cours)
+
+Nous récompensons les utilisateurs en fonction de leur pratique et participation. Obtenez des badges pour des actions spécifiques et explorez des "daily challenges".
+
+> D'autres fonctionnalités sont en réflexion. Partagez vos idées sur notre serveur Discord.
 
 ## Roadmap && Fixes
-Vous pouvez suivre l'avancement du projet directement, [via l'onglet "projects"](https://github.com/syl-p/practice-room/projects/1)
-de ce repo.
 
-## Communauté, Contact, Team...
-Un discord est à disposition à la fois pour les membres de la plateforme Practice room et pour les personnes souhaitant
-participer au développement.
+Suivez notre progrès sur [Projects](https://github.com/syl-p/practice-room/projects/1).
 
+## Communauté, Contact, Équipe...
 
-> Lien d'invitation au serveur discord:  [https://discord.gg/8vCbhQUK7M](https://discord.gg/8vCbhQUK7M)
+Un serveur Discord est disponible pour les membres de Practice Room et les personnes intéressées par le développement.
 
-___
+> Lien d'invitation Discord : [https://discord.gg/8vCbhQUK7M](https://discord.gg/8vCbhQUK7M)
+
+---
 
 ## Détails techniques
+
 - Ruby 2.7.4 avec Ruby on Rails 7.
 - Nodejs LTS
