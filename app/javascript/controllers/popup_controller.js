@@ -1,25 +1,34 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "popup", "popupContent" ]
-  static classes = [ "active", "inactive"]
+  static targets = [ "dialog" ]
 
   connect() {
     // click outside of the popup to close it
-    document.addEventListener('click', (e) => {
-      if (!this.popupContentTarget.contains(e.target)) {
-        // remove class
-        this.popupTarget.classList.add(this.inactiveClass)
-        this.popupTarget.classList.remove(this.activeClass)
-      }
-    })
   }
 
-  toggle($event) {
-    if ($event.target) {
-      document.activeElement.blur()
+  // hide modal on successful form submission
+  // data-action="turbo:submit-end->turbo-modal#submitEnd"
+  submitEnd(e) {
+    if (e.detail.success) {
+      // console.log(e.detail.success)
+      this.close()
     }
-    this.popupTarget.classList.remove(this.inactiveClass)
-    this.popupTarget.classList.toggle(this.activeClass)
+  }
+
+  open() {
+    this.dialogTarget.showModal()
+    document.body.classList.add('overflow-hidden')
+  }
+
+  close() {
+    this.dialogTarget.close()
+    document.body.classList.remove('overflow-hidden')
+  }
+
+  clickOutside(event) {
+    if (event.target == this.dialogTarget) {
+      this.close()
+    }
   }
 }

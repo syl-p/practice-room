@@ -1,8 +1,5 @@
 <%= form_with(model: @exercise, local: true) do |form| %>
   <div class="mb-6">
-    <h2 class="text-xl">Contenu de votre exercice</h2>
-    <p>Définissez le contenu de votre exercice, définissez la catégorie dans laquelle il se trouve etc...</p>
-
     <% if @exercise.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>

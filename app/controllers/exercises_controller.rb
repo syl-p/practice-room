@@ -11,9 +11,6 @@ class ExercisesController < ApplicationController
 
   # POST /exercises/search
   def search
-    order_by = params[:order_by].present? ? params[:order_by] : 'created_at'
-    order = params[:order].present? ? params[:order] : 'DESC'
-
     @exercises = @exercises
                       .where(original: nil)
                       .order(params[:order])
@@ -28,10 +25,6 @@ class ExercisesController < ApplicationController
 
     if params[:levels].present? && params[:levels].count > 0
       @exercises = @exercises.where(level: params[:levels])
-    end
-
-    respond_to do |format|
-      format.turbo_stream
     end
   end
 
@@ -67,39 +60,26 @@ class ExercisesController < ApplicationController
     @exercise = Exercise.new(exercise_params)
     @exercise.user_id = current_user.id
 
-    respond_to do |format|
-      if @exercise.save
-        format.html { redirect_to edit_exercise_path(@exercise), notice: "Exercise was successfully created." }
-        format.json { render :show, status: :created, location: @exercise }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @exercise.errors, status: :unprocessable_entity }
-      end
+    if @exercise.save
+      redirect_to edit_exercise_path(@exercise), notice: "Exercise was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /exercises/1 or /exercises/1.json
   def update
-    respond_to do |format|
-      if @exercise.update(exercise_params)
-        format.html do
-          redirect_to request.referrer, notice: "Exercise was successfully updated."
-        end
-        format.json { render :show, status: :ok, location: @exercise }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @exercise.errors, status: :unprocessable_entity }
-      end
+    if @exercise.update(exercise_params)
+      redirect_to request.referrer, notice: "Exercise was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /exercises/1 or /exercises/1.json
   def destroy
     @exercise.destroy
-    respond_to do |format|
-      format.html { redirect_to me_exercises_path, notice: "Exercise was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to me_exercises_path, notice: "Exercise was successfully destroyed."
   end
 
   def add_or_remove_favorite
@@ -115,10 +95,6 @@ class ExercisesController < ApplicationController
         current_user.update_attribute(:favorites, current_user.favorites - [params[:id]])
         current_user.save
       end
-    end
-
-    respond_to do |format|
-      format.turbo_stream
     end
   end
 

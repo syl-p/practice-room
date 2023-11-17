@@ -3,8 +3,21 @@
   content_for(:description, "Retrouvez ici tout les exercices que vous avez créés.")
 %>
 
-<section class="bg-white shadow-lg rounded-lg p-6">
-  <p id="notice"><%= notice %></p>
+<section class="bg-white shadow-lg rounded-lg p-6" data-controller="popup" >
+  <p id="notice">
+    <%= notice %>
+  </p>
+
+  <div data-action="click->popup#clickOutside">
+    <%= link_to "Créer un exercice", new_exercise_path, class: "btn-primary",
+                data: {turbo_frame: :exercise_edit, action: "click->popup#open"} %>
+    <dialog data-popup-target="dialog" class="backdrop:bg-gray-500 backdrop:opacity-75 w-full md:w-1/2">
+      <div  class="rounded-lg p-6">
+        <%= turbo_frame_tag :exercise_edit %>
+      </div>
+    </dialog>
+  </div>
+
   <div class="flex flex-col">
     <div class="overflow-x-auto -mx-4 -my-2 sm:-mx-6 lg:-mx-8">
       <div class="inline-block py-2 min-w-full align-middle md:px-6 lg:px-8">
@@ -17,7 +30,6 @@
               <th scope="col" class="relative py-3.5 text-sm pr-4 pl-3 sm:pr-6 md:pr-0">Action</th>
             </tr>
           </thead>
-
           <tbody class="divide-y divide-gray-200">
             <% @exercises.each do |exercise| %>
               <tr>
@@ -32,7 +44,7 @@
                 </td>
                 <td class="relative py-4 pr-4 pl-3 text-sm font-medium text-right whitespace-nowrap sm:pr-6 md:pr-0">
                   <%= link_to 'Show', exercise, class: "btn-secondary" %>
-                  <%= link_to 'Edit', edit_exercise_path(exercise), class: "btn-secondary" %>
+                  <%= link_to 'Edit', edit_exercise_path(exercise), class: "btn-secondary", data: {turbo_frame: :exercise_edit, action: "click->popup#open"}  %>
                   <%= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn-secondary" %>
                 </td>
               </tr>

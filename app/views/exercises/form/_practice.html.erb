@@ -1,8 +1,5 @@
 <%= form_with(model: @exercise, local: true, class: 'h-full flex flex-col justify-between') do |form| %>
   <div class="mb-6">
-    <h2 class="text-xl">Pratique</h2>
-    <p>Précisez ici les modalités de pratique (objectif, tempo maximum...).</p>
-
     <% if @exercise.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
