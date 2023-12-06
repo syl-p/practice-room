@@ -8,18 +8,10 @@ export default `
 }
 
 ul.tab {
+  padding: 0px;
   list-style: none;
-  margin: 20px 0;
-  padding: 0px 1.5rem;
-}
-
-ul.tab li{
-  display: inline-block;
-  margin-right: 15px;
-}
-
-ul.tab li:last-child {
-  margin-right: 0px;
+  display: flex;
+  gap: 10px;
 }
 
 ul.tab li a {

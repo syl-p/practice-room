@@ -1,17 +1,15 @@
 <%= form_with(model: @exercise, local: true, class: 'h-full flex flex-col justify-between') do |form| %>
-  <div class="mb-6">
-    <% if @exercise.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
+  <% if @exercise.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
 
-        <ul>
-          <% @exercise.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-  </div>
+      <ul>
+        <% @exercise.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="overflow-y-auto overflow-hidden">
     <div class="mb-6 form-group">

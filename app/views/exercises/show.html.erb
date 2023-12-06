@@ -35,18 +35,7 @@
 
       <!-- TITLE -->
       <div class="flex mb-6 space-x-4 items-center mt-6">
-        <figure class="flex-shrink-0">
-          <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
-            <%= render partial: "users/avatar", locals: {user: @exercise.user, size: 12} %>
-          </a>
-        </figure>
-        <div class="flex-1 min-w-0">
-          <p class="font-light text-gray-500 mb-3">
-            Posté par
-            <a href="<%= user_url(@exercise.user) %>" data-turbo="false" class="py-1 font-medium">
-              <%= @exercise.user.username %>
-            </a>, le <%= l @exercise.created_at, format: :short %> dans:
-          </p>
+        <%= render layout: "users/layouts/user_heading", locals: {user: @exercise.user, posted_at: @exercise.created_at} do %>
           <ul class="text-sm flex space-x-3">
             <% @exercise.categories.each do |category| %>
               <li>
@@ -54,7 +43,7 @@
               </li>
             <% end %>
           </ul>
-        </div>
+        <% end %>
       </div>
       <!-- END TITLE -->
     </section>
@@ -76,13 +65,14 @@
               </div>
             <% end %>
           </div>
-        <% end %>
-
-        <% if @exercise.media.count > 0 %>
-          <div>
-            <p class="m-6 text-sm font-light text-gray-600">Ressources partagées par l'auteur de l'exercice</p>
-            <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
-          </div>
+          <% if @exercise.media.count > 0 %>
+            <div>
+              <p class="m-6 text-sm font-light text-gray-600">Ressources partagées par l'auteur de l'exercice</p>
+              <%= render partial: "shared/ressource_list", locals: {media: @exercise.media} %>
+            </div>
+          <% end %>
+        <% else %>
+          <p>Connectez vous ou inscrivez vous pour profiter de nos outils de pratique.</p>
         <% end %>
       </div>
     </section>

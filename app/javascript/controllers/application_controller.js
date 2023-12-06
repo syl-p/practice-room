@@ -3,7 +3,7 @@ import { leave, enter } from "../transistion"
 
 export default class extends Controller {
   static targets = ['inputVersionsEnabled',
-    'versionsListEdit', 'videoPreviewer', "sidebar", "favorites"]
+    'versionsListEdit', "sidebar", "favorites"]
 
   static values = {
     root: String,
@@ -18,9 +18,9 @@ export default class extends Controller {
     // Close on click outside a sidebar
     sidebar.addEventListener('click', (event) => {
       if (event.target !== event.currentTarget)
-      return;
-      this.sidebarHide({params: {id: sidebar.id}})
-      if(sidebar.id === 'exercise_sidebar') {
+        return;
+      this.sidebarHide({ params: { id: sidebar.id } })
+      if (sidebar.id === 'exercise_sidebar') {
         window.history.replaceState({}, '', this.currentUrl);
       }
     })
@@ -28,14 +28,6 @@ export default class extends Controller {
 
   inputVersionsEnabledTargetConnected() {
     this.showVersionList(this.inputVersionsEnabledTarget.checked)
-  }
-
-  videoPreviewerTargetConnected() {
-    // observe text input in the target
-    const textInput = this.videoPreviewerTarget.querySelector('input')
-    textInput.addEventListener('input', () => { // and change youtube-player video id
-      this.videoPreviewerTarget.querySelector('youtube-player').setAttribute('video-id', textInput.value)
-    })
   }
 
   get practicerNavControllers() {
@@ -51,7 +43,7 @@ export default class extends Controller {
     return this.rootValue
   }
 
-  sidebarShow({ params: { id }}) {
+  sidebarShow({ params: { id } }) {
     const sidebar = this.sidebarTargets.find(s => s.getAttribute('id') == id)
     const sidebar_content = sidebar.querySelector('aside')
 
@@ -62,7 +54,7 @@ export default class extends Controller {
     enter(sidebar_content)
   }
 
-  sidebarHide({ params: { id }}) {
+  sidebarHide({ params: { id } }) {
     const sidebar = this.sidebarTargets.find(s => s.getAttribute('id') == id)
     const sidebar_content = sidebar.querySelector('aside')
     Promise.all([
@@ -98,10 +90,10 @@ export default class extends Controller {
       this.versionsListEditTarget.classList.add('disabled')
       // add disabled attribute to all inputs checkbox
       this.versionsListEditTarget.querySelectorAll('input[type="checkbox"]')
-      .forEach(input => {
-        input.setAttribute('disabled', 'disabled')
+        .forEach(input => {
+          input.setAttribute('disabled', 'disabled')
         }
-      )
+        )
     }
   }
 }

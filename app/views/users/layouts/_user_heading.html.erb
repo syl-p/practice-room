@@ -1,0 +1,13 @@
+<div class="flex space-x-4 items-center mb-6">
+  <figure class="flex-shrink-0">
+    <a href="<%= user_url(user) %>" data-turbo="false">
+      <%= render partial: "users/avatar", locals: {user: user, size: 12} %>
+    </a>
+  </figure>
+  <div class="flex-1 min-w-0">
+    <p class="font-light text-gray-500 mb-1">
+      Posté par <%= link_to user.username, user_url(user), data: {turbo: false}, class: "py-1 font-medium" %>, le <%= l posted_at, format: :short %>
+    </p>
+    <%= yield %>
+  </div>
+</div>

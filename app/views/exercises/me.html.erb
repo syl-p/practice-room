@@ -3,20 +3,10 @@
   content_for(:description, "Retrouvez ici tout les exercices que vous avez créés.")
 %>
 
-<section class="bg-white shadow-lg rounded-lg p-6" data-controller="popup" >
+<section class="bg-white shadow-lg rounded-lg p-6">
   <p id="notice">
     <%= notice %>
   </p>
-
-  <div data-action="click->popup#clickOutside">
-    <%= link_to "Créer un exercice", new_exercise_path, class: "btn-primary",
-                data: {turbo_frame: :exercise_edit, action: "click->popup#open"} %>
-    <dialog data-popup-target="dialog" class="backdrop:bg-gray-500 backdrop:opacity-75 w-full md:w-1/2">
-      <div  class="rounded-lg p-6">
-        <%= turbo_frame_tag :exercise_edit %>
-      </div>
-    </dialog>
-  </div>
 
   <div class="flex flex-col">
     <div class="overflow-x-auto -mx-4 -my-2 sm:-mx-6 lg:-mx-8">
