@@ -4,24 +4,25 @@
   goal_setting = exercise.goal_setting_for_current_user(current_user)
 %>
 
-<article class="bg-white rounded-lg shadow-lg transition hover:shadow-xl p-6 flex-1 flex flex-col space-y-6">
-  <section>
-    <header>
+<article class="flex flex-col h-full justify-between space-y-6">
+  <header class="flex space-x-3">
+    <div class="flex-1">
       <%= render layout: "users/layouts/user_heading", locals: {user: exercise.user, posted_at: exercise.created_at} do %>
-        <h2 class="text-xl font-medium">
+        <h2 class="text-2xl font-medium">
           <%= link_to exercise.title, exercise, data: {turbo: "false"} %>
         </h2>
       <% end %>
-    </header>
+    </div>
+    <%= render partial: "practices/toolbar", locals: {exercise: exercise ,extended: false} if current_user.present? %>
+  </header>
 
-    <p class="font-light text-gray-500 mb-3">
-      <%= exercise.description.truncate(100) if exercise.description %>
-    </p>
-  </section>
 
+  <p class="font-light text-gray-500 mb-3">
+    <%= exercise.description.truncate(100) if exercise.description %>
+  </p>
 
   <% if goal_setting.present? && exercise.goal_end %>
-    <div class="text-sm font-light text-white">
+    <div class="text-sm font-light text-white my-3">
       <div class="flex items-center mb-1 space-x-3">
         <div class="flex-1 h-1 bg-gray-200 rounded-full">
           <div class="h-1 bg-blue-600 rounded-full dark:bg-blue-500"
