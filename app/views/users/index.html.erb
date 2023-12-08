@@ -2,7 +2,7 @@
   content_for(:title, "Bonjour Sylvain")
   content_for(:description, "Bienvenue sur votre espace personnel. Ici, vous trouverez les statistiques en temps réeel de votre pratique mais aussi des conseils et des idées pour vous améliorer.")
 %>
-<section class="rounded-lg bg-white p-6 shadow-lg">
+  <h2 class="mb-6 text-2xl">Votre pratique du jour</h2>
   <section class="mb-6 sm:flex sm:space-x-6">
     <%= render partial: "users/dashboard/goal_stat", locals: {
       done: @more_than_10_mn_today[0],
@@ -31,6 +31,7 @@
     </button>
   </section>
 
+  <h2 class="mb-6 text-2xl">Statistiques</h2>
   <section class="sm:flex sm:space-x-6">
     <!-- stats by category -->
     <article class="p-4 mb-6 rounded-lg border bg-white shadow sm:w-2/6">
@@ -72,4 +73,3 @@
     </article>
     <!-- end stats by week -->
   </section>
-</section>

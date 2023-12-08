@@ -2,6 +2,20 @@
   content_for(:title, @exercise.title)
   content_for(:description, @exercise.description)
 %>
+<header class="mb-6">
+  <%= render layout: "users/layouts/user_heading", locals: {user: @exercise.user, posted_at: @exercise.created_at} do %>
+    <h1 class="text-3xl"><%= @exercise.title %></h1>
+    <p class="mb-3"><%= @exercise.description %></p>
+    <ul class="text-sm flex space-x-3">
+      <% @exercise.categories.each do |category| %>
+        <li>
+          <%= link_to category.name, by_slug_categories_path(category), data: {turbo: false}, class: "px-2 py-1 bg-blue-100 rounded-lg text-xs" %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</header>
+
 <div class="grid grid-cols-1 items-start gap-8 lg:grid-cols-3">
   <% if @exercise.original %>
    <div class="flex space-x-6 col-span-3 bg-white p-4 rounded-lg items-center  shadow-lg">
@@ -32,20 +46,6 @@
         </div>
       </youtube-player>
       <!-- END VIDEO AND PRACTICE TOOLS -->
-
-      <!-- TITLE -->
-      <div class="flex mb-6 space-x-4 items-center mt-6">
-        <%= render layout: "users/layouts/user_heading", locals: {user: @exercise.user, posted_at: @exercise.created_at} do %>
-          <ul class="text-sm flex space-x-3">
-            <% @exercise.categories.each do |category| %>
-              <li>
-                <%= link_to category.name, by_slug_categories_path(category), data: {turbo: false}, class: "px-2 py-1 bg-blue-100 rounded-lg text-xs" %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
-      <!-- END TITLE -->
     </section>
   </div>
 

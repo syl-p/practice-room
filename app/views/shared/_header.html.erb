@@ -1,16 +1,18 @@
-<div class="z-10 w-full border-b border-indigo-300 border-opacity-25 bg-primary">
-  <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-    <div class="relative py-6 flex items-center justify-between">
-      <div class="flex flex-1 justify-between">
-        <div class="flex flex-1 space-x-6" >
-          <%= render partial: "shared/search_form" %>
-          <%= render partial: "shared/nav" %>
-        </div>
-        <div class="flex items-center ml-2 space-x-4 sm:ml-6 sm:space-x-6">
-          <!-- Profile dropdown -->
-          <%= render partial: "shared/profile_head" %>
-        </div>
+<header class="w-full">
+  <div class="relative flex h-16 flex-shrink-0 bg-gray-100">
+    <button type="button" class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
+      <span class="sr-only">Open sidebar</span>
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+      </svg>
+    </button>
+    <div class="flex flex-1 justify-between px-4 sm:px-6">
+      <div class="flex flex-1">
+        <%= render partial: "shared/search_form" %>
+      </div>
+      <div class="ml-2 flex items-center space-x-4 sm:ml-6 sm:space-x-6">
+        <%= render partial: "shared/profile_head" %>
       </div>
     </div>
   </div>
-</div>
+</header>

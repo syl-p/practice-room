@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full">
+<html class="h-full bg-gray-100">
   <head>
     <title><%= content_for?(:title) ? yield(:title) : 'Bienvenue' %> - Practice Room</title>
     <%= csrf_meta_tags %>
@@ -10,57 +10,38 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class="min-h-[712px] bg-gray-100">
-    <div class="min-h-full" aria-labelledby="slide-over-title" data-controller="application popup">
-      <header class="bg-primary pb-32">
-        <%= render "shared/header" %>
-        <div class="py-10">
-          <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-            <div class="flex items-center space-x-6">
-              <% if controller_name == "users" && action_name == "show" %>
-                <%= yield(:user_profile_avatar) if content_for(:user_profile_avatar) %>
+  <body class="h-full overflow-hidden"  data-controller="application popup">
+    <div class="flex h-full">
+      <!-- Narrow sidebar -->
+      <%= render partial: "shared/narrow_sidebar" %>
+
+      <!-- Content area -->
+      <div class="flex flex-1 flex-col overflow-hidden">
+        <%= render partial: "shared/header" %>
+        <!-- Main content -->
+        <div class="flex flex-1 items-stretch overflow-hidden">
+          <main class="flex-1 overflow-y-auto">
+            <!-- Primary column -->
+            <section aria-labelledby="primary-heading" class="flex h-full min-w-0 flex-1 flex-col p-6">
+              <%= yield %>
+            </section>
+
+            <div data-action="click->popup#clickOutside">
+              <%= link_to new_exercise_path, class: "rounded-full text-white bg-primary p-3 fixed bottom-10 right-10", title: "Créer un nouvel exercice", data: {turbo_frame: :exercise_edit, action: "click->popup#open"} do %>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
               <% end %>
-              <div class="flex-1 text-white flex space-x-6">
-                <div class="flex-1">
-                  <h1 class="text-2xl lg:text-4xl font-bold tracking-tight text-white">
-                    <%= content_for?(:title) ? yield(:title) : "Qu'allons nous travailler aujourd'hui ?" %>
-                  </h1>
-                  <div class="flex space-x-6">
-                    <p><%= content_for?(:description) ? yield(:description) : nil %></p>
-                  </div>
+              <dialog data-popup-target="dialog" class="backdrop:bg-gray-500 backdrop:opacity-75 w-full md:w-1/2 rounded-xl">
+                <div  class="rounded-lg p-6">
+                  <%= turbo_frame_tag :exercise_edit %>
                 </div>
-              </div>
+              </dialog>
             </div>
-          </div>
+          </main>
         </div>
-      </header>
-
-      <main class="-mt-32 pb-24">
-        <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-            <%= yield %>
-        </div>
-        <div data-action="click->popup#clickOutside">
-          <%= link_to new_exercise_path, class: "rounded-full text-white bg-primary p-3 fixed bottom-10 right-10", title: "Créer un nouvel exercice", data: {turbo_frame: :exercise_edit, action: "click->popup#open"} do %>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-          <% end %>
-          <dialog data-popup-target="dialog" class="backdrop:bg-gray-500 backdrop:opacity-75 w-full md:w-1/2 rounded-xl">
-            <div  class="rounded-lg p-6">
-              <%= turbo_frame_tag :exercise_edit %>
-            </div>
-          </dialog>
-        </div>
-      </main>
-
-      <footer>
-        <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div class="border-t border-gray-200 py-8 text-center text-sm text-gray-500 sm:text-left">
-            <%= render "shared/footer" %>
-          </div>
-        </div>
-      </footer>
-      <%= render "shared/sidebar/overlayed" if current_user.present? %>
+      </div>
     </div>
+    <%= render "shared/sidebar/overlayed" if current_user.present? %>
   </body>
 </html>
