@@ -47,7 +47,7 @@
       </div>
     </header>
     <p class="text-gray-500 dark:text-gray-400">
-      <%=  sanitize renderHtml comment.body %>
+      <%= comment.content_linkify %>
     </p>
     <div class="flex items-center mt-4 space-x-4">
       <% if user_signed_in? %>

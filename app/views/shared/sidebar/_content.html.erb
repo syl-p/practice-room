@@ -1,16 +1,5 @@
-<tabs-section>
-  <!-- practice sessions list -->
-  <div data-tab-title="Journal de pratique" slot="tab" class="px-6">
-    <h3 class="mb-6 text-2xl font-medium">Retrouvez ici votre historique de pratique:</h3>
-    <%= render partial: "practices/selector", locals: {current_week: Date.today.beginning_of_week..Date.today.end_of_week, practices_for_the_week: current_user.practices_of_the_week } %>
-    <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
-  </div>
-  <!-- end practice sessions list -->
-
-  <!-- favorites list -->
-  <div data-tab-title="Vos favoris" slot="tab">
-    <h3 class="px-6 mb-6 text-2xl font-medium">Par où commencer aujourd'hui ? Voilà vos exercices favoris</h3>
-    <%= render partial: "favorites/list", locals: {exercises: current_user.favorites_populated} %>
-  </div>
-  <!-- end favorites list -->
-</tabs-section>
+<div>
+  <h3 class="mb-6 text-2xl font-medium">Retrouvez ici votre historique de pratique:</h3>
+  <%= render partial: "practices/selector", locals: {current_week: Date.today.beginning_of_week..Date.today.end_of_week, practices_for_the_week: current_user.practices_of_the_week } %>
+  <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
+</div>

@@ -1,7 +1,7 @@
 class Comments::CommentsController < ApplicationController
     include Commentable
     before_action :set_commentable
-    
+
     private
 
     def set_commentable
@@ -9,4 +9,3 @@ class Comments::CommentsController < ApplicationController
         @commentable = @parent.commentable
     end
   end
-  
