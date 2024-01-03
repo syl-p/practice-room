@@ -12,9 +12,7 @@ class CategoriesController < ApplicationController
   end
 
   def get_by_slug
-    @categories = Category.all
-    @category = @categories.find_by(slug: params[:slug])
-    @exercises = Exercise.joins(:categories).where(categories: {slug: params[:slug]})
+    @category = Category.find_by(slug: params[:slug])
     render "exercises/index"
   end
 

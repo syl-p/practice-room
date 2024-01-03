@@ -4,7 +4,10 @@ class UsersController < ApplicationController
   # GET /user or /user.json
   def index
     return redirect_to root_path unless !current_user.nil?
-    @practices_of_the_week = current_user.practices.where(created_at: Date.today.beginning_of_week..Date.today.end_of_week)
+    dashboardService = DashboardService.new(current_user)
+    @more_than_10_mn_today = dashboardService.more_than_10_mn_today?
+    @have_3_exercises_today = dashboardService.have_3_exercises_today?
+    @each_categories_today = dashboardService.each_categories_today?
   end
 
   # GET /user/1 or /user/1.json

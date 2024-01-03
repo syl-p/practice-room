@@ -1,89 +1,29 @@
-<%= form_with(model: exercise, local: true) do |form| %>
-  <% if exercise.errors.any? %>
+<%= form_with(model: @exercise, local: true) do |form| %>
+  <% if @exercise.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
+      <h2><%= pluralize(@exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
 
       <ul>
-        <% exercise.errors.full_messages.each do |message| %>
+        <% @exercise.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
-
     </div>
   <% end %>
 
-  <div class="mb-6 field form-group">
-    <%= form.label "titre", class: "form-label" %>
-    <%= form.text_field :title, class: "form-input"  %>
-  </div>
-
-  <div class="mb-6 field form-group columns">
-    <%= form.label :description, class: "form-label"  %>
-    <%= form.text_area :description, class: "form-input" %>
-  </div>
-
-  <div class="md:flex">
-
-    <div class="pr-6 md:w-3/6">
-      <div class="mb-6 field form-group">
-        <%= form.label :categories, class: "form-label"  %>
-        <%= form.select :category_ids, Category.all.collect { |x| [x.name, x.id]} , {:include_blank => false, selected_value: nil}, :multiple => true, class: "form-input" %>
-      </div>
-
-
-      <div class="mb-6 field form-group">
-        <%= form.label "Niveau", class: "form-label"  %>
-        <ul>
-          <% Exercise.levels.keys.each do |level| %>
-            <li class="mb-3">
-              <%= form.radio_button :level, level %>
-              <%= form.label "#{:level}_#{level.parameterize.underscore}", level %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-
-      <div class="mb-6 field form-group">
-        <%= form.label :goal_label, class: "form-label"  %>
-        <%= form.select :goal_label_id, GoalLabel.all.collect { |x| [x.label, x.id]}, class: "form-input" %>
-      </div>
-
-      <div class="mb-6 field form-group">
-        <%= form.label :goal_start, class: "form-label"  %>
-        <%= form.number_field :goal_start, class: "form-input" %>
-      </div>
-
-      <div class="mb-6 field form-group">
-        <%= form.label :goal_end, class: "form-label"  %>
-        <%= form.number_field :goal_end, class: "form-input" %>
-      </div>
+  <div>
+    <div class="mb-6 form-group">
+      <%= form.label "Vidéo youtube", class: "form-label"  %>
+      <%= form.text_field :video_link, class: "form-input" %>
     </div>
 
-    <div class="md:w-3/6">
-        <div class="field form-group" data-application-target="videoPreviewer">
-          <%= form.label "vidéo (lien de partage youtube)", class: "form-label"  %>
-          <%= form.text_field :video_link, class: "form-input mb-6" %>
-          <youtube-player class="hidden md:block" data-application-target="videoPlayer" video-id="<%= exercise.video_link %>"></youtube-player>
-        </div>
+    <div class="mb-6">
+      <%= form.label "Contenu", class: "form-label"  %>
+      <%= form.text_area :body, class: "form-input w-full" %>
     </div>
   </div>
 
-  <div class="text-center divider" data-content="contenu"></div>
-
-  <div class="flex my-10" data-controller="markdown">
-    <div class="pr-3 md:w-3/6">
-      <%= form.label "Markdown", class: "form-label"  %>
-      <%= form.text_area :body, class: "form-input mardown-textarea",
-        data: {markdown_target: 'field', action: 'input->markdown#onChange'} %>
-    </div>
-    <div class="pl-3 md:w-3/6">
-      <label class="form-label">Aperçu</label>
-      <!-- HTML RESULT FROM MARKDOWN -->
-      <div data-markdown-target="result" class="pt-1"></div>
-    </div>
-  </div>
-
-  <div class="mt-2 actions form-group" data-markdown-target="result">
+  <div class="mt-2 actions form-group">
     <% if @exercise.persisted? %>
       <%= form.submit "Modifier l'exercice", class: "btn btn-primary  float-right" %>
     <% else %>

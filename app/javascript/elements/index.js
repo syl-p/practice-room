@@ -14,5 +14,5 @@ customElements.define('skeleton-box', Skeleton)
 import { Stat } from "./stat/stat";
 customElements.define('stat-box', Stat)
 
-import { Collapse } from "./collapse/collapse";
-customElements.define('collapse-section', Collapse)
+import { Timer } from "./timer/timer";
+customElements.define('timer-watch', Timer)

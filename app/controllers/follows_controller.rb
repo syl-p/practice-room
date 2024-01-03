@@ -3,13 +3,12 @@ class FollowsController < ApplicationController
   before_action :find_follow, :only => [:create, :destroy]
 
   def create
-    return :unprocessable unless @follow.nil? && @user != current_user
+    return :unprocessable unless @user != current_user
 
     @follow = Follow.new
     @follow.follower = current_user
     @follow.following = @user
     @follow.save
-
 
     respond_to do |format|
       format.turbo_stream {

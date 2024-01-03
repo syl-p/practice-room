@@ -1,0 +1,22 @@
+<ul role="list" class="divide-y divide-gray-200">
+  <% items.each do |item| %>
+    <li class="flex space-x-6 relative items-center p-4 hover:bg-gray-50">
+      <div class="flex flex-1 space-x-6 items-center min-w-0">
+        <div class="hidden flex-shrink-0 md:block">
+          <%= yield item, :icon %>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="overflow-hidden m-0 text-sm font-medium text-ellipsis">
+            <%= yield item, :title %>
+          </p>
+          <p class="text-xs font-light text-gray-500">
+            <%= yield item, :description %>
+          </p>
+        </div>
+      </div>
+      <div>
+        <%= yield item, :actions %>
+      </div>
+    </li>
+  <% end %>
+</ul>

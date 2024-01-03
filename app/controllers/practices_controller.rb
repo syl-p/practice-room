@@ -35,37 +35,25 @@ class PracticesController < ApplicationController
   end
 
   def add_to_practice
-    duration = params[:time].present? ? Time.parse(params[:time]).seconds_since_midnight : 600
+    duration = params[:time].present? ? Time.parse(params[:time]).seconds_since_midnight : 10.minutes
     exercise = Exercise.find(params[:id])
+    last_practice = current_user.practices_of_the_day&.last
 
-    last_practice = current_user.practices_of_the_day ? current_user.practices_of_the_day.last : nil
-    if last_practice.present? && ((Time.now - last_practice.created_at.to_time) <= 1.hour)
-      last_practice.practices_exercises << PracticesExercise.new(exercise: exercise, duration: duration)
+    if last_practice && (Time.now - last_practice.created_at < 1.hour)
+      last_practice.practices_exercises.create(exercise: exercise, duration: duration)
     else
-      last_practice = Practice.new(user: current_user)
-      last_practice.practices_exercises << PracticesExercise.new(exercise: exercise, duration: duration)
+      last_practice = current_user.practices_of_the_day.build
+      last_practice.practices_exercises.build(exercise: exercise, duration: duration)
       last_practice.save
     end
   end
 
   def remove_from_practice
-    practices_exercises_id = params[:practices_exercises_id]
-    practices_exercise = PracticesExercise.find(practices_exercises_id)
-    practices_exercise.destroy
+    @practices_exercise = PracticesExercise.find(params[:practices_exercises_id])
+    @practices_exercise.destroy
 
-    if practices_exercise.practice.practices_exercises.count <= 0
-      practices_exercise.practice.destroy
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.remove("practice_#{practices_exercise.practice.id}")
-        end
-      end
-    else
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.remove("practices_exercises_#{params[:practices_exercises_id]}")
-        end
-      end
+    if @practices_exercise.practice.practices_exercises.count <= 0
+      @practices_exercise.practice.destroy
     end
   end
 
@@ -129,6 +117,6 @@ class PracticesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def practice_params
-      params.fetch(:practice, {})
+      params.fetch(:practice, {}).permit(:time)
     end
 end

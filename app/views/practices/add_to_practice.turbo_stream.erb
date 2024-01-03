@@ -6,9 +6,6 @@
 
 <%= turbo_stream.replace "practice_time_today" do %>
   <%= turbo_frame_tag "practice_time_today" do %>
-    <p class="flex-1 flex flex-col">
-      <span class="text-xs">Temps de pratique</span>
-      <span><%= current_user.practice_time_today %></span>
-    </p>
+    <%= render partial: "practices/practice_time" %>
   <% end %>
 <% end %>

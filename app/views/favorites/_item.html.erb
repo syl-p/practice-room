@@ -1,15 +1,15 @@
 <li data-exercise-id="<%= exercise.id %>">
   <div class="block hover:bg-gray-50">
     <div class="flex items-center px-4 py-4 sm:px-6">
-      <div class="min-w-0 flex-1 flex items-center">
+      <div class="min-w-0 flex-1 flex space-x-4 items-center">
         <div class="hidden md:block flex-shrink-0">
           <%= link_to user_url(exercise.user), data: {turbo: false} do %>
-            <%= render partial: "users/avatar", locals: {user: exercise.user, size: :medium} %>
+            <%= render partial: "users/avatar", locals: {user: exercise.user, size: 8} %>
           <% end %>
         </div>
-        <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+        <div class="min-w-0 flex-1">
           <div>
-            <p class="text-sm font-medium text-indigo-600">
+            <p class="text-sm font-medium">
               <%= link_to exercise.title, exercise, data: {turbo: false} %>
             </p>
             <p class="mt-2 flex items-center text-sm text-gray-500">

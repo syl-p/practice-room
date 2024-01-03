@@ -1,0 +1,49 @@
+<%
+  done_class = "bg-green-400 text-white"
+  none_class = "bg-gray-200 text-gray-400"
+  radius = 40
+  stroke = 5
+  normalizedRadius = radius - stroke * 2
+  circumference = normalizedRadius * 2 * Math::PI
+  progress = state * 100 / goal
+  strokeDashoffset = circumference - (progress / 100) * circumference
+%>
+
+<div class="w-40 rounded-lg shadow-lg p-4 my-3 <%= done ? done_class : none_class %> shadow">
+  <div class="inline-flex items-center justify-center overflow-hidden rounded-full">
+    <% if done %>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+      </svg>
+    <% else %>
+      <svg class="w-20 h-20">
+        <circle
+          class="text-gray-100"
+          stroke-width="5"
+          stroke="currentColor"
+          fill="transparent"
+          r="30"
+          cx="40"
+          cy="40"
+        />
+        <circle
+          class="text-primary"
+          stroke-width="5"
+          stroke-dasharray="<%= circumference %>"
+          stroke-dashoffset="<%= strokeDashoffset %>"
+          stroke-linecap="round"
+          stroke="currentColor"
+          fill="transparent"
+          r="30"
+          cx="40"
+          cy="40"
+        />
+      </svg>
+      <span class="absolute text-blue-700 text-xs">
+        <%= "#{stat_label}" %>
+      </span>
+    <% end %>
+  </div>
+  <p class="font-bold text-sm mb-1"><%= label_title %></p>
+  <p class="text-xs"><%= label_subtitle %></p>
+</div>

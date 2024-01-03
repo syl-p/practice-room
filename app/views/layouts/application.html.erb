@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full">
+<html class="h-full bg-gray-100">
   <head>
     <title><%= content_for?(:title) ? yield(:title) : 'Bienvenue' %> - Practice Room</title>
     <%= csrf_meta_tags %>
@@ -10,26 +10,43 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class="h-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900">
-    <div class="flex relative z-10"
-      aria-labelledby="slide-over-title"
-      data-controller="application"
-      data-application-root-value="<%= root_url %>">
+  <body class="h-full" data-controller="application popup">
+    <div>
+      <%= render partial: "shared/narrow_sidebar" %>
 
-      <!-- Narrow -->
-      <%= render "shared/narrow_sidebar" %>
-      <!-- END Narrow -->
+      <main class="lg:pl-20 flex w-full items-stretch gap-x-0">
+        <div class="flex-1 relative">
+          <%= render partial: "shared/header" %>
+          <div class="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
+            <!-- Main area -->
+            <%= yield %>
+          </div>
+        </div>
 
-      <!-- Content area -->
-      <div class="flex flex-col flex-1 lg:pl-20 md:py-4 md:pr-4">
-        <main class="relative px-8 py-6 bg-white border-l md:rounded-2xl md:screen md:overflow-y-auto">
-          <%= render "shared/header" %>
-          <%= yield %>
-          <%#= render "shared/footer" %>
-        </main>
+        <!-- Secondary column (hidden on smaller screens) -->
+        <aside class="sticky h-screen hidden w-3/12 shrink-0 xl:block">
+          <div class="fixed h-full bg-light shadow">
+            <%= render partial: "shared/sidebar/header" %>
+            <div class=" px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
+              <%= render partial: "shared/sidebar/content" %>
+            </div>
+          </div>
+        </aside>
+      </main>
+
+      <div data-action="click->popup#clickOutside">
+        <dialog data-popup-target="dialog" class="backdrop:bg-gray-500 backdrop:opacity-75 w-full md:w-1/2 rounded-xl">
+          <div  class="rounded-lg p-6">
+            <%= turbo_frame_tag :exercise_edit %>
+          </div>
+        </dialog>
+        <%= link_to new_exercise_path, class: "rounded-full text-white bg-primary p-3 fixed bottom-10 right-10", title: "Créer un nouvel exercice", data: {turbo_frame: :exercise_edit, action: "click->popup#open"} do %>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+        <% end %>
       </div>
-      <!-- END Content area -->
-      <%= render "shared/practice_sidebar" if current_user.present? %>
     </div>
+    <%#= render "shared/sidebar/overlayed" if current_user.present? %>
   </body>
 </html>

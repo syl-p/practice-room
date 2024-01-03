@@ -10,10 +10,9 @@ export default {
         padding: 0
       },
       plugins: {
-
-      legend: {
-        position: 'left',
-      },
+        legend: {
+          position: 'bottom',
+        },
       }
     }
   }

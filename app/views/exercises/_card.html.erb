@@ -1,74 +1,49 @@
 <%
   practiced = true if local_assigns[:practiced].nil?
+  bg_url = exercise.video_link ? "https://img.youtube.com/vi/"+ exercise.video_link + "/sddefault.jpg" : nil
+  goal_setting = exercise.goal_setting_for_current_user(current_user)
 %>
 
-<article class="p-4 bg-white rounded-xl border shadow-lg transition hover:shadow-xl">
-  <header class="flex space-x-4">
-    <figure class="flex-shrink-0 self-center">
-      <a href="<%= user_url(exercise.user) %>" data-turbo="false">
-        <%= render partial: "users/avatar", locals: {user: exercise.user, size: :medium} %>
-      </a>
-    </figure>
-    <div class="flex-1 min-w-0">
-      <h2 class="text-lg font-bold">
-        <%= link_to exercise.title, exercise, data: {turbo_frame: "exercise_show"} %>
-      </h2>
-      <p class="text-xs font-light text-gray-500">Publié par
-        <a href="<%= user_url(exercise.user) %>" data-turbo="false">
-          <%= exercise.user.username %>
-        </a>
-        le <%= l exercise.created_at, format: :short %>
-      </p>
+<article class="flex flex-col h-full justify-between space-y-6">
+  <header class="flex space-x-3">
+    <div class="flex-1">
+      <%= render layout: "users/layouts/user_heading", locals: {user: exercise.user, posted_at: exercise.created_at} do %>
+        <h2 class="text-xl font-medium">
+          <%= link_to exercise.title, exercise, data: {turbo: "false"} %>
+        </h2>
+      <% end %>
     </div>
-    <div class="flex flex-shrink-0 self-center">
-      <%= render partial: "practices/toolbar", locals: {exercise: exercise ,extended: false} if current_user.present? %>
-    </div>
+    <%= render partial: "practices/toolbar", locals: {exercise: exercise ,extended: false} if current_user.present? %>
   </header>
 
-  <section class="mt-3 mb-6 text-sm font-light text-gray-500">
-    <p><%= exercise.description.truncate(100) if exercise.description %></p>
-  </section>
 
-  <section class="my-6 text-sm font-light text-gray-500">
-    <%
-      goal_setting = exercise.goal_setting_for_current_user(current_user)
-      if goal_setting.present? && exercise.goal_end %>
-      <div class="flex items-center mb-3 space-x-3">
+  <p class="font-light text-gray-500 mb-3">
+    <%= exercise.description.truncate(100) if exercise.description %>
+  </p>
+
+  <% if goal_setting.present? && exercise.goal_end %>
+    <div class="text-sm font-light text-white my-3">
+      <div class="flex items-center mb-1 space-x-3">
         <div class="flex-1 h-1 bg-gray-200 rounded-full">
           <div class="h-1 bg-blue-600 rounded-full dark:bg-blue-500"
               style="width: <%= goal_setting.value * 100 / exercise.goal_end  %>%"></div>
         </div>
       </div>
-      <p class="">
+      <p>
         <%= goal_setting.value %> <%= exercise.goal_label.label %> /  <%= exercise.goal_end %> <%= exercise.goal_label.label %>
       </p>
-    <% end %>
-  </section>
-
-  <footer class="flex items-end space-x-4">
-    <div class="flex-1">
-      <%= render partial: "exercises/categories_list", locals: {categories: exercise.categories} %>
     </div>
-    <dl class="flex w-full flex-none justify-between gap-x-3 sm:w-auto">
-      <div class="flex -space-x-0.5">
-        <dt class="sr-only">Reply</dt>
-        <% exercise.comments.limit(6).map(&:user).uniq.each do |user| %>
-          <dd>
-            <a href="<%= user_url(user) %>" data-turbo="false">
-              <%= render partial: "users/avatar", locals: {user: user, size: :small} %>
-            </a>
-          </dd>
-        <% end %>
-      </div>
-      <div class="flex w-16 gap-x-2.5">
-        <dt>
-          <span class="sr-only">Total comments</span>
-          <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-          </svg>
-        </dt>
-        <dd class="text-sm leading-6 text-gray-900"><%= exercise.comments.count %></dd>
-      </div>
-    </dl>
+  <% end %>
+
+  <footer class="flex justify-between items-center space-x-6">
+    <ul class="text-sm flex space-x-6">
+      <% exercise.categories.each do |category| %>
+        <li>
+          <%= link_to category.name, by_slug_categories_path(slug: category.slug), data: {turbo: false}, class: "px-2 py-1 bg-blue-100 rounded-lg text-xs" %>
+        </li>
+      <% end %>
+    </ul>
+
+    <%= render partial: "exercises/comments/commenters", locals: {exercise:  exercise} %>
   </footer>
 </article>

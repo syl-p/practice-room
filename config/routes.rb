@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-  get 'goal_settings/new'
-  get 'goal_settings/create'
-  get 'goal_settings/update'
-  get 'goal_settings/edit'
-  get 'goal_settings/destroy'
   devise_for :users, :controllers => { :registrations => "registrations" }
   resources :categories do
     collection do
@@ -14,6 +9,7 @@ Rails.application.routes.draw do
 
   get 'users/show'
   get 'dashboard', to: "users#index", as: "dashboard"
+  get 'search/index', defaults: { format: :turbo_stream }
 
   resources :media do
     collection do
@@ -23,6 +19,7 @@ Rails.application.routes.draw do
 
   resources :exercises do
     resources :comments, module: :exercises
+    resources :versions, module: :exercises
     resources :goal_settings, module: :exercises
     collection do
       post "search", defaults: { format: :turbo_stream }
@@ -30,13 +27,9 @@ Rails.application.routes.draw do
       get "me"
       get ":id/edit/:step", to: "exercises#edit", as: "edit_with_step"
       get "new/:step", to: "exercises#new", as: "new_with_step"
-      get ":id/versions", to: "exercises#versions", as: "versions_list"
       # route for stimulus actions
-      get ":id/practice/add(/:time)", to: "practices#add_to_practice", defaults: { format: :turbo_stream }, as: "add_to_practice"
+      post ":id/practice/add(/:time)", to: "practices#add_to_practice", defaults: { format: :turbo_stream }, as: "add_to_practice"
       get ":id/favorites/:add_or_remove", to: "exercises#add_or_remove_favorite", defaults: { format: :turbo_stream }, as: "add_or_remove_favorite"
-
-      # route for turbo frame query
-      get "last_practiced"
     end
   end
 
@@ -48,7 +41,6 @@ Rails.application.routes.draw do
 
   get "users/:id", to: "users#show", as: "user"
   delete "users/:id/delete_avatar", to: "users#delete_avatar", as: "delete_avatar"
-
 
   delete "practice/remove/:practices_exercises_id", to: "practices#remove_from_practice", as: "remove_from_practice"
 

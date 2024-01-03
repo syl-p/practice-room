@@ -1,17 +1,5 @@
 <div class="mt-6">
   <%= turbo_frame_tag "#{dom_id(@commentable)}_comments" do %>
     <%=  render partial: "comments/comment", collection: @comments, as: :comment  %>
-    <div class="flex relative gap-x-4">
-      <div class="flex absolute top-0 left-0 justify-center w-6 h-6">
-        <div class="w-px bg-gray-200"></div>
-      </div>
-      <div class="flex relative flex-none justify-center items-center w-6 h-6 bg-white">
-        <svg class="w-6 h-6 text-indigo-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
-        </svg>
-      </div>
-      <p class="flex-1 flex-auto py-0.5 text-xs leading-5 text-gray-500"><span class="font-medium text-gray-900"><%= @commentable.user.username %></span> a posté cet exercice.</p>
-      <time datetime="<%= @commentable.created_at %>" class="flex-none py-0.5 text-xs leading-5 text-gray-500"><%= @commentable.created_at %></time>
-    </div>
   <% end %>
 </div>

@@ -2,7 +2,7 @@ import helper from '../../helper';
 
 export default {
   dataset : {
-    borderColor: '#5755d9',
+    borderColor: '#4895f7',
     tension: 0.5
   },
   general: {

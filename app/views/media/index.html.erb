@@ -1,22 +1,10 @@
-<section class="p-10" data-controller="popup" data-popup-inactive-class="invisible" data-popup-active-class="visible">
+<%
+  content_for(:title, "Media")
+  content_for(:description, "Retrouvez ici tout les ressources que vous avez mis en ligne")
+%>
+<section class="bg-white rounded-lg shadow-lg p-6"
+         data-controller="popup" data-popup-active-class="invisible">
   <p id="notice"><%= notice %></p>
-  <header class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
-      <%= render partial: "shared/breadcrump", locals: {links: [
-        {
-          label: "Media",
-          path: media_path
-        }
-      ]}
-      %>
-      <h1 class="text-4xl font-semibold text-gray-900">Media</h1>
-      <p class="mt-2 text-sm text-gray-700">Retrouvez ici tout les ressources que vous avez mis en ligne.</p>
-    </div>
-    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-      <%= link_to "Ajouter une ressource", "javascript:;", class: "btn btn-primary",
-                  data: { action: "click->popup#toggle", target: "#popup" } %>
-    </div>
-  </header>
 
   <!-- MODAL -->
   <div class="relative invisible popup" data-popup-target="popup">
@@ -34,7 +22,7 @@
   </div>
   <!-- END MODAL -->
 
-  <div class="flex flex-col mt-8">
+  <div class="flex flex-col">
     <div class="overflow-x-auto -mx-4 -my-2 sm:-mx-6 lg:-mx-8">
       <div class="inline-block py-2 min-w-full align-middle md:px-6 lg:px-8">
         <%= turbo_frame_tag "media-list"  do %>

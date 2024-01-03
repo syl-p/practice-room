@@ -11,13 +11,13 @@ class ExercisesController < ApplicationController
 
   # POST /exercises/search
   def search
-    order_by = params[:order_by].present? ? params[:order_by] : 'created_at'
-    order = params[:order].present? ? params[:order] : 'DESC'
-
     @exercises = @exercises
                       .where(original: nil)
-                      .filtered(params)
                       .order(params[:order])
+
+    if params[:favorites] && current_user.present?
+      @exercises = @exercises.where(id: current_user.favorites)
+    end
 
     if params[:category_ids].present? && params[:category_ids].count > 0
       @exercises = @exercises.joins(:categories).where(categories: params[:category_ids])
@@ -26,28 +26,6 @@ class ExercisesController < ApplicationController
     if params[:levels].present? && params[:levels].count > 0
       @exercises = @exercises.where(level: params[:levels])
     end
-
-    if params[:visibility].present?
-      case params[:visibility]
-      when "friends"
-        @exercises = @exercises.joins(:user).where(users: {id: current_user.friends})
-      end
-    end
-
-    respond_to do |format|
-      format.turbo_stream
-    end
-  end
-
-  def last_practiced
-    @last_practiced = Exercise.joins(:goal_settings).where(goal_settings: {user_id: current_user.id}).order("updated_at desc").limit(3)
-  end
-
-  def versions
-    render partial: "exercises/versions/list", locals: {
-      versions: @exercise.versions_filtered(current_user),
-      exercise: @exercise
-    }
   end
 
   def me
@@ -61,32 +39,19 @@ class ExercisesController < ApplicationController
     unless @goal_setting.present?
       @goal_setting = GoalSetting.new(exercise_id: @exercise.id, user_id: current_user)
     end
-
-    if params[:view].present?
-      render "exercises/versions/show"
-    end
   end
 
   # GET /exercises/new
   def new
     @exercise = Exercise.new
-
-    if params[:original_id].present? # version ?
-      @exercise.exercise_id = params[:original_id]
-      render "exercises/versions/new", locals: {exercise: @exercise}
-    end
   end
 
   # GET /exercises/1/edit
   def edit
-    return unless ['media', "versions", "visibility"].include?(params[:step]) || params[:step].blank?
+    return unless %w[presentation practice content media versions visibility].include?(params[:step]) || params[:step].blank?
 
     if params[:step] == "media"
       @medium = Medium.new
-    end
-
-    if @exercise.original.present? # it's a version
-      render "exercises/versions/edit"
     end
   end
 
@@ -94,68 +59,27 @@ class ExercisesController < ApplicationController
   def create
     @exercise = Exercise.new(exercise_params)
     @exercise.user_id = current_user.id
-    # published false if is a version of an exercise
-    @exercise.published = false if @exercise.original.present?
 
-    respond_to do |format|
-      if @exercise.save
-        format.html { redirect_to edit_exercise_path(@exercise), notice: "Exercise was successfully created." }
-        format.json { render :show, status: :created, location: @exercise }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace(
-            "exercise_versions_form",
-            partial: "exercises/versions/form",
-            locals: {
-              version: @exercise
-            }
-          )
-        }
-        format.json { render json: @exercise.errors, status: :unprocessable_entity }
-      end
+    if @exercise.save
+      redirect_to edit_exercise_path(@exercise), notice: "Exercise was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /exercises/1 or /exercises/1.json
   def update
-    respond_to do |format|
-      if @exercise.update(exercise_params)
-        format.html do
-          redirect_to request.referrer, notice: "Exercise was successfully updated."
-        end
-        format.json { render :show, status: :ok, location: @exercise }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @exercise.errors, status: :unprocessable_entity }
-      end
+    if @exercise.update(exercise_params)
+      redirect_to request.referrer, notice: "Exercise was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /exercises/1 or /exercises/1.json
   def destroy
-    original = @exercise.original
     @exercise.destroy
-    respond_to do |format|
-
-      if original.present? # it's a version
-        # turbo respond for get_versions_list
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace(
-            "exercise_versions",
-              partial: "exercises/versions/list",
-              locals: {
-                exercise: original,
-                versions: original.versions_filtered(current_user)
-              }
-            )
-        }
-      end
-
-      # normal
-      format.html { redirect_to me_exercises_path, notice: "Exercise was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to me_exercises_path, notice: "Exercise was successfully destroyed."
   end
 
   def add_or_remove_favorite
@@ -171,10 +95,6 @@ class ExercisesController < ApplicationController
         current_user.update_attribute(:favorites, current_user.favorites - [params[:id]])
         current_user.save
       end
-    end
-
-    respond_to do |format|
-      format.turbo_stream
     end
   end
 

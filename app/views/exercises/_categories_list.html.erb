@@ -1,7 +1,0 @@
-<ul class="text-sm flex space-x-3">
-  <% categories.each do |category| %>
-    <li>
-      <%= link_to category.name, by_slug_categories_path(category), data: {turbo: false}, class: "px-2 py-1 bg-blue-100 rounded-lg text-xs" %>
-    </li>
-  <% end %>
-</ul>

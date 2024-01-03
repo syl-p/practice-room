@@ -1,0 +1,22 @@
+<%= turbo_frame_tag "exercise_versions" do %>
+    <div class="flex space-x-6 mb-6">
+      <div class="flex-1">
+        <p class="font-light text-gray-500">
+          Découvrez ici des versions améliorées, modifiées de ce même exercice !
+        </p>
+      </div>
+      <div class="self-center">
+        <% if current_user.present? %>
+          <%= link_to edit_exercise_path(@exercise), class: "btn-secondary", data: {turbo_frame: :exercise_edit, action: "click->popup#open"}, class: 'block rounded-full border p-1' do %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+  <div class="overflow-hidden overflow-y-auto">
+    <%= render partial: "exercises/versions/list", locals: {versions: @versions, exercise: @exercise} %>
+  </div>
+<% end %>

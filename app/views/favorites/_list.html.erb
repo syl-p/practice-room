@@ -1,9 +1,7 @@
-<%= turbo_frame_tag "favorites" do %>
-  <div class="border-t"
-    data-controller="favorites">
+<%= turbo_frame_tag "favorites_list" do %>
+  <div class="border-t">
     <div class="overflow-hidden bg-white shadow sm:rounded-md">
-
-      <ul role="list" class="divide-y divide-gray-200" data-favorites-target="favorites">
+      <ul role="list" class="divide-y divide-gray-200">
         <% exercises.each do |exercise| %>
           <%= render partial: "favorites/item", locals: {exercise: exercise}  %>
         <% end %>

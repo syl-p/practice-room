@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_28_164311) do
+ActiveRecord::Schema.define(version: 2023_05_13_201832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2023_02_28_164311) do
     t.boolean "published", default: true
     t.text "description"
     t.integer "level", default: 0
-    t.integer "duration", default: 600
+    t.interval "duration", default: "PT0S"
     t.integer "visibility", default: 0
     t.boolean "versions_enabled", default: true
     t.float "goal_end"
@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(version: 2023_02_28_164311) do
   create_table "practices_exercises", force: :cascade do |t|
     t.bigint "practice_id", null: false
     t.bigint "exercise_id", null: false
-    t.integer "duration", null: false
+    t.interval "duration", default: "PT0S", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["exercise_id"], name: "index_practices_exercises_on_exercise_id"

@@ -6,7 +6,7 @@
 %>
 
 <%= turbo_frame_tag "practices_selector", target: "practices_selector"  do %>
-  <div class="bg-gray-100 text-center rounded-md p-4 mb-8">
+  <div class="text-center mb-8">
     <nav class="mb-4">
       <span class="text-lg font-bold"><%= I18n.t("date.month_names")[current_month] %> <%= current_year %></span>
     </nav>
@@ -23,7 +23,7 @@
         it_current_date = day.strftime("%Y-%m-%d") == current_date.strftime("%Y-%m-%d") if current_date
       %>
         <%= link_to with_data || today ? get_day_path(date: day) : 'javascript:;',
-          class: "p-1 rounded-full #{ "bg-gray-700" if today } #{ "border border-indigo-500" if it_current_date }",
+          class: "p-1 rounded-full #{ "bg-gray-700" if today } #{ "border border-primary" if it_current_date }",
           data: {
             pratices_target: "dateLink",
             date: day.strftime("%Y-%m-%d")
@@ -31,7 +31,7 @@
           <span class="block text-sm <%= "text-white" if today  %>"><%= Date::ABBR_DAYNAMES[day.wday][0,1] %></span>
           <span class="block text-sm bg-white rounded-full py-1 px-2 relative">
             <% if with_data %>
-              <span class="<%= "block absolute bottom-5 left-5 content-[''] bg-indigo-400 w-2 h-2 rounded-full" %>"> </span>
+              <span class="<%= "block absolute bottom-5 left-5 content-[''] bg-primary w-2 h-2 rounded-full" %>"> </span>
             <% end %>
             <%= day.day %>
           </span>

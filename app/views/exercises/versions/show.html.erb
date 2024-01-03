@@ -1,47 +1,50 @@
-
 <%= turbo_frame_tag "exercise_versions" do %>
-  <div class="flex space-x-4">
-    <div class="flex-shrink-0">
-      <a href="<%= user_path(@exercise.user.id) %>" data-turbo="false">
-        <%= render partial: "users/avatar", locals: {user: @exercise.user, size: :medium} %>
-      </a>
-    </div>
-    <div class="flex-1 min-w-0">
-      <p class="font-medium text-gray-900 truncate"><%= @exercise.title %></strong></p>
-      <p class="text-gray-500 font-light truncate">
-        Publié par <%= link_to @exercise.user.username, user_path(@exercise.user.id), data: {turbo: false}  %></small>
-      </p>
-    </div>
-    <div class="self-center">
-      <!-- Close btn -->
-      <%= link_to  versions_list_exercises_path(id: @exercise.original), class: "float-right",
-        data: {
-          video_id: @exercise.original.video_link,
-          action: 'click->application#showVersion'
-        } do %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      <% end %>
-      <!-- end  Close btn -->
-    </div>
-  </div>
-
-  <div class="my-4 text-gray-600 font-light line-clamp-2">
-    <% if notice.present? %>
-      <div id="notice" class="toast toast-success">
-        <button class="btn btn-clear float-right"></button>
-        <%= notice %>
+  <div class="flex flex-col w-full h-full">
+    <article class="p-6 flex-1">
+      <div class="flex space-x-6">
+        <div class="flex-shrink-0">
+          <a href="<%= user_path(@version.user.id) %>" data-turbo="false">
+            <%= render partial: "users/avatar", locals: {user: @version.user} %>
+          </a>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="font-medium text-gray-900 truncate"><%= @version.title %></strong></p>
+          <p class="text-gray-500 font-light truncate">
+            Publié par <%= link_to @version.user.username, user_path(@version.user.id), data: {turbo: false}  %></small>
+          </p>
+        </div>
+        <div class="self-center">
+          <!-- Close btn -->
+          <%= link_to  exercise_versions_path(exercise_id: @version.original), class: "float-right",
+                       data: {
+                         video_id: @version.original.video_link,
+                         action: 'click->application#showVersion'
+                       } do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          <% end %>
+          <!-- end  Close btn -->
+        </div>
       </div>
-    <% end %>
-    <p>
-      <%= @exercise.description %>
-    </p>
-  </div>
 
-  <div class="text-sm uppercase font-bold text-right">
-    <% if can? :manage, @exercise %>
-      <%= link_to 'Modifier', edit_exercise_path(@exercise) %> | <%= link_to 'Supprimer', @exercise, method: :delete, data: { confirm: 'Are you sure?', turbo: true } %>
-    <% end %>
+      <div class="my-4 text-gray-600 font-light line-clamp-2">
+        <% if notice.present? %>
+          <div id="notice" class="toast toast-success">
+            <button class="btn btn-clear float-right"></button>
+            <%= notice %>
+          </div>
+        <% end %>
+        <p>
+          <%= @version.description %>
+        </p>
+      </div>
+    </article>
+
+    <div class="text-sm uppercase font-bold text-right p-6">
+      <% if can? :manage, @version %>
+        <%= link_to 'Modifier', edit_exercise_version_path(exercise_id: @version.original.id, id: @version) %> | <%= link_to 'Supprimer', exercise_version_path(@version, exercise_id: @version.original.id), method: :delete, data: { confirm: 'Are you sure?', turbo: true } %>
+      <% end %>
+    </div>
   </div>
 <% end %>

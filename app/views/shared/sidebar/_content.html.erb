@@ -1,0 +1,5 @@
+<div>
+  <h3 class="mb-6 text-2xl font-medium">Retrouvez ici votre historique de pratique:</h3>
+  <%= render partial: "practices/selector", locals: {current_week: Date.today.beginning_of_week..Date.today.end_of_week, practices_for_the_week: current_user.practices_of_the_week } %>
+  <%= render partial: "practices/list", locals: {practices_of_the_day: current_user.practices_of_the_day} %>
+</div>

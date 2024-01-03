@@ -1,17 +1,13 @@
 export default `
-  .drag-and-drop {
+  .drag-and-drop_container {
     border: 1px dashed;
     margin-bottom: 1rem;
     padding: 3rem;
     position: relative;
   }
 
-  .drag-and-drop.is-over {
+  .drag-and-drop_container-drop.is-over {
     border: 1px solid;
-  }
-
-  .drag-and-drop.has-file {
-    border:  3px solid blue;
   }
 
   .drag-and-drop ::slotted(input) {

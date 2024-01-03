@@ -1,74 +1,18 @@
-<header class="mb-6 w-full z-100">
-  <div class="flex relative flex-shrink-0">
-    <button type="button" class="px-4 text-gray-500 border-r border-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
-      <span class="sr-only">Open sidebar</span>
-      <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
-      </svg>
-    </button>
-    <div class="flex flex-1 justify-between">
-      <div class="flex flex-1">
-        <!-- FORM SEARCH -->
-        <form class="flex w-full md:ml-0" action="#" method="GET">
-          <label for="search-field" class="sr-only">Search all files</label>
-          <div class="relative w-full text-gray-400 focus-within:text-gray-600">
-            <div class="flex absolute inset-y-0 left-0 items-center pointer-events-none">
-              <!-- Heroicon name: solid/search -->
-              <svg class="flex-shrink-0 w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="black" aria-hidden="true">
-                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            <input name="search-field" id="search-field"
-              class="py-2 pr-3 pl-8 w-full h-full text-base placeholder-gray-500 text-gray-900 bg-transparent border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-transparent"
-              placeholder="Recherche..." type="Recherche...">
-          </div>
-        </form>
-        <!-- FORM SEARCH -->
-      </div>
-      <div class="flex items-center ml-2 space-x-4 sm:ml-6 sm:space-x-6">
-        <!-- Profile dropdown -->
-        <div class="relative flex-shrink-0">
-          <div>
-            <% if user_signed_in? %>
-              <div class="flex space-x-3">
-                <div class="self-center px-4 border-r">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="black" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                  </svg>
-                </div>
+<header class="sticky w-full top-0 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-gray-100 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+  <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden" @click="open = true">
+    <span class="sr-only">Open sidebar</span>
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+    </svg>
+  </button>
 
-                <div class="flex space-x-3">
-                  <button type="button"
-                    data-action="application#sidebarShow"
-                    data-application-id-param="practice_sidebar"
-                    class="flex text-sm bg-white rounded-md group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                    <span class="sr-only">Open user menu</span>
-                    <%= render partial: "users/avatar", locals: {user: current_user, size: :medium} %>
-                    <%#= render partial: "users/dropdown" %>
-                  </button>
-
-                  <div class="hidden self-center md:block">
-                    <%= turbo_frame_tag "practice_time_today" do %>
-                      <p class="flex flex-col flex-1">
-                        <span class="text-xs">Temps de pratique</span>
-                        <span><%= current_user.practice_time_today %></span>
-                      </p>
-                    <% end %>
-                  </div>
-                </div>
-
-              </div>
-            <% else %>
-              <div class="flex">
-                <%= link_to "Se connecter", new_user_session_path, class: "uppercase text-xs mr-3"  %>
-                <%= link_to "S'inscrire", new_user_registration_path, class: "uppercase text-xs"  %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-
-      </div>
+  <div class="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true"></div>
+  <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+    <div class="flex flex-1">
+      <%= render partial: "shared/search_form" %>
+    </div>
+    <div class="ml-2 flex items-center space-x-4 sm:ml-6 sm:space-x-6">
+      <%#= render partial: "shared/profile_head" %>
     </div>
   </div>
 </header>

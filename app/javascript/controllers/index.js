@@ -9,11 +9,11 @@ application.register("application", ApplicationController)
 import CommentController from "./comment_controller.js"
 application.register("comment", CommentController)
 
-import HelloController from "./hello_controller.js"
-application.register("hello", HelloController)
+import SearchController from "./search_controller.js"
+application.register("search", SearchController)
 
-import MarkdownController from "./markdown_controller.js"
-application.register("markdown", MarkdownController)
+import ExercisesController from "./exercises_controller.js"
+application.register("exercises", ExercisesController)
 
 import PracticesController from "./practices_controller.js"
 application.register("practices", PracticesController)
@@ -26,3 +26,6 @@ application.register("upload-async", UploadAsyncController)
 
 import Popup from "./popup_controller"
 application.register("popup", Popup)
+
+import Dropdown from "./dropdown_controller"
+application.register("dropdown", Dropdown)

@@ -35,6 +35,10 @@ class User < ApplicationRecord
     self.practices.where(created_at: date.all_day)
   end
 
+  def practices_of_the_week(date = Date.today)
+    self.practices.where(created_at: date.beginning_of_week..date.end_of_week)
+  end
+
   def practice_time_today
     res = 0
     self.practices_of_the_day.each do |practice|
@@ -42,7 +46,7 @@ class User < ApplicationRecord
         res += practice.duration
       end
     end
-    Time.at(res).utc.strftime("%H:%M:%S")
+    res
   end
 
   def practice_time_by_category
