@@ -14,7 +14,7 @@
     <div>
       <%= render partial: "shared/narrow_sidebar" %>
 
-      <main class="lg:pl-20 flex w-full items-stretch gap-x-0">
+      <main class="md:pl-20 flex w-full items-stretch gap-x-0">
         <div class="flex-1 relative">
           <%= render partial: "shared/header" %>
           <div class="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
@@ -43,7 +43,7 @@
               <%= turbo_frame_tag :exercise_edit %>
             </div>
           </dialog>
-          <%= link_to new_exercise_path, class: "rounded-full text-white bg-primary p-3 fixed bottom-10 right-10", title: "Créer un nouvel exercice", data: {turbo_frame: :exercise_edit, action: "click->popup#open"} do %>
+          <%= link_to new_exercise_path, class: "hidden rounded-full text-white bg-primary p-3 fixed bottom-10 right-10 md:block", title: "Créer un nouvel exercice", data: {turbo_frame: :exercise_edit, action: "click->popup#open"} do %>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
