@@ -2,43 +2,18 @@
   content_for(:title, "Bonjour Sylvain")
   content_for(:description, "Bienvenue sur votre espace personnel. Ici, vous trouverez les statistiques en temps réeel de votre pratique mais aussi des conseils et des idées pour vous améliorer.")
 %>
-  <h2 class="mb-6 text-2xl">Votre pratique du jour</h2>
-  <section class="mb-6 sm:flex sm:space-x-6">
-    <%= render partial: "users/dashboard/goal_stat", locals: {
-      done: @more_than_10_mn_today[0],
-      state: @more_than_10_mn_today[1].to_f,
-      goal: @more_than_10_mn_today[2].to_f,
-      stat_label: "#{Time.at(@more_than_10_mn_today[1]).utc.strftime("%M")}/#{Time.at(@more_than_10_mn_today[2]).utc.strftime("%M")}",
-      label_title: 'Temps de pratique minimum',
-      label_subtitle: 'Dépasser les 20 minutes de pratique quotidienne'
-    } %>
-
-    <%= render partial: "users/dashboard/goal_stat", locals: {
-      done: @have_3_exercises_today[0],
-      state: @have_3_exercises_today[1].to_f,
-      goal: @have_3_exercises_today[2].to_f,
-      stat_label: "#{@have_3_exercises_today[1]}/#{@have_3_exercises_today[2]}",
-      label_title: '3 exercices minimum',
-      label_subtitle: 'Dépasser les 20 minutes de pratique quotidienne'
-    } %>
-
-    <button type="button"
-      class="w-40 my-3 rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-      <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" />
-      </svg>
-      <span class="mt-3 block text-sm font-semibold text-gray-900">Créér un nouvel objectif de pratique</span>
-    </button>
-  </section>
-
-  <h2 class="mb-6 text-2xl">Statistiques</h2>
-  <section class="sm:flex sm:space-x-6">
-    <!-- stats by category -->
-    <article class="p-4 mb-6 rounded-lg border bg-white shadow sm:w-2/6">
-      <div class="mb-6">
-        <h2 class="text-lg font-semibold">Répartition par catégorie</h2>
-      </div>
-      <div class="flex">
+  <header class="mb-6">
+    <h1 class="text-3xl lg:text-4xl">
+      Bienvenue <%= current_user.username %>
+    </h1>
+    <p class="font-light text-gray-500">
+      Tu es ici sur ton espace personnel, il te permet de visualiser l'évolution de ta pratique mais aussi l'avancé de tes objectifs.
+    </p>
+  </header>
+  <section class="lg:flex lg:space-x-6 mb-6">
+    <div class="mb-3 lg:mb-0 lg:w-3/12 flex flex-col">
+      <h2 class="mb-3 text-xl">Vue Générale</h2>
+      <div class="p-4 flex-1 rounded-lg border bg-white shadow flex flex-col justify-center">
         <% if current_user.practice_time_by_category.present? %>
           <stat-box
             labels="<%= current_user.practice_time_by_category.keys.to_json %>"
@@ -51,9 +26,44 @@
           </p>
         <% end %>
       </div>
-    </article>
-    <!-- end stats by category -->
+    </div>
+    <div class="flex-1 flex flex-col">
+      <h2 class="mb-3 text-xl">Que faire aujourd'hui ?</h2>
+      <div class="p-4 flex-1 rounded-lg border bg-white shadow">
+        <h3 class="mb-3">Objectifs quotidiens</h3>
+        <div class="flex space-x-6">
+          <%= render partial: "users/dashboard/goal_stat", locals: {
+            done: @more_than_10_mn_today[0],
+            state: @more_than_10_mn_today[1].to_f,
+            goal: @more_than_10_mn_today[2].to_f,
+            stat_label: "#{Time.at(@more_than_10_mn_today[1]).utc.strftime("%M")}/#{Time.at(@more_than_10_mn_today[2]).utc.strftime("%M")}",
+            label_title: 'Temps de pratique minimum',
+            label_subtitle: 'Dépasser les 20 minutes de pratique quotidienne'
+          } %>
 
+          <%= render partial: "users/dashboard/goal_stat", locals: {
+            done: @have_3_exercises_today[0],
+            state: @have_3_exercises_today[1].to_f,
+            goal: @have_3_exercises_today[2].to_f,
+            stat_label: "#{@have_3_exercises_today[1]}/#{@have_3_exercises_today[2]}",
+            label_title: '3 exercices minimum',
+            label_subtitle: 'Dépasser les 20 minutes de pratique quotidienne'
+          } %>
+
+          <button type="button"
+            class="lg:w-40 my-3 rounded-lg border-2 border-dashed border-gray-300 p-4 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" />
+            </svg>
+            <span class="mt-3 block text-sm font-semibold text-gray-900">Créér un nouvel objectif de pratique</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <h2 class="mb-6 text-2xl">Statistiques</h2>
+  <section class="sm:flex sm:space-x-6">
     <!-- stats by week -->
     <article class="p-4 mb-6 rounded-lg border shadow bg-white sm:w-4/6">
       <h2 class="mb-6 text-lg font-semibold">Ces 7 derniers jours</h2>

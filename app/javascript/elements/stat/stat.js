@@ -5,18 +5,16 @@ import doughnutConfig from './doughnut.config';
 export class Stat extends HTMLElement {
   constructor() {
     super();
-    this.shadow = this.attachShadow({mode: 'open'});
+    this.shadow = this.attachShadow({ mode: 'open' });
     this.shadow.innerHTML = `
       <style>
         :host {
           display: block;
           width: 100%;
-          max-height: 130px;
           overflow: hidden;
         }
         .chart {
           width: 100%;
-          max-height: 130px;
         }
       </style>
       <canvas class="chart"></canvas>
@@ -49,7 +47,7 @@ export class Stat extends HTMLElement {
     const gradient = this.ctx.createLinearGradient(0, 0, 0, 140);
     gradient.addColorStop(0, 'rgb(72, 149, 247)');
     gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-    if(this.type === 'line') {
+    if (this.type === 'line') {
       this.config.dataset.backgroundColor = gradient;
     }
 

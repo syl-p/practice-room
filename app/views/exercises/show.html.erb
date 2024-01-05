@@ -5,7 +5,7 @@
 <header class="mb-6">
   <%= render layout: "users/layouts/user_heading", locals: {user: @exercise.user, posted_at: @exercise.created_at} do %>
     <h1 class="text-3xl"><%= @exercise.title %></h1>
-    <p class="mb-3"><%= @exercise.description %></p>
+    <p class="mb-3 font-light text-gray-500"><%= @exercise.description %></p>
     <ul class="text-sm flex space-x-3">
       <% @exercise.categories.each do |category| %>
         <li>
