@@ -10,7 +10,7 @@
     <nav class="mb-4">
       <span class="text-lg font-bold"><%= I18n.t("date.month_names")[current_month] %> <%= current_year %></span>
     </nav>
-    <div class="flex justify-center items-center space-x-2">
+    <div class="flex justify-center items-center w-full">
       <%= link_to get_week_path(previous_next: 'previous', date: first_day) do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
@@ -23,7 +23,7 @@
         it_current_date = day.strftime("%Y-%m-%d") == current_date.strftime("%Y-%m-%d") if current_date
       %>
         <%= link_to with_data || today ? get_day_path(date: day) : 'javascript:;',
-          class: "p-1 rounded-full #{ "bg-gray-700" if today } #{ "border border-primary" if it_current_date }",
+          class: "flex-1 p-1 rounded-full #{ "bg-gray-700" if today } #{ "border border-primary" if it_current_date }",
           data: {
             pratices_target: "dateLink",
             date: day.strftime("%Y-%m-%d")

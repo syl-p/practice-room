@@ -8,6 +8,8 @@ export default `
 }
 
 ul.tab {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
   padding: 0px;
   list-style: none;
   display: flex;

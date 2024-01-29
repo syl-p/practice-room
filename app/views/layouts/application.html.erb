@@ -10,14 +10,13 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class="h-full" data-controller="application popup">
-    <div>
+  <body class="h-full relative" data-controller="application popup">
       <%= render partial: "shared/narrow_sidebar" %>
 
       <main class="md:pl-20 flex w-full items-stretch gap-x-0">
         <div class="flex-1 relative">
           <%= render partial: "shared/header" %>
-          <div class="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
+          <div class="p-4 sm:px-6 lg:px-8 lg:py-6">
             <!-- Main area -->
             <%= yield %>
           </div>
@@ -50,7 +49,6 @@
           <% end %>
         </div>
       <% end %>
-    </div>
     <%#= render "shared/sidebar/overlayed" if current_user.present? %>
   </body>
 </html>

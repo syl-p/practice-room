@@ -1,6 +1,6 @@
-<ul role="list" class="gap-6 grid xl:grid-cols-3 lg:grid-flow-row-dense" data-exercises-target="results">
+<ul role="list" class="gap-6 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:grid-flow-row-dense" data-exercises-target="results">
   <% exercises.each do |exercise| %>
-    <li class="bg-white rounded-lg shadow-lg transition hover:shadow-xl p-6 flex-1">
+    <li class="bg-white rounded-lg shadow-lg transition hover:shadow-xl p-4">
       <%= render partial: "exercises/card", locals: {exercise: exercise} %>
     </li>
   <% end %>
