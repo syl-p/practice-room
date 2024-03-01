@@ -1,6 +1,5 @@
 class Exercise < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
-  has_many :versions, dependent: :destroy
 
   # todo: convert into has_and_belongs_to_many
   has_many :media_exercises, dependent: :destroy
@@ -12,7 +11,7 @@ class Exercise < ApplicationRecord
   belongs_to :goal_label, optional: true
   has_many :goal_settings, dependent: :destroy
 
-  accepts_nested_attributes_for :versions, update_only: true
+  # accepts_nested_attributes_for :versions, update_only: true
 
   belongs_to :original, class_name: 'Exercise', optional: true, foreign_key: :exercise_id
   has_many :versions, class_name: 'Exercise', dependent: :destroy

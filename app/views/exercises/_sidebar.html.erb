@@ -1,14 +1,11 @@
 <div class="rounded-lg bg-white shadow-lg p-6">
   <% if current_user.present? %>
     <div>
-      <%= render partial: "practices/adding_time", locals: {exercise: @exercise} %>
       <% if @exercise.goal_end.present? %>
-        <div class="pt-6">
           <p class="mb-6 text-sm font-light text-gray-600">Mise à jour de l'objectif</p>
           <%= turbo_frame_tag "goal_setting_form" do %>
             <%= render partial: "exercises/goal_settings/form", locals: {exercise: @exercise, goal_setting: @goal_setting} %>
           <% end %>
-        </div>
       <% end %>
     </div>
   <% end %>

@@ -2,100 +2,68 @@
   content_for(:title, @exercise.title)
   content_for(:description, @exercise.description)
 %>
-<header class="mb-6 pb-6 border-b">
-  <h1 class="text-4xl font-medium mb-3"><%= @exercise.title %></h1>
+<header class="min-h-[50vh] mb-6 p-6 bg-primary text-white flex flex-col justify-end">
   <%= render layout: "layouts/user_heading", locals: {user: @exercise.user, posted_at: @exercise.created_at} do %>
-    <p class="mb-3 font-light"><%= @exercise.description %></p>
-    <ul class="text-sm flex space-x-3 mb-6">
-      <% @exercise.categories.each do |category| %>
-        <li>
-          <%= link_to category.name, by_slug_categories_path(category), data: {turbo: false}, class: "px-2 py-1 bg-blue-100 rounded-lg text-xs" %>
-        </li>
-      <% end %>
-    </ul>
+    <h1 class="text-4xl font-medium mb-3"><%= @exercise.title %></h1>
   <% end %>
-  <div class="flex space-x-6">
-    <div class="flex space-x-3 justify-center items-center border-r pr-3">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
-      </svg>
-      <p>
-        <%= @exercise.level %>
-      </p>
-    </div>
-    <div class="flex space-x-3 justify-center items-center border-r pr-3">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
-      </svg>
-      <p>
-        <%= @exercise.versions.count %>
-        versions alternatives
-      </p>
-    </div>
-    <div>
-      <%= render partial: "practices/toolbar", locals: {exercise: @exercise} %>
-    </div>
-  </div>
+
+  <%= render partial: "practices/adding_time", locals: {exercise: @exercise} if current_user.present? %>
 </header>
 
-<section class="lg:flex lg:space-x-6">
-  <article class="flex-1 w-5/6">
-    <% if @exercise.video_link.present? %>
-      <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>">
-        <div class="bg-white flex items-center justify-center h-[450px] rounded-lg shadow-lg" slot="empty">
-          <div class="text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
-            </svg>
-            <p class="my-6 text-sm font-light text-center">Aucune vidéo disponible</p>
-          </div>
+<section class="lg:flex lg:space-x-6 mb-6">
+  <tabs-section class="flex-1 w-5/6">
+    <div slot="tab" data-tab-title="Contenu de l'exercice">
+      <% if @exercise.original %>
+        <div class="flex space-x-6 col-span-3 bg-white p-4 rounded-lg items-center shadow-lg">
+          <figure class="flex-shrink-0">
+            <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
+              <%= render partial: "users/avatar", locals: {user: @exercise.original.user, size: 12} %>
+            </a>
+          </figure>
+          <span>
+            Cet exercice est une version originale de l'exercice suivant:
+            <strong><%= link_to @exercise.original.title, @exercise.original %></strong>.
+          </span>
         </div>
-      </youtube-player>
-    <% end %>
+      <% end %>
 
-    <tabs-section>
-      <div class="prose" slot="tab" data-tab-title="Contenu de l'exercice">
-        <% if @exercise.original %>
-          <div class="flex space-x-6 col-span-3 bg-white p-4 rounded-lg items-center shadow-lg">
-            <figure class="flex-shrink-0">
-              <a href="<%= user_url(@exercise.user) %>" data-turbo="false">
-                <%= render partial: "users/avatar", locals: {user: @exercise.original.user, size: 12} %>
-              </a>
-            </figure>
-            <span>
-              Cet exercice est une version originale de l'exercice suivant:
-              <strong><%= link_to @exercise.original.title, @exercise.original %></strong>.
-            </span>
-          </div>
-        <% end %>
+      <% if @exercise.video_link.present? %>
+        <youtube-player data-application-target="videoPlayer" video-id="<%= @exercise.video_link %>" class="w-full mb-6"></youtube-player>
+      <% end %>
+
+      <div class="prose">
         <%= sanitize renderHtml @exercise.body %>
       </div>
+    </div>
 
-      <div slot="tab" data-tab-title="Les versions des pratiquants">
-        <%= turbo_frame_tag "exercise_versions", src: exercise_versions_path(@exercise) do %>
-          <%#= render partial: "exercises/versions/list_skeleton" %>
+    <div slot="tab" data-tab-title="Les versions des pratiquants">
+      <%= turbo_frame_tag "exercise_versions", src: exercise_versions_path(@exercise) do %>
+        <%#= render partial: "exercises/versions/list_skeleton" %>
+      <% end %>
+    </div>
+
+
+    <div slot="tab" data-tab-title="Discussions">
+      <% if user_signed_in? %>
+        <%= turbo_frame_tag "comment_new" do %>
+          <%= render partial: "comments/form",
+                     locals: {
+                       comment: Comment.new, commentable: @exercise, first: true
+                     } %>
         <% end %>
-      </div>
+      <% end %>
 
-
-      <div slot="tab" data-tab-title="Discussions">
-        <% if user_signed_in? %>
-          <%= turbo_frame_tag "comment_new" do %>
-            <%= render partial: "comments/form",
-                       locals: {
-                         comment: Comment.new, commentable: @exercise, first: true
-                       } %>
-          <% end %>
-        <% end %>
-
-        <!-- Turbo load comments list + Skeleton -->
-        <%= turbo_frame_tag "#{dom_id(@exercise)}_comments", src: exercise_comments_path(@exercise), loading: :lazy do %>
-          <%#= render partial: "exercises/versions/list_skeleton" %>
-        <% end %>
-      </div>
-    </tabs-section>
-  </article>
+      <!-- Turbo load comments list + Skeleton -->
+      <%= turbo_frame_tag "#{dom_id(@exercise)}_comments", src: exercise_comments_path(@exercise), loading: :lazy do %>
+        <%#= render partial: "exercises/versions/list_skeleton" %>
+      <% end %>
+    </div>
+  </tabs-section>
   <aside>
     <%= render partial: "exercises/sidebar" %>
   </aside>
+</section>
+
+<section>
+
 </section>

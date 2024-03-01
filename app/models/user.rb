@@ -74,4 +74,12 @@ class User < ApplicationRecord
     end
     res
   end
+
+  def top_exercises_list
+    PracticesExercise.joins(:practice).joins(exercise: :user).where(practices: {user_id: self.id})
+                     .group('title', 'exercise_id', 'username', 'exercises.user_id')
+                     .order('COUNT(practices_exercises.exercise_id) DESC')
+                     .count(:exercise_id)
+
+  end
 end

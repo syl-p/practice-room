@@ -14,7 +14,7 @@ class FollowsController < ApplicationController
       format.turbo_stream {
         render turbo_stream: turbo_stream.replace(
           "follow_btn",
-          partial: "users/follows/bell",
+          partial: "users/follows/btn",
           locals: { user: @follow.following }
         )
       }

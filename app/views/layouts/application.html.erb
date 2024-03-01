@@ -16,18 +16,22 @@
       <main class="md:pl-20 flex w-full items-stretch gap-x-0">
         <div class="flex-1 relative">
           <%= render partial: "shared/header" %>
-          <div class="p-4 sm:px-6 lg:px-8 lg:py-6">
-            <!-- Main area -->
-            <%= yield %>
-          </div>
+          <%= yield %>
         </div>
 
         <!-- Secondary column (hidden on smaller screens) -->
         <% if current_user %>
-          <aside class="h-screen hidden w-96 shrink-0 xl:block">
-            <div class="fixed h-full bg-light shadow">
+          <aside class="z-[110] h-screen hidden fixed right-0 bottom-0 w-96 shrink-0 xl:static xl:block"
+                 data-application-target="sidebar"
+                 data-transition-enter="transform transition ease-in-out duration-500"
+                 data-transition-enter-start="translate-x-full"
+                 data-transition-enter-end="translate-x-0"
+                 data-transition-leave="transform transition ease-in-out duration-500"
+                 data-transition-leave-start="translate-x-0"
+                 data-transition-leave-end="translate-x-full">
+            <div class="fixed h-full right-0 bottom-0 bg-light shadow px-4 overflow-hidden">
               <%= render partial: "shared/sidebar/header" %>
-              <div class=" px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
+              <div class="flex flex-col h-full gap-6">
                 <%= render partial: "shared/sidebar/content" %>
               </div>
             </div>
@@ -42,13 +46,22 @@
               <%= turbo_frame_tag :exercise_edit %>
             </div>
           </dialog>
-          <%= link_to new_exercise_path, class: "hidden rounded-full text-white bg-primary p-3 fixed bottom-10 right-10 md:block", title: "Créer un nouvel exercice", data: {turbo_frame: :exercise_edit, action: "click->popup#open"} do %>
+          <%= link_to new_exercise_path, class: "hidden rounded-full shadow-lg text-white bg-primary p-3 fixed bottom-10 right-10 md:block z-[500]", title: "Créer un nouvel exercice", data: {turbo_frame: :exercise_edit, action: "click->popup#open"} do %>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
           <% end %>
         </div>
       <% end %>
-    <%#= render "shared/sidebar/overlayed" if current_user.present? %>
+
+    <%#
+      data-transition-enter="ease-in-out duration-500"
+      data-transition-enter-start="opacity-0"
+      data-transition-enter-end="opacity-100"
+      data-transition-leave="ease-in-out duration-500"
+      data-transition-leave-start="opacity-100"
+      data-transition-leave-end="opacity-0" %>
+    <div data-application-target="overlay"
+         class="hidden inset-0 bg-gray-500 bg-opacity-75 transition-opacity fixed left-0 top-0 w-full h-screen z-[100]"></div>
   </body>
 </html>

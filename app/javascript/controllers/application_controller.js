@@ -3,7 +3,7 @@ import { leave, enter } from "../transistion"
 
 export default class extends Controller {
   static targets = ['inputVersionsEnabled',
-    'versionsListEdit', "sidebar", "favorites"]
+    'versionsListEdit', "sidebar", "favorites", "overlay"]
 
   static values = {
     root: String,
@@ -14,15 +14,12 @@ export default class extends Controller {
     this.currentUrl = window.location.href
   }
 
-  sidebarTargetConnected(sidebar) {
+  sidebarTargetConnected() {
     // Close on click outside a sidebar
-    sidebar.addEventListener('click', (event) => {
+    this.overlayTarget.addEventListener('click', (event) => {
       if (event.target !== event.currentTarget)
         return;
-      this.sidebarHide({ params: { id: sidebar.id } })
-      if (sidebar.id === 'exercise_sidebar') {
-        window.history.replaceState({}, '', this.currentUrl);
-      }
+      this.sidebarHide()
     })
   }
 
@@ -43,26 +40,34 @@ export default class extends Controller {
     return this.rootValue
   }
 
-  sidebarShow({ params: { id } }) {
-    const sidebar = this.sidebarTargets.find(s => s.getAttribute('id') == id)
-    const sidebar_content = sidebar.querySelector('aside')
-
-    sidebar.classList.remove('hidden')
-    enter(sidebar)
-
-    sidebar_content.classList.remove('hidden')
-    enter(sidebar_content)
+  toggle(e) {
+    if(this.sidebarTarget) {
+      if (this.sidebarTarget.classList.contains('hidden')) {
+        if (window.innerWidth < 1280) {
+          this.sidebarShow()
+        }
+      } else {
+        this.sidebarHide()
+      }
+    }
   }
 
-  sidebarHide({ params: { id } }) {
-    const sidebar = this.sidebarTargets.find(s => s.getAttribute('id') == id)
-    const sidebar_content = sidebar.querySelector('aside')
+  sidebarShow() {
+    const sidebar = this.sidebarTarget
+    this.overlayTarget.classList.remove('hidden')
+    sidebar.classList.remove('hidden')
+    enter(sidebar)
+  }
+
+  sidebarHide() {
+    const sidebar = this.sidebarTarget
     Promise.all([
-      leave(sidebar_content),
+      // leave(sidebar_content),
       leave(sidebar)
     ]).then(() => {
       // this.overlayTarget.classList.add("hidden")
-      // sidebar.classList.add('hidden')
+      sidebar.classList.add('hidden')
+      this.overlayTarget.classList.add('hidden')
       // enter(sidebar)
     })
   }

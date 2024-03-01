@@ -1,5 +1,7 @@
-<div class="mt-6">
-  <%= turbo_frame_tag "#{dom_id(@commentable)}_comments" do %>
-    <%=  render partial: "comments/comment", collection: @comments, as: :comment  %>
+<div class="my-6">
+    <%= turbo_frame_tag "#{dom_id(@commentable)}_comments" do %>
+      <ul role="list" class="space-y-6">
+        <%=  render partial: "comments/comment", collection: @comments, as: :comment  %>
+      </ul>
   <% end %>
 </div>

@@ -1,54 +1,33 @@
-<article
-  data-controller="<%= "comment" if comment.parent_id.nil? %>"
-  class="<%= "border-b my-6" if comment.parent_id.nil? %>">
-  <section class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
-    <header class="flex justify-between items-center mb-2">
-      <div class="flex items-center">
-        <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-          <%= link_to user_path(comment.user), data:{turbo: false} do %>
-            <%= render partial: "users/avatar", locals: {user: comment.user, size: 6, classes: "mr-2"}  %>
-          <% end %>
-          <%= link_to user_path(comment.user), data:{turbo: false}  do %>
-           <%= comment.user.username %>
-          <% end %>
-        </p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          <time pubdate datetime="2022-02-12" title="<%= l comment.created_at, format: :long %>">
-            <%= l comment.created_at, format: :short %>
-          </time>
-        </p>
+<li class="relative flex gap-x-4"
+    data-controller="<%= "comment" if comment.parent_id.nil? %>">
+  <div class="absolute left-0 top-0 flex w-6 justify-center -bottom-6">
+    <div class="w-px bg-gray-200"></div>
+  </div>
+  <div class="relative flex h-6 w-6 flex-none items-center justify-center bg-gray-100">
+    <div class="h-1.5 w-1.5 rounded-full bg-primary ring-1 ring-gray-300"></div>
+  </div>
+
+  <%= link_to user_path(comment.user), data:{turbo: false} do %>
+    <%= render partial: "users/avatar", locals: {user: comment.user, size: 8, classes: "flex items-center justify-center bg-gray-400"}  %>
+  <% end %>
+
+  <div class="flex-1">
+    <div class="flex items-center space-x-3 mb-3">
+      <div class="py-0.5 text-sm font-bold leading-5 text-gray-500">
+        <%= link_to user_path(comment.user), data:{turbo: false}, class: "font-medium text-gray-900"  do %>
+          <%= comment.user.username %>
+        <% end %>
       </div>
-      <button id="dropdownComment2Button" data-dropdown-toggle="dropdownComment2"
-              class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              type="button">
-        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-          <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
-        </svg>
-        <span class="sr-only">Comment settings</span>
-      </button>
-      <!-- Dropdown menu -->
-      <div id="dropdownComment2"
-           class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="dropdownMenuIconHorizontalButton">
-          <li>
-            <a href="#"
-               class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-          </li>
-          <li>
-            <a href="#"
-               class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</a>
-          </li>
-          <li>
-            <a href="#"
-               class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
-          </li>
-        </ul>
-      </div>
-    </header>
-    <p class="text-gray-500 dark:text-gray-400">
+      <div class="border-l w-1.5 h-1.5 bg-black rounded-full"></div>
+      <time class="flex-none py-0.5 text-xs leading-5 text-gray-500" pubdate datetime="2022-02-12" title="<%= l comment.created_at, format: :long %>">
+        <%= l comment.created_at, format: :short %>
+      </time>
+    </div>
+
+    <p class="text-gray-500 dark:text-gray-400 p-3 border rounded-lg">
       <%= comment.content_linkify %>
     </p>
+
     <div class="flex items-center mt-4 space-x-4">
       <% if user_signed_in? %>
         <%= link_to "#",
@@ -61,11 +40,10 @@
         <% end %>
       <% end %>
     </div>
-  </section>
-  <footer class="ml-6 lg:ml-12">
-    <%= turbo_frame_tag "#{dom_id(comment)}_comments", src: comment_path(comment) do %>
-      ...
-    <% end %>
-    <%= render partial: "comments/form", locals: {commentable: comment, comment: Comment.new, class: 'hidden'} if comment.parent_id.nil? && user_signed_in? %>
-  </footer>
-</article>
+
+    <div class="my-6 lg:ml-12">
+      <%= turbo_frame_tag "#{dom_id(comment)}_comments", src: comment_path(comment) %>
+      <%= render partial: "comments/form", locals: {commentable: comment, comment: Comment.new, class: 'hidden'} if comment.parent_id.nil? && user_signed_in? %>
+    </div>
+  </div>
+</li>

@@ -4,7 +4,6 @@ export default `
     width: 100%;
     height: 0;
     padding-bottom: 56.25%; /* aspect ratio 16:9 */
-    margin-bottom: 1.5rem;
     overflow: hidden;
     cursor: pointer;
     border-radius: .5rem;

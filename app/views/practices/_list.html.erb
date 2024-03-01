@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "practices_of_the_day" do %>
-  <ul role="list" class="-mb-8">
-    <% if practices_of_the_day.present? %>
+  <% if practices_of_the_day.present? %>
+  <ul role="list">
       <% practices_of_the_day.each_with_index do |practice, index| %>
         <%= turbo_frame_tag "practice_#{practice.id.to_s}" do %>
           <%= render partial: "practices/item",
@@ -10,6 +10,8 @@
           %>
         <% end %>
       <% end %>
-    <% end %>
   </ul>
+  <% else %>
+    <p>Aucune pratique enregistré ce jour là.</p>
+  <% end %>
 <% end %>

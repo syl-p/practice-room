@@ -1,14 +1,27 @@
 <% model = [local_assigns[:commentable], comment].compact %>
-
-<%= form_with model: model, id: record_id_gen(*model),
-              data: {turbo: true, comment_target: 'form'},
-              class: "comment_form #{local_assigns[:class]} mb-12"  do |f| %>
-  <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-    <label for="comment" class="sr-only">Votre commentaire</label>
-    <%= f.text_area :body, row: 6, placeholder: "Votre commentaire...",
-                    class: "px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800" %>
+<div class="relative flex items-stretch gap-x-4 my-6 comment_form <%= local_assigns[:class] %>">
+  <div class="absolute left-0 top-0 flex w-6 justify-center -bottom-6">
+    <div class="w-px bg-gray-200"></div>
   </div>
-  <%= f.submit "Commenter", disable_with: 'Envoi un cours...',
-               class: "inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-white hover:bg-primary",
-               data: {action: "click->comment#submit"} %>
-<% end %>
+  <div class="relative flex h-6 w-6 flex-none items-center justify-center bg-gray-100">
+    <div class="h-1.5 w-1.5 rounded-full bg-primary ring-1 ring-gray-300"></div>
+  </div>
+  <div class="flex space-x-4 w-full">
+    <%= link_to user_path(current_user), data:{turbo: false} do %>
+      <%= render partial: "users/avatar", locals: {user: current_user, size: 8, classes: "flex items-center justify-center bg-gray-400"}  %>
+    <% end %>
+
+    <%= form_with model: model, id: record_id_gen(*model),
+                  data: {turbo: true, comment_target: 'form'},
+                  class: "w-full"  do |f| %>
+      <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <label for="comment" class="sr-only">Votre commentaire</label>
+        <%= f.text_area :body, row: 6, placeholder: "Votre commentaire...",
+                        class: "px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800" %>
+      </div>
+      <%= f.submit "Commenter", disable_with: 'Envoi un cours...',
+                   class: "inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-white hover:bg-primary",
+                   data: {action: "click->comment#submit"} %>
+    <% end %>
+  </div>
+</div>

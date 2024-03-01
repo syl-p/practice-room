@@ -4,19 +4,24 @@
   current_month = current_week.first.month
   current_year = current_week.first.year
 %>
-
 <%= turbo_frame_tag "practices_selector", target: "practices_selector"  do %>
-  <div class="text-center mb-8">
-    <nav class="mb-4">
-      <span class="text-lg font-bold"><%= I18n.t("date.month_names")[current_month] %> <%= current_year %></span>
+  <div class="mb-8">
+    <nav class="flex space-x-3 mb-4 items-center">
+      <span class="text-lg font-bold flex-1"><%= I18n.t("date.month_names")[current_month] %> <%= current_year %></span>
+      <div class="flex space-x-3 items-center">
+        <%= link_to get_week_path(previous_next: 'previous', date: first_day), class: "bg-gray-300 text-white p-1 rounded-lg" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        <% end %>
+        <%= link_to get_week_path(previous_next: 'next', date: first_day), class: "bg-gray-300 text-white p-1 rounded-lg" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        <% end %>
+      </div>
     </nav>
-    <div class="flex justify-center items-center w-full">
-      <%= link_to get_week_path(previous_next: 'previous', date: first_day) do %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-      <% end %>
-
+    <div class="text-center flex justify-center items-center w-full">
       <% current_week.each do |day|
         with_data = practices_for_the_week.select { |p| p.created_at.all_day == day.all_day }.present?
         today = day.strftime("%Y-%m-%d") == Date.today.strftime("%Y-%m-%d")
@@ -28,7 +33,7 @@
             pratices_target: "dateLink",
             date: day.strftime("%Y-%m-%d")
           } do %>
-          <span class="block text-sm <%= "text-white" if today  %>"><%= Date::ABBR_DAYNAMES[day.wday][0,1] %></span>
+          <span class="block text-sm <%= "text-white" if today  %>"><%= Date::ABBR_DAYNAMES[day.wday][0,4] %></span>
           <span class="block text-sm bg-white rounded-full py-1 px-2 relative">
             <% if with_data %>
               <span class="<%= "block absolute bottom-5 left-5 content-[''] bg-primary w-2 h-2 rounded-full" %>"> </span>
@@ -36,12 +41,6 @@
             <%= day.day %>
           </span>
         <% end %>
-      <% end %>
-
-      <%= link_to get_week_path(previous_next: 'next', date: first_day) do %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
       <% end %>
     </div>
   </div>
